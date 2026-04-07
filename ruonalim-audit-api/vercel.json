@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/audit.js": { "maxDuration": 60 },
+    "api/seo.js": { "maxDuration": 60 },
+    "api/app.js": { "maxDuration": 60 }
+  }
+}

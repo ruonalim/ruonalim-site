@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 130" width="260" height="130">
+  <defs><style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@900&display=swap');</style></defs>
+  
+  <text x="130" y="64" text-anchor="middle" font-family="'DM Sans', sans-serif"
+    font-weight="900" font-size="56" letter-spacing="-2.3" fill="#0047FF">r.</text>
+  <text x="130" y="110" text-anchor="middle" font-family="'DM Sans', sans-serif"
+    font-weight="900" font-size="30" letter-spacing="-1.2" fill="#0047FF">ruonalim.</text>
+</svg>

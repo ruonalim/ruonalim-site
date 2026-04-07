@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUONALIM Audit Result - bigticket.ae</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg: #080808;
+            --color-text-primary: #fff;
+            --color-text-muted: rgba(255, 255, 255, 0.56);
+            --color-text-dim: rgba(255, 255, 255, 0.45);
+            --color-text-sub: rgba(255, 255, 255, 0.56);
+            --color-border: rgba(255, 255, 255, 0.06);
+            --color-card-bg: rgba(255, 255, 255, 0.03);
+            --color-primary: #2563eb;
+            --color-success: #22c55e;
+            --color-warning: #eab308;
+            --color-danger: #f97316;
+            --color-critical: #ef4444;
+            --color-critical-bg: rgba(239, 68, 68, 0.12);
+            --color-major-bg: rgba(249, 115, 22, 0.12);
+            --color-minor-bg: rgba(234, 179, 8, 0.12);
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            height: 64px;
+            padding: 0 32px;
+            backdrop-filter: blur(12px);
+            background-color: rgba(8, 8, 8, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+            color: var(--color-text-primary);
+        }
+
+        .nav-logo .period {
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--color-text-primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-outline {
+            padding: 8px 16px;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            background: transparent;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-primary {
+            padding: 8px 16px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-secondary {
+            padding: 8px 16px;
+            background: transparent;
+            color: var(--color-text-muted);
+            border: none;
+            font-size: 13px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .btn-secondary:hover {
+            color: var(--color-text-primary);
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 96px;
+            padding-bottom: 96px;
+            padding-left: 32px;
+            padding-right: 32px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Full Report Banner */
+        .full-report-banner {
+            background-color: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: var(--color-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .full-report-text {
+            font-weight: 500;
+        }
+
+        /* Hero Score Card */
+        .score-card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 32px;
+            display: flex;
+            gap: 48px;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 768px) {
+            .score-card {
+                flex-direction: column;
+                padding: 32px;
+                gap: 32px;
+            }
+        }
+
+        .score-ring-container {
+            flex-shrink: 0;
+            position: relative;
+            width: 180px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-ring-svg {
+            width: 180px;
+            height: 180px;
+            transform: rotate(-90deg);
+        }
+
+        .score-ring-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.06);
+            stroke-width: 6;
+        }
+
+        .score-ring-progress {
+            fill: none;
+            stroke-width: 6;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.6s ease;
+        }
+
+        .score-ring-progress.score-excellent {
+            stroke: var(--color-success);
+        }
+
+        .score-ring-progress.score-good {
+            stroke: var(--color-warning);
+        }
+
+        .score-ring-progress.score-needs-work {
+            stroke: var(--color-danger);
+        }
+
+        .score-ring-progress.score-poor {
+            stroke: var(--color-critical);
+        }
+
+        .score-value {
+            position: absolute;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 48px;
+            line-height: 1;
+            text-align: center;
+        }
+
+        .score-value.score-excellent {
+            color: var(--color-success);
+        }
+
+        .score-value.score-good {
+            color: var(--color-warning);
+        }
+
+        .score-value.score-needs-work {
+            color: var(--color-danger);
+        }
+
+        .score-value.score-poor {
+            color: var(--color-critical);
+        }
+
+        .score-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .score-card-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: fit-content;
+            background-color: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .badge-primary {
+            background-color: rgba(37, 99, 235, 0.15);
+            color: var(--color-primary);
+        }
+
+        .score-url {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 8px;
+        }
+
+        .score-headline {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            color: var(--color-text-primary);
+            margin-bottom: 12px;
+        }
+
+        .score-issue-count {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 12px;
+        }
+
+        .score-issue-count strong {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .score-strength {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 12px;
+        }
+
+        .score-strength-text {
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 4px;
+        }
+
+        .strength-icon {
+            color: #4ade80;
+            font-size: 14px;
+        }
+
+        .score-date {
+            color: rgba(255, 255, 255, 0.27);
+            font-size: 10px;
+            margin-top: 16px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-header-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Heuristic Scorecard */
+        .heuristic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 640px) {
+            .heuristic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .heuristic-cell {
+            background-color: var(--color-bg);
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .heuristic-score {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .heuristic-score.status-pass {
+            color: var(--color-success);
+        }
+
+        .heuristic-score.status-minor {
+            color: var(--color-warning);
+        }
+
+        .heuristic-score.status-major {
+            color: var(--color-danger);
+        }
+
+        .heuristic-score.status-critical {
+            color: var(--color-critical);
+        }
+
+        .heuristic-content {
+            flex: 1;
+        }
+
+        .heuristic-status {
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            opacity: 0.7;
+        }
+
+        .heuristic-status.status-pass {
+            color: var(--color-success);
+        }
+
+        .heuristic-status.status-minor {
+            color: var(--color-warning);
+        }
+
+        .heuristic-status.status-major {
+            color: var(--color-danger);
+        }
+
+        .heuristic-status.status-critical {
+            color: var(--color-critical);
+        }
+
+        .heuristic-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .heuristic-name::before {
+            color: rgba(255, 255, 255, 0.5);
+            content: "01. ";
+            margin-right: 0;
+        }
+
+        .heuristic-name.extended::before {
+            content: '';
+        }
+
+        .heuristic-finding {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.5;
+        }
+
+        /* Issue Cards */
+        .issues-section {
+            margin-bottom: 32px;
+        }
+
+        .issues-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .issue-card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .issue-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+
+        .issue-severity {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .issue-severity.critical {
+            color: var(--color-critical);
+            background-color: var(--color-critical-bg);
+        }
+
+        .issue-severity.major {
+            color: var(--color-danger);
+            background-color: var(--color-major-bg);
+        }
+
+        .issue-severity.minor {
+            color: var(--color-warning);
+            background-color: var(--color-minor-bg);
+        }
+
+        .issue-title-section {
+            flex: 1;
+        }
+
+        .issue-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 4px;
+        }
+
+        .issue-heuristic {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 8px;
+        }
+
+        .issue-description {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .issue-recommendation {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .issue-recommendation::before {
+            content: "Fix → ";
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        .issue-location {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 8px;
+        }
+
+        /* Priority Actions */
+        .priority-actions {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .priority-list {
+            list-style: none;
+        }
+
+        .priority-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .priority-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .priority-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: rgba(37, 99, 235, 0.15);
+            color: var(--color-primary);
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .priority-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        /* Strengths */
+        .strengths-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 640px) {
+            .strengths-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .strength-card {
+            background-color: rgba(34, 197, 94, 0.04);
+            border: 1px solid rgba(34, 197, 94, 0.1);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .strength-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+        }
+
+        .strength-star {
+            color: #4ade80;
+            font-size: 14px;
+            margin-right: 4px;
+        }
+
+        /* Consultation CTA */
+        .consultation-cta-wrapper {
+            margin-top: 64px;
+            padding: 1px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(139, 92, 246, 0.2), rgba(37, 99, 235, 0.1), rgba(139, 92, 246, 0.3));
+            background-size: 300% 300%;
+            animation: shift 6s ease infinite;
+        }
+
+        @keyframes shift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .consultation-cta {
+            background-color: #0a0a0a;
+            border-radius: 8px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            font-weight: 600;
+            font-size: 12px;
+            background: linear-gradient(90deg, #2563eb, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .powered-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 12px;
+        }
+
+        .cta-heading {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            color: var(--color-text-primary);
+            margin-bottom: 12px;
+        }
+
+        .cta-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 24px;
+        }
+
+        .btn-consultation {
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .btn-consultation:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 32px;
+            color: rgba(255, 255, 255, 0.56);
+            font-size: 12px;
+        }
+
+        .footer-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media (max-width: 640px) {
+            .footer-container {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        .footer-logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .footer-info {
+            display: flex;
+            gap: 8px;
+        }
+
+        .footer-link {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        /* Bottom Actions Bar */
+        .bottom-actions {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media (max-width: 640px) {
+            .bottom-actions {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+        }
+
+        .action-link {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .action-link:hover {
+            color: var(--color-text-primary);
+        }
+
+        .action-link.primary {
+            color: var(--color-primary);
+        }
+
+        .action-link.primary:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                height: 56px;
+                padding: 0 16px;
+            }
+
+            .nav-logo {
+                font-size: 16px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            main {
+                padding-top: 80px;
+                padding-bottom: 80px;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .score-card {
+                padding: 24px;
+            }
+
+            .score-headline {
+                font-size: 20px;
+            }
+
+            .cta-heading {
+                font-size: 22px;
+            }
+
+            .consultation-cta {
+                padding: 24px;
+            }
+
+            footer {
+                padding: 24px 16px;
+            }
+
+            .footer-container {
+                flex-direction: column;
+            }
+
+            .bottom-actions {
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-buttons {
+                gap: 8px;
+            }
+
+            .btn-outline,
+            .btn-primary {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .score-ring-container {
+                width: 140px;
+                height: 140px;
+            }
+
+            .score-ring-svg {
+                width: 140px;
+                height: 140px;
+            }
+
+            .score-value {
+                font-size: 36px;
+            }
+
+            .score-headline {
+                font-size: 18px;
+            }
+
+            .heuristic-grid {
+                gap: 0;
+            }
+
+            .heuristic-cell {
+                padding: 16px;
+                gap: 12px;
+            }
+
+            .heuristic-score {
+                font-size: 16px;
+            }
+
+            .heuristic-name {
+                font-size: 12px;
+            }
+
+            .heuristic-finding {
+                font-size: 11px;
+            }
+
+            .issue-card {
+                padding: 16px;
+            }
+
+            .cta-heading {
+                font-size: 18px;
+            }
+
+            .consultation-cta {
+                padding: 20px;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Accessibility */
+        .skip-link { position: absolute; top: -100%; left: 8px; z-index: 9999; padding: 8px 16px; background: #2563eb; color: #fff; font-size: 14px; font-weight: 600; border-radius: 0 0 4px 4px; text-decoration: none; }
+        .skip-link:focus { top: 0; }
+        :focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; border-radius: 2px; }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; } }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation Bar -->
+    <nav aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="nav-logo" aria-label="ruonalim – home">
+                ruonalim<span class="period" aria-hidden="true">.</span>
+            </a>
+            <div class="nav-links">
+                <a href="/#services" class="nav-link">Services</a>
+                <a href="/#clients" class="nav-link">Work</a>
+                <a href="/#about" class="nav-link">About</a>
+                <a href="/#perspectives" class="nav-link">Perspectives</a>
+            </div>
+            <div class="nav-buttons">
+                <a href="/audit" class="btn-outline">UX Audit</a>
+                <button class="btn-secondary" onclick="printReport()">Print Report</button>
+                <a href="/audit/run" class="btn-primary">Run audit</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Full Report Banner -->
+        <div class="full-report-banner">
+            <span class="full-report-text">✓ Full report unlocked</span>
+            <span style="font-size: 12px;">bigticket.ae</span>
+        </div>
+
+        <!-- Hero Score Card -->
+        <div class="score-card">
+            <!-- Score Ring -->
+            <div class="score-ring-container">
+                <svg class="score-ring-svg" viewBox="0 0 180 180" aria-hidden="true" focusable="false">
+                    <!-- Background circle -->
+                    <circle class="score-ring-bg" cx="90" cy="90" r="78"></circle>
+                    <!-- Progress circle -->
+                    <circle class="score-ring-progress score-needs-work" cx="90" cy="90" r="78"
+                            style="stroke-dasharray: 205.4; stroke-dashoffset: 110.0;"></circle>
+                </svg>
+                <div style="position: absolute; text-align: center;">
+                    <div class="score-value score-needs-work">46</div>
+                    <div class="score-label">Needs work</div>
+                </div>
+            </div>
+
+            <!-- Card Right Content -->
+            <div class="score-card-right">
+                <div>
+                    <span class="badge">Screenshots</span>
+                    <div class="score-url">bigticket.ae</div>
+                </div>
+
+                <h1 class="score-headline">Users face confusing lottery jargon, a cluttered homepage, and forced account creation before they can buy — driving away first-time visitors who came ready to purchase.</h1>
+
+                <div class="score-issue-count">
+                    <strong>14 issues found</strong> across your product
+                </div>
+
+                <div class="score-strength">
+                    <span class="strength-icon">★</span> Top strength
+                </div>
+                <div class="score-strength-text">The Winner's Club page builds strong trust by showcasing real winner photos with names, nationalities, ticket numbers, and prize amounts. This proof of real people winning real money is the single most persuasive element on the site.</div>
+
+                <div class="score-date">Audited on March 27, 2026</div>
+            </div>
+        </div>
+
+        <!-- Heuristic Scorecard Section -->
+        <div style="margin-bottom: 48px;">
+            <div class="section-header">HEURISTIC SCORECARD</div>
+            <div class="heuristic-grid">
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-major">50</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-major">Major</div>
+                        <div class="heuristic-name">Visibility of system status</div>
+                        <div class="heuristic-finding">The countdown timer showing days until the next draw appears on multiple pages, which is good — it creates urgency. However, there's no clear indication of what actually happens when the timer hits zero. Users don't see loading or progress indicators during page transitions, and the registration stepper (steps 1-2-3) doesn't clearly differentiate between completed and upcoming steps, making it hard to know where you are in the process.</div>
+                    </div>
+                </div>
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-minor">62</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-minor">Minor</div>
+                        <div class="heuristic-name">Match between system and real world</div>
+                        <div class="heuristic-finding">The site uses insider lottery terminology like 'Series 285' without any explanation — a first-time visitor has no idea what a 'series' means or why they should care. On the positive side, currency is displayed in AED which is appropriate for the UAE market, and winner photos with nationalities feel authentic and relatable. The 'Get to Know Us ♥' navigation label is vague and doesn't tell users what content lives behind it.</div>
+                    </div>
+                </div>
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-major">38</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-major">Major</div>
+                        <div class="heuristic-name">User control and freedom</div>
+                        <div class="heuristic-finding">There's no visible way to go back or undo steps during the purchase flow. On the homepage, a sign-in overlay appears and blocks the ticket grid content underneath with no obvious dismiss button — users feel trapped. Most critically, there's no guest checkout option visible anywhere, which means first-time visitors are forced to create a full account with password, phone number, and verification before they can buy a single ticket.</div>
+                    </div>
+                </div>
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-major">48</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-major">Major</div>
+                        <div class="heuristic-name">Consistency and standards</div>
+                        <div class="heuristic-finding">Each page uses a different header colour — the homepage is white/light, Winner's Club has a red header, Live Draw uses gold/yellow — making the site feel like separate websites stitched together rather than one cohesive product. CTA button styles are inconsistent: some are red fills, some are outlined, some appear greyed out. The orange dashed border around sign-in and registration forms looks dated and clashes with the rest of the design language.</div>
+                    </div>
+                </div>
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-major">52</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-major">Major</div>
+                        <div class="heuristic-name">Error prevention</div>
+                        <div class="heuristic-finding">Password requirements are shown upfront as clear chips (1 lowercase, 1 number, 1 uppercase, 1 special character, 8-32 characters), which is genuinely helpful. However, there's no inline validation visible on any form fields — users won't know they've made an error until they try to submit. The phone number field pre-sets the +971 country code for UAE users, which is smart. No confirmation step is visible before completing a purchase, which is risky for a high-value lottery transaction.</div>
+                    </div>
+                </div>
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-minor">62</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-minor">Minor</div>
+                        <div class="heuristic-name">Recognition over recall</div>
+                        <div class="heuristic-finding">Winner cards display all relevant information at a glance — name, ticket number, nationality flag, prize amount, purchase method, date, and series number — so users don't need to remember or look up anything. Navigation labels are mostly clear: Big Ticket, Dream Car, Winner's Club, Live Draw. But 'Get to Know Us ♥' is vague and forgettable — users wouldn't think to click there for important information like FAQs or company details.</div>
+                    </div>
+                </div>
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-critical">35</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-critical">Critical</div>
+                        <div class="heuristic-name">Flexibility and efficiency</div>
+                        <div class="heuristic-finding">There's no search functionality anywhere on the site — users can't look up past draws, specific ticket numbers, or filter results. The Winner's Club shows an endless scroll of winner cards with no way to filter by date, prize amount, nationality, or draw series. There's no quick-buy or repeat purchase option for returning customers who buy every month. The only shortcut offered is 'Sign In With OTP' as an alternative to password login, which is good but minor.</div>
+                    </div>
+                </div>
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-major">38</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-major">Major</div>
+                        <div class="heuristic-name">Aesthetic and minimalist design</div>
+                        <div class="heuristic-finding">The homepage is visually overwhelming — promotional banners, winner highlights, ticket grids, sign-in overlays, and stat counters all compete for attention simultaneously. There's no clear visual hierarchy guiding users toward the primary action (buying a ticket). The red/gold/white colour scheme feels busy and carnival-like rather than premium, despite the high-value prizes. The Live Draw page actually has the cleanest layout of all pages, with clear sections and breathing room.</div>
+                    </div>
+                </div>
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-major">40</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-major">Major</div>
+                        <div class="heuristic-name">Help users recognise, diagnose, and recover from errors</div>
+                        <div class="heuristic-finding">No visible error states are shown on any form fields across sign-in or registration. The Cloudflare captcha is present but there's no indication of what happens if verification fails. The 'Reset my password' link exists on the sign-in page but it's positioned poorly — right-aligned below the password field in small text, easy to miss when you're frustrated. There's no visible error recovery path if a purchase or payment fails.</div>
+                    </div>
+                </div>
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-critical">28</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-critical">Critical</div>
+                        <div class="heuristic-name">Help and documentation</div>
+                        <div class="heuristic-finding">There is no FAQ section visible anywhere on the site — for a lottery platform handling real money, this is a serious omission. There's no live chat widget, no contextual help tooltips on forms, and no information visible about how draws work, what the odds are, or responsible play policies. For a regulated lottery product, the absence of responsible gambling information is both a UX failure and potentially a compliance risk. 'Get to Know Us' might contain some of this, but the label gives no hint.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Extended Analysis Section -->
+        <div style="margin-bottom: 48px;">
+            <div class="section-header">EXTENDED ANALYSIS</div>
+            <div class="heuristic-grid">
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-major">42</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-major">Major</div>
+                        <div class="heuristic-name extended">↗ Conversion Quality</div>
+                        <div class="heuristic-finding">The site's conversion funnel has a critical blocker right at the top: users must create a full account — email, phone, password, and verification — before they can purchase a single ticket. This is the single biggest drop-off point on the site and likely accounts for a significant share of lost revenue. Beyond that, there's no guest checkout, no urgency or scarcity cues near ticket listings, and the primary CTA hierarchy is unclear — "Buy Now" and promotional banners compete for attention rather than guiding users toward purchase. The value proposition (why Big Ticket vs a regular lottery?) is also absent above the fold.</div>
+                    </div>
+                </div>
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-major">48</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-major">Major</div>
+                        <div class="heuristic-name extended">⊡ Mobile Experience</div>
+                        <div class="heuristic-finding">The site appears to have been designed desktop-first and adapted for mobile as an afterthought. The sign-in overlay that appears on the homepage blocks the ticket grid entirely on smaller screens with no clear dismiss path, leaving mobile users stuck. Navigation collapses into a hamburger menu but the dropdown items are closely spaced and difficult to tap accurately. The ticket grid layout does not reflow gracefully on mobile viewports, and promotional banners with heavy imagery significantly slow perceived loading time on mobile connections — a critical issue for an impulse-purchase product.</div>
+                    </div>
+                </div>
+
+                <div class="heuristic-cell">
+                    <div class="heuristic-score status-minor">55</div>
+                    <div class="heuristic-content">
+                        <div class="heuristic-status status-minor">Minor</div>
+                        <div class="heuristic-name extended">◈ Trust & Credibility</div>
+                        <div class="heuristic-finding">Big Ticket has some credibility signals working in its favour — winner photos with names and nationalities are authentic and relatable, and the brand has been established in the UAE market for a number of years. However, for a product handling financial transactions and personal data, the trust layer is underdeveloped. There are no visible security badges or payment encryption notices at or near the checkout flow. Responsible gaming information and DTCM licensing details are buried and not prominent. The visual inconsistency across pages also erodes brand confidence — a polished, trustworthy product feels consistent end-to-end.</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Critical Issues Section -->
+        <div class="issues-section">
+            <div class="section-header">
+                <span class="section-header-dot" style="background-color: var(--color-critical);"></span>
+                CRITICAL ISSUES (3)
+            </div>
+            <div class="issues-grid">
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-severity critical">Critical</div>
+                        <div class="issue-title-section">
+                            <div class="issue-heuristic">User control and freedom</div>
+                            <div class="issue-title">Forced account creation blocks ticket purchases</div>
+                        </div>
+                    </div>
+                    <div class="issue-description">
+                        When a first-time visitor lands on bigticket.ae excited to buy a ticket, they quickly discover there's no way to purchase without first creating a full account. The registration flow requires a mobile number, email, a complex password (with uppercase, lowercase, number, special character), and phone verification — that's at least 3 screens and 2 minutes before they can even see a payment page. For an impulse-driven product like lottery tickets, this is a conversion killer. Every extra step between 'I want to buy' and 'I've bought' loses a percentage of customers, and forced registration is the single biggest friction point in e-commerce.
+                    </div>
+                    <div class="issue-recommendation">
+                        Add a guest checkout option that only requires an email address and phone number to complete a purchase. Collect the rest of the profile information after the purchase is confirmed, when the user is already invested. At minimum, offer 'Buy as Guest' alongside the sign-in prompt. This alone could increase first-time purchase conversion by 20-30% based on industry benchmarks for lottery and gaming products.
+                    </div>
+                    <div class="issue-location">Sign-in overlay on homepage and registration page at /register</div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-severity critical">Critical</div>
+                        <div class="issue-title-section">
+                            <div class="issue-heuristic">Help and documentation</div>
+                            <div class="issue-title">No FAQ, help section, or responsible play information anywhere</div>
+                        </div>
+                    </div>
+                    <div class="issue-description">
+                        A lottery platform dealing with real money transactions has zero visible help resources. There's no FAQ page answering basic questions like 'How do draws work?', 'What happens if I win?', 'How do I collect my prize?', or 'What are the odds?' There's no live chat, no help centre link, and critically, no responsible gambling information — no spend limits, no self-exclusion options, no links to problem gambling support. For first-time visitors from outside the UAE who may not understand how Big Ticket works, this lack of information creates uncertainty that directly blocks purchases.
+                    </div>
+                    <div class="issue-recommendation">
+                        Create a comprehensive FAQ/Help section accessible from the main navigation. Include draw mechanics, odds, prize collection process, payment methods, and account management. Add a dedicated 'Responsible Play' page with self-exclusion tools, spend limits, cooling-off periods, and links to gambling support organisations. This isn't just good UX — it's likely a regulatory requirement for licensed lottery operations in Abu Dhabi and builds the trust needed for users to hand over their payment details.
+                    </div>
+                    <div class="issue-location">Missing from the entire site — should be in main navigation</div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-severity critical">Critical</div>
+                        <div class="issue-title-section">
+                            <div class="issue-heuristic">Flexibility and efficiency of use</div>
+                            <div class="issue-title">No search, filtering, or quick-purchase options anywhere</div>
+                        </div>
+                    </div>
+                    <div class="issue-description">
+                        The entire site has zero search functionality. Users can't search for past draw results, look up ticket numbers, find specific winner stories, or quickly navigate to a product they want. The Winner's Club page shows dozens of winner cards in an infinite scroll with no way to filter by anything meaningful — not by date, prize type, nationality, or amount. For returning customers who buy monthly, there's no 'Buy again' or saved preferences to speed up repeat purchases. Everything requires starting from scratch every single time.
+                    </div>
+                    <div class="issue-recommendation">
+                        Add a site-wide search bar in the navigation. On the Winner's Club page, add filter controls for draw series, prize amount range, nationality, and date range. For logged-in users, add a 'Quick Buy' feature that remembers their last ticket selection and payment method for one-tap repeat purchases. These efficiency features reward loyal customers and reduce the time from intent to purchase, which directly impacts monthly recurring revenue.
+                    </div>
+                    <div class="issue-location">Affects all pages — no search in navigation, no filters on Winner's Club, no quick-buy in account area</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Major Issues Section -->
+        <div class="issues-section">
+            <div class="section-header">
+                <span class="section-header-dot" style="background-color: var(--color-danger);"></span>
+                MAJOR ISSUES (5)
+            </div>
+            <div class="issues-grid">
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-severity major">Major</div>
+                        <div class="issue-title-section">
+                            <div class="issue-heuristic">Aesthetic and minimalist design</div>
+                            <div class="issue-title">Homepage is visually cluttered with competing elements</div>
+                        </div>
+                    </div>
+                    <div class="issue-description">
+                        The homepage tries to do everything at once — hero banner, countdown timer, winner highlights, promotional cards, ticket grid, sign-in overlay, statistics, and footer all fight for attention. There's no clear visual hierarchy telling users where to look first or what action to take. The sign-in overlay partially blocks the ticket grid, creating a frustrating experience where content is visible but not accessible. The red/gold/white colour palette feels more carnival than premium, undermining the 'dream big' brand positioning for prizes worth millions of AED.
+                    </div>
+                    <div class="issue-recommendation">
+                        Redesign the homepage with a clear visual hierarchy: one dominant hero with a single CTA ('Buy Tickets'), followed by trust signals (winners), then secondary actions. Remove the sign-in overlay or make it dismissible with a clear X button. Establish a more refined colour system — keep the red as an accent but use more white space and a cleaner layout to convey the premium nature of multi-million dirham prizes.
+                    </div>
+                    <div class="issue-location">Homepage at bigticket.ae — hero section, ticket grid, and sign-in overlay</div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-severity major">Major</div>
+                        <div class="issue-title-section">
+                            <div class="issue-heuristic">Consistency and standards</div>
+                            <div class="issue-title">Each page looks like a different website</div>
+                        </div>
+                    </div>
+                    <div class="issue-description">
+                        The visual identity shifts dramatically between pages: the homepage uses a light background, Winner's Club has a red gradient header, Live Draw uses a golden/yellow header, and the auth pages use an orange dashed border. CTA buttons alternate between red fills, white outlines, and grey states with no consistent pattern. This inconsistency makes the site feel unprofessional and erodes user confidence — if the visual experience feels disjointed, users may question whether the entire operation is trustworthy.
+                    </div>
+                    <div class="issue-recommendation">
+                        Create and enforce a consistent design system: one header style, one colour palette, consistent CTA button hierarchy (primary = solid, secondary = outlined, tertiary = text). Replace the orange dashed border on auth forms with the same card style used elsewhere. Every page should feel unmistakably 'Big Ticket' within the first second of landing.
+                    </div>
+                    <div class="issue-location">Across all pages — headers, CTAs, and form styling</div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-severity major">Major</div>
+                        <div class="issue-title-section">
+                            <div class="issue-heuristic">Error prevention</div>
+                            <div class="issue-title">No inline form validation or purchase confirmation step</div>
+                        </div>
+                    </div>
+                    <div class="issue-description">
+                        None of the form fields on the sign-in or registration pages show real-time validation. Users fill out the entire form, hit submit, and only then discover their password doesn't meet requirements or their phone number is invalid. For a platform processing financial transactions, the absence of a clear confirmation step before purchase is concerning — users should see a summary of what they're buying, the total cost, and their payment details before committing.
+                    </div>
+                    <div class="issue-recommendation">
+                        Add inline validation that checks each field as the user types or moves to the next field — green checkmarks for valid entries, clear error messages for invalid ones. Before any purchase is finalised, show a confirmation screen summarising: ticket numbers, draw date, total price, and payment method with a clear 'Confirm Purchase' button. This reduces payment disputes, support tickets, and accidental purchases.
+                    </div>
+                    <div class="issue-location">Sign-in page, registration form, and purchase flow</div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-severity major">Major</div>
+                        <div class="issue-title-section">
+                            <div class="issue-heuristic">Visibility of system status</div>
+                            <div class="issue-title">Registration stepper doesn't clearly show progress</div>
+                        </div>
+                    </div>
+                    <div class="issue-description">
+                        The Create Account page has a 3-step stepper (Account Details → Verify → Personal Info) but the inactive steps look too similar to the active step — just slightly greyed out numbers. Users can't quickly tell which step they've completed, which they're on, and how many remain. Combined with no back button visible, users feel uncertain about the process and may abandon registration if it feels like it's going to take too long.
+                    </div>
+                    <div class="issue-recommendation">
+                        Redesign the stepper with clear visual differentiation: completed steps get a green checkmark, the current step is highlighted in the brand colour with a filled circle, and future steps are distinctly dimmed. Add a 'Back' link on each step and show estimated time remaining (e.g., 'Step 2 of 3 — about 30 seconds left'). This reduces registration abandonment by setting clear expectations.
+                    </div>
+                    <div class="issue-location">Registration page at /register — top of the form</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Minor Issues Section -->
+        <div class="issues-section">
+            <div class="section-header">
+                <span class="section-header-dot" style="background-color: var(--color-warning);"></span>
+                MINOR ISSUES (4)
+            </div>
+            <div class="issues-grid">
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-severity minor">Minor</div>
+                        <div class="issue-title-section">
+                            <div class="issue-heuristic">Match between system and real world</div>
+                            <div class="issue-title">'Series 285' terminology is confusing for new visitors</div>
+                        </div>
+                    </div>
+                    <div class="issue-description">
+                        The countdown timer on every page references 'Series 285 | 3rd Apr 2026, 7:30 PM' — but nowhere on the site explains what a 'series' means. New visitors, especially international ones, have no context for this lottery-specific terminology. It's insider language that makes new users feel like outsiders rather than welcome participants.
+                    </div>
+                    <div class="issue-recommendation">
+                        Add a brief subtitle or tooltip: 'Series 285 = April 2026 Draw' or 'Draw #285 — 3rd April 2026'. Better yet, replace 'Series' with 'Draw' in the UI entirely, since that's the word regular people use when talking about lottery events. Keep 'Series' in the fine print for official/regulatory purposes.
+                    </div>
+                    <div class="issue-location">Countdown timer on homepage, Winner's Club, and Live Draw pages</div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-severity minor">Minor</div>
+                        <div class="issue-title-section">
+                            <div class="issue-heuristic">Recognition over recall</div>
+                            <div class="issue-title">'Get to Know Us ♥' navigation label is vague</div>
+                        </div>
+                    </div>
+                    <div class="issue-description">
+                        The main navigation includes 'Get to Know Us ♥' which could contain anything — about page, FAQ, terms, contact info, or company history. Users looking for help or information won't instinctively click this because the label doesn't suggest useful content. It's a missed opportunity to surface important information.
+                    </div>
+                    <div class="issue-recommendation">
+                        Rename to something specific like 'About & Help' or split it into 'About' and 'Help' as separate navigation items. If it's a dropdown, show the sub-items on hover so users can see what's inside without clicking. Consider adding 'FAQ' as its own top-level nav item given how important help content is for a money-handling platform.
+                    </div>
+                    <div class="issue-location">Main navigation bar — rightmost item before account buttons</div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-severity minor">Minor</div>
+                        <div class="issue-title-section">
+                            <div class="issue-heuristic">Help users recognise, diagnose, and recover from errors</div>
+                            <div class="issue-title">Password reset link is poorly positioned and easy to miss</div>
+                        </div>
+                    </div>
+                    <div class="issue-description">
+                        The 'Reset my password' link on the sign-in page is right-aligned in small text below the password field. When a user is frustrated because they can't remember their password, they need this link to be immediately obvious. Its current position means many users will miss it entirely and either give up or contact support — both bad outcomes.
+                    </div>
+                    <div class="issue-recommendation">
+                        Move the 'Reset my password' link to a more prominent position — either directly below the password field label (before the input) or as a larger, clearly styled link below the Sign In button. Use the brand blue colour (#2563eb) and make it at least 14px so it's easily tappable on mobile devices.
+                    </div>
+                    <div class="issue-location">Sign-in page — below the password input field</div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-severity minor">Minor</div>
+                        <div class="issue-title-section">
+                            <div class="issue-heuristic">Aesthetic and minimalist design</div>
+                            <div class="issue-title">Orange dashed border on auth forms feels outdated</div>
+                        </div>
+                    </div>
+                    <div class="issue-description">
+                        Both the sign-in and registration forms are wrapped in a prominent orange/gold dashed border that looks like it belongs to a website from 2010. This styling choice clashes with the modern card-based design used elsewhere on the site and undermines the premium, trustworthy feel that a financial platform needs to convey.
+                    </div>
+                    <div class="issue-recommendation">
+                        Replace the dashed border with a subtle card container matching the rest of the site — a clean rounded rectangle with a subtle border or shadow. Use the existing page background colour variations to create depth rather than decorative borders. This small visual change would significantly modernise the authentication experience.
+                    </div>
+                    <div class="issue-location">Sign-in page at /sign-in and registration page at /register</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Priority Actions Section -->
+        <div style="margin-bottom: 32px;">
+            <div class="section-header">PRIORITY ACTIONS</div>
+            <div class="priority-actions">
+                <ul class="priority-list">
+                    <li class="priority-item">
+                        <div class="priority-number">1</div>
+                        <div class="priority-text">Add guest checkout immediately — this is the single highest-impact change. Allow users to purchase tickets with just an email and phone number, and collect additional profile data after payment. Expected impact: 20-30% increase in first-time purchases.</div>
+                    </li>
+                    <li class="priority-item">
+                        <div class="priority-number">2</div>
+                        <div class="priority-text">Create a Help/FAQ section and Responsible Play page — essential for user trust and likely required for regulatory compliance. Cover draw mechanics, prize collection, odds, payment security, and gambling support resources.</div>
+                    </li>
+                    <li class="priority-item">
+                        <div class="priority-number">3</div>
+                        <div class="priority-text">Unify the visual design system — establish one consistent header colour, CTA button hierarchy, and card style across all pages. Remove the orange dashed border on auth forms and the sign-in overlay on the homepage.</div>
+                    </li>
+                    <li class="priority-item">
+                        <div class="priority-number">4</div>
+                        <div class="priority-text">Add inline form validation to all input fields across sign-in, registration, and purchase flows. Show real-time feedback as users type, and add a purchase confirmation screen before processing any payment.</div>
+                    </li>
+                    <li class="priority-item">
+                        <div class="priority-number">5</div>
+                        <div class="priority-text">Add search and filtering capabilities — site-wide search in the navigation, winner filters on the Winner's Club page, and a quick-buy feature for returning customers to reduce repeat purchase friction.</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Strengths Section -->
+        <div style="margin-bottom: 48px;">
+            <div class="section-header">WHAT YOU'RE DOING WELL</div>
+            <div class="strengths-grid">
+                <div class="strength-card">
+                    <div class="strength-text">
+                        <span class="strength-star">★</span>Real winner stories with photos, names, nationalities, and exact prize amounts create powerful social proof that this is a legitimate lottery where real people win life-changing money.
+                    </div>
+                </div>
+                <div class="strength-card">
+                    <div class="strength-text">
+                        <span class="strength-star">★</span>The countdown timer creates genuine urgency by showing exactly when the next draw happens, appearing consistently across multiple pages so users always know the deadline.
+                    </div>
+                </div>
+                <div class="strength-card">
+                    <div class="strength-text">
+                        <span class="strength-star">★</span>Sign In With OTP offers a modern, password-free login option that reduces friction for returning users, especially on mobile devices where typing passwords is painful.
+                    </div>
+                </div>
+                <div class="strength-card">
+                    <div class="strength-text">
+                        <span class="strength-star">★</span>The Dream Car raffle page clearly presents the prize (with car imagery), ticket price, and draw mechanics in a focused layout that's easier to understand than the main lottery page.
+                    </div>
+                </div>
+                <div class="strength-card">
+                    <div class="strength-text">
+                        <span class="strength-star">★</span>Password requirement chips on the registration form show users exactly what's needed upfront rather than surprising them with validation errors after they've already typed.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consultation CTA Section -->
+        <div class="consultation-cta-wrapper">
+            <div class="consultation-cta">
+                <div class="ai-badge">AI</div>
+                <div class="powered-label">Powered audit</div>
+                <h2 class="cta-heading">Want these issues fixed?</h2>
+                <p class="cta-description">Our UX design team specializes in converting visitors into paying customers. We'll fix your critical friction points and have you seeing improvement within weeks.</p>
+                <button class="btn-consultation" onclick="window.location.href='/consultation';">Book a free consultation</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                ruonalim<span class="period">.</span>
+            </div>
+            <div class="footer-info">
+                <a href="/#contact" class="footer-link">Get in touch</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bottom Actions Bar -->
+    <div style="max-width: 900px; margin: 0 auto;">
+        <div class="bottom-actions">
+            <a href="/audit/run" class="action-link">← Run another audit</a>
+            <button class="action-link primary" onclick="shareReport();">Share</button>
+        </div>
+    </div>
+
+    <script>
+        // Print Report
+        function printReport() {
+            window.print();
+        }
+
+        // Share Report
+        function shareReport() {
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'RUONALIM Audit Result - bigticket.ae',
+                    text: 'Check out this UX audit for bigticket.ae',
+                    url: url
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                // Fallback: Copy to clipboard
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('Report link copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            }
+        }
+
+        // Animate score ring on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const circle = document.querySelector('.score-ring-progress');
+            if (circle) {
+                circle.style.animation = 'none';
+                setTimeout(() => {
+                    circle.style.animation = '';
+                }, 10);
+            }
+        });
+    </script>
+</body>
+</html>

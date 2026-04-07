@@ -1,0 +1,249 @@
+{
+  "name": "RUONALIM Outbound Pipeline v2",
+  "nodes": [
+    {
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ruonalim-outbound",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "webhookId": "ruonalim-outbound-v2"
+    },
+    {
+      "id": "run-ux-audit",
+      "name": "Run UX Audit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [260, -200],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.AUDIT_API_URL }}/api/audit",
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "url": "={{ $json.website_url }}"
+        },
+        "options": { "timeout": 60000 }
+      }
+    },
+    {
+      "id": "run-seo-audit",
+      "name": "Run SEO Audit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [260, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.AUDIT_API_URL }}/api/seo",
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "url": "={{ $json.website_url }}"
+        },
+        "options": { "timeout": 60000 }
+      }
+    },
+    {
+      "id": "run-app-audit",
+      "name": "Run App Audit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [260, 200],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.AUDIT_API_URL }}/api/app",
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "url": "={{ $json.website_url }}",
+          "company_name": "={{ $json.company_name }}",
+          "industry": "={{ $json.industry }}"
+        },
+        "options": { "timeout": 60000 }
+      }
+    },
+    {
+      "id": "merge-audits",
+      "name": "Merge Audit Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [560, 0],
+      "parameters": {
+        "jsCode": "// Gather all items from the three audit branches\nconst items = $input.all();\n\n// The webhook trigger data is passed through via the initial node\nconst webhookData = $('Webhook Trigger').first().json;\n\n// Pull results from each branch\nconst uxResult = $('Run UX Audit').first().json;\nconst seoResult = $('Run SEO Audit').first().json;\nconst appResult = $('Run App Audit').first().json;\n\nreturn [{\n  json: {\n    // Prospect info from webhook\n    company_name: webhookData.company_name,\n    website_url: webhookData.website_url,\n    contact_name: webhookData.contact_name,\n    contact_email: webhookData.contact_email,\n    industry: webhookData.industry || '',\n\n    // UX audit\n    ux_score: uxResult.overall_score,\n    ux_grade: uxResult.grade,\n    ux_summary: uxResult.summary,\n    ux_hook: uxResult.email_hook,\n    ux_top_issues: uxResult.top_issues || [],\n\n    // SEO audit\n    seo_score: seoResult.overall_score,\n    seo_grade: seoResult.grade,\n    seo_summary: seoResult.summary,\n    seo_hook: seoResult.email_hook,\n    seo_top_issues: seoResult.top_issues || [],\n\n    // App audit\n    app_has_ios: appResult.has_ios_app,\n    app_has_android: appResult.has_android_app,\n    app_ios_rating: appResult.ios_rating,\n    app_opportunity_score: appResult.opportunity_score,\n    app_opportunity_grade: appResult.opportunity_grade,\n    app_recommendation: appResult.recommendation,\n    app_recommendation_label: appResult.recommendation_label,\n    app_summary: appResult.summary,\n    app_hook: appResult.email_hook,\n    app_rationale: appResult.rationale,\n    competitors_have_apps: appResult.competitors_have_apps\n  }\n}];"
+      }
+    },
+    {
+      "id": "generate-html-concept",
+      "name": "Generate HTML Concept",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [820, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-api-key", "value": "={{ $vars.ANTHROPIC_API_KEY }}" },
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "model": "claude-sonnet-4-20250514",
+          "max_tokens": 3000,
+          "messages": [{
+            "role": "user",
+            "content": "=You are a senior UI designer at RUONALIM, a premium Dubai-based product design agency. Create a single-page HTML concept redesign for {{ $json.company_name }} ({{ $json.website_url }}).\n\nContext:\n- UX Score: {{ $json.ux_score }}/100 ({{ $json.ux_grade }})\n- SEO Score: {{ $json.seo_score }}/100 ({{ $json.seo_grade }})\n- App Opportunity: {{ $json.app_opportunity_grade }} ({{ $json.app_recommendation_label }})\n- Top UX issue: {{ $json.ux_summary }}\n- Top SEO issue: {{ $json.seo_summary }}\n\nCreate a polished HTML hero section concept. Requirements:\n- Dark premium aesthetic (#0A0A0A background, white text, gold or electric blue accent)\n- Syne or Inter font via Google Fonts\n- Clear headline and subheadline addressing their main pain point\n- CTA button\n- Responsive, self-contained single HTML file with inline CSS\n- No external dependencies except Google Fonts\n- 400-600px wide centered card layout\n- Show what the site COULD look like with better design\n\nReturn ONLY the raw HTML. No explanation, no markdown fences."
+          }]
+        },
+        "options": { "timeout": 60000 }
+      }
+    },
+    {
+      "id": "generate-email",
+      "name": "Generate Email Copy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1080, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-api-key", "value": "={{ $vars.ANTHROPIC_API_KEY }}" },
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": {
+          "model": "claude-sonnet-4-20250514",
+          "max_tokens": 1000,
+          "messages": [{
+            "role": "user",
+            "content": "=Write a cold outreach email from Jay Tulloch at RUONALIM to {{ $json.contact_name }} at {{ $json.company_name }}.\n\nAudit results:\n- UX Score: {{ $json.ux_score }}/100 ({{ $json.ux_grade }}) | Hook: {{ $json.ux_hook }}\n- SEO Score: {{ $json.seo_score }}/100 ({{ $json.seo_grade }}) | Hook: {{ $json.seo_hook }}\n- App: {{ $json.app_recommendation_label }} | Hook: {{ $json.app_hook }}\n\nEmail rules:\n- 150 words max\n- Open with the strongest hook across the three audits\n- Reference all three scores naturally in one paragraph (UX, SEO, App)\n- One clear CTA: reply to see the full audit + concept redesign\n- Tone: confident, direct, senior. Not salesy. No exclamation marks. No em-dashes.\n- Sign off: Jay Tulloch / RUONALIM / hello@ruonalim.com\n\nReturn ONLY JSON: {\"subject\": \"...\", \"body\": \"...\"}"
+          }]
+        },
+        "options": { "timeout": 30000 }
+      }
+    },
+    {
+      "id": "assemble-email",
+      "name": "Assemble Final Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 0],
+      "parameters": {
+        "jsCode": "const emailResponse = $('Generate Email Copy').first().json;\nconst data = $('Merge Audit Results').first().json;\nconst htmlResponse = $('Generate HTML Concept').first().json;\n\n// Parse email JSON\nconst textBlock = emailResponse.content?.find(b => b.type === 'text');\nlet emailData = { subject: '', body: '' };\ntry {\n  const clean = textBlock?.text.replace(/```json|```/g, '').trim();\n  emailData = JSON.parse(clean);\n} catch(e) {\n  emailData.subject = 'We audited ' + data.company_name + ' — 3 things to fix first';\n  emailData.body = textBlock?.text || '';\n}\n\n// Extract HTML concept\nconst htmlBlock = htmlResponse.content?.find(b => b.type === 'text');\nconst htmlConcept = htmlBlock?.text || '';\n\n// Build audit scorecard footer\nconst appLine = data.app_has_ios || data.app_has_android\n  ? 'App: ' + (data.app_ios_rating ? data.app_ios_rating + '/5 rating' : 'exists') + ' | Opportunity: ' + data.app_opportunity_grade\n  : 'App: No app detected | Opportunity: ' + data.app_opportunity_grade + ' (' + data.app_recommendation_label + ')';\n\nconst scorecard = [\n  '',\n  '--- RUONALIM AUDIT REPORT ---',\n  'Site: ' + data.website_url,\n  'UX Score: ' + data.ux_score + '/100 (' + data.ux_grade + ') | ' + data.ux_summary,\n  'SEO Score: ' + data.seo_score + '/100 (' + data.seo_grade + ') | ' + data.seo_summary,\n  appLine,\n  '[CONCEPT_LINK - paste hosted HTML URL here]',\n  '---'\n].join('\\n');\n\nconst fullBody = emailData.body + scorecard;\n\nreturn [{\n  json: {\n    ...data,\n    email_subject: emailData.subject,\n    email_body: fullBody,\n    html_concept: htmlConcept\n  }\n}];"
+      }
+    },
+    {
+      "id": "create-gmail-draft",
+      "name": "Create Gmail Draft",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1600, -160],
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_body }}",
+        "options": {
+          "sendTo": "={{ $json.contact_email }}"
+        }
+      }
+    },
+    {
+      "id": "log-to-airtable",
+      "name": "Log to Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [1600, 80],
+      "parameters": {
+        "operation": "create",
+        "base": { "__rl": true, "value": "appVxqNP0UE6whBPD", "mode": "id" },
+        "table": "Outbound Pipeline",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Company": "={{ $('Assemble Final Email').item.json.company_name }}",
+            "Website": "={{ $('Assemble Final Email').item.json.website_url }}",
+            "Contact Name": "={{ $('Assemble Final Email').item.json.contact_name }}",
+            "Contact Email": "={{ $('Assemble Final Email').item.json.contact_email }}",
+            "Industry": "={{ $('Assemble Final Email').item.json.industry }}",
+            "UX Score": "={{ $('Assemble Final Email').item.json.ux_score }}",
+            "UX Grade": "={{ $('Assemble Final Email').item.json.ux_grade }}",
+            "SEO Score": "={{ $('Assemble Final Email').item.json.seo_score }}",
+            "SEO Grade": "={{ $('Assemble Final Email').item.json.seo_grade }}",
+            "App Has iOS": "={{ $('Assemble Final Email').item.json.app_has_ios }}",
+            "App Has Android": "={{ $('Assemble Final Email').item.json.app_has_android }}",
+            "App Opportunity Grade": "={{ $('Assemble Final Email').item.json.app_opportunity_grade }}",
+            "App Recommendation": "={{ $('Assemble Final Email').item.json.app_recommendation_label }}",
+            "Email Subject": "={{ $('Assemble Final Email').item.json.email_subject }}",
+            "Status": "Draft",
+            "Audited At": "={{ new Date().toISOString() }}"
+          }
+        }
+      }
+    },
+    {
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1860, 0],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ status: 'success', company: $('Assemble Final Email').item.json.company_name, ux_score: $('Assemble Final Email').item.json.ux_score, seo_score: $('Assemble Final Email').item.json.seo_score, app_recommendation: $('Assemble Final Email').item.json.app_recommendation, gmail_draft_created: true }) }}"
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [[
+        { "node": "Run UX Audit", "type": "main", "index": 0 },
+        { "node": "Run SEO Audit", "type": "main", "index": 0 },
+        { "node": "Run App Audit", "type": "main", "index": 0 }
+      ]]
+    },
+    "Run UX Audit": {
+      "main": [[{ "node": "Merge Audit Results", "type": "main", "index": 0 }]]
+    },
+    "Run SEO Audit": {
+      "main": [[{ "node": "Merge Audit Results", "type": "main", "index": 1 }]]
+    },
+    "Run App Audit": {
+      "main": [[{ "node": "Merge Audit Results", "type": "main", "index": 2 }]]
+    },
+    "Merge Audit Results": {
+      "main": [[{ "node": "Generate HTML Concept", "type": "main", "index": 0 }]]
+    },
+    "Generate HTML Concept": {
+      "main": [[{ "node": "Generate Email Copy", "type": "main", "index": 0 }]]
+    },
+    "Generate Email Copy": {
+      "main": [[{ "node": "Assemble Final Email", "type": "main", "index": 0 }]]
+    },
+    "Assemble Final Email": {
+      "main": [[
+        { "node": "Create Gmail Draft", "type": "main", "index": 0 },
+        { "node": "Log to Airtable", "type": "main", "index": 0 }
+      ]]
+    },
+    "Create Gmail Draft": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": ["ruonalim", "outbound", "v2"]
+}

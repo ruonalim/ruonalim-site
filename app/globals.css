@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --brand-bg: #ffffff;
+  --brand-text: #111111;
+  --brand-body: #141414;
+  --brand-accent: #0044E4;
+  --brand-accent-bg: #EAF0FF;
+  --brand-border: #E8E8EC;
+  --brand-muted: #767676;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 8px;
+  z-index: 9999;
+  padding: 8px 16px;
+  background: #0044E4;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 0 0 4px 4px;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
+/* Focus visible — override Tailwind's focus:outline-none where needed */
+:focus-visible {
+  outline: 3px solid #0044E4 !important;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid #0044E4 !important;
+  outline-offset: 3px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  background: var(--brand-bg);
+  color: var(--brand-body);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(0, 68, 228, 0.15);
+  color: #111111;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #E8E8EC; border-radius: 3px; }
+
+/* Upload zone */
+.upload-zone {
+  border: 1px dashed #E8E8EC;
+  transition: border-color 0.25s, background 0.25s;
+}
+.upload-zone:hover, .upload-zone.dragover {
+  border-color: var(--brand-accent);
+  background: rgba(0, 68, 228, 0.03);
+}
+
+/* Score ring animation */
+@keyframes score-fill {
+  from { stroke-dashoffset: 314; }
+}
+
+/* Fade in */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.5s ease-out forwards; }
+.fade-up-d1 { animation-delay: 0.1s; opacity: 0; }
+.fade-up-d2 { animation-delay: 0.2s; opacity: 0; }
+.fade-up-d3 { animation-delay: 0.3s; opacity: 0; }
+.fade-up-d4 { animation-delay: 0.4s; opacity: 0; }
+
+/* Pulse */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}

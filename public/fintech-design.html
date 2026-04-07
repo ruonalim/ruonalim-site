@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fintech UX Design Agency | Banking, Crypto & Payments | ruonalim.</title>
+  <meta name="description" content="Specialist fintech UX design for banking apps, crypto platforms, and payment products. Senior designers who've shipped financial products used by millions. Dubai, UK, EMEA." />
+  <link rel="canonical" href="https://ruonalim.com/fintech-design" />
+  <meta property="og:title" content="Fintech UX Design Agency | ruonalim." />
+  <meta property="og:description" content="Senior product designers for banking, crypto, and payments. Platforms used by millions." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ruonalim.com/fintech-design" />
+  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABbklEQVR4nO2WMYoCMRiFv2RE0EE8hBewshEUFGsbW2vBRkHsPIW3EWy9g57CShA0eVssI+vusjuJi+LiK//M5D3+/O8lRpJ4IOwjyV8CXgL+hwBJ3OLkQsjH3nsArLU45wBIkiSaHMDEBJH3Hmvfm3c8HpFEqVSKEpDrCDKN0+mUbreLtZbNZsNgMKBWqzGbzQAuXQmCcsA5J0mq1+sCtFwuBQhQuVzWaDSSJJ3P5zzbXSFIQKfTUbFYVKFQ0Hw+1263036/1+FwCCaOEtDr9QRoMplEE35GkA0zFwyHQ5xznE6n+9owG7JKpUKSJBhjMMZEk0NkEN1K+hFBHfgJ3nskYYy5ZMRdBYSQXv0XSvI5erPBXK/X9Pt9VqvVVf1XhNiw0WgI0Ha7vdSz8Gm32wLUarUk5Q+lXEeQDV2z2SRNU9I0vaoDLBYLqtUq4/H4y9qPe+sWE/8Boq/j79ZiXPDwDjz/k+wl4CXg6QW8AennMZgZQfcHAAAAAElFTkSuQmCC"/>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Fintech UX Design","provider":{"@type":"Organization","name":"ruonalim.","url":"https://ruonalim.com"},"description":"Specialist UX and product design for fintech companies.","serviceType":"Fintech UX Design"}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#FFFFFF;--text:#111111;--body:#141414;--muted:#767676;--border:#E8E8EC;--accent:#0044E4;--tag-bg:#EAF0FF;--tag-text:#0044E4;}
+    .skip-link{position:absolute;top:-100%;left:8px;z-index:9999;padding:8px 16px;background:#0044E4;color:#fff;font-size:14px;font-weight:600;border-radius:0 0 4px 4px;text-decoration:none;}
+    .skip-link:focus{top:0;}
+    :focus-visible{outline:3px solid #0044E4;outline-offset:3px;border-radius:2px;}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.001ms!important;transition-duration:0.001ms!important;}#hero-dots{display:none!important;}}
+    #copy-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(12px);background:#111;color:#fff;font-size:13px;font-weight:500;padding:10px 20px;border-radius:100px;opacity:0;transition:opacity 0.22s,transform 0.22s cubic-bezier(0.16,1,0.3,1);pointer-events:none;z-index:9999;white-space:nowrap;}
+    #copy-toast.visible{opacity:1;transform:translateX(-50%) translateY(0);}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:16px;scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+    body{background:var(--bg);color:var(--body);font-family:'Inter',-apple-system,Helvetica Neue,Arial,sans-serif;font-weight:400;line-height:1.55;overflow-x:hidden;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='%230044E4' stroke-width='1.5' opacity='0.45'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%230044E4' opacity='0.9'/%3E%3C/svg%3E") 12 12,auto;}
+    a,button,[role="button"],[onclick]{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12' fill='none' stroke='%230044E4' stroke-width='1.5' opacity='0.55'/%3E%3Ccircle cx='14' cy='14' r='5' fill='%230044E4' opacity='0.9'/%3E%3C/svg%3E") 14 14,pointer!important;}
+    a{color:inherit;text-decoration:none;}
+    #hero-dots{position:fixed;inset:0;z-index:0;pointer-events:none;}
+    @media(max-width:768px){#hero-dots{display:none;}}
+    #scroll-progress{position:fixed;top:0;left:0;width:0%;height:2px;background:var(--accent);z-index:9999;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+    .nav-inner{max-width:1200px;margin:0 auto;padding:0 56px;height:64px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;}
+    .nav-logo{font-weight:800;font-size:16px;letter-spacing:-0.03em;color:var(--text);}
+    .nav-logo span{color:var(--accent);}
+    .nav-links{list-style:none;display:flex;align-items:center;gap:36px;}
+    .nav-links a{font-size:13px;font-weight:500;color:var(--muted);transition:color 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--text);}
+    .nav-audit{color:var(--accent)!important;font-weight:600!important;padding:6px 14px;border:1px solid rgba(0,68,228,0.3);border-radius:4px;transition:background 0.2s;}
+    .nav-audit:hover{background:var(--tag-bg)!important;}
+    .nav-cta-btn{font-size:13px;font-weight:600;padding:9px 20px;background:var(--text);color:#fff;border-radius:2px;transition:opacity 0.2s;}
+    .nav-cta-btn:hover{opacity:0.75;}
+    .page{padding-top:64px;position:relative;z-index:1;}
+    .lp-hero{padding:100px 56px 80px;max-width:1200px;margin:0 auto;}
+    .lp-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
+    .lp-h1{font-weight:700;font-size:clamp(36px,5vw,64px);letter-spacing:-2px;line-height:0.97;margin-bottom:24px;color:var(--text);}
+    .lp-sub{font-size:17px;color:var(--muted);max-width:580px;line-height:1.65;margin-bottom:40px;}
+    .lp-cta{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--text);color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;border:none;border-radius:2px;transition:opacity 0.2s;}
+    .lp-cta:hover{opacity:0.75;}
+    .lp-section{padding:80px 56px;max-width:1200px;margin:0 auto;border-top:1px solid var(--border);}
+    .lp-section-tag{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
+    .lp-h2{font-weight:700;font-size:clamp(24px,3vw,40px);letter-spacing:-1.2px;line-height:1.05;margin-bottom:24px;color:var(--text);}
+    .lp-prose{font-size:15px;color:var(--muted);line-height:1.75;max-width:680px;}
+    .lp-prose p{margin-bottom:20px;}
+    .lp-prose strong{color:var(--body);font-weight:600;}
+    .lp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;}
+    .lp-card{background:#F7F7F9;border:1px solid var(--border);padding:32px 28px;transition:background 0.2s;}
+    .lp-card:hover{background:#F0F0F4;}
+    .lp-card-title{font-weight:700;font-size:16px;letter-spacing:-0.3px;margin-bottom:10px;color:var(--text);}
+    .lp-card-desc{font-size:14px;color:var(--muted);line-height:1.6;}
+    .lp-stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:48px;}
+    .lp-stat{border-right:1px solid var(--border);padding:32px 40px;}
+    .lp-stat:first-child{padding-left:0;}
+    .lp-stat:last-child{border-right:none;}
+    .lp-stat-num{font-weight:700;font-size:48px;letter-spacing:-2px;line-height:1;color:var(--text);margin-bottom:8px;}
+    .lp-stat-num span{color:var(--accent);}
+    .lp-stat-label{font-size:13px;color:var(--muted);}
+    .lp-brands{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;}
+    .lp-brand{font-size:13px;font-weight:600;color:var(--muted);padding:8px 18px;border:1px solid var(--border);border-radius:100px;}
+    .lp-cta-section{padding:100px 56px;max-width:1200px;margin:0 auto;border-top:1px solid var(--border);}
+    footer{border-top:1px solid var(--border);padding:52px 0;position:relative;z-index:1;}
+    .footer-inner{max-width:1200px;margin:0 auto;padding:0 56px;display:flex;align-items:center;justify-content:space-between;}
+    .footer-logo{font-size:15px;font-weight:800;letter-spacing:-0.03em;color:var(--text);}
+    .footer-logo span{color:var(--accent);}
+    .footer-copy{font-size:12px;color:var(--muted);}
+    @media(max-width:768px){.lp-hero,.lp-section,.lp-cta-section{padding-left:24px;padding-right:24px;}.nav-inner{padding:0 24px;}.lp-grid,.lp-stats{grid-template-columns:1fr;}.lp-stat{border-right:none;border-bottom:1px solid var(--border);padding:24px 0;}.footer-inner{flex-direction:column;gap:16px;text-align:center;padding:0 24px;}}
+    @media(max-width:1024px){.lp-grid{grid-template-columns:repeat(2,1fr);}}
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<canvas id="hero-dots" aria-hidden="true" role="presentation"></canvas>
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="ruonalim – home">ruonalim<span aria-hidden="true">.</span></a>
+    <ul class="nav-links" role="list">
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/writing">Writing</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/audit" class="nav-audit">UX Audit</a></li>
+    </ul>
+    <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="nav-cta-btn">Get in touch</a>
+  </div>
+</nav>
+
+<main id="main-content">
+<div class="page">
+  <div class="lp-hero">
+    <div class="lp-eyebrow">Fintech UX Design</div>
+    <h1 class="lp-h1">Financial products that<br>people actually trust.</h1>
+    <p class="lp-sub">We design banking apps, crypto platforms, and payment products for companies that need senior craft and regulatory awareness from day one. Not a rebrand. Real product design that moves metrics.</p>
+    <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="lp-cta">Start a conversation →</a>
+  </div>
+
+  <div class="lp-section">
+    <div class="lp-section-tag">Why fintech is different</div>
+    <h2 class="lp-h2">Every screen is a trust decision.</h2>
+    <div class="lp-prose">
+      <p>In fintech, a confused user doesn't just bounce. They lose money, trigger compliance flags, or abandon your platform permanently. <strong>The margin for error is zero.</strong></p>
+      <p>We've designed financial products used by millions across banking, crypto, lottery, and super-apps. We know what regulators expect, what users fear, and how to build confidence through interface design.</p>
+    </div>
+  </div>
+
+  <div class="lp-section">
+    <div class="lp-section-tag">What we deliver</div>
+    <h2 class="lp-h2">End-to-end fintech product design.</h2>
+    <div class="lp-grid">
+      <div class="lp-card"><div class="lp-card-title">Banking &amp; Neo-bank UX</div><div class="lp-card-desc">Card activation, transaction flows, balance management, and spend analytics designed for trust and retention.</div></div>
+      <div class="lp-card"><div class="lp-card-title">Crypto &amp; Trading Platforms</div><div class="lp-card-desc">Complex order types, portfolio views, and onboarding flows that convert without overwhelming.</div></div>
+      <div class="lp-card"><div class="lp-card-title">Payment Products</div><div class="lp-card-desc">Checkout flows, recurring payments, and merchant dashboards optimised for speed and conversion.</div></div>
+      <div class="lp-card"><div class="lp-card-title">Regulated Experiences</div><div class="lp-card-desc">KYC, AML, responsible play, and self-exclusion flows that meet compliance without killing the experience.</div></div>
+      <div class="lp-card"><div class="lp-card-title">Design Systems</div><div class="lp-card-desc">Scalable component libraries, tokens, and documentation built for fintech speed and consistency.</div></div>
+      <div class="lp-card"><div class="lp-card-title">Growth &amp; Conversion</div><div class="lp-card-desc">Activation funnels, retention mechanics, and onboarding optimisation backed by real data.</div></div>
+    </div>
+  </div>
+
+  <div class="lp-section">
+    <div class="lp-section-tag">Track record</div>
+    <h2 class="lp-h2">Built by designers who've shipped at scale.</h2>
+    <div class="lp-stats">
+      <div class="lp-stat"><div class="lp-stat-num">14M<span>+</span></div><div class="lp-stat-label">Users across fintech products</div></div>
+      <div class="lp-stat"><div class="lp-stat-num">100<span>%</span></div><div class="lp-stat-label">Client retention</div></div>
+      <div class="lp-stat"><div class="lp-stat-num">20<span>+</span></div><div class="lp-stat-label">Years designing digital experiences</div></div>
+    </div>
+    <div class="lp-brands">
+      <span class="lp-brand">Metro Bank</span>
+      <span class="lp-brand">Top Crypto Exchange</span>
+      <span class="lp-brand">Careem</span>
+      <span class="lp-brand">The Big Ticket</span>
+      <span class="lp-brand">Booking.com</span>
+    </div>
+  </div>
+
+  <div class="lp-cta-section">
+    <h2 class="lp-h2">Your fintech product deserves<br>senior design from day one.</h2>
+    <p class="lp-sub">No juniors, no account managers, no layers. Senior designers embedded directly in your product team.</p>
+    <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="lp-cta">Start a conversation →</a>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo" aria-label="ruonalim – home">ruonalim<span aria-hidden="true">.</span></a>
+    <span class="footer-copy">© 2024 ruonalim. Dubai, UAE.</span>
+  </div>
+</footer>
+
+<script>
+  function copyEmail(e) {
+    e.preventDefault();
+    navigator.clipboard.writeText('hello@ruonalim.com').then(() => {
+      let t = document.getElementById('copy-toast');
+      if (!t) { t = document.createElement('div'); t.id = 'copy-toast'; document.body.appendChild(t); }
+      t.textContent = 'hello@ruonalim.com copied ✓';
+      t.classList.add('visible');
+      clearTimeout(window._tt);
+      window._tt = setTimeout(() => t.classList.remove('visible'), 2200);
+    }).catch(() => { window.location.href = 'mailto:hello@ruonalim.com'; });
+  }
+
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+  }, { passive: true });
+
+  const canvas = document.getElementById('hero-dots');
+  const ctx = canvas.getContext('2d');
+  let dotMouseX = -1000, dotMouseY = -1000, dots = [];
+  const DOT_SPACING = 32, DOT_RADIUS = 1.1, INFLUENCE_R = 180, BULGE = 20;
+  function initDots() {
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight; dots = [];
+    for (let r = 0; r < Math.ceil(canvas.height/DOT_SPACING)+1; r++)
+      for (let c = 0; c < Math.ceil(canvas.width/DOT_SPACING)+1; c++)
+        dots.push({ baseX: c*DOT_SPACING, baseY: r*DOT_SPACING, x: c*DOT_SPACING, y: r*DOT_SPACING });
+  }
+  function drawDots() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const d of dots) {
+      const dx = dotMouseX-d.baseX, dy = dotMouseY-d.baseY, dist = Math.sqrt(dx*dx+dy*dy);
+      let drawX=d.baseX, drawY=d.baseY, alpha=0.07, radius=DOT_RADIUS;
+      if (dist < INFLUENCE_R) { const f=1-dist/INFLUENCE_R, a=Math.atan2(dy,dx); drawX=d.baseX-Math.cos(a)*f*BULGE; drawY=d.baseY-Math.sin(a)*f*BULGE; alpha=0.07+f*0.38; radius=DOT_RADIUS+f*1.5; }
+      d.x+=(drawX-d.x)*0.12; d.y+=(drawY-d.y)*0.12;
+      ctx.beginPath(); ctx.arc(d.x,d.y,radius,0,Math.PI*2); ctx.fillStyle=`rgba(17,17,17,${alpha})`; ctx.fill();
+    }
+    requestAnimationFrame(drawDots);
+  }
+  document.addEventListener('mousemove', e => { dotMouseX=e.clientX; dotMouseY=e.clientY; });
+  document.addEventListener('mouseleave', () => { dotMouseX=-1000; dotMouseY=-1000; });
+  canvas.style.pointerEvents = 'none';
+  if (window.innerWidth > 768) { initDots(); drawDots(); window.addEventListener('resize', initDots); }
+</script>
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perspectives on Design, Product & Growth | ruonalim.</title>
+  <meta name="description" content="Sharp thinking on design leadership, product strategy, and why most digital experiences fall short. From the team at ruonalim." />
+  <link rel="canonical" href="https://ruonalim.com/writing" />
+  <meta property="og:title" content="Perspectives | ruonalim." />
+  <meta property="og:description" content="Sharp thinking on design, product, and the gap between what gets built and what should." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ruonalim.com/writing" />
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAAAIAD8AAAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAAAMNJREFUeJy9krENg1AMRM/8T8UEjELJnnQs8GlYANEjGlpmoAX7UoGC8lEiIXKdbfnpdLaQJG4oubP8HIAkzAyq+hUgv2RAEiISnfn3wsyQJAn6vkcIASKCaZrQNA1EJA7im7ZtI0m2bUvnHKuq4jiONDNeKQoIIbAsy1NfVaMAj4hIIssyqCrMDGmaXuYTvcK6rliWBc45eO9R1zW6rjtyugTsAeV5jqIojt4wDJjn+XB32nnklfdH2mVmH9afdfBXwAuGhszIMpe2iAAAAABJRU5ErkJggg=="/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:       #FFFFFF;
+      --text:     #111111;
+      --body:     #141414;
+      --muted:    #767676;
+      --border:   #E8E8EC;
+      --accent:   #0044E4;
+      --tag-bg:   #EAF0FF;
+      --tag-text: #0044E4;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      background: var(--bg);
+      color: var(--body);
+      font-family: 'Inter', -apple-system, Helvetica Neue, Arial, sans-serif;
+      font-weight: 400;
+      line-height: 1.55;
+      overflow-x: hidden;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='%230044E4' stroke-width='1.5' opacity='0.45'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%230044E4' opacity='0.9'/%3E%3C/svg%3E") 12 12, auto;
+    }
+    a, button, [role="button"], input[type="submit"], select, [onclick] {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12' fill='none' stroke='%230044E4' stroke-width='1.5' opacity='0.55'/%3E%3Ccircle cx='14' cy='14' r='5' fill='%230044E4' opacity='0.9'/%3E%3C/svg%3E") 14 14, pointer !important;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    #hero-dots { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    @media (max-width: 768px) { #hero-dots { display: none; } }
+
+    #scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: var(--accent); z-index: 9999; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 56px;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 1;
+    }
+    .nav-logo { font-weight: 800; font-size: 16px; letter-spacing: -0.03em; color: var(--text); }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 36px; }
+    .nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-audit { color: var(--accent) !important; font-weight: 600 !important; padding: 6px 14px; border: 1px solid rgba(0,68,228,0.3); border-radius: 4px; transition: background 0.2s; }
+    .nav-audit:hover { background: var(--tag-bg) !important; border-color: var(--accent) !important; }
+    .nav-cta-btn { font-size: 13px; font-weight: 600; padding: 9px 20px; background: var(--text); color: #fff; border-radius: 2px; transition: opacity 0.2s; }
+    .nav-cta-btn:hover { opacity: 0.75; }
+
+    /* PAGE */
+    .page-wrap { padding-top: 64px; min-height: 100vh; position: relative; z-index: 1; }
+
+    /* HEADER */
+    .writing-header {
+      padding: 80px 56px 60px;
+      border-bottom: 1px solid var(--border);
+      max-width: 1200px; margin: 0 auto;
+    }
+    .writing-eyebrow {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px;
+    }
+    .writing-title {
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 64px);
+      letter-spacing: -2px; line-height: 0.97;
+      color: var(--text); margin-bottom: 16px;
+    }
+    .writing-sub { font-size: 16px; color: var(--muted); max-width: 480px; line-height: 1.6; }
+
+    /* GRID */
+    .writing-grid {
+      max-width: 1200px; margin: 0 auto;
+      padding: 60px 56px 120px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    @media (max-width: 1024px) { .writing-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px)  { .writing-grid { grid-template-columns: 1fr; padding: 40px 20px 80px; } }
+    @media (max-width: 768px)  { .writing-header { padding: 60px 24px 40px; } }
+
+    /* CARD */
+    .post-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 36px 32px;
+      display: flex; flex-direction: column; gap: 16px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .post-card:hover { background: #F7F7F9; border-color: var(--accent); }
+    .post-meta { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+    .post-topic { color: var(--accent); }
+    .post-date { color: var(--muted); }
+    .post-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
+    .post-title { font-weight: 700; font-size: 18px; letter-spacing: -0.4px; line-height: 1.2; color: var(--text); }
+    .post-excerpt { font-size: 14px; color: var(--muted); line-height: 1.65; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .post-read {
+      margin-top: auto; padding-top: 8px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent); display: flex; align-items: center; gap: 6px;
+    }
+    .post-read svg { width: 12px; height: 12px; transition: transform 0.2s; }
+    .post-card:hover .post-read svg { transform: translateX(3px); }
+
+    /* STATES */
+    .state-wrap { max-width: 1200px; margin: 0 auto; padding: 80px 56px; display: flex; flex-direction: column; gap: 12px; }
+    .state-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .state-msg { font-weight: 700; font-size: 24px; letter-spacing: -0.5px; color: var(--text); }
+
+    /* ARTICLE OVERLAY */
+    .article-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: var(--bg);
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.45s var(--ease-out);
+    }
+    .article-overlay.open { transform: translateY(0); }
+    .article-inner { max-width: 720px; margin: 0 auto; padding: 40px 40px 120px; }
+    @media (max-width: 768px) { .article-inner { padding: 24px 20px 80px; } }
+    .article-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); background: none; border: none;
+      font-family: inherit; margin-bottom: 48px; transition: color 0.2s;
+    }
+    .article-back:hover { color: var(--text); }
+    .article-back svg { width: 12px; height: 12px; }
+    .article-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; }
+    .article-topic { color: var(--accent); }
+    .article-date  { color: var(--muted); }
+    .article-title {
+      font-weight: 700; font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -1.5px; line-height: 1.05; color: var(--text);
+      margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border);
+    }
+    .share-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 48px; }
+    .share-bar span { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+    .share-btn { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 50%; background: none; color: var(--muted); transition: color 0.2s, border-color 0.2s, background 0.2s; }
+    .share-btn:hover { color: var(--text); border-color: var(--text); }
+    .share-btn svg { width: 14px; height: 14px; }
+    .share-btn.copied { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .article-body { font-size: 17px; line-height: 1.8; color: var(--body); }
+    .article-body p { margin-bottom: 24px; }
+    .article-body h2 { font-weight: 700; font-size: 22px; letter-spacing: -0.5px; line-height: 1.2; margin: 40px 0 16px; color: var(--text); }
+    .article-body h3 { font-weight: 700; font-size: 18px; letter-spacing: -0.3px; margin: 32px 0 12px; color: var(--text); }
+    .article-body strong { font-weight: 700; color: var(--text); }
+    .article-body em { color: var(--muted); }
+    .article-body ul, .article-body ol { padding-left: 24px; margin-bottom: 24px; }
+    .article-body li { margin-bottom: 8px; }
+    .article-body blockquote { border-left: 2px solid var(--accent); padding-left: 20px; margin: 32px 0; color: var(--muted); font-style: italic; }
+
+    /* ARTICLE NAV — sticky bottom of overlay, never overlaps content */
+    .article-nav {
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      padding: 14px 40px;
+      z-index: 10;
+    }
+    @media (max-width: 768px) { .article-nav { padding: 12px 20px; } }
+    .article-nav-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: none;
+      border: none;
+      padding: 8px 0;
+      font-family: inherit;
+      text-align: left;
+      cursor: inherit;
+      max-width: 42%;
+    }
+    .article-nav-btn:disabled { opacity: 0.3; pointer-events: none; }
+    .article-nav-btn.nav-next { text-align: right; }
+    .article-nav-btn:hover:not(:disabled) .article-nav-title { color: var(--accent); }
+    .article-nav-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #555555; /* 7.4:1 on white — passes WCAG AAA */
+      display: flex; align-items: center; gap: 5px;
+    }
+    .article-nav-btn.nav-next .article-nav-label { justify-content: flex-end; }
+    .article-nav-label svg { width: 10px; height: 10px; flex-shrink: 0; }
+    .article-nav-title {
+      font-size: 13px; font-weight: 600;
+      letter-spacing: -0.2px; line-height: 1.25;
+      color: #111111; /* 21:1 — passes WCAG AAA */ transition: color 0.2s;
+      display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .article-nav-back {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      background: none; border: none; font-family: inherit;
+      cursor: inherit; padding: 8px 16px; flex-shrink: 0;
+    }
+    .article-nav-back:hover .article-nav-back-label { color: var(--text); }
+    .article-nav-back-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #555555; transition: color 0.2s;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .article-nav-back-label svg { width: 10px; height: 10px; }
+    @media (max-width: 480px) { .article-nav-back span.back-label-text { display: none; } }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 52px 0; position: relative; z-index: 1; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 56px; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 15px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
+    .footer-logo span { color: var(--accent); }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 12px; color: var(--muted); }
+    @media (max-width: 640px) { .footer-inner { flex-direction: column; gap: 16px; text-align: center; } }
+
+    /* SKELETON */
+    @keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+    .skeleton {
+      background: linear-gradient(90deg, #F7F7F9 25%, var(--border) 50%, #F7F7F9 75%);
+      background-size: 800px 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 2px;
+    }
+    .sk-card { border: 1px solid var(--border); padding: 36px 32px; display: flex; flex-direction: column; gap: 16px; }
+    .sk-tag  { height: 10px; width: 80px; }
+    .sk-h    { height: 20px; width: 90%; }
+    .sk-h2   { height: 20px; width: 70%; }
+    .sk-p    { height: 12px; width: 100%; }
+    .sk-p2   { height: 12px; width: 85%; }
+    .sk-p3   { height: 12px; width: 60%; }
+    .skip-link { position: absolute; top: -100%; left: 8px; z-index: 9999; padding: 8px 16px; background: #0044E4; color: #fff; font-size: 14px; font-weight: 600; border-radius: 0 0 4px 4px; text-decoration: none; }
+    .skip-link:focus { top: 0; }
+    :focus-visible { outline: 3px solid #0044E4; outline-offset: 3px; border-radius: 2px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; } #hero-dots { display: none !important; } }
+    #copy-toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(12px); background: #111; color: #fff; font-size: 13px; font-weight: 500; padding: 10px 20px; border-radius: 100px; opacity: 0; transition: opacity 0.22s, transform 0.22s cubic-bezier(0.16,1,0.3,1); pointer-events: none; z-index: 9999; white-space: nowrap; }
+    #copy-toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<canvas id="hero-dots" aria-hidden="true" role="presentation"></canvas>
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<!-- NAV -->
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="ruonalim – home">ruonalim<span aria-hidden="true">.</span></a>
+    <ul class="nav-links" role="list">
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/writing" class="active" aria-current="page">Writing</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/audit" class="nav-audit">UX Audit</a></li>
+    </ul>
+    <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="nav-cta-btn">Get in touch</a>
+  </div>
+</nav>
+
+<main id="main-content">
+<div class="page-wrap">
+  <div class="writing-header">
+    <div class="writing-eyebrow" aria-hidden="true">Perspectives</div>
+    <h1 class="writing-title">Things worth saying.</h1>
+    <p class="writing-sub">Sharp thinking on design, product, and the gap between what gets built and what should.</p>
+  </div>
+  <div class="writing-grid" id="writing-grid">
+    <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-h2"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div><div class="skeleton sk-p3"></div></div>
+    <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div><div class="skeleton sk-p3"></div></div>
+    <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-h2"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div></div>
+  </div>
+</div>
+
+<!-- ARTICLE OVERLAY -->
+<div class="article-overlay" id="article-overlay">
+  <div class="article-inner">
+    <button class="article-back" id="article-back">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2L3 6l4 4"/></svg>
+      All posts
+    </button>
+    <div class="article-meta">
+      <span class="article-topic" id="art-topic"></span>
+      <div class="post-dot"></div>
+      <span class="article-date" id="art-date"></span>
+    </div>
+    <h1 class="article-title" id="art-title"></h1>
+    <div class="share-bar" id="share-bar">
+      <span>Share</span>
+      <button class="share-btn" id="share-linkedin" aria-label="Share on LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </button>
+      <button class="share-btn" id="share-x" aria-label="Share on X">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </button>
+      <button class="share-btn" id="share-copy" aria-label="Copy link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </button>
+    </div>
+    <div class="article-body" id="art-body"></div>
+  </div>
+
+  <nav class="article-nav" aria-label="Article navigation">
+    <button class="article-nav-btn nav-prev" id="art-prev" aria-label="Previous article">
+      <span class="article-nav-label">
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg>
+        Previous
+      </span>
+      <span class="article-nav-title" id="art-prev-title"></span>
+    </button>
+    <button class="article-nav-back" id="art-back-all" aria-label="Back to all articles">
+      <span class="article-nav-back-label">
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 2v6M2 5l3-3 3 3"/></svg>
+        <span class="back-label-text">All articles</span>
+      </span>
+    </button>
+    <button class="article-nav-btn nav-next" id="art-next" aria-label="Next article">
+      <span class="article-nav-label">
+        Next
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2l3 3-3 3"/></svg>
+      </span>
+      <span class="article-nav-title" id="art-next-title"></span>
+    </button>
+  </nav>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo" aria-label="ruonalim – home">ruonalim<span aria-hidden="true">.</span></a>
+    <nav aria-label="Footer navigation">
+      <div class="footer-links">
+        <a href="/#services">Services</a>
+        <a href="/#work">Work</a>
+        <a href="/audit">UX Audit</a>
+        <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)">hello@ruonalim.com</a>
+      </div>
+    </nav>
+    <span class="footer-copy">© <span id="yr"></span> ruonalim. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  function copyEmail(e) {
+    e.preventDefault();
+    navigator.clipboard.writeText('hello@ruonalim.com').then(() => {
+      let t = document.getElementById('copy-toast');
+      if (!t) { t = document.createElement('div'); t.id = 'copy-toast'; document.body.appendChild(t); }
+      t.textContent = 'hello@ruonalim.com copied ✓';
+      t.classList.add('visible');
+      clearTimeout(window._tt);
+      window._tt = setTimeout(() => t.classList.remove('visible'), 2200);
+    }).catch(() => { window.location.href = 'mailto:hello@ruonalim.com'; });
+  }
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ── SCROLL PROGRESS ── */
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+  }, { passive: true });
+
+  /* ── DOT MATRIX ── */
+  const canvas = document.getElementById('hero-dots');
+  const ctx = canvas.getContext('2d');
+  let dotMouseX = -1000, dotMouseY = -1000, dots = [];
+  const DOT_SPACING = 32, DOT_RADIUS = 1.1, INFLUENCE_R = 180, BULGE = 20;
+  function initDots() {
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight; dots = [];
+    const cols = Math.ceil(canvas.width / DOT_SPACING) + 1;
+    const rows = Math.ceil(canvas.height / DOT_SPACING) + 1;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++)
+      dots.push({ baseX: c * DOT_SPACING, baseY: r * DOT_SPACING, x: c * DOT_SPACING, y: r * DOT_SPACING });
+  }
+  function drawDots() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const d of dots) {
+      const dx = dotMouseX - d.baseX, dy = dotMouseY - d.baseY;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      let drawX = d.baseX, drawY = d.baseY, alpha = 0.07, radius = DOT_RADIUS;
+      if (dist < INFLUENCE_R) {
+        const force = 1 - dist / INFLUENCE_R, angle = Math.atan2(dy, dx);
+        drawX = d.baseX - Math.cos(angle) * force * BULGE;
+        drawY = d.baseY - Math.sin(angle) * force * BULGE;
+        alpha = 0.07 + force * 0.38; radius = DOT_RADIUS + force * 1.5;
+      }
+      d.x += (drawX - d.x) * 0.12; d.y += (drawY - d.y) * 0.12;
+      ctx.beginPath(); ctx.arc(d.x, d.y, radius, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(17,17,17,${alpha})`; ctx.fill();
+    }
+    requestAnimationFrame(drawDots);
+  }
+  document.addEventListener('mousemove', e => { dotMouseX = e.clientX; dotMouseY = e.clientY; });
+  document.addEventListener('mouseleave', () => { dotMouseX = -1000; dotMouseY = -1000; });
+  canvas.style.pointerEvents = 'none';
+  if (window.innerWidth > 768) { initDots(); drawDots(); window.addEventListener('resize', initDots); }
+
+  /* ── ARTICLE SYSTEM ── */
+  const overlay  = document.getElementById('article-overlay');
+  const backBtn  = document.getElementById('article-back');
+  const artTitle = document.getElementById('art-title');
+  const artTopic = document.getElementById('art-topic');
+  const artDate  = document.getElementById('art-date');
+  const artBody  = document.getElementById('art-body');
+  const artPrev  = document.getElementById('art-prev');
+  const artNext  = document.getElementById('art-next');
+  const artPrevTitle = document.getElementById('art-prev-title');
+  const artNextTitle = document.getElementById('art-next-title');
+
+  let allPosts = [];
+  let currentIndex = -1;
+
+  function fmtDate(d) {
+    if (!d) return '';
+    return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function renderBody(text) {
+    if (!text) return '';
+    return text.split('\n').map(line => {
+      if (line.startsWith('## ')) return `<h2>${line.slice(3)}</h2>`;
+      if (line.startsWith('### ')) return `<h3>${line.slice(4)}</h3>`;
+      if (line.startsWith('# ')) return `<h2>${line.slice(2)}</h2>`;
+      if (line.startsWith('> ')) return `<blockquote>${line.slice(2)}</blockquote>`;
+      if (line.trim() === '') return '';
+      return `<p>${line}</p>`;
+    }).join('');
+  }
+
+  document.getElementById('share-linkedin').addEventListener('click', () => {
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=500');
+  });
+  document.getElementById('share-x').addEventListener('click', () => {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(artTitle.textContent + ' — ruonalim.');
+    window.open(`https://x.com/intent/tweet?text=${text}&url=${url}`, '_blank', 'width=600,height=400');
+  });
+  document.getElementById('share-copy').addEventListener('click', () => {
+    const btn = document.getElementById('share-copy');
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 1500);
+    });
+  });
+
+  function updateNav() {
+    const prev = allPosts[currentIndex - 1];
+    const next = allPosts[currentIndex + 1];
+    artPrev.disabled = !prev;
+    artNext.disabled = !next;
+    artPrevTitle.textContent = prev ? prev.title : '';
+    artNextTitle.textContent = next ? next.title : '';
+  }
+
+  function openArticle(post, index) {
+    currentIndex = index !== undefined ? index : allPosts.findIndex(p => p.id === post.id);
+    artTitle.textContent = post.title;
+    artTopic.textContent = post.topic;
+    artDate.textContent  = fmtDate(post.date);
+    artBody.innerHTML    = renderBody(post.body);
+    updateNav();
+    overlay.classList.add('open');
+    overlay.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+    history.pushState({ postId: post.id }, '', `?post=${post.id}`);
+  }
+
+  function closeArticle() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    history.pushState({}, '', '/writing');
+  }
+
+  artPrev.addEventListener('click', () => {
+    if (currentIndex > 0) openArticle(allPosts[currentIndex - 1], currentIndex - 1);
+  });
+  artNext.addEventListener('click', () => {
+    if (currentIndex < allPosts.length - 1) openArticle(allPosts[currentIndex + 1], currentIndex + 1);
+  });
+
+  document.getElementById('art-back-all').addEventListener('click', closeArticle);
+  backBtn.addEventListener('click', closeArticle);
+  overlay.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeArticle();
+    if (e.key === 'ArrowLeft') artPrev.click();
+    if (e.key === 'ArrowRight') artNext.click();
+  });
+
+  function renderGrid(posts) {
+    const grid = document.getElementById('writing-grid');
+    if (!posts.length) {
+      grid.innerHTML = '<div class="state-wrap"><div class="state-label">Coming soon</div><div class="state-msg">No posts published yet.</div></div>';
+      return;
+    }
+    grid.innerHTML = posts.map((post, i) => `
+      <div class="post-card" data-index="${i}">
+        <div class="post-meta">
+          ${post.topic ? `<span class="post-topic">${post.topic}</span><div class="post-dot"></div>` : ''}
+          <span class="post-date">${fmtDate(post.date)}</span>
+        </div>
+        <div class="post-title">${post.title}</div>
+        ${post.body ? `<div class="post-excerpt">${post.body.slice(0, 200).replace(/[#>]/g, '')}</div>` : ''}
+        <div class="post-read">Read <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
+      </div>
+    `).join('');
+    grid.querySelectorAll('.post-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const i = parseInt(card.dataset.index);
+        openArticle(posts[i], i);
+      });
+    });
+  }
+
+  async function loadPosts() {
+    try {
+      const res = await fetch('/posts.json');
+      if (!res.ok) throw new Error(`${res.status}`);
+      allPosts = await res.json();
+      renderGrid(allPosts);
+      const pid = new URLSearchParams(location.search).get('post');
+      if (pid) { const post = allPosts.find(p => p.id === pid); if (post) openArticle(post); }
+    } catch(e) {
+      document.getElementById('writing-grid').innerHTML = '<div class="state-wrap"><div class="state-label">Error</div><div class="state-msg">Couldn\'t load posts.</div></div>';
+    }
+  }
+  loadPosts();
+</script>
+</body>
+</html>
