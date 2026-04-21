@@ -1,0 +1,32 @@
+# robots.txt for ruonalim.com
+# Last updated: 2026-04-19
+
+User-agent: *
+Allow: /
+
+# Block internal API and admin surfaces
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Explicit allow for key crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# AI overview / discovery bots
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://ruonalim.com/sitemap.xml
