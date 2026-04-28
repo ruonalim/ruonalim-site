@@ -1154,6 +1154,27 @@
       box-shadow: 0 16px 48px rgba(0,0,0,0.07);
     }
 
+    /* Founder section */
+    .founder-section {
+      padding: 96px 0;
+      border-top: 1px solid var(--border);
+    }
+    .founder-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .founder-body {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--body);
+      margin-bottom: 20px;
+    }
+    @media (max-width: 900px) {
+      .founder-inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+
     /* Edge pills pop */
     .edge-pill {
       transition: border-color 0.2s, color 0.2s, transform 0.25s;
@@ -1206,7 +1227,6 @@
     <a href="/" class="nav-logo" aria-label="ruonalim – home">ruonalim<span aria-hidden="true">.</span></a>
     <ul class="nav-links" role="list">
       <li><a href="#services">Services</a></li>
-      <li><a href="#work">Work</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="/writing">Writing</a></li>
       <li><a href="/audit" class="nav-audit">UX Audit</a></li>
@@ -1340,8 +1360,8 @@
       </div>
       <div class="service-row" id="service-ai" data-anim="fade-up" data-delay="3">
         <span class="service-num">03</span>
-        <div class="service-title">AI Automation Workflows</div>
-        <p class="service-desc">Identify and automate the manual work slowing your business down. AI-powered systems that save time, reduce errors, and scale operations.</p>
+        <div class="service-title">AI-Powered Product Design</div>
+        <p class="service-desc">AI embedded into every phase of design — faster research synthesis, smarter prototyping, LLM-integrated product experiences, and AI-native UX thinking from day one.</p>
         <div class="service-tag"><span class="tag">AI</span></div>
       </div>
       <div class="service-row" id="service-plg" data-anim="fade-up" data-delay="4">
@@ -1361,68 +1381,6 @@
 </section>
 
 
-<!-- ─── WORK ─── -->
-<section class="work" id="work">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <div class="label" style="margin-bottom:14px;">Selected work</div>
-        <h2 class="display-md">The <em>real work.</em></h2>
-      </div>
-      <p style="font-size:13px;color:var(--muted);max-width:260px;text-align:right;line-height:1.5;">Every project shipped. Every client retained. More available on request.</p>
-    </div>
-    <div class="work-list">
-      <div class="work-list-row" data-anim="fade-up">
-        <span class="work-list-num">01</span>
-        <span class="work-list-name">Kraken</span>
-        <div class="work-list-tags">
-          <span class="tag">0-1</span>
-          <span class="tag">Neobank</span>
-          <span class="tag">App</span>
-          <span class="tag">Brand</span>
-          <span class="tag">Fintech</span>
-          <span class="tag">Loyalty</span>
-          <span class="tag">Crypto</span>
-        </div>
-        <span class="work-list-soon">Case study coming</span>
-      </div>
-      <div class="work-list-row" data-anim="fade-up" data-delay="1">
-        <span class="work-list-num">02</span>
-        <span class="work-list-name">The Big Ticket UAE</span>
-        <div class="work-list-tags">
-          <span class="tag">Mobile</span>
-          <span class="tag">Web</span>
-          <span class="tag">Design Systems</span>
-        </div>
-        <span class="work-list-soon">Case study coming</span>
-      </div>
-      <div class="work-list-row" data-anim="fade-up" data-delay="2">
-        <span class="work-list-num">03</span>
-        <span class="work-list-name">Tania's Tea House</span>
-        <div class="work-list-tags">
-          <span class="tag">Digital</span>
-          <span class="tag">Brand</span>
-          <span class="tag">Online Delivery</span>
-          <span class="tag">Digital Menu</span>
-        </div>
-        <span class="work-list-soon">Case study coming</span>
-      </div>
-      <div class="work-list-row" data-anim="fade-up" data-delay="3">
-        <span class="work-list-num">04</span>
-        <span class="work-list-name">Badibanga</span>
-        <div class="work-list-tags">
-          <span class="tag">Fashion</span>
-          <span class="tag">Brand</span>
-        </div>
-        <span class="work-list-soon">Case study coming</span>
-      </div>
-    </div>
-    <div class="work-footer">
-      <p class="work-note">All projects under NDA where required.</p>
-      <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-ghost">Request full portfolio →</a>
-    </div>
-  </div>
-</section>
 
 
 <!-- ─── AUDIT BAND ─── -->
@@ -1493,7 +1451,26 @@
           <span class="edge-pill">E-commerce</span>
           <span class="edge-pill">Design Systems</span>
           <span class="edge-pill">Regulated UX</span>
+          <span class="edge-pill">Selective about who we work with</span>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── FOUNDER ─── -->
+<section class="founder-section" id="founder" data-anim="fade-up">
+  <div class="container">
+    <div class="founder-inner">
+      <div class="founder-left">
+        <div class="label" style="margin-bottom:18px;">The person behind the work</div>
+        <h2 class="display-md">Led by someone<br>who's <em>done it.</em></h2>
+      </div>
+      <div class="founder-right">
+        <p class="founder-body">Ruonalim is led by <strong><a href="https://jaytulloch.com" target="_blank" rel="noopener noreferrer" style="color:var(--text);text-decoration:underline;text-underline-offset:3px;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Jay Tulloch</a></strong> — a product design leader with 16 years across fintech, crypto, super-apps and regulated products. He's built and scaled design teams at Careem (70M+ users), Metro Bank, Kraken, and Almosafer.</p>
+        <p class="founder-body">When you work with Ruonalim, you get that level of thinking directly applied to your product.</p>
+        <a href="https://jaytulloch.com" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="margin-top:8px;">View Jay's work →</a>
       </div>
     </div>
   </div>
@@ -1505,7 +1482,6 @@
   <div class="container">
     <div class="big-cta-inner">
       <div data-anim="fade-up">
-        <div class="label" style="margin-bottom:24px;">We're selective. When we take you on, you get our full focus.</div>
         <h2 class="big-cta-heading">Let's build<br><em>something ambitious.</em></h2>
       </div>
       <div class="big-cta-right" data-anim="fade-up" data-delay="2">
@@ -1581,7 +1557,6 @@
     <nav aria-label="Footer navigation">
       <div class="footer-links">
         <a href="#services">Services</a>
-        <a href="#work">Work</a>
         <a href="#faq">FAQ</a>
         <a href="/audit">UX Audit</a>
         <a href="/writing">Writing</a>
@@ -1666,7 +1641,7 @@
   const saResults = {
     website:    { tag: "Website & App Design",       heading: "You need to go from zero to credible — fast.",          body: "You have conviction but no product yet. We'll validate the concept, design the core flows, and ship something that looks and feels like a serious product — in weeks, not months.",                                                       href: "#service-website",    cta: "See Website & App Design →" },
     seo:        { tag: "SEO Optimisation",           heading: "You're building in the dark without discoverability.",   body: "Great design means nothing if no one finds you. We bake SEO into the build from day one — technical foundations, on-page structure, and content architecture that compounds over time.",                                              href: "#service-seo",        cta: "See SEO Optimisation →" },
-    ai:         { tag: "AI Automation Workflows",    heading: "Your team needs leverage, not more headcount.",          body: "You're not short on people — you're short on time. We design and build AI-powered workflows that remove the repetitive work and let your team focus on what actually moves the needle.",                                              href: "#service-ai",         cta: "See AI Automation →" },
+    ai:         { tag: "AI-Powered Product Design",   heading: "Your team needs leverage, not more headcount.",          body: "You're not short on people — you're short on time. We embed AI into every phase of design: faster research, smarter prototyping, LLM-native experiences, and AI product thinking from day one.",                                    href: "#service-ai",         cta: "See AI-Powered Design →" },
     plg:        { tag: "Product-Led Growth Design",  heading: "Your product is leaking — and you know it.",            body: "You have users but the numbers aren't moving. We'll audit your flows, identify the drop-off points, and redesign the experience to turn browsers into buyers.",                                                                      href: "#service-plg",        cta: "See PLG Design →" },
     fractional: { tag: "Fractional Design Leadership", heading: "You need senior design thinking at the top.",         body: "Your team has talent but lacks direction. We embed at leadership level — setting design standards, mentoring the team, and making sure quality matches your vision.",                                                                 href: "/fractional-design-leadership", cta: "Explore Design Leadership →" }
   };
@@ -1924,7 +1899,6 @@
   (function() {
     const sections = [
       { id: 'services', selector: 'a[href="#services"]' },
-      { id: 'work',     selector: 'a[href="#work"]' },
       { id: 'about',    selector: 'a[href="#about"]' },
       { id: 'faq',      selector: 'a[href="#faq"]' }
     ];
