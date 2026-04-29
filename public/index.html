@@ -825,32 +825,39 @@
     }
     .service-row--flagship .service-num { color: var(--accent); }
 
-    /* Full-row shimmer sweep — plays once on scroll entry */
-    .service-row--flagship::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 55%;
-      height: 100%;
-      pointer-events: none;
+    /* Row background pulse — whole section lights up */
+    .service-row--flagship.shimmer-play {
+      animation: row-bg-pulse 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    @keyframes row-bg-pulse {
+      0%   { background: transparent; }
+      20%  { background: rgba(0, 68, 228, 0.05); }
+      60%  { background: rgba(0, 68, 228, 0.05); }
+      100% { background: transparent; }
+    }
+
+    /* Title text gradient sweep */
+    .service-row--flagship .service-title {
       background: linear-gradient(
-        105deg,
-        transparent 0%,
-        rgba(0, 68, 228, 0.04) 25%,
-        rgba(0, 68, 228, 0.10) 50%,
-        rgba(0, 68, 228, 0.04) 75%,
-        transparent 100%
+        90deg,
+        var(--text) 0%,
+        var(--text) 30%,
+        #0044E4 50%,
+        var(--text) 70%,
+        var(--text) 100%
       );
-      transform: translateX(-200%);
-      will-change: transform;
+      background-size: 250% 100%;
+      background-position: 100% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .service-row--flagship.shimmer-play::after {
-      animation: row-shimmer 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    .service-row--flagship.shimmer-play .service-title {
+      animation: title-sweep 1.6s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
     }
-    @keyframes row-shimmer {
-      0%   { transform: translateX(-200%); }
-      100% { transform: translateX(320%); }
+    @keyframes title-sweep {
+      0%   { background-position: 100% 0; }
+      100% { background-position: -20% 0; }
     }
 
     /* ─────────────────────────────────────────────
