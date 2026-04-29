@@ -2739,11 +2739,36 @@
       p.addEventListener('mouseenter', function() {
         if (!p.classList.contains('active')) activate(i);
       });
-      // Mobile: tap to expand
+      // Mobile: tap collapsed panel to expand
       p.addEventListener('click', function() {
         if (!p.classList.contains('active')) activate(i);
       });
     });
+
+    // Mobile swipe: left = next, right = prev
+    var touchStartX = 0;
+    var touchStartY = 0;
+    acc.addEventListener('touchstart', function(e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    acc.addEventListener('touchend', function(e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      // Only act on horizontal swipes (dx dominant, > 40px threshold)
+      if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+      var currentIdx = panels.findIndex(function(p) { return p.classList.contains('active'); });
+      if (dx < 0) {
+        // Swipe left → next
+        var next = (currentIdx + 1) % panels.length;
+        activate(next);
+      } else {
+        // Swipe right → prev
+        var prev = (currentIdx - 1 + panels.length) % panels.length;
+        activate(prev);
+      }
+    }, { passive: true });
   })();
 
 
