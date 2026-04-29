@@ -374,20 +374,21 @@
     /* ─────────────────────────────────────────────
        NAV
     ───────────────────────────────────────────── */
+    /* ─── NAV: transparent on hero, white on scroll ─── */
     .site-nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 500;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      background: transparent;
+      border-bottom: 1px solid transparent;
       transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     }
     .site-nav.nav--scrolled {
-      background: rgba(255,255,255,0.95);
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
       box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-      border-bottom: 1px solid rgba(0,0,0,0.10);
     }
     .nav-inner {
       max-width: 1200px;
@@ -400,53 +401,41 @@
       position: relative;
       z-index: 1;
     }
-    .nav-logo {
-      font-weight: 800;
-      font-size: 16px;
-      letter-spacing: -0.03em;
-      color: #050508;
-    }
-    .nav-logo span { color: rgba(0,0,0,0.35); }
+    /* default (hero) = white text */
+    .nav-logo { font-weight: 800; font-size: 16px; letter-spacing: -0.03em; color: #ffffff; transition: color 0.4s; }
+    .nav-logo span { color: rgba(255,255,255,0.5); transition: color 0.4s; }
     .nav-links { list-style: none; display: flex; align-items: center; gap: 36px; margin-left: auto; }
-    .nav-links a {
-      font-size: 13px;
-      font-weight: 500;
-      color: rgba(0,0,0,0.50);
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: rgba(0,0,0,0.85); }
-    .nav-links a.nav-active { color: #050508; font-weight: 600; }
+    .nav-links a { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.65); transition: color 0.4s; }
+    .nav-links a:hover { color: #ffffff; }
+    .nav-links a.nav-active { color: #ffffff; font-weight: 600; }
     .nav-audit {
-      display: inline-flex;
-      align-items: center;
-      line-height: 1;
-      color: rgba(0,0,0,0.70) !important;
-      font-size: 13px;
-      font-weight: 600 !important;
+      display: inline-flex; align-items: center; line-height: 1;
+      color: rgba(255,255,255,0.80) !important;
+      font-size: 13px; font-weight: 600 !important;
       padding: 8px 18px;
-      border: 1px solid rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.30);
       border-radius: 4px;
-      transition: background 0.2s, border-color 0.2s;
+      transition: background 0.2s, border-color 0.2s, color 0.4s;
     }
-    .nav-audit:hover {
-      background: rgba(0,0,0,0.05) !important;
-      border-color: rgba(0,0,0,0.35) !important;
-      color: #050508 !important;
-    }
+    .nav-audit:hover { background: rgba(255,255,255,0.12) !important; border-color: rgba(255,255,255,0.55) !important; color: #ffffff !important; }
     .nav-cta-btn {
-      display: inline-flex;
-      align-items: center;
-      line-height: 1;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 8px 18px;
-      background: #050508;
-      color: #ffffff;
-      border-radius: 4px;
-      transition: opacity 0.2s;
-      margin-left: 10px;
+      display: inline-flex; align-items: center; line-height: 1;
+      font-size: 13px; font-weight: 600; padding: 8px 18px;
+      background: #ffffff; color: #050508;
+      border-radius: 4px; transition: opacity 0.2s; margin-left: 10px;
     }
-    .nav-cta-btn:hover { opacity: 0.80; }
+    .nav-cta-btn:hover { opacity: 0.85; }
+
+    /* scrolled = dark text on white */
+    .site-nav.nav--scrolled .nav-logo { color: #050508; }
+    .site-nav.nav--scrolled .nav-logo span { color: rgba(0,0,0,0.35); }
+    .site-nav.nav--scrolled .nav-links a { color: rgba(0,0,0,0.50); }
+    .site-nav.nav--scrolled .nav-links a:hover { color: rgba(0,0,0,0.85); }
+    .site-nav.nav--scrolled .nav-links a.nav-active { color: #050508; }
+    .site-nav.nav--scrolled .nav-audit { color: rgba(0,0,0,0.65) !important; border-color: rgba(0,0,0,0.18) !important; }
+    .site-nav.nav--scrolled .nav-audit:hover { background: rgba(0,0,0,0.05) !important; border-color: rgba(0,0,0,0.35) !important; color: #050508 !important; }
+    .site-nav.nav--scrolled .nav-cta-btn { background: #050508; color: #ffffff; }
+    .site-nav.nav--scrolled .nav-hamburger span { background: #050508 !important; }
 
     /* ─── HAMBURGER BUTTON ─── */
     .nav-hamburger {
@@ -467,9 +456,9 @@
       display: block;
       width: 22px;
       height: 2px;
-      background: #050508;
+      background: #ffffff;
       border-radius: 2px;
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.2s;
+      transition: background 0.4s, transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.2s;
       transform-origin: center;
     }
     .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -2760,37 +2749,58 @@
 
   /* ── SCROLL PROGRESS ── */
   const progressBar = document.getElementById('scroll-progress');
-  // Hero cinematic scroll: content shrinks, blurs and fades as page-body rises over it
-  const heroInner = document.querySelector('.hero-inner');
-  const heroEl = document.querySelector('.hero');
-  const heroGoldOverlay = document.querySelector('.hero-gold-overlay');
-  function easeIn(t) { return t * t * t; }
+  // Hero cinematic scroll: content shrinks, blurs and fades; bg transitions blue→gold
+  const heroInner    = document.querySelector('.hero-inner');
+  const heroEl       = document.querySelector('.hero');
+  const heroGoldOvl  = document.querySelector('.hero-gold-overlay');
+  const heroHeadEm   = document.querySelector('.hero-heading .display-xl em');
+  const heroHeadText = document.querySelector('.hero-heading .display-xl');
+
+  function easeIn(t)  { return t * t * t; }
   function easeOut(t) { return 1 - (1-t)*(1-t); }
+  function lerp(a, b, t) { return Math.round(a + (b - a) * t); }
+
   function updateHeroParallax() {
     if (!heroInner || !heroEl) return;
     const scrolled = window.scrollY;
     const heroH = heroEl.offsetHeight;
-    // Start effect after 8% of hero height, complete by 65%
     const start = heroH * 0.08;
     const end   = heroH * 0.65;
     const raw = Math.min(Math.max((scrolled - start) / (end - start), 0), 1);
     const p = easeIn(raw);
 
-    const scale   = 1 - p * 0.18;          // shrinks to 82%
-    const opacity = 1 - p * 0.95;          // nearly disappears
-    const blur    = p * 20;                 // blurs to 20px
-    const ty      = p * -30;               // floats up slightly as it recedes
+    const scale   = 1 - p * 0.18;
+    const opacity = 1 - p * 0.95;
+    const blur    = p * 20;
+    const ty      = p * -30;
 
     heroInner.style.transform = `translateY(${ty}px) scale(${scale})`;
     heroInner.style.opacity   = opacity;
     heroInner.style.filter    = `blur(${blur}px)`;
 
-    // Blue → Gold transition: gold overlay rises as content fades
-    // Starts at p=0.3 so it's visible after content begins to fade
+    // Gold overlay: rises after content starts to fade
     const goldRaw = Math.min(Math.max((raw - 0.25) / 0.75, 0), 1);
-    if (heroGoldOverlay) heroGoldOverlay.style.opacity = easeOut(goldRaw) * 0.92;
+    const goldP   = easeOut(goldRaw);
+    if (heroGoldOvl) heroGoldOvl.style.opacity = goldP * 0.92;
 
-    // Parallax: hero bg moves at 40% of scroll speed
+    // Content colour shift: white → dark as gold rises (so text stays readable)
+    // Heading body text: white → near-black
+    if (heroHeadText) {
+      const r = lerp(255, 12,  goldP);
+      const g = lerp(255, 12,  goldP);
+      const b = lerp(255, 20,  goldP);
+      heroHeadText.style.color = `rgb(${r},${g},${b})`;
+    }
+    // em italic "real growth": gold (#FFD23F) → deep blue (#0044E4)
+    if (heroHeadEm) {
+      const r = lerp(255, 0,   goldP);
+      const g = lerp(210, 68,  goldP);
+      const b = lerp(63,  228, goldP);
+      heroHeadEm.style.color = `rgb(${r},${g},${b})`;
+      heroHeadEm.style.webkitTextFillColor = `rgb(${r},${g},${b})`;
+    }
+
+    // Parallax: hero bg moves at 28% of scroll speed
     heroEl.style.backgroundPositionY = `calc(50% + ${scrolled * 0.28}px)`;
   }
   window.addEventListener('scroll', updateHeroParallax, { passive: true });
