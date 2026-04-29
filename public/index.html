@@ -1319,9 +1319,13 @@
       100% { background-position: 150% 0; }
     }
 
-    /* ── Service row mobile toggle icon ── */
+    /* ── Service row mobile toggle button ── */
     .svc-toggle {
       display: none;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
     }
     @media (max-width: 900px) {
       .svc-toggle {
@@ -1330,15 +1334,14 @@
         justify-content: center;
         position: absolute;
         right: 0;
-        top: 36px;
-        width: 20px;
-        height: 20px;
-        font-size: 18px;
+        top: 28px;
+        width: 32px;
+        height: 32px;
+        font-size: 22px;
         font-weight: 300;
         color: var(--muted);
         line-height: 1;
         transition: transform 0.25s ease, color 0.2s;
-        pointer-events: none;
       }
       .service-row.is-open .svc-toggle {
         transform: rotate(45deg);
@@ -1406,17 +1409,28 @@
       .stat-item:last-child { border-bottom: none; }
       .stat-item::before { top: 0; left: 0; }
       .stat-num { font-size: 44px; letter-spacing: -1.5px; margin-bottom: 8px; }
-      .service-row { grid-template-columns: 40px 1fr; position: relative; padding-right: 32px; }
-      .service-desc, .service-tag { display: none; }
-      .service-row.is-open .service-desc {
-        display: block;
+      .service-row { grid-template-columns: 40px 1fr; position: relative; padding-right: 40px; }
+      .service-desc {
         grid-column: 2;
+        max-height: 0;
+        overflow: hidden;
+        margin: 0;
+        transition: max-height 0.35s ease, margin 0.35s ease;
+      }
+      .service-tag {
+        grid-column: 2;
+        max-height: 0;
+        overflow: hidden;
+        margin: 0;
+        text-align: left;
+        transition: max-height 0.35s ease, margin 0.35s ease;
+      }
+      .service-row.is-open .service-desc {
+        max-height: 300px;
         margin-top: 10px;
       }
       .service-row.is-open .service-tag {
-        display: block;
-        grid-column: 2;
-        text-align: left;
+        max-height: 60px;
         margin-top: 8px;
         margin-bottom: 4px;
       }
@@ -1582,42 +1596,42 @@
         <div class="service-title">0→1 Product Design</div>
         <p class="service-desc">From validated idea to first shipped product. We take founders and funded scale-ups from a brief to a working, designed product: problem framing, UX strategy, full UI, and dev-ready specs. One engagement. No hand-offs. No wasted rounds.</p>
         <div class="service-tag"><span class="tag">Founders</span></div>
-        <span class="svc-toggle" aria-hidden="true">+</span>
+        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
       </div>
       <div class="service-row" id="service-website" data-anim="fade-up" data-delay="1">
         <span class="service-num">02</span>
         <div class="service-title">Website &amp; App Design</div>
         <p class="service-desc">End-to-end design for mobile apps, web apps, and marketing sites. Problem framing through to pixel-perfect UI and developer handoff.</p>
         <div class="service-tag"><span class="tag">Design</span></div>
-        <span class="svc-toggle" aria-hidden="true">+</span>
+        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
       </div>
       <div class="service-row" id="service-seo" data-anim="fade-up" data-delay="2">
         <span class="service-num">03</span>
         <div class="service-title">SEO Optimisation</div>
         <p class="service-desc">Technical and on-page SEO built into every project from day one, not bolted on afterwards. Discoverability as a first principle.</p>
         <div class="service-tag"><span class="tag">Growth</span></div>
-        <span class="svc-toggle" aria-hidden="true">+</span>
+        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
       </div>
       <div class="service-row" id="service-ai" data-anim="fade-up" data-delay="3">
         <span class="service-num">04</span>
         <div class="service-title">AI-Powered Product Design</div>
         <p class="service-desc">AI embedded into every phase of design: faster research synthesis, smarter prototyping, LLM-integrated product experiences, and AI-native UX thinking from day one.</p>
         <div class="service-tag"><span class="tag">AI</span></div>
-        <span class="svc-toggle" aria-hidden="true">+</span>
+        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
       </div>
       <div class="service-row" id="service-plg" data-anim="fade-up" data-delay="4">
         <span class="service-num">05</span>
         <div class="service-title">Product-Led Growth Design</div>
         <p class="service-desc">Design your product to be the growth engine. Activation flows, retention loops, and conversion mechanics embedded into UX from day one.</p>
         <div class="service-tag"><span class="tag">PLG</span></div>
-        <span class="svc-toggle" aria-hidden="true">+</span>
+        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
       </div>
       <div class="service-row" id="service-fractional" data-anim="fade-up" data-delay="5">
         <span class="service-num">06</span>
         <div class="service-title">Fractional Design Leadership</div>
         <p class="service-desc">Embedded design direction on a retained basis. Strategic design capability without the full-time overhead. Critiques, alignment, roadmap input.</p>
         <div class="service-tag"><span class="tag">Leadership</span></div>
-        <span class="svc-toggle" aria-hidden="true">+</span>
+        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
       </div>
     </div>
   </div>
@@ -2218,20 +2232,14 @@
   })();
 
   /* ── Mobile service accordion ── */
-  (function() {
-    document.querySelectorAll('.service-row').forEach(function(row) {
-      row.setAttribute('role', 'button');
-      row.setAttribute('tabindex', '0');
-      function toggle(e) {
-        e.stopPropagation();
-        row.classList.toggle('is-open');
-      }
-      row.addEventListener('click', toggle);
-      row.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') toggle(e);
-      });
+  document.querySelectorAll('.svc-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var row = btn.closest('.service-row');
+      var isOpen = row.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
-  })();
+  });
 
 </script>
 </body>
