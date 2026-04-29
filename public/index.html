@@ -339,7 +339,7 @@
     .nav-audit {
       color: var(--accent) !important;
       font-weight: 600 !important;
-      padding: 6px 14px;
+      padding: 8px 18px;
       border: 1px solid rgba(0,68,228,0.3);
       border-radius: 4px;
       transition: background 0.2s, border-color 0.2s;
@@ -352,11 +352,12 @@
     .nav-cta-btn {
       font-size: 13px;
       font-weight: 600;
-      padding: 9px 20px;
+      padding: 8px 18px;
       background: var(--text);
       color: #fff;
-      border-radius: 2px;
+      border-radius: 4px;
       transition: opacity 0.2s;
+      margin-left: 10px;
     }
     .nav-cta-btn:hover { opacity: 0.75; }
 
@@ -1259,41 +1260,36 @@
     }
     .service-row:hover::after { width: 100%; }
 
-    /* ── FLAGSHIP: override ::after with metallic sweep (must be after .service-row::after) ── */
-    .service-row--flagship::after {
-      content: '';
-      position: absolute;
-      top: -3px; left: -80%;
-      width: 80%; height: 10px;
-      bottom: auto;
+    /* ── FLAGSHIP: suppress hover underline ── */
+    .service-row--flagship::after { display: none; }
+    .service-row--flagship:hover::after { display: none; }
+
+    /* ── FLAGSHIP: metallic blue text sweep ──
+       Gradient is 400% wide. Animating background-position 0%→150%
+       sweeps the metallic zone (black→navy→blue→white→blue→navy→black)
+       cleanly across the text and returns to solid black. */
+    .service-row--flagship .service-title {
       background: linear-gradient(90deg,
-        transparent 0%,
-        #0033bb 12%,
-        #0055ff 24%,
-        #5588ff 34%,
-        #aac4ff 42%,
-        #ddeeff 48%,
-        #ffffff   50%,
-        #ddeeff 52%,
-        #aac4ff 58%,
-        #5588ff 66%,
-        #0055ff 76%,
-        #0033bb 88%,
-        transparent 100%
+        #111111 0%,   #111111 35%,
+        #001b8c 43%,  #0044e4 49%,
+        #5588ff 53%,  #c0d8ff 56%,
+        #ffffff 58%,
+        #c0d8ff 60%,  #5588ff 64%,
+        #0044e4 70%,  #001b8c 76%,
+        #111111 84%,  #111111 100%
       );
-      width: 80%;
-      height: 10px;
-      transition: none;
-      pointer-events: none;
-      z-index: 2;
+      background-size: 400% 100%;
+      background-position: 0% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .service-row--flagship:hover::after { width: 80%; left: -80%; }
-    .service-row--flagship.shimmer-play::after {
-      animation: metallic-sweep 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    .service-row--flagship.shimmer-play .service-title {
+      animation: metallic-text 2.4s ease-in-out 0.5s both;
     }
-    @keyframes metallic-sweep {
-      0%   { transform: translateX(-100%); }
-      100% { transform: translateX(360%); }
+    @keyframes metallic-text {
+      0%   { background-position: 0% 0; }
+      100% { background-position: 150% 0; }
     }
 
     /* Work card lift */
