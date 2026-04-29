@@ -1267,8 +1267,13 @@
     /* ── FLAGSHIP: metallic blue text sweep ──
        Gradient is 400% wide. Animating background-position 0%→150%
        sweeps the metallic zone (black→navy→blue→white→blue→navy→black)
-       cleanly across the text and returns to solid black. */
-    .service-row--flagship .service-title {
+       cleanly across the text and returns to solid black.
+       All four text elements share the same gradient; staggered delays
+       make them light up in sequence. */
+    .service-row--flagship .service-num,
+    .service-row--flagship .service-title,
+    .service-row--flagship .service-desc,
+    .service-row--flagship .tag {
       background: linear-gradient(90deg,
         #111111 0%,   #111111 35%,
         #001b8c 43%,  #0044e4 49%,
@@ -1284,8 +1289,22 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    /* .tag has its own border — keep it, just let text be gradient */
+    .service-row--flagship .tag {
+      background-color: transparent;
+      border-color: rgba(0, 68, 228, 0.3);
+    }
+    .service-row--flagship.shimmer-play .service-num {
+      animation: metallic-text 2.4s ease-in-out 0.3s both;
+    }
     .service-row--flagship.shimmer-play .service-title {
       animation: metallic-text 2.4s ease-in-out 0.5s both;
+    }
+    .service-row--flagship.shimmer-play .service-desc {
+      animation: metallic-text 2.4s ease-in-out 0.7s both;
+    }
+    .service-row--flagship.shimmer-play .tag {
+      animation: metallic-text 2.4s ease-in-out 0.9s both;
     }
     @keyframes metallic-text {
       0%   { background-position: 0% 0; }
