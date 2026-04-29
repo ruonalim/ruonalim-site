@@ -1697,8 +1697,7 @@
       <h1 class="display-xl">We design products that drive <em style="white-space:nowrap">real growth.</em></h1>
     </div>
     <div class="hero-sub-row">
-      <p class="hero-body">For founders building from scratch and funded teams moving fast. Senior product designers embedded in your team. No layers, no hand-offs.</p>
-      <p class="hero-proof">Built into products used by 70M+ people across Careem, Krak, and Metro Bank.</p>
+      <p class="hero-body">Apps, websites and digital growth systems built for ambitious companies. Senior designers, embedded in your team. No layers, no hand-offs.</p>
       <div class="hero-actions">
         <div class="hero-actions-row">
           <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-primary">Start a project</a>
@@ -2538,7 +2537,7 @@
     sections.forEach(s => { const el = document.getElementById(s.id); if (el) spyObs.observe(el); });
   })();
 
-  /* ── HERO WAVE CANVAS — Stripe-style woven threads, blue spectrum ── */
+  /* ── HERO WAVE CANVAS — Stripe-density woven threads, blue spectrum ── */
   (function() {
     var canvas = document.getElementById('hero-wave-canvas');
     if (!canvas) return;
@@ -2546,80 +2545,105 @@
     var ctx = canvas.getContext('2d');
     var animId, frame = 0;
 
-    // Blue spectrum derived from brand #0044E4 — darkest to lightest
+    // Blue spectrum from near-black navy → bright sky blue, derived from #0044E4
     var palette = [
-      '#000B2E','#000D33','#001044','#001458','#001880',
-      '#001E9A','#0028B5','#0033CC','#003CE0','#0044E4',
-      '#0050EE','#1160F5','#2270FF','#3380FF','#4490FF',
-      '#55A0FF','#66AEFF','#7ABBFF','#8DC8FF','#A0D0FF'
+      [0,   8,  38],   // #00081A darkest navy
+      [0,  11,  46],   // #000B2E
+      [0,  16,  68],   // #001044
+      [0,  22,  94],   // #00165E
+      [0,  28, 128],   // #001C80
+      [0,  36, 160],   // #0024A0
+      [0,  44, 196],   // #002CC4
+      [0,  52, 220],   // #0034DC
+      [0,  68, 228],   // #0044E4  brand blue
+      [17, 96, 245],   // #1160F5
+      [34,112, 255],   // #2270FF
+      [51,128, 255],   // #3380FF
+      [68,144, 255],   // #4490FF
+      [85,160, 255],   // #55A0FF
+      [102,174,255],   // #66AEFF
+      [122,187,255],   // #7ABBFF
+      [141,200,255],   // #8DC8FF
+      [160,208,255],   // #A0D0FF
+      [187,220,255],   // #BBDCFF lightest
     ];
 
-    function hexRGB(hex) {
-      return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
-    }
-
-    // Seed procedural threads once so they're stable across frames
-    var N = 55;
-    var threads = [];
-    // Deterministic pseudo-random using index so it's reproducible
+    // Seeded deterministic pseudo-random
     function pr(i, salt) {
       var x = Math.sin(i * 127.1 + salt * 311.7) * 43758.5453;
       return x - Math.floor(x);
     }
+
+    // Build 280 threads — seeded so stable
+    var N = 280;
+    var threads = [];
     for (var i = 0; i < N; i++) {
+      // Colour biased toward mid-spectrum (not all dark or all light)
+      var cIdx = Math.floor(2 + pr(i, 0) * (palette.length - 4));
+      var c = palette[cIdx];
+
+      // Fan origin: threads fan from a tight vertical band on the right
+      // sy clustered in 0.35–0.65 (middle third of right edge), spreads on left
+      var syBase  = 0.35 + pr(i, 1) * 0.30;   // right: tight band mid-canvas
+      var eyBase  = pr(i, 2);                   // left: full 0–1 spread
+
+      // Bezier shape: pulled toward top-right corner to create fan convergence
+      var cp1yBase = 0.2 + pr(i, 3) * 0.55;
+      var cp2yBase = pr(i, 4);
+
       threads.push({
-        color:    palette[Math.floor(pr(i, 0) * palette.length)],
-        sy:       pr(i, 1),          // start Y fraction (right edge)
-        ey:       pr(i, 2),          // end Y fraction (left edge)
-        cp1y:     pr(i, 3),          // control point 1 Y
-        cp2y:     pr(i, 4),          // control point 2 Y
-        lw:       0.4 + pr(i, 5) * 2.6,  // lineWidth 0.4 – 3px
-        phase:    pr(i, 6) * Math.PI * 2,
-        speed:    0.25 + pr(i, 7) * 0.55,
-        alpha:    0.35 + pr(i, 8) * 0.55,  // per-thread base alpha
-        drift:    (pr(i, 9) - 0.5) * 0.12, // max Y drift amplitude
+        r: c[0], g: c[1], b: c[2],
+        sy:   syBase,
+        ey:   eyBase,
+        cp1y: cp1yBase,
+        cp2y: cp2yBase,
+        lw:   0.3 + pr(i, 5) * 0.9,          // 0.3 – 1.2px — very fine
+        phase: pr(i, 6) * Math.PI * 2,
+        speed: 0.18 + pr(i, 7) * 0.38,        // very slow breathing
+        alpha: 0.28 + pr(i, 8) * 0.52,        // 0.28 – 0.8
+        driftAmp: 0.008 + pr(i, 9) * 0.022,   // subtle per-thread drift
       });
     }
 
     function resize() {
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width  = canvas.offsetWidth  * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
+      canvas.width  = Math.round(canvas.offsetWidth  * dpr);
+      canvas.height = Math.round(canvas.offsetHeight * dpr);
     }
 
     function draw() {
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
       var W = canvas.offsetWidth;
       var H = canvas.offsetHeight;
+      if (!W || !H) { animId = requestAnimationFrame(draw); return; }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.save();
       ctx.scale(dpr, dpr);
 
-      var t = frame * 0.003; // slow breathing
+      var t = frame * 0.0025; // very slow
 
       for (var i = 0; i < N; i++) {
         var th = threads[i];
-        var wave = Math.sin(t * th.speed + th.phase) * th.drift;
-        var wave2 = Math.cos(t * th.speed * 0.7 + th.phase + 1.3) * th.drift * 0.6;
+        var d  = Math.sin(t * th.speed + th.phase) * th.driftAmp;
+        var d2 = Math.cos(t * th.speed * 0.6 + th.phase + 1.1) * th.driftAmp * 0.7;
 
-        // Threads flow from right → left
-        var sx   = W * 1.02;
-        var sy   = H * (th.sy  + wave);
-        var ex   = W * (0.15 + pr(i, 10) * 0.12); // end between 15–27% from left
-        var ey   = H * (th.ey  + wave2);
-        var cp1x = W * 0.75;
-        var cp1y = H * (th.cp1y + wave * 0.8);
-        var cp2x = W * 0.40;
-        var cp2y = H * (th.cp2y + wave2 * 0.8);
+        // Right → left. Threads start at right edge, taper into left.
+        var sx   = W * 1.01;
+        var sy   = H * (th.sy   + d);
+        var ex   = W * -0.02;
+        var ey   = H * (th.ey   + d2);
+        var cp1x = W * 0.72;
+        var cp1y = H * (th.cp1y + d);
+        var cp2x = W * 0.38;
+        var cp2y = H * (th.cp2y + d2);
 
-        var rgb = hexRGB(th.color);
         var grad = ctx.createLinearGradient(sx, sy, ex, ey);
-        // Fade in from right, solid mid, fade out toward left
-        grad.addColorStop(0,    'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',0)');
-        grad.addColorStop(0.08, 'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+(th.alpha * 0.9)+')');
-        grad.addColorStop(0.5,  'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+th.alpha+')');
-        grad.addColorStop(0.88, 'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+(th.alpha * 0.55)+')');
-        grad.addColorStop(1,    'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',0)');
+        var r = th.r, g = th.g, b = th.b, a = th.alpha;
+        grad.addColorStop(0,    'rgba('+r+','+g+','+b+',0)');
+        grad.addColorStop(0.05, 'rgba('+r+','+g+','+b+','+(a * 0.8)+')');
+        grad.addColorStop(0.35, 'rgba('+r+','+g+','+b+','+a+')');
+        grad.addColorStop(0.72, 'rgba('+r+','+g+','+b+','+(a * 0.6)+')');
+        grad.addColorStop(1,    'rgba('+r+','+g+','+b+',0)');
 
         ctx.beginPath();
         ctx.moveTo(sx, sy);
@@ -2637,7 +2661,7 @@
     }
 
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', function() { resize(); });
     draw();
     document.addEventListener('visibilitychange', function() {
       if (document.hidden) { cancelAnimationFrame(animId); }
