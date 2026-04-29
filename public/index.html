@@ -1763,12 +1763,36 @@
       .tl-accordion { height: 240px; gap: 4px; position: relative; }
       .tl-panel { min-width: 38px; }
       .tl-header-row { flex-direction: column; align-items: flex-start; }
-      .tl-swipe-overlay { display: block; }
       .tl-dots { display: flex; }
+    }
+    @media (max-width: 768px) {
+      .tl-accordion {
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 0;
+        height: 220px;
+        border-radius: 10px;
+      }
+      .tl-accordion::-webkit-scrollbar { display: none; }
+      .tl-panel {
+        flex: 0 0 100% !important;
+        min-width: 100% !important;
+        scroll-snap-align: start;
+        border-radius: 0;
+        cursor: default;
+      }
+      .tl-panel:first-child { border-radius: 10px 0 0 10px; }
+      .tl-panel:last-child { border-radius: 0 10px 10px 0; }
+      .tl-panel iframe { pointer-events: auto !important; }
+      .tl-panel-label { opacity: 1 !important; pointer-events: none; }
+      .tl-panel-label span { writing-mode: horizontal-tb; transform: none; font-size: 12px; }
+      .tl-panel-hint { display: none; }
+      .tl-swipe-overlay { display: none; }
     }
     @media (max-width: 600px) {
       .tl-accordion { height: 200px; }
-      .tl-panel { min-width: 32px; }
     }
 
     /* ─── NEW: BIG CTA BUTTONS ─── */
@@ -2170,42 +2194,6 @@
         <iframe src="https://www.youtube.com/embed/TMtN8xB0aBs?rel=0&modestbranding=1&enablejsapi=1"
           allow="autoplay; encrypted-media" allowfullscreen title="Ana Sofia Gonzalez: From UI to AI"></iframe>
         <div class="tl-panel-label"><span>A. Sofia</span></div>
-        <div class="tl-panel-hint">
-          <svg viewBox="0 0 16 16"><path d="M6 3l6 5-6 5V3z"/></svg>
-        </div>
-      </div>
-
-      <div class="tl-panel" data-vid="ZbXrio-j4t0" data-title="Jonathan Steingeisser: Designers Don't Know Who They Are">
-        <iframe src="https://www.youtube.com/embed/ZbXrio-j4t0?rel=0&modestbranding=1&enablejsapi=1"
-          allow="autoplay; encrypted-media" allowfullscreen title="Jonathan Steingeisser: Designers Don't Know Who They Are"></iframe>
-        <div class="tl-panel-label"><span>J. Stein</span></div>
-        <div class="tl-panel-hint">
-          <svg viewBox="0 0 16 16"><path d="M6 3l6 5-6 5V3z"/></svg>
-        </div>
-      </div>
-
-      <div class="tl-panel" data-vid="mC_0Cu0kfyI" data-title="Amber Jabeen: Design is About Emotions">
-        <iframe src="https://www.youtube.com/embed/mC_0Cu0kfyI?rel=0&modestbranding=1&enablejsapi=1"
-          allow="autoplay; encrypted-media" allowfullscreen title="Amber Jabeen: Design is About Emotions"></iframe>
-        <div class="tl-panel-label"><span>A. Jabeen</span></div>
-        <div class="tl-panel-hint">
-          <svg viewBox="0 0 16 16"><path d="M6 3l6 5-6 5V3z"/></svg>
-        </div>
-      </div>
-
-      <div class="tl-panel" data-vid="I4U8pNLyJE0" data-title="Joe Fletcher: The Evolution of Design in the Age of AI">
-        <iframe src="https://www.youtube.com/embed/I4U8pNLyJE0?rel=0&modestbranding=1&enablejsapi=1"
-          allow="autoplay; encrypted-media" allowfullscreen title="Joe Fletcher: The Evolution of Design in the Age of AI"></iframe>
-        <div class="tl-panel-label"><span>J. Fletcher</span></div>
-        <div class="tl-panel-hint">
-          <svg viewBox="0 0 16 16"><path d="M6 3l6 5-6 5V3z"/></svg>
-        </div>
-      </div>
-
-      <div class="tl-panel" data-vid="zrDn5vAzPrE" data-title="Indi Young: Continuous Discovery Without Guide Rails">
-        <iframe src="https://www.youtube.com/embed/zrDn5vAzPrE?rel=0&modestbranding=1&enablejsapi=1"
-          allow="autoplay; encrypted-media" allowfullscreen title="Indi Young: Continuous Discovery Without Guide Rails"></iframe>
-        <div class="tl-panel-label"><span>Indi Young</span></div>
         <div class="tl-panel-hint">
           <svg viewBox="0 0 16 16"><path d="M6 3l6 5-6 5V3z"/></svg>
         </div>
@@ -2748,22 +2736,27 @@
     var acc = document.getElementById('tl-accordion');
     if (!acc) return;
     var panels = Array.from(acc.querySelectorAll('.tl-panel'));
-    var overlay = document.getElementById('tl-swipe-overlay');
     var dotsContainer = document.getElementById('tl-dots');
     var currentIdx = 0;
+    var isMobile = function() { return window.innerWidth <= 768; };
 
     // Build dots
     panels.forEach(function(_, i) {
       var dot = document.createElement('button');
       dot.className = 'tl-dot' + (i === 0 ? ' active' : '');
       dot.setAttribute('aria-label', 'Episode ' + (i + 1));
-      dot.addEventListener('click', function() { activate(i); });
+      dot.addEventListener('click', function() {
+        if (isMobile()) {
+          acc.scrollTo({ left: i * acc.offsetWidth, behavior: 'smooth' });
+        } else {
+          activate(i);
+        }
+      });
       dotsContainer.appendChild(dot);
     });
 
     function updateDots(idx) {
-      var dots = dotsContainer.querySelectorAll('.tl-dot');
-      dots.forEach(function(d, i) {
+      dotsContainer.querySelectorAll('.tl-dot').forEach(function(d, i) {
         d.classList.toggle('active', i === idx);
       });
     }
@@ -2786,47 +2779,27 @@
       updateDots(idx);
     }
 
+    // Desktop: hover to expand
     panels.forEach(function(p, i) {
-      // Desktop: hover to expand
       p.addEventListener('mouseenter', function() {
-        if (!p.classList.contains('active')) activate(i);
+        if (!isMobile() && !p.classList.contains('active')) activate(i);
       });
     });
 
-    // Swipe overlay captures touch events above iframes (mobile)
-    if (overlay) {
-      var touchStartX = 0;
-      var touchStartY = 0;
-
-      overlay.addEventListener('touchstart', function(e) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }, { passive: true });
-
-      overlay.addEventListener('touchend', function(e) {
-        var dx = e.changedTouches[0].clientX - touchStartX;
-        var dy = e.changedTouches[0].clientY - touchStartY;
-        if (Math.abs(dx) < 35 || Math.abs(dy) > Math.abs(dx) * 0.8) return;
-        if (dx < 0) {
-          activate((currentIdx + 1) % panels.length);
-        } else {
-          activate((currentIdx - 1 + panels.length) % panels.length);
+    // Mobile: native scroll-snap — detect snapped panel via scroll
+    var scrollTimer;
+    acc.addEventListener('scroll', function() {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() {
+        if (!isMobile()) return;
+        var idx = Math.round(acc.scrollLeft / acc.offsetWidth);
+        if (idx !== currentIdx) {
+          currentIdx = idx;
+          panels.forEach(function(p, i) { p.classList.toggle('active', i === idx); });
+          updateDots(idx);
         }
-      }, { passive: true });
-
-      // Tap on collapsed panel (non-active side)
-      overlay.addEventListener('click', function(e) {
-        var rect = acc.getBoundingClientRect();
-        var relX = e.clientX - rect.left;
-        var fraction = relX / rect.width;
-        // Tapped left third → prev, right third → next, middle → ignore
-        if (fraction < 0.25) {
-          activate((currentIdx - 1 + panels.length) % panels.length);
-        } else if (fraction > 0.75) {
-          activate((currentIdx + 1) % panels.length);
-        }
-      });
-    }
+      }, 80);
+    }, { passive: true });
   })();
 
 
