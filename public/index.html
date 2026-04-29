@@ -839,37 +839,7 @@
       z-index: 1;
     }
 
-    /* Metallic shine strip — sweeps once on scroll */
-    .service-row--flagship::after {
-      content: '';
-      position: absolute;
-      top: -3px; left: -80%;
-      width: 80%; height: 10px;
-      background: linear-gradient(90deg,
-        transparent 0%,
-        #0033bb 12%,
-        #0055ff 24%,
-        #5588ff 34%,
-        #aac4ff 42%,
-        #ddeeff 48%,
-        #ffffff   50%,
-        #ddeeff 52%,
-        #aac4ff 58%,
-        #5588ff 66%,
-        #0055ff 76%,
-        #0033bb 88%,
-        transparent 100%
-      );
-      pointer-events: none;
-      z-index: 2;
-    }
-    .service-row--flagship.shimmer-play::after {
-      animation: metallic-sweep 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    }
-    @keyframes metallic-sweep {
-      0%   { transform: translateX(-100%); }
-      100% { transform: translateX(360%); }
-    }
+    /* placeholder — real ::after defined after .service-row::after below */
 
     /* ─────────────────────────────────────────────
        WORK
@@ -1317,7 +1287,7 @@
       pointer-events: none;
       z-index: 2;
     }
-    .service-row--flagship:hover::after { width: 80%; }
+    .service-row--flagship:hover::after { width: 80%; left: -80%; }
     .service-row--flagship.shimmer-play::after {
       animation: metallic-sweep 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
@@ -1539,7 +1509,7 @@
       <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-ghost">Discuss your project →</a>
     </div>
     <div class="services-list">
-      <div class="service-row service-row--flagship" id="service-zero-to-one" data-anim="fade-up">
+      <div class="service-row service-row--flagship" id="service-zero-to-one">
         <span class="service-num">01</span>
         <div class="service-title">0→1 Product Design</div>
         <p class="service-desc">From validated idea to first shipped product. We take founders and funded scale-ups from a brief to a working, designed product: problem framing, UX strategy, full UI, and dev-ready specs. One engagement. No hand-offs. No wasted rounds.</p>
@@ -2040,7 +2010,7 @@
     const shimmerObs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          setTimeout(() => flagshipRow.classList.add('shimmer-play'), 200);
+          setTimeout(() => flagshipRow.classList.add('shimmer-play'), 500);
           shimmerObs.unobserve(entry.target);
         }
       });
