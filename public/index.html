@@ -30,7 +30,7 @@
     "areaServed": ["United Arab Emirates", "Saudi Arabia", "Qatar", "Bahrain", "Kuwait", "Oman", "United Kingdom", "Europe", "Middle East", "GCC", "Asia Pacific"],
     "address": {"@type": "PostalAddress", "addressLocality": "Dubai", "addressRegion": "Dubai", "addressCountry": "AE"},
     "geo": {"@type": "GeoCoordinates", "latitude": "25.2048", "longitude": "55.2708"},
-    "serviceType": ["Product Design", "UX Design", "UI Design", "AI Product Design", "Agentic AI Design", "Fintech Design", "Fractional Design Leadership", "Product-Led Growth Design", "SEO Optimisation", "AI Automation", "Design Systems", "App Design", "Regulated UX Design"],
+    "serviceType": ["0-1 Product Design", "Startup Product Design", "Product Design", "UX Design", "UI Design", "AI Product Design", "Agentic AI Design", "Fintech Design", "Fractional Design Leadership", "Product-Led Growth Design", "SEO Optimisation", "Design Systems", "App Design", "Regulated UX Design"],
     "knowsAbout": ["Product Design", "User Experience", "UI UX Design", "AI Product Design", "Agentic AI UX", "AI Agent Interfaces", "GenAI Product Design", "Fintech", "SaaS", "Crypto", "Lottery App Design", "Design Systems", "Conversion Rate Optimisation", "Product-Led Growth", "Dubai Tech Startups", "GCC Digital Products", "Regulated Digital Products"],
     "priceRange": "$$$",
     "contactPoint": {
@@ -817,6 +817,35 @@
     .service-desc { font-size: 14px; color: var(--muted); line-height: 1.65; padding-top: 2px; }
     .service-tag { text-align: right; padding-top: 4px; }
 
+    /* Flagship service row */
+    .service-row--flagship {
+      background: #F7F9FF;
+      border-top: 2px solid var(--accent) !important;
+      padding-left: 24px;
+      padding-right: 24px;
+      border-radius: 4px;
+      margin-bottom: 2px;
+    }
+    .service-row--flagship .service-num { color: var(--accent); }
+    .service-row--flagship .service-title { font-size: 22px; }
+    .service-flagship-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--tag-bg);
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-left: 10px;
+      vertical-align: middle;
+      position: relative;
+      top: -2px;
+    }
+
     /* ─────────────────────────────────────────────
        WORK
     ───────────────────────────────────────────── */
@@ -1356,7 +1385,7 @@
       <h1 class="display-xl">We design products that drive <em style="white-space:nowrap">real growth.</em></h1>
     </div>
     <div class="hero-sub-row">
-      <p class="hero-body">Apps, websites and digital growth systems built for ambitious companies. Senior designers, embedded in your team. No layers, no hand-offs.</p>
+      <p class="hero-body">For founders building from scratch and funded teams moving fast. Senior product designers embedded in your team — no layers, no hand-offs.</p>
       <div class="hero-actions">
         <div class="hero-actions-row">
           <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-primary">Start a project</a>
@@ -1447,37 +1476,43 @@
     <div class="section-header">
       <div>
         <div class="label" style="margin-bottom:14px;">What we do</div>
-        <h2 class="display-md">Five ways we work <em>with you.</em></h2>
+        <h2 class="display-md">Six ways we work <em>with you.</em></h2>
       </div>
       <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-ghost">Discuss your project →</a>
     </div>
     <div class="services-list">
-      <div class="service-row" id="service-website" data-anim="fade-up" data-delay="1">
+      <div class="service-row service-row--flagship" id="service-zero-to-one" data-anim="fade-up">
         <span class="service-num">01</span>
+        <div class="service-title">0→1 Product Design <span class="service-flagship-badge">Flagship</span></div>
+        <p class="service-desc">From validated idea to first shipped product. We take founders and funded scale-ups from a brief to a working, designed product — problem framing, UX strategy, full UI, and dev-ready specs. One engagement. No hand-offs. No wasted rounds.</p>
+        <div class="service-tag"><span class="tag">Founders</span></div>
+      </div>
+      <div class="service-row" id="service-website" data-anim="fade-up" data-delay="1">
+        <span class="service-num">02</span>
         <div class="service-title">Website &amp; App Design</div>
         <p class="service-desc">End-to-end design for mobile apps, web apps, and marketing sites — problem framing through to pixel-perfect UI and developer handoff.</p>
         <div class="service-tag"><span class="tag">Design</span></div>
       </div>
       <div class="service-row" id="service-seo" data-anim="fade-up" data-delay="2">
-        <span class="service-num">02</span>
+        <span class="service-num">03</span>
         <div class="service-title">SEO Optimisation</div>
         <p class="service-desc">Technical and on-page SEO built into every project from day one, not bolted on afterwards. Discoverability as a first principle.</p>
         <div class="service-tag"><span class="tag">Growth</span></div>
       </div>
       <div class="service-row" id="service-ai" data-anim="fade-up" data-delay="3">
-        <span class="service-num">03</span>
+        <span class="service-num">04</span>
         <div class="service-title">AI-Powered Product Design</div>
         <p class="service-desc">AI embedded into every phase of design — faster research synthesis, smarter prototyping, LLM-integrated product experiences, and AI-native UX thinking from day one.</p>
         <div class="service-tag"><span class="tag">AI</span></div>
       </div>
       <div class="service-row" id="service-plg" data-anim="fade-up" data-delay="4">
-        <span class="service-num">04</span>
+        <span class="service-num">05</span>
         <div class="service-title">Product-Led Growth Design</div>
         <p class="service-desc">Design your product to be the growth engine. Activation flows, retention loops, and conversion mechanics embedded into UX from day one.</p>
         <div class="service-tag"><span class="tag">PLG</span></div>
       </div>
       <div class="service-row" id="service-fractional" data-anim="fade-up" data-delay="5">
-        <span class="service-num">05</span>
+        <span class="service-num">06</span>
         <div class="service-title">Fractional Design Leadership</div>
         <p class="service-desc">Embedded design direction on a retained basis. Strategic design capability without the full-time overhead. Critiques, alignment, roadmap input.</p>
         <div class="service-tag"><span class="tag">Leadership</span></div>
@@ -1611,6 +1646,14 @@
 
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
+            What is 0→1 Product Design, and who is it for?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a">It's our flagship engagement for founders and funded scale-ups building a product for the first time. We take you from a validated idea to a fully designed, dev-ready product — covering problem framing, UX strategy, end-to-end UI design, and handoff specs. It's a single, senior-led engagement with no hand-offs and no junior work. Ideal if you've raised a round, have engineers lined up, and need a design partner who's done this at scale before.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
             How quickly can you start?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
@@ -1662,6 +1705,7 @@
     <a href="/" class="footer-logo" aria-label="ruonalim – home">ruonalim<span aria-hidden="true">.</span></a>
     <nav aria-label="Footer navigation">
       <div class="footer-links">
+        <a href="#service-zero-to-one">0→1 Design</a>
         <a href="#services">Services</a>
         <a href="#faq">FAQ</a>
         <a href="/audit">UX Audit</a>
@@ -1745,7 +1789,7 @@
   };
 
   const saResults = {
-    website:    { tag: "Website & App Design",       heading: "You need to go from zero to credible — fast.",          body: "You have conviction but no product yet. We'll validate the concept, design the core flows, and ship something that looks and feels like a serious product — in weeks, not months.",                                                       href: "#service-website",    cta: "See Website & App Design →" },
+    website:    { tag: "0→1 Product Design",            heading: "You need to go from zero to credible — fast.",          body: "You have conviction but no product yet. We'll frame the problem, design the core flows, and ship something that looks and feels like a serious product — in weeks, not months. This is our flagship engagement for founders.",             href: "#service-zero-to-one", cta: "See 0→1 Product Design →" },
     seo:        { tag: "SEO Optimisation",           heading: "You're building in the dark without discoverability.",   body: "Great design means nothing if no one finds you. We bake SEO into the build from day one — technical foundations, on-page structure, and content architecture that compounds over time.",                                              href: "#service-seo",        cta: "See SEO Optimisation →" },
     ai:         { tag: "AI-Powered Product Design",   heading: "Your team needs leverage, not more headcount.",          body: "You're not short on people — you're short on time. We embed AI into every phase of design: faster research, smarter prototyping, LLM-native experiences, and AI product thinking from day one.",                                    href: "#service-ai",         cta: "See AI-Powered Design →" },
     plg:        { tag: "Product-Led Growth Design",  heading: "Your product is leaking — and you know it.",            body: "You have users but the numbers aren't moving. We'll audit your flows, identify the drop-off points, and redesign the experience to turn browsers into buyers.",                                                                      href: "#service-plg",        cta: "See PLG Design →" },
