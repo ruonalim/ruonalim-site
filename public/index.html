@@ -470,11 +470,11 @@
     #hero-wave-canvas {
       position: absolute;
       top: 0; right: 0;
-      width: 55%; height: 100%;
+      width: 65%; height: 100%;
       pointer-events: none;
-      opacity: 0.9;
+      opacity: 1;
     }
-    @media (max-width: 768px) { #hero-wave-canvas { width: 100%; opacity: 0.45; } }
+    @media (max-width: 768px) { #hero-wave-canvas { width: 100%; opacity: 0.35; } }
     .hero-eyebrow {
       display: flex;
       align-items: center;
@@ -500,7 +500,9 @@
       font-size: 17px;
       line-height: 1.65;
       color: var(--muted);
+      white-space: nowrap;
     }
+    @media (max-width: 900px) { .hero-body { white-space: normal; } }
     .hero-actions {
       display: flex;
       flex-direction: column;
@@ -509,6 +511,8 @@
     }
     .hero-actions-row { display: flex; gap: 12px; }
     .hero-note { font-size: 12px; color: var(--muted); }
+    /* Per-letter DNA interaction */
+    .hc { display: inline; transition: color 0.12s ease, text-shadow 0.12s ease; }
 
     /* ─────────────────────────────────────────────
        CLIENTS STRIP
@@ -2536,7 +2540,7 @@
     sections.forEach(s => { const el = document.getElementById(s.id); if (el) spyObs.observe(el); });
   })();
 
-  /* ── HERO WAVE CANVAS — DNA ribbon bundle, blue spectrum ── */
+  /* ── HERO WAVE CANVAS — DNA double helix + per-letter colour ── */
   (function() {
     var canvas = document.getElementById('hero-wave-canvas');
     if (!canvas) return;
@@ -2544,51 +2548,49 @@
     var ctx = canvas.getContext('2d');
     var animId, frame = 0;
 
-    // Blue spectrum, navy → sky, brand #0044E4 at index 8
-    var pal = [
-      [0,8,38],[0,11,46],[0,16,68],[0,22,94],[0,28,128],
-      [0,36,160],[0,44,196],[0,52,220],[0,68,228],
-      [17,96,245],[34,112,255],[51,128,255],[68,144,255],
-      [85,160,255],[102,174,255],[122,187,255],[141,200,255],[160,208,255]
-    ];
+    // Palette: dark navy → brand #0044E4 → sky blue
+    var palDark  = [[0,8,38],[0,11,46],[0,16,68],[0,22,94],[0,28,128],[0,36,160],[0,44,196],[0,52,220],[0,68,228]];
+    var palLight = [[17,96,245],[34,112,255],[51,128,255],[68,144,255],[85,160,255],[102,174,255],[122,187,255],[141,200,255]];
 
     function pr(i, s) {
       var x = Math.sin(i * 127.1 + s * 311.7) * 43758.5453;
       return x - Math.floor(x);
     }
 
-    // 3 ribbon bundles — each bundle is a tight cluster of threads that
-    // undulate together in a sine wave (DNA / woven-ribbon look)
-    var BUNDLES = 3;
-    var THREADS_PER_BUNDLE = 90; // 270 total threads
-    var N = BUNDLES * THREADS_PER_BUNDLE;
+    // ── Build thread data (seeded, stable) ──────────────────────────────
+    var STN = 120;   // threads per backbone strand
+    var RUNGS = 18;
+    var RPN   = 28;  // rung threads per rung
 
-    var threads = [];
-    for (var b = 0; b < BUNDLES; b++) {
-      // Each bundle has its own spine: a sinusoidal path across the canvas
-      // Vertical centre of bundle at canvas mid, offset per bundle
-      var bundleOffset = (b - 1) * 0.18; // -0.18, 0, +0.18 from centre
-      var bundlePhase  = b * (Math.PI * 2 / BUNDLES); // stagger phases
+    var strand1 = [], strand2 = [], rungData = [];
 
-      for (var j = 0; j < THREADS_PER_BUNDLE; j++) {
-        var gi = b * THREADS_PER_BUNDLE + j;
-        // Thread offset within bundle — tight spread ±0.06 of canvas height
-        var offset = (pr(gi, 1) - 0.5) * 0.12;
-        var cIdx = Math.floor(pr(gi, 0) * pal.length);
-        var c = pal[cIdx];
-
-        threads.push({
-          r: c[0], g: c[1], b: c[2],
-          bundleOffset: bundleOffset,
-          bundlePhase:  bundlePhase,
-          offset:       offset,          // thread's deviation within bundle
-          lw:    0.25 + pr(gi, 5) * 0.85, // 0.25 – 1.1px
-          speed: 0.20 + pr(gi, 7) * 0.25, // slow undulation
-          alpha: 0.30 + pr(gi, 8) * 0.55,
-          phaseFine: pr(gi, 6) * Math.PI * 2, // fine per-thread phase
-        });
+    for (var i = 0; i < STN; i++) {
+      var c = palDark[Math.floor(pr(i, 0) * palDark.length)];
+      strand1.push({ off:(pr(i,1)-0.5)*0.05, r:c[0],g:c[1],b:c[2], lw:0.35+pr(i,2)*1.4, alpha:0.4+pr(i,3)*0.5 });
+      var gi = STN + i;
+      var c2 = palDark[Math.floor(pr(gi,0) * palDark.length)];
+      strand2.push({ off:(pr(gi,1)-0.5)*0.05, r:c2[0],g:c2[1],b:c2[2], lw:0.35+pr(gi,2)*1.4, alpha:0.4+pr(gi,3)*0.5 });
+    }
+    for (var r = 0; r < RUNGS; r++) {
+      var xf = (r + 0.5) / RUNGS;
+      for (var j = 0; j < RPN; j++) {
+        var gi = STN*2 + r*RPN + j;
+        var c = palLight[Math.floor(pr(gi,0) * palLight.length)];
+        rungData.push({ xf:xf, xOff:(pr(gi,1)-0.5)*0.008, r:c[0],g:c[1],b:c[2], lw:0.5+pr(gi,2)*0.8, alpha:0.35+pr(gi,3)*0.5 });
       }
     }
+
+    // ── Helix maths ──────────────────────────────────────────────────────
+    var AMP  = 0.30;  // amplitude as fraction of H
+    var FREQ = 1.5;   // full rotations across canvas width
+    var SEG  = 40;    // path segments (smooth enough for sine)
+
+    function spY(xf, t, s) {
+      return 0.50 + AMP * Math.sin(FREQ * Math.PI * 2 * xf - t + (s ? Math.PI : 0));
+    }
+
+    // Strand spine samples (absolute page coords) for letter interaction
+    var spineAbs = [[], []];
 
     function resize() {
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -2596,63 +2598,143 @@
       canvas.height = Math.round(canvas.offsetHeight * dpr);
     }
 
-    // Evaluate the spine Y at normalised x position [0..1]
-    // Returns Y as fraction of canvas height
-    function spineY(x, t, bundleOffset, bundlePhase, speed) {
-      // Centred on 0.5 + bundleOffset, undulates ±0.12
-      var centre = 0.5 + bundleOffset;
-      return centre
-        + Math.sin(x * Math.PI * 1.8 + t * speed + bundlePhase) * 0.13
-        + Math.sin(x * Math.PI * 3.2 - t * speed * 0.7 + bundlePhase + 1.4) * 0.05;
+    // Draw one backbone strand — returns arrays of canvas-space {x,y}
+    function drawStrand(threads, sIdx, W, H, t, grad) {
+      var xs = [], ys = [];
+      for (var k = 0; k <= SEG; k++) {
+        xs.push(W * k / SEG);
+        ys.push(H * spY(k / SEG, t, sIdx));
+      }
+      for (var i = 0; i < threads.length; i++) {
+        var th = threads[i];
+        var off = th.off * H;
+        ctx.beginPath();
+        ctx.moveTo(xs[0], ys[0] + off);
+        for (var k = 1; k <= SEG; k++) ctx.lineTo(xs[k], ys[k] + off);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth   = th.lw;
+        ctx.globalAlpha = th.alpha;
+        ctx.stroke();
+      }
+      return { xs: xs, ys: ys };
     }
 
     function draw() {
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      var W = canvas.offsetWidth;
-      var H = canvas.offsetHeight;
+      var W = canvas.offsetWidth, H = canvas.offsetHeight;
       if (!W || !H) { animId = requestAnimationFrame(draw); return; }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.save();
       ctx.scale(dpr, dpr);
+      ctx.lineCap = 'round';
 
-      var t = frame * 0.0018; // very slow drift
+      var t = frame * 0.010; // rotation speed
 
-      for (var i = 0; i < N; i++) {
-        var th = threads[i];
+      // Shared gradient per strand (fade left↔right)
+      var g1 = ctx.createLinearGradient(W, 0, 0, 0);
+      g1.addColorStop(0,    'rgba(0,16,68,0)');
+      g1.addColorStop(0.06, 'rgba(0,52,220,1)');
+      g1.addColorStop(0.94, 'rgba(0,52,220,1)');
+      g1.addColorStop(1,    'rgba(0,16,68,0)');
 
-        // Sample 4 x-positions to build bezier control points
-        var x0 = 1.01, x1 = 0.72, x2 = 0.38, x3 = -0.01;
+      var s1 = drawStrand(strand1, 0, W, H, t, g1);
+      var s2 = drawStrand(strand2, 1, W, H, t, g1);
 
-        var sx   = W * x0;
-        var sy   = H * (spineY(x0, t, th.bundleOffset, th.bundlePhase, th.speed) + th.offset);
-        var cp1x = W * x1;
-        var cp1y = H * (spineY(x1, t, th.bundleOffset, th.bundlePhase, th.speed) + th.offset * 0.9);
-        var cp2x = W * x2;
-        var cp2y = H * (spineY(x2, t, th.bundleOffset, th.bundlePhase, th.speed) + th.offset * 0.9);
-        var ex   = W * x3;
-        var ey   = H * (spineY(x3, t, th.bundleOffset, th.bundlePhase, th.speed) + th.offset);
-
-        var grad = ctx.createLinearGradient(sx, 0, ex, 0);
-        var r = th.r, g = th.g, b = th.b, a = th.alpha;
-        grad.addColorStop(0,    'rgba('+r+','+g+','+b+',0)');
-        grad.addColorStop(0.06, 'rgba('+r+','+g+','+b+','+(a * 0.85)+')');
-        grad.addColorStop(0.4,  'rgba('+r+','+g+','+b+','+a+')');
-        grad.addColorStop(0.82, 'rgba('+r+','+g+','+b+','+(a * 0.6)+')');
-        grad.addColorStop(1,    'rgba('+r+','+g+','+b+',0)');
-
+      // Rungs
+      ctx.globalAlpha = 1;
+      for (var i = 0; i < rungData.length; i++) {
+        var rg = rungData[i];
+        var k  = Math.min(Math.round(rg.xf * SEG), SEG);
+        var x  = s1.xs[k] + rg.xOff * W;
+        var y1r = s1.ys[k];
+        var y2r = s2.ys[k];
+        // Visibility: rungs are clearest when the helix faces us (strands close together)
+        var vis = Math.max(0, Math.cos(FREQ * Math.PI * 2 * rg.xf - t));
+        var a = rg.alpha * (0.15 + 0.85 * vis);
         ctx.beginPath();
-        ctx.moveTo(sx, sy);
-        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ex, ey);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth   = th.lw;
-        ctx.lineCap     = 'round';
-        ctx.globalAlpha = 1;
+        ctx.moveTo(x, y1r);
+        ctx.lineTo(x, y2r);
+        ctx.strokeStyle = 'rgba('+rg.r+','+rg.g+','+rg.b+','+a+')';
+        ctx.lineWidth   = rg.lw;
         ctx.stroke();
+      }
+
+      // Update absolute spine positions for letter interaction
+      var rect = canvas.getBoundingClientRect();
+      spineAbs = [[], []];
+      for (var k = 0; k <= SEG; k++) {
+        spineAbs[0].push({ x: rect.left + s1.xs[k], y: rect.top + s1.ys[k] });
+        spineAbs[1].push({ x: rect.left + s2.xs[k], y: rect.top + s2.ys[k] });
       }
 
       ctx.restore();
       frame++;
       animId = requestAnimationFrame(draw);
+      if (frame % 3 === 0) updateLetterColors();
+    }
+
+    // ── Per-letter colour interaction ────────────────────────────────────
+    var heroChars = null;
+
+    function splitChars(el) {
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+      var nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(function(node) {
+        var frag = document.createDocumentFragment();
+        var text = node.textContent;
+        for (var i = 0; i < text.length; i++) {
+          if (text[i] === ' ') {
+            frag.appendChild(document.createTextNode('\u00A0'));
+          } else {
+            var sp = document.createElement('span');
+            sp.className = 'hc';
+            sp.textContent = text[i];
+            frag.appendChild(sp);
+          }
+        }
+        node.parentNode.replaceChild(frag, node);
+      });
+    }
+
+    var HIT_R = 28; // px proximity to strand spine
+
+    function updateLetterColors() {
+      if (!heroChars || !heroChars.length) return;
+      for (var i = 0; i < heroChars.length; i++) {
+        var sp = heroChars[i];
+        var rc = sp.getBoundingClientRect();
+        var cx = rc.left + rc.width  * 0.5;
+        var cy = rc.top  + rc.height * 0.5;
+        var minD = 9999;
+        for (var s = 0; s < 2; s++) {
+          var pts = spineAbs[s];
+          for (var k = 0; k < pts.length; k++) {
+            var dx = cx - pts[k].x, dy = cy - pts[k].y;
+            var d = Math.sqrt(dx*dx + dy*dy);
+            if (d < minD) minD = d;
+          }
+        }
+        if (minD < HIT_R) {
+          sp.style.color = '#0044E4';
+          sp.style.textShadow = '0 0 10px rgba(0,68,228,0.35)';
+        } else {
+          sp.style.color = '';
+          sp.style.textShadow = '';
+        }
+      }
+    }
+
+    function initChars() {
+      var els = [document.querySelector('.hero-heading h1'), document.querySelector('.hero-body')];
+      els.forEach(function(el) { if (el) splitChars(el); });
+      heroChars = document.querySelectorAll('.hc');
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initChars);
+    } else {
+      initChars();
     }
 
     resize();
@@ -2667,4 +2749,3 @@
 </script>
 </body>
 </html>
-<!-- deploy 2026-04-08T06:10:08Z -->
