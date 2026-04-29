@@ -406,16 +406,18 @@
     .nav-drawer {
       display: none;
       position: fixed;
-      top: 64px;
+      top: 0;
       right: 0;
       bottom: 0;
       width: min(320px, 85vw);
-      background: var(--bg);
-      border-left: 1px solid var(--border);
+      background: rgba(0,12,60,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-left: 1px solid rgba(100,160,255,0.12);
       z-index: 490;
       transform: translateX(100%);
       transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
-      padding: 40px 32px;
+      padding: 88px 32px 40px;
     }
     .nav-drawer.open { transform: translateX(0); }
     .nav-drawer-inner {
@@ -435,21 +437,20 @@
       font-size: 22px;
       font-weight: 700;
       letter-spacing: -0.03em;
-      color: var(--text);
+      color: rgba(255,255,255,0.88);
       padding: 10px 0;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
       transition: color 0.2s;
     }
-    .nav-drawer-links a:hover { color: var(--accent); }
-    .nav-drawer-cta { width: 100%; justify-content: center; font-size: 15px; padding: 15px; }
+    .nav-drawer-links a:hover { color: #ffffff; }
+    .nav-drawer-cta { width: 100%; justify-content: center; font-size: 15px; padding: 15px; background: #ffffff; color: #050508; }
     .nav-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      top: 64px;
-      background: rgba(0,0,0,0.25);
+      background: rgba(0,8,40,0.55);
       z-index: 480;
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(4px);
       opacity: 0;
       transition: opacity 0.3s;
     }
@@ -1591,6 +1592,7 @@
       background: var(--border);
       border: 1px solid var(--border);
     }
+    @media (max-width: 1100px) { .proof-grid { grid-template-columns: repeat(2, 1fr); } }
     .proof-card {
       background: var(--bg);
       padding: 36px 32px;
@@ -1599,7 +1601,7 @@
       gap: 16px;
       transition: background 0.2s;
     }
-    .proof-card:hover { background: rgba(0,68,228,0.02); }
+    .proof-card:hover { background: rgba(0,68,228,0.04); box-shadow: inset 0 0 0 1px rgba(0,68,228,0.12); }
     .proof-tags { display: flex; gap: 8px; flex-wrap: wrap; }
     .proof-tag {
       font-size: 10px;
@@ -1626,12 +1628,13 @@
     }
     .proof-metric {
       font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
+      font-weight: 700;
+      color: var(--accent);
       padding-top: 16px;
       border-top: 1px solid var(--border);
+      letter-spacing: -0.01em;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 600px) {
       .proof-grid { grid-template-columns: 1fr; }
       .proof { padding: 60px 0; }
     }
@@ -1991,37 +1994,61 @@
     <div class="section-header" style="margin-bottom:48px;">
       <div>
         <div class="label" style="margin-bottom:14px;">Selected work</div>
-        <h2 class="display-md">The work speaks<br><em>for itself.</em></h2>
+        <h2 class="display-md">Outcomes,<br><em>not just outputs.</em></h2>
       </div>
     </div>
     <div class="proof-grid">
+
       <div class="proof-card">
         <div class="proof-tags">
           <span class="proof-tag">Fintech</span>
           <span class="proof-tag">0→1</span>
         </div>
         <div class="proof-client">Krak</div>
-        <p class="proof-brief">Consumer neobank, zero to shipped. Card UX, information architecture, account flows, and onboarding — from blank canvas to live product across 5 markets.</p>
-        <div class="proof-metric">70M+ users. 5 markets.</div>
+        <p class="proof-brief">Designed the full consumer neobank experience from zero — card UX, onboarding, account flows, and IA. Shipped across 5 markets, achieving PMF in 8 weeks and driving millions in early transaction volume with thousands of card orders in the first sprint.</p>
+        <div class="proof-metric">PMF in 8 weeks. Millions in transaction volume.</div>
       </div>
+
       <div class="proof-card">
         <div class="proof-tags">
           <span class="proof-tag">Regulated UX</span>
-          <span class="proof-tag">Lottery</span>
+          <span class="proof-tag">0→1 Mobile</span>
         </div>
         <div class="proof-client">Big Ticket</div>
-        <p class="proof-brief">UAE's flagship lottery platform. Full purchase flow, responsible play system, spend limits, self-exclusion, and admin CMS — designed and handed off to engineering.</p>
-        <div class="proof-metric">Live in 8 weeks from brief.</div>
+        <p class="proof-brief">Built UAE's flagship regulated lottery app from scratch — purchase flows, responsible play, self-exclusion, spend limits, and admin CMS. Every screen compliant, every interaction considered. Designed and handed to engineering, ready to scale.</p>
+        <div class="proof-metric">Live in 8 weeks. Regulated markets, zero compliance gaps.</div>
       </div>
+
       <div class="proof-card">
         <div class="proof-tags">
+          <span class="proof-tag">Enterprise</span>
           <span class="proof-tag">E-commerce</span>
-          <span class="proof-tag">Widget</span>
         </div>
         <div class="proof-client">Northladder</div>
-        <p class="proof-brief">Device trade-in widget embedded across Amazon UAE, Vodafone, Samsung, and Media Markt. Quote-to-assessment UX redesigned end-to-end for enterprise partner embedding.</p>
-        <div class="proof-metric">4 enterprise partners. Live across multiple platforms.</div>
+        <p class="proof-brief">Reimagined the trade-in experience for the world's largest tech retailers. A white-label widget redesigned end-to-end and embedded inside Amazon UAE, Vodafone, Samsung, and Media Markt — meeting the bar of companies that set the bar.</p>
+        <div class="proof-metric">4 enterprise partners. Embedded at scale globally.</div>
       </div>
+
+      <div class="proof-card">
+        <div class="proof-tags">
+          <span class="proof-tag">Fashion</span>
+          <span class="proof-tag">E-commerce</span>
+        </div>
+        <div class="proof-client">Badibanga</div>
+        <p class="proof-brief">Launched a fashion-forward e-commerce brand into the UAE market from zero digital presence. Full online store design, brand expression, product UX, and checkout — built to convert from day one.</p>
+        <div class="proof-metric">Zero to live. Fashion e-commerce launch in the UAE.</div>
+      </div>
+
+      <div class="proof-card">
+        <div class="proof-tags">
+          <span class="proof-tag">Hospitality</span>
+          <span class="proof-tag">Digital Presence</span>
+        </div>
+        <div class="proof-client">Tania's</div>
+        <p class="proof-brief">Uplifted a beloved restaurant's digital presence from the ground up — new website, in-restaurant digital menus, and integrated online delivery automation. More orders, less friction, stronger brand in every touchpoint.</p>
+        <div class="proof-metric">Stronger brand. Automated delivery. Higher order volume.</div>
+      </div>
+
     </div>
   </div>
 </section>
