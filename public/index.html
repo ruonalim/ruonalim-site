@@ -1729,11 +1729,42 @@
     .tl-panel.active .tl-panel-hint { opacity: 0; pointer-events: none; }
     .tl-panel-hint svg { width: 14px; height: 14px; fill: white; }
 
+    /* Swipe overlay — sits above iframes to capture touch events on mobile */
+    .tl-swipe-overlay {
+      display: none;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 10;
+      cursor: grab;
+    }
+    /* Nav dots */
+    .tl-dots {
+      display: none;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .tl-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(0,68,228,0.2);
+      transition: background 0.3s, transform 0.3s;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+    }
+    .tl-dot.active {
+      background: var(--accent);
+      transform: scale(1.4);
+    }
+
     @media (max-width: 900px) {
       .thought-lead { padding: 60px 0; }
-      .tl-accordion { height: 240px; gap: 4px; }
+      .tl-accordion { height: 240px; gap: 4px; position: relative; }
       .tl-panel { min-width: 38px; }
       .tl-header-row { flex-direction: column; align-items: flex-start; }
+      .tl-swipe-overlay { display: block; }
+      .tl-dots { display: flex; }
     }
     @media (max-width: 600px) {
       .tl-accordion { height: 200px; }
@@ -2115,6 +2146,7 @@
     </div>
 
     <div class="tl-accordion" id="tl-accordion">
+      <div class="tl-swipe-overlay" id="tl-swipe-overlay" aria-hidden="true"></div>
 
       <div class="tl-panel active" data-vid="4p5LzrAYN30" data-title="Matt D Smith: Good Enough UI Is the Problem">
         <iframe src="https://www.youtube.com/embed/4p5LzrAYN30?autoplay=1&mute=1&rel=0&modestbranding=1&enablejsapi=1"
@@ -2180,6 +2212,7 @@
       </div>
 
     </div>
+    <div class="tl-dots" id="tl-dots"></div>
   </div>
 </section>
 
@@ -2715,23 +2748,42 @@
     var acc = document.getElementById('tl-accordion');
     if (!acc) return;
     var panels = Array.from(acc.querySelectorAll('.tl-panel'));
+    var overlay = document.getElementById('tl-swipe-overlay');
+    var dotsContainer = document.getElementById('tl-dots');
+    var currentIdx = 0;
+
+    // Build dots
+    panels.forEach(function(_, i) {
+      var dot = document.createElement('button');
+      dot.className = 'tl-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Episode ' + (i + 1));
+      dot.addEventListener('click', function() { activate(i); });
+      dotsContainer.appendChild(dot);
+    });
+
+    function updateDots(idx) {
+      var dots = dotsContainer.querySelectorAll('.tl-dot');
+      dots.forEach(function(d, i) {
+        d.classList.toggle('active', i === idx);
+      });
+    }
 
     function activate(idx) {
+      currentIdx = idx;
       panels.forEach(function(p, i) {
         var iframe = p.querySelector('iframe');
         var vid = p.dataset.vid;
         if (i === idx) {
           p.classList.add('active');
-          // Reload src with autoplay
           iframe.src = 'https://www.youtube.com/embed/' + vid +
             '?autoplay=1&mute=0&rel=0&modestbranding=1&enablejsapi=1';
         } else {
           p.classList.remove('active');
-          // Stop playback by reloading without autoplay
           iframe.src = 'https://www.youtube.com/embed/' + vid +
             '?rel=0&modestbranding=1&enablejsapi=1';
         }
       });
+      updateDots(idx);
     }
 
     panels.forEach(function(p, i) {
@@ -2739,36 +2791,42 @@
       p.addEventListener('mouseenter', function() {
         if (!p.classList.contains('active')) activate(i);
       });
-      // Mobile: tap collapsed panel to expand
-      p.addEventListener('click', function() {
-        if (!p.classList.contains('active')) activate(i);
-      });
     });
 
-    // Mobile swipe: left = next, right = prev
-    var touchStartX = 0;
-    var touchStartY = 0;
-    acc.addEventListener('touchstart', function(e) {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-    }, { passive: true });
+    // Swipe overlay captures touch events above iframes (mobile)
+    if (overlay) {
+      var touchStartX = 0;
+      var touchStartY = 0;
 
-    acc.addEventListener('touchend', function(e) {
-      var dx = e.changedTouches[0].clientX - touchStartX;
-      var dy = e.changedTouches[0].clientY - touchStartY;
-      // Only act on horizontal swipes (dx dominant, > 40px threshold)
-      if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
-      var currentIdx = panels.findIndex(function(p) { return p.classList.contains('active'); });
-      if (dx < 0) {
-        // Swipe left → next
-        var next = (currentIdx + 1) % panels.length;
-        activate(next);
-      } else {
-        // Swipe right → prev
-        var prev = (currentIdx - 1 + panels.length) % panels.length;
-        activate(prev);
-      }
-    }, { passive: true });
+      overlay.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      overlay.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        var dy = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(dx) < 35 || Math.abs(dy) > Math.abs(dx) * 0.8) return;
+        if (dx < 0) {
+          activate((currentIdx + 1) % panels.length);
+        } else {
+          activate((currentIdx - 1 + panels.length) % panels.length);
+        }
+      }, { passive: true });
+
+      // Tap on collapsed panel (non-active side)
+      overlay.addEventListener('click', function(e) {
+        var rect = acc.getBoundingClientRect();
+        var relX = e.clientX - rect.left;
+        var fraction = relX / rect.width;
+        // Tapped left third → prev, right third → next, middle → ignore
+        if (fraction < 0.25) {
+          activate((currentIdx - 1 + panels.length) % panels.length);
+        } else if (fraction > 0.75) {
+          activate((currentIdx + 1) % panels.length);
+        }
+      });
+    }
   })();
 
 
