@@ -1848,6 +1848,106 @@
       .tl-ep-body { padding: 14px 16px 16px; }
     }
 
+    /* Mobile featured video — autoplay muted inline player */
+    .tl-featured-mobile { display: none; }
+    @media (max-width: 768px) {
+      .tl-episodes { display: none; }
+      .tl-featured-mobile {
+        display: block;
+        margin-top: 28px;
+      }
+      .tl-feat-player {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #000;
+        margin-bottom: 12px;
+      }
+      .tl-feat-player iframe {
+        width: 100%; height: 100%;
+        border: none;
+        display: block;
+      }
+      .tl-feat-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,4,24,0.80) 0%, transparent 50%);
+        display: flex;
+        align-items: flex-end;
+        padding: 16px;
+        pointer-events: none;
+      }
+      .tl-feat-meta { flex: 1; }
+      .tl-feat-show {
+        font-size: 10px; font-weight: 700;
+        letter-spacing: 0.10em; text-transform: uppercase;
+        color: rgba(255,255,255,0.50);
+        margin-bottom: 4px;
+      }
+      .tl-feat-guest {
+        font-size: 15px; font-weight: 700;
+        color: #fff; letter-spacing: -0.02em;
+        line-height: 1.2;
+      }
+      .tl-feat-title {
+        font-size: 11px; color: rgba(255,255,255,0.65);
+        line-height: 1.4; margin-top: 2px;
+      }
+      /* Smaller nav cards for other episodes */
+      .tl-mini-cards {
+        display: flex;
+        gap: 10px;
+      }
+      .tl-mini-card {
+        flex: 1;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        text-align: left;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 0.15s ease;
+      }
+      .tl-mini-card:active { transform: scale(0.96); }
+      .tl-mini-thumb-wrap {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: #000;
+        border-radius: 8px;
+        margin-bottom: 8px;
+      }
+      .tl-mini-thumb {
+        width: 100%; height: 100%;
+        object-fit: cover; display: block;
+        transition: transform 0.3s ease;
+      }
+      .tl-mini-card:active .tl-mini-thumb { transform: scale(1.03); }
+      .tl-mini-play {
+        position: absolute; inset: 0;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(0,0,0,0.25);
+      }
+      .tl-mini-play svg { width: 22px; height: 22px; fill: rgba(255,255,255,0.9); }
+      .tl-mini-guest {
+        font-size: 11px; font-weight: 700;
+        color: var(--text); letter-spacing: -0.01em;
+        line-height: 1.3;
+      }
+      .tl-mini-title {
+        font-size: 10px; color: var(--muted);
+        line-height: 1.4; margin-top: 1px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+
     /* Fullscreen video modal */
     .tl-modal {
       display: none;
@@ -2188,6 +2288,103 @@
 </section>
 
 
+<!-- ─── THOUGHT LEADERSHIP ─── -->
+<section class="thought-lead" data-anim="fade-up">
+  <div class="container">
+    <div class="tl-header-row">
+      <div>
+        <div class="label" style="margin-bottom:14px;">Beyond the work</div>
+        <h2 class="display-md">We think<br><em>in public.</em></h2>
+        <p class="tl-sub">Practitioners with a point of view. Beyond the Interface — the design leadership podcast.</p>
+      </div>
+      <a href="https://www.youtube.com/@beyondtheinterface" target="_blank" rel="noopener noreferrer" class="tl-podcast-link">Watch all episodes →</a>
+    </div>
+
+    <div class="tl-episodes">
+
+      <button class="tl-ep-card" data-vid="4p5LzrAYN30" aria-label="Watch: Matt D Smith — Good Enough UI Is the Problem">
+        <div class="tl-ep-thumb-wrap">
+          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/4p5LzrAYN30/maxresdefault.jpg" alt="" loading="lazy">
+          <div class="tl-ep-thumb-overlay">
+            <div class="tl-play-icon"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
+          </div>
+        </div>
+        <div class="tl-ep-body">
+          <div class="tl-ep-show">Beyond the Interface</div>
+          <div class="tl-ep-guest">Matt D Smith</div>
+          <div class="tl-ep-title">Good Enough UI Is the Problem — On craft, systems, and AI</div>
+        </div>
+      </button>
+
+      <button class="tl-ep-card" data-vid="8QKgpL_UqKE" aria-label="Watch: Darren Hood — Why UX Needs Gatekeepers">
+        <div class="tl-ep-thumb-wrap">
+          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/8QKgpL_UqKE/maxresdefault.jpg" alt="" loading="lazy">
+          <div class="tl-ep-thumb-overlay">
+            <div class="tl-play-icon"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
+          </div>
+        </div>
+        <div class="tl-ep-body">
+          <div class="tl-ep-show">Beyond the Interface</div>
+          <div class="tl-ep-guest">Darren Hood</div>
+          <div class="tl-ep-title">Why UX Needs Gatekeepers — Saving the discipline from itself</div>
+        </div>
+      </button>
+
+      <button class="tl-ep-card" data-vid="TMtN8xB0aBs" aria-label="Watch: Ana Sofia Gonzalez — From UI to AI">
+        <div class="tl-ep-thumb-wrap">
+          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/TMtN8xB0aBs/maxresdefault.jpg" alt="" loading="lazy">
+          <div class="tl-ep-thumb-overlay">
+            <div class="tl-play-icon"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
+          </div>
+        </div>
+        <div class="tl-ep-body">
+          <div class="tl-ep-show">Beyond the Interface</div>
+          <div class="tl-ep-guest">Ana Sofia Gonzalez</div>
+          <div class="tl-ep-title">From UI to AI — Why designers must evolve or get left behind</div>
+        </div>
+      </button>
+
+    </div>
+
+    <!-- Mobile: featured autoplay video + mini cards -->
+    <div class="tl-featured-mobile">
+      <div class="tl-feat-player">
+        <iframe
+          src="https://www.youtube.com/embed/4p5LzrAYN30?autoplay=1&mute=1&playsinline=1&loop=1&playlist=4p5LzrAYN30&controls=1&rel=0&modestbranding=1"
+          allow="autoplay; encrypted-media" allowfullscreen
+          title="Matt D Smith: Good Enough UI Is the Problem"></iframe>
+        <div class="tl-feat-overlay">
+          <div class="tl-feat-meta">
+            <div class="tl-feat-show">Beyond the Interface</div>
+            <div class="tl-feat-guest">Matt D Smith</div>
+            <div class="tl-feat-title">Good Enough UI Is the Problem</div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-mini-cards">
+        <button class="tl-mini-card" data-vid="8QKgpL_UqKE" aria-label="Watch Darren Hood episode">
+          <div class="tl-mini-thumb-wrap">
+            <img class="tl-mini-thumb" src="https://img.youtube.com/vi/8QKgpL_UqKE/mqdefault.jpg" alt="" loading="lazy">
+            <div class="tl-mini-play"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
+          </div>
+          <div class="tl-mini-guest">Darren Hood</div>
+          <div class="tl-mini-title">Why UX Needs Gatekeepers</div>
+        </button>
+        <button class="tl-mini-card" data-vid="TMtN8xB0aBs" aria-label="Watch Ana Sofia episode">
+          <div class="tl-mini-thumb-wrap">
+            <img class="tl-mini-thumb" src="https://img.youtube.com/vi/TMtN8xB0aBs/mqdefault.jpg" alt="" loading="lazy">
+            <div class="tl-mini-play"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
+          </div>
+          <div class="tl-mini-guest">Ana Sofia Gonzalez</div>
+          <div class="tl-mini-title">From UI to AI</div>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
 <!-- ─── PROOF ─── -->
 <section class="proof" id="proof" data-anim="fade-up">
   <div class="container">
@@ -2252,67 +2449,6 @@
     </div>
   </div>
 </section>
-
-<!-- ─── THOUGHT LEADERSHIP ─── -->
-<section class="thought-lead" data-anim="fade-up">
-  <div class="container">
-    <div class="tl-header-row">
-      <div>
-        <div class="label" style="margin-bottom:14px;">Beyond the work</div>
-        <h2 class="display-md">We think<br><em>in public.</em></h2>
-        <p class="tl-sub">Practitioners with a point of view. Beyond the Interface — the design leadership podcast.</p>
-      </div>
-      <a href="https://www.youtube.com/@beyondtheinterface" target="_blank" rel="noopener noreferrer" class="tl-podcast-link">Watch all episodes →</a>
-    </div>
-
-    <div class="tl-episodes">
-
-      <button class="tl-ep-card" data-vid="4p5LzrAYN30" aria-label="Watch: Matt D Smith — Good Enough UI Is the Problem">
-        <div class="tl-ep-thumb-wrap">
-          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/4p5LzrAYN30/maxresdefault.jpg" alt="" loading="lazy">
-          <div class="tl-ep-thumb-overlay">
-            <div class="tl-play-icon"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
-          </div>
-        </div>
-        <div class="tl-ep-body">
-          <div class="tl-ep-show">Beyond the Interface</div>
-          <div class="tl-ep-guest">Matt D Smith</div>
-          <div class="tl-ep-title">Good Enough UI Is the Problem — On craft, systems, and AI</div>
-        </div>
-      </button>
-
-      <button class="tl-ep-card" data-vid="8QKgpL_UqKE" aria-label="Watch: Darren Hood — Why UX Needs Gatekeepers">
-        <div class="tl-ep-thumb-wrap">
-          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/8QKgpL_UqKE/maxresdefault.jpg" alt="" loading="lazy">
-          <div class="tl-ep-thumb-overlay">
-            <div class="tl-play-icon"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
-          </div>
-        </div>
-        <div class="tl-ep-body">
-          <div class="tl-ep-show">Beyond the Interface</div>
-          <div class="tl-ep-guest">Darren Hood</div>
-          <div class="tl-ep-title">Why UX Needs Gatekeepers — Saving the discipline from itself</div>
-        </div>
-      </button>
-
-      <button class="tl-ep-card" data-vid="TMtN8xB0aBs" aria-label="Watch: Ana Sofia Gonzalez — From UI to AI">
-        <div class="tl-ep-thumb-wrap">
-          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/TMtN8xB0aBs/maxresdefault.jpg" alt="" loading="lazy">
-          <div class="tl-ep-thumb-overlay">
-            <div class="tl-play-icon"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
-          </div>
-        </div>
-        <div class="tl-ep-body">
-          <div class="tl-ep-show">Beyond the Interface</div>
-          <div class="tl-ep-guest">Ana Sofia Gonzalez</div>
-          <div class="tl-ep-title">From UI to AI — Why designers must evolve or get left behind</div>
-        </div>
-      </button>
-
-    </div>
-  </div>
-</section>
-
 
 <!-- ─── FOUNDER ─── -->
 <section class="founder-section" id="founder" data-anim="fade-up">
@@ -2489,27 +2625,30 @@
 
   function copyEmail(e) {
     e.preventDefault();
+    // Show flash IMMEDIATELY — never wait on async clipboard
+    showCopyFlash();
     var email = 'hello@ruonalim.com';
-
-    function doFallback() {
-      // execCommand fallback — works on all mobile browsers
+    // Background copy attempt — success is a bonus, not required
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(email).catch(function() { fallbackCopy(email); });
+      } else {
+        fallbackCopy(email);
+      }
+    } catch(err) { /* silent */ }
+  }
+  function fallbackCopy(email) {
+    try {
       var ta = document.createElement('textarea');
       ta.value = email;
-      ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:absolute;left:0;top:0;opacity:0;font-size:16px;';
       document.body.appendChild(ta);
       ta.focus();
-      ta.select();
-      var ok = false;
-      try { ok = document.execCommand('copy'); } catch(err) {}
+      ta.setSelectionRange(0, 99999);
+      document.execCommand('copy');
       document.body.removeChild(ta);
-      if (ok) { showCopyFlash(); } else { window.location.href = 'mailto:' + email; }
-    }
-
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(email).then(showCopyFlash).catch(doFallback);
-    } else {
-      doFallback();
-    }
+    } catch(err) { /* silent */ }
   }
 
   /* ── SELF ASSESSMENT QUIZ ── */
@@ -2946,7 +3085,7 @@
       document.body.style.overflow = '';
     }
 
-    document.querySelectorAll('.tl-ep-card').forEach(function(card) {
+    document.querySelectorAll('.tl-ep-card, .tl-mini-card').forEach(function(card) {
       card.addEventListener('click', function() { openModal(card.dataset.vid); });
     });
 
