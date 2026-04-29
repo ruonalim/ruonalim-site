@@ -464,7 +464,17 @@
     .hero {
       padding-top: 160px;
       padding-bottom: 120px;
+      position: relative;
+      overflow: hidden;
     }
+    #hero-wave-canvas {
+      position: absolute;
+      top: 0; right: 0;
+      width: 55%; height: 100%;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    @media (max-width: 768px) { #hero-wave-canvas { width: 100%; opacity: 0.45; } }
     .hero-eyebrow {
       display: flex;
       align-items: center;
@@ -1677,6 +1687,7 @@
 
 <!-- ─── HERO ─── -->
 <section class="hero">
+  <canvas id="hero-wave-canvas" aria-hidden="true"></canvas>
   <div class="container">
     <div class="hero-eyebrow" aria-hidden="true">
       <div class="eyebrow-dot"></div>
@@ -1708,40 +1719,29 @@
 
 <!-- ─── CLIENTS ─── -->
 <div class="clients-strip" role="region" aria-label="Clients we've worked with">
-  <div class="container">
-    <div class="clients-header">
-      <span class="clients-eyebrow">Trusted by</span>
-      <h2 class="clients-headline">Brands that <em>set the standard.</em></h2>
-    </div>
-    <div class="clients-grid">
-      <div class="client-card">
-        <div class="client-card-name">Kraken</div>
-        <div class="client-card-outcome">Consumer neobank. 5 markets.</div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-name">Careem</div>
-        <div class="client-card-outcome">Super-app design team. 70M+ users.</div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-name">Metro Bank</div>
-        <div class="client-card-outcome">Challenger bank. Award-winning UX.</div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-name">Uber</div>
-        <div class="client-card-outcome">Ride-share. Global scale.</div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-name">UK Government</div>
-        <div class="client-card-outcome">GDS-standard regulated services.</div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-name">Dentsu</div>
-        <div class="client-card-outcome">Global agency. Digital products.</div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-name">Almosafer</div>
-        <div class="client-card-outcome">MENA travel platform. Full UX overhaul.</div>
-      </div>
+  <div class="clients-header">
+    <span class="clients-eyebrow">Trusted by</span>
+    <h2 class="clients-headline">Brands that <em>set the standard.</em></h2>
+  </div>
+  <div class="clients-marquee-wrap" aria-hidden="true">
+    <div class="clients-track">
+      <span class="client-name">Kraken</span>
+      <span class="client-name">Uber</span>
+      <span class="client-name">Dentsu</span>
+      <span class="client-name">Careem</span>
+      <span class="client-name">Metro Bank</span>
+      <span class="client-name">UK Government</span>
+      <span class="client-name">Merkle</span>
+      <span class="client-name">Almosafer</span>
+      <!-- duplicate for seamless loop -->
+      <span class="client-name">Kraken</span>
+      <span class="client-name">Uber</span>
+      <span class="client-name">Dentsu</span>
+      <span class="client-name">Careem</span>
+      <span class="client-name">Metro Bank</span>
+      <span class="client-name">UK Government</span>
+      <span class="client-name">Merkle</span>
+      <span class="client-name">Almosafer</span>
     </div>
   </div>
 </div>
@@ -2559,6 +2559,92 @@
     sections.forEach(s => { const el = document.getElementById(s.id); if (el) spyObs.observe(el); });
   })();
 
+  /* ── HERO WAVE CANVAS — woven threads in brand blue spectrum ── */
+  (function() {
+    var canvas = document.getElementById('hero-wave-canvas');
+    if (!canvas) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var ctx = canvas.getContext('2d');
+    var animId;
+    var frame = 0;
+
+    function hexRGB(hex) {
+      return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
+    }
+
+    // Blue spectrum threads derived from #0044E4
+    // [colorA, colorB, startY, cp1Y, cp2Y, endY, lineWidth, phaseOffset, speed]
+    var threads = [
+      ['#001044','#001880', 0.05, 0.45, 0.55, 0.15, 85, 0.0,  0.8],
+      ['#001880','#003BB0', 0.20, 0.65, 0.30, 0.85, 110, 1.4, 0.6],
+      ['#0033CC','#0044E4', 0.02, 0.35, 0.70, 0.50, 130, 2.3, 0.9],
+      ['#0044E4','#2255FF', 0.35, 0.10, 0.88, 0.10, 95,  0.7, 0.7],
+      ['#1155EE','#3366FF', 0.12, 0.72, 0.22, 0.75, 75,  1.9, 1.0],
+      ['#2266FF','#5588FF', 0.45, 0.20, 0.80, 0.30, 115, 3.1, 0.65],
+      ['#3377FF','#88AAFF', 0.08, 0.58, 0.42, 0.92, 90,  2.6, 0.85],
+      ['#0022AA','#2244DD', 0.30, 0.05, 0.95, 0.60, 105, 0.4, 0.75],
+    ];
+
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width  = canvas.offsetWidth  * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+    }
+
+    function draw() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var W = canvas.offsetWidth;
+      var H = canvas.offsetHeight;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.scale(dpr, dpr);
+
+      var t = frame * 0.004;
+
+      threads.forEach(function(th) {
+        var cA = th[0], cB = th[1];
+        var y0 = th[2], cy1 = th[3], cy2 = th[4], y1 = th[5];
+        var lw = th[6], phase = th[7], spd = th[8];
+
+        var a1 = Math.sin(t * spd + phase) * 0.09;
+        var a2 = Math.cos(t * spd * 0.65 + phase + 0.8) * 0.07;
+
+        var sx = W * 0.25,  sy = H * (y0  + a1);
+        var cp1x = W * 0.60, cp1y = H * (cy1 + a2);
+        var cp2x = W * 0.85, cp2y = H * (cy2 + a1 * 0.6);
+        var ex = W * 1.08,  ey = H * (y1  + a2);
+
+        var grad = ctx.createLinearGradient(sx, sy, ex, ey);
+        var rA = hexRGB(cA), rB = hexRGB(cB);
+        grad.addColorStop(0,    'rgba('+rA[0]+','+rA[1]+','+rA[2]+',0)');
+        grad.addColorStop(0.12, 'rgba('+rA[0]+','+rA[1]+','+rA[2]+',0.75)');
+        grad.addColorStop(0.45, 'rgba('+rB[0]+','+rB[1]+','+rB[2]+',0.88)');
+        grad.addColorStop(0.78, 'rgba('+rB[0]+','+rB[1]+','+rB[2]+',0.65)');
+        grad.addColorStop(1,    'rgba('+rB[0]+','+rB[1]+','+rB[2]+',0)');
+
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ex, ey);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth   = lw;
+        ctx.lineCap     = 'round';
+        ctx.globalAlpha = 0.55;
+        ctx.stroke();
+      });
+
+      ctx.restore();
+      frame++;
+      animId = requestAnimationFrame(draw);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    draw();
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) { cancelAnimationFrame(animId); }
+      else { frame = frame; draw(); }
+    });
+  })();
 
 </script>
 </body>
