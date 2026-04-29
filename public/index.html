@@ -819,10 +819,36 @@
 
     /* Flagship service row */
     .service-row--flagship {
-      background: #F7F9FF;
       border-top: 2px solid var(--accent) !important;
     }
     .service-row--flagship .service-num { color: var(--accent); }
+
+    /* Shimmer gradient on 0→1 title — plays once on scroll entry */
+    .service-row--flagship .service-title {
+      background: linear-gradient(
+        90deg,
+        var(--text) 0%,
+        var(--text) 30%,
+        #0044E4 45%,
+        #5C9AFF 55%,
+        var(--text) 70%,
+        var(--text) 100%
+      );
+      background-size: 250% 100%;
+      background-position: 100% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      transition: none;
+    }
+    .service-row--flagship .service-title.shimmer-play {
+      animation: title-shimmer 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    @keyframes title-shimmer {
+      0%   { background-position: 100% 0; }
+      100% { background-position: -30% 0; }
+    }
 
     /* ─────────────────────────────────────────────
        WORK
@@ -1953,6 +1979,20 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
   animEls.forEach(el => observer.observe(el));
+
+  /* ── 0→1 FLAGSHIP TITLE SHIMMER ── */
+  const flagshipTitle = document.querySelector('.service-row--flagship .service-title');
+  if (flagshipTitle) {
+    const shimmerObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => flagshipTitle.classList.add('shimmer-play'), 180);
+          shimmerObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    shimmerObs.observe(flagshipTitle);
+  }
 
   /* ── STAT COUNTER ANIMATION ── */
   const countEls = document.querySelectorAll('[data-count]');
