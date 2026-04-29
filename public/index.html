@@ -1763,74 +1763,95 @@
       transform: scale(1.4);
     }
 
+    /* Mobile episode cards — replace accordion entirely on small screens */
+    .tl-mobile-cards { display: none; }
+
     @media (max-width: 900px) {
       .thought-lead { padding: 60px 0; }
       .tl-accordion { height: 240px; gap: 4px; position: relative; }
       .tl-panel { min-width: 38px; }
       .tl-header-row { flex-direction: column; align-items: flex-start; }
-      .tl-dots { display: flex; }
     }
     @media (max-width: 768px) {
-      /* On mobile: panels stack as absolute layers, overlay handles all gestures */
-      .tl-accordion {
-        overflow: hidden;
-        gap: 0;
-        height: 220px;
-        border-radius: 10px;
+      /* Hide desktop accordion + dots, show cards instead */
+      .tl-accordion { display: none !important; }
+      .tl-dots { display: none !important; }
+      .tl-swipe-overlay { display: none !important; }
+      .tl-watch-hint { display: none !important; }
+      .tl-mobile-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .tl-ep-card {
         position: relative;
-      }
-      .tl-panel {
-        position: absolute !important;
-        inset: 0 !important;
-        flex: none !important;
-        min-width: 0 !important;
-        opacity: 0;
-        transition: opacity 0.35s ease;
-        border-radius: 10px;
-        pointer-events: none;
-      }
-      .tl-panel.active { opacity: 1; }
-      .tl-panel iframe { pointer-events: none !important; }
-      .tl-panel-label {
-        opacity: 1 !important;
-        pointer-events: none;
-      }
-      .tl-panel-label span {
-        writing-mode: horizontal-tb;
-        transform: none;
-        font-size: 13px;
-        font-weight: 700;
-      }
-      .tl-panel-hint { display: none; }
-      /* Overlay covers entire accordion — captures ALL touch events */
-      .tl-swipe-overlay {
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        background: #000;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 0.15s ease;
         display: block;
+        border: none;
+        width: 100%;
+        padding: 0;
+        text-align: left;
+      }
+      .tl-ep-card:active { transform: scale(0.98); }
+      .tl-ep-thumb {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        display: block;
+      }
+      .tl-ep-overlay {
         position: absolute;
         inset: 0;
-        z-index: 20;
-        cursor: pointer;
-        touch-action: pan-x;
+        background: linear-gradient(
+          to top,
+          rgba(0,4,24,0.92) 0%,
+          rgba(0,4,24,0.40) 45%,
+          transparent 100%
+        );
+        display: flex;
+        align-items: flex-end;
+        padding: 16px;
       }
-      /* Tap-to-watch hint */
-      .tl-watch-hint {
-        position: absolute;
-        bottom: 48px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0,0,0,0.55);
-        color: rgba(255,255,255,0.85);
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.04em;
-        padding: 5px 12px;
-        border-radius: 20px;
-        pointer-events: none;
-        white-space: nowrap;
-        z-index: 21;
+      .tl-ep-info { flex: 1; }
+      .tl-ep-guest {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.50);
+        margin-bottom: 4px;
       }
-    }
-    @media (max-width: 600px) {
-      .tl-accordion { height: 200px; }
+      .tl-ep-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+      .tl-ep-play {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-left: 12px;
+        border: 1px solid rgba(255,255,255,0.20);
+      }
+      .tl-ep-play svg {
+        width: 14px; height: 14px;
+        fill: #fff;
+        margin-left: 2px;
+      }
     }
 
     /* Fullscreen video modal */
@@ -2268,6 +2289,46 @@
 
     </div>
     <div class="tl-dots" id="tl-dots"></div>
+
+    <!-- Mobile episode cards -->
+    <div class="tl-mobile-cards">
+      <button class="tl-ep-card" data-vid="4p5LzrAYN30" aria-label="Watch: Matt D Smith — Good Enough UI Is the Problem">
+        <img class="tl-ep-thumb" src="https://img.youtube.com/vi/4p5LzrAYN30/maxresdefault.jpg" alt="Matt D Smith: Good Enough UI Is the Problem" loading="lazy">
+        <div class="tl-ep-overlay">
+          <div class="tl-ep-info">
+            <div class="tl-ep-guest">Matt D Smith</div>
+            <div class="tl-ep-title">Good Enough UI Is the Problem</div>
+          </div>
+          <div class="tl-ep-play">
+            <svg viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg>
+          </div>
+        </div>
+      </button>
+      <button class="tl-ep-card" data-vid="8QKgpL_UqKE" aria-label="Watch: Darren Hood — Why UX Needs Gatekeepers">
+        <img class="tl-ep-thumb" src="https://img.youtube.com/vi/8QKgpL_UqKE/maxresdefault.jpg" alt="Darren Hood: Why UX Needs Gatekeepers" loading="lazy">
+        <div class="tl-ep-overlay">
+          <div class="tl-ep-info">
+            <div class="tl-ep-guest">Darren Hood</div>
+            <div class="tl-ep-title">Why UX Needs Gatekeepers: Saving the Discipline from Itself</div>
+          </div>
+          <div class="tl-ep-play">
+            <svg viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg>
+          </div>
+        </div>
+      </button>
+      <button class="tl-ep-card" data-vid="TMtN8xB0aBs" aria-label="Watch: Ana Sofia Gonzalez — From UI to AI">
+        <img class="tl-ep-thumb" src="https://img.youtube.com/vi/TMtN8xB0aBs/maxresdefault.jpg" alt="Ana Sofia Gonzalez: From UI to AI" loading="lazy">
+        <div class="tl-ep-overlay">
+          <div class="tl-ep-info">
+            <div class="tl-ep-guest">Ana Sofia Gonzalez</div>
+            <div class="tl-ep-title">From UI to AI — Why Designers Must Evolve or Get Left Behind</div>
+          </div>
+          <div class="tl-ep-play">
+            <svg viewBox="0 0 16 16"><polygon points="4,2 14,8 4,14"/></svg>
+          </div>
+        </div>
+      </button>
+    </div>
   </div>
 </section>
 
@@ -2898,22 +2959,36 @@
     }
 
     // Modal close
+    function closeModal() {
+      if (modal) { modal.classList.remove('open'); }
+      if (modalIframe) { modalIframe.src = ''; }
+      document.body.style.overflow = '';
+    }
     if (modalClose) {
-      modalClose.addEventListener('click', function() {
-        modal.classList.remove('open');
-        modalIframe.src = '';
-        document.body.style.overflow = '';
-      });
+      modalClose.addEventListener('click', closeModal);
     }
     if (modal) {
       modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-          modal.classList.remove('open');
-          modalIframe.src = '';
-          document.body.style.overflow = '';
-        }
+        if (e.target === modal) closeModal();
       });
     }
+    // Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Mobile card tap → open modal
+    document.querySelectorAll('.tl-ep-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var vid = card.dataset.vid;
+        if (modal && modalIframe) {
+          modalIframe.src = 'https://www.youtube.com/embed/' + vid +
+            '?autoplay=1&rel=0&modestbranding=1';
+          modal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
   })();
 
 
