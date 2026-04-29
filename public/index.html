@@ -804,6 +804,7 @@
       margin-bottom: 64px;
     }
     .services-list { display: flex; flex-direction: column; }
+    .service-row { cursor: pointer; }
     .service-row {
       display: grid;
       grid-template-columns: 52px 1fr 1fr 100px;
@@ -1405,7 +1406,7 @@
       .stat-item:last-child { border-bottom: none; }
       .stat-item::before { top: 0; left: 0; }
       .stat-num { font-size: 44px; letter-spacing: -1.5px; margin-bottom: 8px; }
-      .service-row { grid-template-columns: 40px 1fr; cursor: pointer; position: relative; padding-right: 32px; }
+      .service-row { grid-template-columns: 40px 1fr; position: relative; padding-right: 32px; }
       .service-desc, .service-tag { display: none; }
       .service-row.is-open .service-desc {
         display: block;
@@ -2218,13 +2219,16 @@
 
   /* ── Mobile service accordion ── */
   (function() {
-    const MOBILE_BP = 900;
-    function isMobile() { return window.innerWidth <= MOBILE_BP; }
-
     document.querySelectorAll('.service-row').forEach(function(row) {
-      row.addEventListener('click', function() {
-        if (!isMobile()) return;
+      row.setAttribute('role', 'button');
+      row.setAttribute('tabindex', '0');
+      function toggle(e) {
+        e.stopPropagation();
         row.classList.toggle('is-open');
+      }
+      row.addEventListener('click', toggle);
+      row.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') toggle(e);
       });
     });
   })();
