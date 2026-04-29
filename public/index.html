@@ -1425,6 +1425,214 @@
       .footer-bottom-bar { padding-left: 32px !important; padding-right: 32px !important; }
       .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
     }
+
+    /* ─── NEW: HERO PROOF ─── */
+    .hero-proof {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+      margin-top: 12px;
+      border-left: 2px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    /* ─── NEW: WAVE DIVIDER ─── */
+    .wave-divider { overflow: hidden; line-height: 0; height: 60px; }
+    .wave-divider svg { width: 100%; height: 100%; display: block; }
+    .wave-a { fill: rgba(0,68,228,0.06); animation: wave-drift 8s ease-in-out infinite; }
+    .wave-b { fill: rgba(0,68,228,0.03); animation: wave-drift 11s ease-in-out infinite reverse; }
+    @keyframes wave-drift {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-2%); }
+    }
+
+    /* ─── NEW: CLIENTS GRID ─── */
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .client-card {
+      background: var(--bg);
+      padding: 28px 24px;
+      transition: background 0.2s;
+    }
+    .client-card:hover { background: rgba(0,68,228,0.03); }
+    .client-card-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.2px;
+      margin-bottom: 6px;
+    }
+    .client-card-outcome {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    @media (max-width: 900px) {
+      .clients-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .clients-grid { grid-template-columns: 1fr 1fr; }
+      .client-card { padding: 20px 16px; }
+    }
+
+    /* ─── NEW: SERVICE PATHS ─── */
+    .service-paths {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+    .service-path {
+      background: var(--bg);
+      padding: 28px 32px;
+    }
+    .sp-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      letter-spacing: -0.1px;
+    }
+    .sp-links { display: flex; flex-direction: column; gap: 8px; }
+    .sp-link {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sp-link::before {
+      content: '→';
+      color: var(--accent);
+      font-size: 11px;
+    }
+    .sp-link:hover { color: var(--accent); }
+    @media (max-width: 600px) {
+      .service-paths { grid-template-columns: 1fr; }
+      .service-path { padding: 20px 20px; }
+    }
+
+    /* ─── NEW: PROOF SECTION ─── */
+    .proof { padding: 100px 0; border-top: 1px solid var(--border); }
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .proof-card {
+      background: var(--bg);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: background 0.2s;
+    }
+    .proof-card:hover { background: rgba(0,68,228,0.02); }
+    .proof-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .proof-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(0,68,228,0.25);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    .proof-client {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    .proof-brief {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .proof-metric {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 900px) {
+      .proof-grid { grid-template-columns: 1fr; }
+      .proof { padding: 60px 0; }
+    }
+
+    /* ─── NEW: THOUGHT LEADERSHIP ─── */
+    .thought-lead { padding: 100px 0; border-top: 1px solid var(--border); }
+    .tl-inner {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .tl-sub {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 16px;
+    }
+    .tl-items { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .tl-item {
+      background: var(--bg);
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .tl-item:hover { background: rgba(0,68,228,0.02); }
+    .tl-type { display: flex; align-items: center; gap: 8px; }
+    .tl-type-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(0,68,228,0.25);
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+    .tl-type-name { font-size: 11px; color: var(--muted); }
+    .tl-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.2px;
+      line-height: 1.3;
+    }
+    .tl-hook { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .tl-arrow { font-size: 12px; font-weight: 600; color: var(--accent); margin-top: 4px; }
+    @media (max-width: 900px) {
+      .tl-inner { grid-template-columns: 1fr; gap: 40px; }
+      .thought-lead { padding: 60px 0; }
+      .tl-item { padding: 24px 20px; }
+    }
+
+    /* ─── NEW: BIG CTA BUTTONS ─── */
+    .big-cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    @media (max-width: 600px) {
+      .big-cta-btns { flex-direction: column; }
+      .big-cta-btns .btn { text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -1479,6 +1687,7 @@
     </div>
     <div class="hero-sub-row">
       <p class="hero-body">For founders building from scratch and funded teams moving fast. Senior product designers embedded in your team. No layers, no hand-offs.</p>
+      <p class="hero-proof">Built into products used by 70M+ people across Careem, Krak, and Metro Bank.</p>
       <div class="hero-actions">
         <div class="hero-actions-row">
           <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-primary">Start a project</a>
@@ -1489,31 +1698,50 @@
   </div>
 </section>
 
+<!-- ─── WAVE ─── -->
+<div class="wave-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path class="wave-a" d="M0,36 C240,68 480,4 720,36 C960,68 1200,4 1440,36 L1440,72 L0,72 Z"/>
+    <path class="wave-b" d="M0,48 C180,16 360,64 540,40 C720,16 900,56 1080,36 C1260,16 1380,52 1440,44 L1440,72 L0,72 Z"/>
+  </svg>
+</div>
 
 <!-- ─── CLIENTS ─── -->
 <div class="clients-strip" role="region" aria-label="Clients we've worked with">
-  <div class="clients-header">
-    <span class="clients-eyebrow">Trusted by</span>
-    <h2 class="clients-headline">Brands that <em>set the standard.</em></h2>
-  </div>
-  <div class="clients-marquee-wrap" aria-hidden="true">
-    <!-- Row 1 — forward -->
-    <div class="clients-track">
-      <span class="client-name">Kraken</span>
-      <span class="client-name">Uber</span>
-      <span class="client-name">Dentsu</span>
-      <span class="client-name">Careem</span>
-      <span class="client-name">Metro Bank</span>
-      <span class="client-name">UK Government</span>
-      <span class="client-name">Merkle</span>
-      <!-- duplicate for seamless loop -->
-      <span class="client-name">Kraken</span>
-      <span class="client-name">Uber</span>
-      <span class="client-name">Dentsu</span>
-      <span class="client-name">Careem</span>
-      <span class="client-name">Metro Bank</span>
-      <span class="client-name">UK Government</span>
-      <span class="client-name">Merkle</span>
+  <div class="container">
+    <div class="clients-header">
+      <span class="clients-eyebrow">Trusted by</span>
+      <h2 class="clients-headline">Brands that <em>set the standard.</em></h2>
+    </div>
+    <div class="clients-grid">
+      <div class="client-card">
+        <div class="client-card-name">Kraken</div>
+        <div class="client-card-outcome">Consumer neobank. 5 markets.</div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-name">Careem</div>
+        <div class="client-card-outcome">Super-app design team. 70M+ users.</div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-name">Metro Bank</div>
+        <div class="client-card-outcome">Challenger bank. Award-winning UX.</div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-name">Uber</div>
+        <div class="client-card-outcome">Ride-share. Global scale.</div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-name">UK Government</div>
+        <div class="client-card-outcome">GDS-standard regulated services.</div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-name">Dentsu</div>
+        <div class="client-card-outcome">Global agency. Digital products.</div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-name">Almosafer</div>
+        <div class="client-card-outcome">MENA travel platform. Full UX overhaul.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -1525,11 +1753,11 @@
     <div class="stats-grid">
       <div class="stat-item" data-anim="fade-up" data-delay="1">
         <div class="stat-num" data-count="20" data-suffix="+" aria-label="20+">20+</div>
-        <div class="stat-label">Years of senior product design experience</div>
+        <div class="stat-label">Senior-only. No juniors. Ever.</div>
       </div>
       <div class="stat-item" data-anim="fade-up" data-delay="2">
         <div class="stat-num" data-count="70" data-suffix="M+" aria-label="70 million plus">70M+</div>
-        <div class="stat-label">Users across products we've shipped</div>
+        <div class="stat-label">Users have used products we designed.</div>
       </div>
       <div class="stat-item" data-anim="fade-up" data-delay="3">
         <div class="stat-num" data-count="48" data-suffix="h" aria-label="48 hours">48h</div>
@@ -1566,6 +1794,24 @@
       <div>
         <div class="label" style="margin-bottom:14px;">What we do</div>
         <h2 class="display-md">Six ways we work <em>with you.</em></h2>
+      </div>
+    </div>
+    <div class="service-paths" data-anim="fade-up">
+      <div class="service-path">
+        <p class="sp-label">Building from scratch?</p>
+        <div class="sp-links">
+          <a href="#service-zero-to-one" class="sp-link">0→1 Product Design</a>
+          <a href="#service-website" class="sp-link">Website & App Design</a>
+          <a href="#service-ai" class="sp-link">AI-Powered Design</a>
+        </div>
+      </div>
+      <div class="service-path">
+        <p class="sp-label">Scaling or need embedded leadership?</p>
+        <div class="sp-links">
+          <a href="#service-fractional" class="sp-link">Fractional Leadership</a>
+          <a href="#service-plg" class="sp-link">Product-Led Growth</a>
+          <a href="#service-website" class="sp-link">Website & App Design</a>
+        </div>
       </div>
     </div>
     <div class="services-list">
@@ -1696,6 +1942,104 @@
   </div>
 </section>
 
+<!-- ─── WAVE ─── -->
+<div class="wave-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path class="wave-a" d="M0,36 C240,68 480,4 720,36 C960,68 1200,4 1440,36 L1440,72 L0,72 Z"/>
+    <path class="wave-b" d="M0,48 C180,16 360,64 540,40 C720,16 900,56 1080,36 C1260,16 1380,52 1440,44 L1440,72 L0,72 Z"/>
+  </svg>
+</div>
+
+<!-- ─── PROOF ─── -->
+<section class="proof" id="proof" data-anim="fade-up">
+  <div class="container">
+    <div class="section-header" style="margin-bottom:48px;">
+      <div>
+        <div class="label" style="margin-bottom:14px;">Selected work</div>
+        <h2 class="display-md">The work speaks<br><em>for itself.</em></h2>
+      </div>
+    </div>
+    <div class="proof-grid">
+      <div class="proof-card">
+        <div class="proof-tags">
+          <span class="proof-tag">Fintech</span>
+          <span class="proof-tag">0→1</span>
+        </div>
+        <div class="proof-client">Krak</div>
+        <p class="proof-brief">Consumer neobank, zero to shipped. Card UX, information architecture, account flows, and onboarding — from blank canvas to live product across 5 markets.</p>
+        <div class="proof-metric">70M+ users. 5 markets.</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-tags">
+          <span class="proof-tag">Regulated UX</span>
+          <span class="proof-tag">Lottery</span>
+        </div>
+        <div class="proof-client">Big Ticket</div>
+        <p class="proof-brief">UAE's flagship lottery platform. Full purchase flow, responsible play system, spend limits, self-exclusion, and admin CMS — designed and handed off to engineering.</p>
+        <div class="proof-metric">Live in 8 weeks from brief.</div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-tags">
+          <span class="proof-tag">E-commerce</span>
+          <span class="proof-tag">Widget</span>
+        </div>
+        <div class="proof-client">Northladder</div>
+        <p class="proof-brief">Device trade-in widget embedded across Amazon UAE, Vodafone, Samsung, and Media Markt. Quote-to-assessment UX redesigned end-to-end for enterprise partner embedding.</p>
+        <div class="proof-metric">4 enterprise partners. Live across multiple platforms.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── THOUGHT LEADERSHIP ─── -->
+<section class="thought-lead" data-anim="fade-up">
+  <div class="container">
+    <div class="tl-inner">
+      <div class="tl-header">
+        <div class="label" style="margin-bottom:14px;">Beyond the work</div>
+        <h2 class="display-md">We think<br><em>in public.</em></h2>
+        <p class="tl-sub">Practitioners with a point of view. Not just a production shop.</p>
+      </div>
+      <div class="tl-items">
+        <a href="https://open.spotify.com/show/beyondtheinterface" target="_blank" rel="noopener noreferrer" class="tl-item">
+          <div class="tl-type">
+            <span class="tl-type-label">Podcast</span>
+            <span class="tl-type-name">Beyond the Interface</span>
+          </div>
+          <div class="tl-title">Why most design leaders plateau — and how to stop it</div>
+          <div class="tl-hook">The uncomfortable patterns that separate good designers from the ones who actually move businesses.</div>
+          <div class="tl-arrow">Listen →</div>
+        </a>
+        <a href="https://open.spotify.com/show/beyondtheinterface" target="_blank" rel="noopener noreferrer" class="tl-item">
+          <div class="tl-type">
+            <span class="tl-type-label">Podcast</span>
+            <span class="tl-type-name">Beyond the Interface</span>
+          </div>
+          <div class="tl-title">Design systems aren't about components</div>
+          <div class="tl-hook">They're about decision-making velocity. How the best teams use them to ship faster without compromising quality.</div>
+          <div class="tl-arrow">Listen →</div>
+        </a>
+        <a href="/writing" class="tl-item">
+          <div class="tl-type">
+            <span class="tl-type-label">Writing</span>
+            <span class="tl-type-name">ruonalim.com</span>
+          </div>
+          <div class="tl-title">The 48-hour brief-to-design standard</div>
+          <div class="tl-hook">How we set up our process so speed and quality reinforce each other — and what most agencies get wrong.</div>
+          <div class="tl-arrow">Read →</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WAVE ─── -->
+<div class="wave-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path class="wave-a" d="M0,36 C240,68 480,4 720,36 C960,68 1200,4 1440,36 L1440,72 L0,72 Z"/>
+    <path class="wave-b" d="M0,48 C180,16 360,64 540,40 C720,16 900,56 1080,36 C1260,16 1380,52 1440,44 L1440,72 L0,72 Z"/>
+  </svg>
+</div>
 
 <!-- ─── FOUNDER ─── -->
 <section class="founder-section" id="founder" data-anim="fade-up">
@@ -1723,7 +2067,10 @@
         <h2 class="big-cta-heading">Let's build<br><em>something ambitious.</em></h2>
       </div>
       <div class="big-cta-right" data-anim="fade-up" data-delay="2">
-        <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-primary" style="font-size:15px;padding:15px 32px;">Start the conversation →</a>
+        <div class="big-cta-btns">
+          <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-primary" style="font-size:15px;padding:15px 32px;">Start a project →</a>
+          <a href="mailto:hello@ruonalim.com?subject=Book a 30-min call" onclick="copyEmail(event)" class="btn btn-ghost" style="font-size:15px;padding:15px 32px;">Book a 30-min call</a>
+        </div>
         <p class="big-cta-note">We typically reply within 4 hours during Dubai business hours.</p>
       </div>
     </div>
