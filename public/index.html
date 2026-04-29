@@ -378,15 +378,16 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 500;
-      background: transparent;
-      border-bottom: 1px solid transparent;
-      transition: background 0.4s ease, border-color 0.4s ease;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     }
     .site-nav.nav--scrolled {
-      background: rgba(0,28,120,0.62);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(100,160,255,0.15);
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.10);
     }
     .nav-inner {
       max-width: 1200px;
@@ -1895,57 +1896,7 @@
         font-size: 11px; color: rgba(255,255,255,0.65);
         line-height: 1.4; margin-top: 2px;
       }
-      /* Smaller nav cards for other episodes */
-      .tl-mini-cards {
-        display: flex;
-        gap: 10px;
-      }
-      .tl-mini-card {
-        flex: 1;
-        border-radius: 10px;
-        overflow: hidden;
-        cursor: pointer;
-        background: none;
-        border: none;
-        padding: 0;
-        text-align: left;
-        -webkit-tap-highlight-color: transparent;
-        transition: transform 0.15s ease;
-      }
-      .tl-mini-card:active { transform: scale(0.96); }
-      .tl-mini-thumb-wrap {
-        position: relative;
-        aspect-ratio: 16 / 9;
-        overflow: hidden;
-        background: #000;
-        border-radius: 8px;
-        margin-bottom: 8px;
-      }
-      .tl-mini-thumb {
-        width: 100%; height: 100%;
-        object-fit: cover; display: block;
-        transition: transform 0.3s ease;
-      }
-      .tl-mini-card:active .tl-mini-thumb { transform: scale(1.03); }
-      .tl-mini-play {
-        position: absolute; inset: 0;
-        display: flex; align-items: center; justify-content: center;
-        background: rgba(0,0,0,0.25);
-      }
-      .tl-mini-play svg { width: 22px; height: 22px; fill: rgba(255,255,255,0.9); }
-      .tl-mini-guest {
-        font-size: 11px; font-weight: 700;
-        color: var(--text); letter-spacing: -0.01em;
-        line-height: 1.3;
-      }
-      .tl-mini-title {
-        font-size: 10px; color: var(--muted);
-        line-height: 1.4; margin-top: 1px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
+      /* mini-cards removed */
     }
 
     /* Fullscreen video modal */
@@ -2013,7 +1964,7 @@
       <li><a href="/writing">Writing</a></li>
       <li><a href="/audit" class="nav-audit">UX Audit</a></li>
     </ul>
-    <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="nav-cta-btn nav-cta-desktop">Get in touch</a>
+    <a href="#" class="nav-cta-btn nav-cta-desktop email-cta">Get in touch</a>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
       <span></span><span></span><span></span>
     </button>
@@ -2029,7 +1980,7 @@
       <li><a href="/writing" onclick="closeDrawer()">Writing</a></li>
       <li><a href="/audit" onclick="closeDrawer()">UX Audit</a></li>
     </ul>
-    <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event); closeDrawer();" class="btn btn-primary nav-drawer-cta">Get in touch</a>
+    <a href="#" class="btn btn-primary nav-drawer-cta email-cta" data-close-drawer="true">Get in touch</a>
   </div>
 </div>
 <div class="nav-overlay" id="nav-overlay" onclick="closeDrawer()"></div>
@@ -2052,7 +2003,7 @@
       <p class="hero-body">Apps, websites and digital growth systems designed for ambitious companies.</p>
       <div class="hero-actions">
         <div class="hero-actions-row">
-          <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-primary">Start a project</a>
+          <a href="#" class="btn btn-primary email-cta">Start a project</a>
           <a href="/audit" class="btn btn-ghost">Free UX Audit →</a>
         </div>
       </div>
@@ -2204,7 +2155,7 @@
       </div>
     </div>
     <div style="padding-top: 40px; border-top: 1px solid var(--border);">
-      <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-ghost">Discuss your project →</a>
+      <a href="#" class="btn btn-ghost email-cta">Discuss your project →</a>
     </div>
   </div>
 </section>
@@ -2361,24 +2312,7 @@
           </div>
         </div>
       </div>
-      <div class="tl-mini-cards">
-        <button class="tl-mini-card" data-vid="8QKgpL_UqKE" aria-label="Watch Darren Hood episode">
-          <div class="tl-mini-thumb-wrap">
-            <img class="tl-mini-thumb" src="https://img.youtube.com/vi/8QKgpL_UqKE/mqdefault.jpg" alt="" loading="lazy">
-            <div class="tl-mini-play"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
-          </div>
-          <div class="tl-mini-guest">Darren Hood</div>
-          <div class="tl-mini-title">Why UX Needs Gatekeepers</div>
-        </button>
-        <button class="tl-mini-card" data-vid="TMtN8xB0aBs" aria-label="Watch Ana Sofia episode">
-          <div class="tl-mini-thumb-wrap">
-            <img class="tl-mini-thumb" src="https://img.youtube.com/vi/TMtN8xB0aBs/mqdefault.jpg" alt="" loading="lazy">
-            <div class="tl-mini-play"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
-          </div>
-          <div class="tl-mini-guest">Ana Sofia Gonzalez</div>
-          <div class="tl-mini-title">From UI to AI</div>
-        </button>
-      </div>
+      <a href="https://www.youtube.com/@beyondtheinterface" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;">See all episodes →</a>
     </div>
 
   </div>
@@ -2477,8 +2411,8 @@
       </div>
       <div class="big-cta-right" data-anim="fade-up" data-delay="2">
         <div class="big-cta-btns">
-          <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-primary" style="font-size:15px;padding:15px 32px;">Start a project →</a>
-          <a href="mailto:hello@ruonalim.com?subject=Book a 30-min call" onclick="copyEmail(event)" class="btn btn-ghost" style="font-size:15px;padding:15px 32px;">Book a 30-min call</a>
+          <a href="#" class="btn btn-primary email-cta" style="font-size:15px;padding:15px 32px;">Start a project →</a>
+          <a href="#" class="btn btn-ghost email-cta" data-subject="Book a 30-min call" style="font-size:15px;padding:15px 32px;">Book a 30-min call</a>
         </div>
         <p class="big-cta-note">We typically reply within 4 hours during Dubai business hours.</p>
       </div>
@@ -2570,7 +2504,7 @@
     </nav>
     <div class="footer-contact">
       <strong>Get in touch</strong>
-      <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" title="Click to copy">hello@ruonalim.com</a>
+      <a href="#" class="email-cta" title="Tap to get in touch">hello@ruonalim.com</a>
       <span>Dubai &amp; London · Remote-first</span>
     </div>
   </div>
@@ -2602,7 +2536,9 @@
 </div>
 
 <script>
-  /* ── COPY EMAIL ── */
+  /* ── COPY EMAIL — JS event delegation, no onclick attrs, no mailto: race ── */
+  var EMAIL = 'hello@ruonalim.com';
+
   function showCopyFlash() {
     var flash = document.getElementById('copy-flash');
     if (!flash) return;
@@ -2614,42 +2550,50 @@
     var flash = document.getElementById('copy-flash');
     if (flash) flash.classList.remove('visible');
   }
-  document.addEventListener('DOMContentLoaded', function() {
-    var dismiss = document.getElementById('cf-dismiss');
-    if (dismiss) dismiss.addEventListener('click', hideCopyFlash);
-    var flash = document.getElementById('copy-flash');
-    if (flash) flash.addEventListener('click', function(e) {
-      if (e.target === flash) hideCopyFlash();
-    });
-  });
-
-  function copyEmail(e) {
-    e.preventDefault();
-    // Show flash IMMEDIATELY — never wait on async clipboard
-    showCopyFlash();
-    var email = 'hello@ruonalim.com';
-    // Background copy attempt — success is a bonus, not required
+  function tryCopy() {
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(email).catch(function() { fallbackCopy(email); });
+        navigator.clipboard.writeText(EMAIL).catch(function() {});
       } else {
-        fallbackCopy(email);
+        var ta = document.createElement('textarea');
+        ta.value = EMAIL; ta.setAttribute('readonly','');
+        ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px;';
+        document.body.appendChild(ta);
+        ta.setSelectionRange(0,99999);
+        try { document.execCommand('copy'); } catch(e){}
+        document.body.removeChild(ta);
       }
-    } catch(err) { /* silent */ }
+    } catch(e){}
   }
-  function fallbackCopy(email) {
-    try {
-      var ta = document.createElement('textarea');
-      ta.value = email;
-      ta.setAttribute('readonly', '');
-      ta.style.cssText = 'position:absolute;left:0;top:0;opacity:0;font-size:16px;';
-      document.body.appendChild(ta);
-      ta.focus();
-      ta.setSelectionRange(0, 99999);
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-    } catch(err) { /* silent */ }
-  }
+
+  // Attach CTA handlers after DOM ready — fire on touchend (mobile) and click (desktop)
+  // Using a single flag to prevent double-fire
+  (function attachCTAs() {
+    var _busy = false;
+    function handleCTA(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (_busy) return; _busy = true; setTimeout(function(){ _busy=false; }, 600);
+      if (e.currentTarget.dataset.closeDrawer) { try { closeDrawer(); } catch(ex){} }
+      showCopyFlash();
+      tryCopy();
+    }
+    function wire() {
+      document.querySelectorAll('.email-cta').forEach(function(el) {
+        el.addEventListener('touchend', handleCTA, { passive: false });
+        el.addEventListener('click',    handleCTA, false);
+      });
+      // Flash dismiss
+      var dismiss = document.getElementById('cf-dismiss');
+      if (dismiss) dismiss.addEventListener('click', hideCopyFlash);
+      if (dismiss) dismiss.addEventListener('touchend', function(e){ e.preventDefault(); hideCopyFlash(); }, {passive:false});
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', wire);
+    } else {
+      wire();
+    }
+  })();
 
   /* ── SELF ASSESSMENT QUIZ ── */
   const saQuestions = [
