@@ -2932,8 +2932,10 @@
 
     function openModal(vid) {
       if (!modal || !modalIframe) return;
+      // autoplay=1 works on desktop + Android; iOS ignores it and shows play button — both are fine
+      var autoplay = window.matchMedia('(hover: hover)').matches ? '1' : '0';
       modalIframe.src = 'https://www.youtube.com/embed/' + vid +
-        '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
+        '?autoplay=' + autoplay + '&playsinline=1&rel=0&modestbranding=1';
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
