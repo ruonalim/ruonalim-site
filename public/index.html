@@ -470,7 +470,7 @@
     ───────────────────────────────────────────── */
     .hero {
       padding-top: 160px;
-      padding-bottom: 120px;
+      padding-bottom: 0;
       position: relative;
       overflow: hidden;
       background: linear-gradient(118deg, #050508 0%, #001060 22%, #0044E4 52%, #c8e0ff 80%, #ffffff 100%);
@@ -567,10 +567,10 @@
        CLIENTS STRIP
     ───────────────────────────────────────────── */
     .clients-strip {
-      padding: 72px 0 80px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--bg);
+      padding: 60px 0 72px;
+      border-top: none;
+      border-bottom: none;
+      background: transparent;
       overflow: hidden;
     }
     .clients-header {
@@ -586,18 +586,18 @@
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(255,255,255,0.45);
     }
     .clients-headline {
       font-size: clamp(28px, 3.5vw, 42px);
       font-weight: 800;
       letter-spacing: -1.5px;
-      color: var(--text);
+      color: rgba(255,255,255,0.90);
       line-height: 1;
     }
     .clients-headline em {
       font-style: italic;
-      color: var(--muted);
+      color: rgba(255,255,255,0.45);
     }
 
     /* Marquee rows */
@@ -627,7 +627,7 @@
       font-weight: 800;
       letter-spacing: -1.5px;
       line-height: 1;
-      color: var(--text);
+      color: rgba(255,255,255,0.70);
       white-space: nowrap;
       padding: 10px 36px 10px 0;
       transition: color 0.2s;
@@ -638,12 +638,12 @@
     .client-name::after {
       content: '·';
       font-size: 0.5em;
-      color: var(--accent);
+      color: rgba(255,255,255,0.30);
       margin-left: 36px;
       vertical-align: middle;
       line-height: 1;
     }
-    .client-name:hover { color: var(--accent); }
+    .client-name:hover { color: rgba(255,255,255,1); }
 
     /* ─────────────────────────────────────────────
        STATS STRIP
@@ -1926,11 +1926,8 @@
       </div>
     </div>
   </div>
-</section>
-
-
-<!-- ─── CLIENTS ─── -->
-<div class="clients-strip" role="region" aria-label="Clients we've worked with">
+  <!-- ─── CLIENTS TICKER (inside hero) ─── -->
+  <div class="clients-strip" role="region" aria-label="Clients we've worked with">
   <div class="clients-header">
     <span class="clients-eyebrow">Trusted by</span>
     <h2 class="clients-headline">Brands that <em>set the standard.</em></h2>
@@ -1956,7 +1953,8 @@
       <span class="client-name">Almosafer</span>
     </div>
   </div>
-</div>
+  </div>
+</section>
 
 
 <!-- ─── STATS ─── -->
