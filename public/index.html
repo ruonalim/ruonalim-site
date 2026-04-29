@@ -1766,33 +1766,96 @@
       .tl-dots { display: flex; }
     }
     @media (max-width: 768px) {
+      /* On mobile: panels stack as absolute layers, overlay handles all gestures */
       .tl-accordion {
-        overflow-x: scroll;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+        overflow: hidden;
         gap: 0;
         height: 220px;
         border-radius: 10px;
+        position: relative;
       }
-      .tl-accordion::-webkit-scrollbar { display: none; }
       .tl-panel {
-        flex: 0 0 100% !important;
-        min-width: 100% !important;
-        scroll-snap-align: start;
-        border-radius: 0;
-        cursor: default;
+        position: absolute !important;
+        inset: 0 !important;
+        flex: none !important;
+        min-width: 0 !important;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        border-radius: 10px;
+        pointer-events: none;
       }
-      .tl-panel:first-child { border-radius: 10px 0 0 10px; }
-      .tl-panel:last-child { border-radius: 0 10px 10px 0; }
-      .tl-panel iframe { pointer-events: auto !important; }
-      .tl-panel-label { opacity: 1 !important; pointer-events: none; }
-      .tl-panel-label span { writing-mode: horizontal-tb; transform: none; font-size: 12px; }
+      .tl-panel.active { opacity: 1; }
+      .tl-panel iframe { pointer-events: none !important; }
+      .tl-panel-label {
+        opacity: 1 !important;
+        pointer-events: none;
+      }
+      .tl-panel-label span {
+        writing-mode: horizontal-tb;
+        transform: none;
+        font-size: 13px;
+        font-weight: 700;
+      }
       .tl-panel-hint { display: none; }
-      .tl-swipe-overlay { display: none; }
+      /* Overlay covers entire accordion — captures ALL touch events */
+      .tl-swipe-overlay {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        cursor: pointer;
+        touch-action: pan-x;
+      }
+      /* Tap-to-watch hint */
+      .tl-watch-hint {
+        position: absolute;
+        bottom: 48px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.55);
+        color: rgba(255,255,255,0.85);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        padding: 5px 12px;
+        border-radius: 20px;
+        pointer-events: none;
+        white-space: nowrap;
+        z-index: 21;
+      }
     }
     @media (max-width: 600px) {
       .tl-accordion { height: 200px; }
+    }
+
+    /* Fullscreen video modal */
+    .tl-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .tl-modal.open { display: flex; }
+    .tl-modal iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      max-height: 56.25vw; /* 16:9 */
+    }
+    .tl-modal-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: none; border-radius: 50%;
+      color: #fff; font-size: 20px; line-height: 1;
+      cursor: pointer; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
     }
 
     /* ─── NEW: BIG CTA BUTTONS ─── */
@@ -2171,6 +2234,7 @@
 
     <div class="tl-accordion" id="tl-accordion">
       <div class="tl-swipe-overlay" id="tl-swipe-overlay" aria-hidden="true"></div>
+      <div class="tl-watch-hint" id="tl-watch-hint">&#9654; Tap to watch</div>
 
       <div class="tl-panel active" data-vid="4p5LzrAYN30" data-title="Matt D Smith: Good Enough UI Is the Problem">
         <iframe src="https://www.youtube.com/embed/4p5LzrAYN30?autoplay=1&mute=1&rel=0&modestbranding=1&enablejsapi=1"
@@ -2736,7 +2800,11 @@
     var acc = document.getElementById('tl-accordion');
     if (!acc) return;
     var panels = Array.from(acc.querySelectorAll('.tl-panel'));
+    var overlay = document.getElementById('tl-swipe-overlay');
     var dotsContainer = document.getElementById('tl-dots');
+    var modal = document.getElementById('tl-modal');
+    var modalIframe = document.getElementById('tl-modal-iframe');
+    var modalClose = document.getElementById('tl-modal-close');
     var currentIdx = 0;
     var isMobile = function() { return window.innerWidth <= 768; };
 
@@ -2745,13 +2813,7 @@
       var dot = document.createElement('button');
       dot.className = 'tl-dot' + (i === 0 ? ' active' : '');
       dot.setAttribute('aria-label', 'Episode ' + (i + 1));
-      dot.addEventListener('click', function() {
-        if (isMobile()) {
-          acc.scrollTo({ left: i * acc.offsetWidth, behavior: 'smooth' });
-        } else {
-          activate(i);
-        }
-      });
+      dot.addEventListener('click', function() { activate(i); });
       dotsContainer.appendChild(dot);
     });
 
@@ -2768,12 +2830,16 @@
         var vid = p.dataset.vid;
         if (i === idx) {
           p.classList.add('active');
-          iframe.src = 'https://www.youtube.com/embed/' + vid +
-            '?autoplay=1&mute=0&rel=0&modestbranding=1&enablejsapi=1';
+          if (!isMobile()) {
+            iframe.src = 'https://www.youtube.com/embed/' + vid +
+              '?autoplay=1&mute=0&rel=0&modestbranding=1&enablejsapi=1';
+          }
         } else {
           p.classList.remove('active');
-          iframe.src = 'https://www.youtube.com/embed/' + vid +
-            '?rel=0&modestbranding=1&enablejsapi=1';
+          if (!isMobile()) {
+            iframe.src = 'https://www.youtube.com/embed/' + vid +
+              '?rel=0&modestbranding=1&enablejsapi=1';
+          }
         }
       });
       updateDots(idx);
@@ -2786,23 +2852,75 @@
       });
     });
 
-    // Mobile: native scroll-snap — detect snapped panel via scroll
-    var scrollTimer;
-    acc.addEventListener('scroll', function() {
-      clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(function() {
-        if (!isMobile()) return;
-        var idx = Math.round(acc.scrollLeft / acc.offsetWidth);
-        if (idx !== currentIdx) {
-          currentIdx = idx;
-          panels.forEach(function(p, i) { p.classList.toggle('active', i === idx); });
-          updateDots(idx);
+    // ── MOBILE: overlay handles ALL gestures ──
+    if (overlay) {
+      var txStart = 0, tyStart = 0, tMoved = false;
+
+      overlay.addEventListener('touchstart', function(e) {
+        txStart = e.touches[0].clientX;
+        tyStart = e.touches[0].clientY;
+        tMoved = false;
+      }, { passive: true });
+
+      overlay.addEventListener('touchmove', function(e) {
+        var dx = Math.abs(e.touches[0].clientX - txStart);
+        var dy = Math.abs(e.touches[0].clientY - tyStart);
+        if (dx > 8 || dy > 8) tMoved = true;
+      }, { passive: true });
+
+      overlay.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - txStart;
+        var dy = e.changedTouches[0].clientY - tyStart;
+        var absDx = Math.abs(dx), absDy = Math.abs(dy);
+
+        // Swipe: horizontal > 35px and more horizontal than vertical
+        if (absDx > 35 && absDx > absDy) {
+          if (dx < 0) {
+            activate((currentIdx + 1) % panels.length); // swipe left → next
+          } else {
+            activate((currentIdx - 1 + panels.length) % panels.length); // swipe right → prev
+          }
+          return;
         }
-      }, 80);
-    }, { passive: true });
+
+        // Tap: open fullscreen modal
+        if (!tMoved && modal && modalIframe) {
+          var vid = panels[currentIdx].dataset.vid;
+          modalIframe.src = 'https://www.youtube.com/embed/' + vid +
+            '?autoplay=1&rel=0&modestbranding=1';
+          modal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      }, { passive: true });
+    }
+
+    // Modal close
+    if (modalClose) {
+      modalClose.addEventListener('click', function() {
+        modal.classList.remove('open');
+        modalIframe.src = '';
+        document.body.style.overflow = '';
+      });
+    }
+    if (modal) {
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.classList.remove('open');
+          modalIframe.src = '';
+          document.body.style.overflow = '';
+        }
+      });
+    }
   })();
 
 
 </script>
+
+<!-- Video modal (mobile tap-to-watch) -->
+<div class="tl-modal" id="tl-modal" role="dialog" aria-modal="true" aria-label="Watch episode">
+  <button class="tl-modal-close" id="tl-modal-close" aria-label="Close">&#x2715;</button>
+  <iframe id="tl-modal-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+
 </body>
 </html>
