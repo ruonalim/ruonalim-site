@@ -471,7 +471,9 @@
     .hero {
       padding-top: 160px;
       padding-bottom: 0;
-      position: relative;
+      position: sticky;
+      top: 0;
+      z-index: 1;
       overflow: hidden;
       min-height: 100vh;
       min-height: 100svh;
@@ -481,6 +483,14 @@
       background: linear-gradient(118deg, #050508 0%, #001060 22%, #0044E4 52%, #3a6fd8 78%, #6690c8 100%);
       background-size: 280% 100%;
       animation: hero-sweep 12s ease-in-out infinite alternate;
+    }
+    .hero-inner {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: transform 0.1s linear, opacity 0.1s linear;
+      will-change: transform, opacity;
     }
     @keyframes hero-sweep {
       0%   { background-position: 0% 50%;   }
@@ -1884,6 +1894,15 @@
       display: flex; align-items: center; justify-content: center;
     }
 
+    /* Page body slides over sticky hero */
+    .page-body {
+      position: relative;
+      z-index: 2;
+      background: var(--bg);
+      border-radius: 16px 16px 0 0;
+      box-shadow: 0 -12px 60px rgba(0,0,0,0.22);
+    }
+
     /* ─── NEW: BIG CTA BUTTONS ─── */
     .big-cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
     @media (max-width: 600px) {
@@ -1934,7 +1953,8 @@
 
 <!-- ─── HERO ─── -->
 <section class="hero">
-  <div class="container" style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+  <div class="hero-inner">
+  <div class="container">
     <div class="hero-eyebrow" aria-hidden="true">
       <div class="eyebrow-dot"></div>
       <span class="label" id="hero-eyebrow-text">Dubai &nbsp;·&nbsp; Est. 2024 &nbsp;·&nbsp; Product Design</span>
@@ -1952,6 +1972,7 @@
       </div>
     </div>
   </div>
+  </div><!-- /.hero-inner -->
   <!-- ─── CLIENTS TICKER (inside hero) ─── -->
   <div class="clients-strip" role="region" aria-label="Clients we've worked with">
   <div class="clients-header">
@@ -1982,6 +2003,8 @@
   </div>
 </section>
 
+
+<div class="page-body">
 
 <!-- ─── STATS ─── -->
 <section class="stats-strip">
@@ -2433,6 +2456,8 @@
   </div>
 </section>
 
+</div><!-- /.page-body -->
+
 </main>
 
 <!-- ─── FOOTER ─── -->
@@ -2631,6 +2656,22 @@
 
   /* ── SCROLL PROGRESS ── */
   const progressBar = document.getElementById('scroll-progress');
+  // Hero parallax: content scales + fades as page-body slides over
+  const heroInner = document.querySelector('.hero-inner');
+  const heroEl = document.querySelector('.hero');
+  function updateHeroParallax() {
+    if (!heroInner || !heroEl) return;
+    const scrolled = window.scrollY;
+    const heroH = heroEl.offsetHeight;
+    const progress = Math.min(scrolled / heroH, 1);
+    const scale = 1 - progress * 0.06;
+    const opacity = 1 - progress * 0.5;
+    heroInner.style.transform = `scale(${scale})`;
+    heroInner.style.opacity = opacity;
+  }
+  window.addEventListener('scroll', updateHeroParallax, { passive: true });
+  updateHeroParallax();
+
   const mainNav = document.querySelector('.site-nav');
   window.addEventListener('scroll', () => {
     const h = document.documentElement.scrollHeight - window.innerHeight;
