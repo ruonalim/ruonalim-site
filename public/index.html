@@ -489,8 +489,8 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      transition: transform 0.1s linear, opacity 0.1s linear;
-      will-change: transform, opacity;
+      will-change: transform, opacity, filter;
+      transform-origin: center 40%;
     }
     @keyframes hero-sweep {
       0%   { background-position: 0% 50%;   }
@@ -1811,8 +1811,8 @@
       position: relative;
       z-index: 2;
       background: var(--bg);
-      border-radius: 16px 16px 0 0;
-      box-shadow: 0 -12px 60px rgba(0,0,0,0.22);
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -20px 80px rgba(0,0,0,0.35), 0 -2px 0 rgba(255,255,255,0.08);
     }
 
     /* ─── NEW: BIG CTA BUTTONS ─── */
@@ -2540,18 +2540,31 @@
 
   /* ── SCROLL PROGRESS ── */
   const progressBar = document.getElementById('scroll-progress');
-  // Hero parallax: content scales + fades as page-body slides over
+  // Hero cinematic scroll: content shrinks, blurs and fades as page-body rises over it
   const heroInner = document.querySelector('.hero-inner');
   const heroEl = document.querySelector('.hero');
+  function easeIn(t) { return t * t * t; }
   function updateHeroParallax() {
     if (!heroInner || !heroEl) return;
     const scrolled = window.scrollY;
     const heroH = heroEl.offsetHeight;
-    const progress = Math.min(scrolled / heroH, 1);
-    const scale = 1 - progress * 0.06;
-    const opacity = 1 - progress * 0.5;
-    heroInner.style.transform = `scale(${scale})`;
-    heroInner.style.opacity = opacity;
+    // Start effect after 8% of hero height, complete by 65%
+    const start = heroH * 0.08;
+    const end   = heroH * 0.65;
+    const raw = Math.min(Math.max((scrolled - start) / (end - start), 0), 1);
+    const p = easeIn(raw);
+
+    const scale   = 1 - p * 0.18;          // shrinks to 82%
+    const opacity = 1 - p * 0.95;          // nearly disappears
+    const blur    = p * 20;                 // blurs to 20px
+    const ty      = p * -30;               // floats up slightly as it recedes
+
+    heroInner.style.transform = `translateY(${ty}px) scale(${scale})`;
+    heroInner.style.opacity   = opacity;
+    heroInner.style.filter    = `blur(${blur}px)`;
+
+    // Parallax: hero bg moves at 40% of scroll speed
+    heroEl.style.backgroundPositionY = `calc(50% + ${scrolled * 0.28}px)`;
   }
   window.addEventListener('scroll', updateHeroParallax, { passive: true });
   updateHeroParallax();
