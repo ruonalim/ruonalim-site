@@ -327,7 +327,7 @@
       color: var(--text);
     }
     .nav-logo span { color: var(--accent); }
-    .nav-links { list-style: none; display: flex; align-items: center; gap: 36px; }
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 36px; margin-left: auto; }
     .nav-links a {
       font-size: 13px;
       font-weight: 500;
@@ -1288,6 +1288,43 @@
       transition: width 0.4s cubic-bezier(0.16,1,0.3,1);
     }
     .service-row:hover::after { width: 100%; }
+
+    /* ── FLAGSHIP: override ::after with metallic sweep (must be after .service-row::after) ── */
+    .service-row--flagship::after {
+      content: '';
+      position: absolute;
+      top: -3px; left: -80%;
+      width: 80%; height: 10px;
+      bottom: auto;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        #0033bb 12%,
+        #0055ff 24%,
+        #5588ff 34%,
+        #aac4ff 42%,
+        #ddeeff 48%,
+        #ffffff   50%,
+        #ddeeff 52%,
+        #aac4ff 58%,
+        #5588ff 66%,
+        #0055ff 76%,
+        #0033bb 88%,
+        transparent 100%
+      );
+      width: 80%;
+      height: 10px;
+      transition: none;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .service-row--flagship:hover::after { width: 80%; }
+    .service-row--flagship.shimmer-play::after {
+      animation: metallic-sweep 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    @keyframes metallic-sweep {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(360%); }
+    }
 
     /* Work card lift */
     .work-card {
