@@ -1399,9 +1399,12 @@
       .footer-inner { padding: 0 32px; }
       .hero-sub-row { flex-direction: column; gap: 32px; }
       .hero-actions { align-items: flex-start; }
-      .stats-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
-      .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 16px 0 32px; }
-      .stat-item::before { top: 0; }
+      .stats-strip { padding: 60px 0; }
+      .stats-grid { grid-template-columns: 1fr; gap: 0; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 28px 0; }
+      .stat-item:last-child { border-bottom: none; }
+      .stat-item::before { top: 0; left: 0; }
+      .stat-num { font-size: 44px; letter-spacing: -1.5px; margin-bottom: 8px; }
       .service-row { grid-template-columns: 40px 1fr; cursor: pointer; position: relative; padding-right: 32px; }
       .service-desc, .service-tag { display: none; }
       .service-row.is-open .service-desc {
