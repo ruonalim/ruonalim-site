@@ -558,6 +558,14 @@
       background-size: 280% 100%;
       animation: hero-sweep 12s ease-in-out infinite alternate;
     }
+    .hero-gold-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(118deg, #1a0900 0%, #7a3800 20%, #E8780A 45%, #FFD23F 70%, #FFE566 100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
     .hero-inner {
       flex: 1;
       display: flex;
@@ -565,6 +573,8 @@
       justify-content: center;
       will-change: transform, opacity, filter;
       transform-origin: center 40%;
+      position: relative;
+      z-index: 1;
     }
     @keyframes hero-sweep {
       0%   { background-position: 0% 50%;   }
@@ -1989,6 +1999,7 @@
 
 <!-- ─── HERO ─── -->
 <section class="hero">
+  <div class="hero-gold-overlay" aria-hidden="true"></div>
   <div class="hero-inner">
   <div class="container">
     <div class="hero-eyebrow" aria-hidden="true">
@@ -2752,7 +2763,9 @@
   // Hero cinematic scroll: content shrinks, blurs and fades as page-body rises over it
   const heroInner = document.querySelector('.hero-inner');
   const heroEl = document.querySelector('.hero');
+  const heroGoldOverlay = document.querySelector('.hero-gold-overlay');
   function easeIn(t) { return t * t * t; }
+  function easeOut(t) { return 1 - (1-t)*(1-t); }
   function updateHeroParallax() {
     if (!heroInner || !heroEl) return;
     const scrolled = window.scrollY;
@@ -2771,6 +2784,11 @@
     heroInner.style.transform = `translateY(${ty}px) scale(${scale})`;
     heroInner.style.opacity   = opacity;
     heroInner.style.filter    = `blur(${blur}px)`;
+
+    // Blue → Gold transition: gold overlay rises as content fades
+    // Starts at p=0.3 so it's visible after content begins to fade
+    const goldRaw = Math.min(Math.max((raw - 0.25) / 0.75, 0), 1);
+    if (heroGoldOverlay) heroGoldOverlay.style.opacity = easeOut(goldRaw) * 0.92;
 
     // Parallax: hero bg moves at 40% of scroll speed
     heroEl.style.backgroundPositionY = `calc(50% + ${scrolled * 0.28}px)`;
