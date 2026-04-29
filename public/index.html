@@ -304,10 +304,15 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 500;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+    nav.nav--scrolled {
+      background: rgba(5,5,8,0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .nav-inner {
       max-width: 1200px;
@@ -324,34 +329,34 @@
       font-weight: 800;
       font-size: 16px;
       letter-spacing: -0.03em;
-      color: var(--text);
+      color: #ffffff;
     }
-    .nav-logo span { color: var(--accent); }
+    .nav-logo span { color: rgba(255,255,255,0.55); }
     .nav-links { list-style: none; display: flex; align-items: center; gap: 36px; margin-left: auto; }
     .nav-links a {
       font-size: 13px;
       font-weight: 500;
-      color: var(--muted);
+      color: rgba(255,255,255,0.55);
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a.nav-active { color: var(--text); font-weight: 600; }
+    .nav-links a:hover { color: rgba(255,255,255,0.90); }
+    .nav-links a.nav-active { color: #ffffff; font-weight: 600; }
     .nav-audit {
       display: inline-flex;
       align-items: center;
       line-height: 1;
-      color: var(--accent) !important;
+      color: rgba(255,255,255,0.80) !important;
       font-size: 13px;
       font-weight: 600 !important;
       padding: 8px 18px;
-      border: 1px solid rgba(0,68,228,0.3);
+      border: 1px solid rgba(255,255,255,0.25);
       border-radius: 4px;
       transition: background 0.2s, border-color 0.2s;
     }
     .nav-audit:hover {
-      background: var(--tag-bg) !important;
-      border-color: var(--accent) !important;
-      color: var(--accent) !important;
+      background: rgba(255,255,255,0.08) !important;
+      border-color: rgba(255,255,255,0.45) !important;
+      color: #ffffff !important;
     }
     .nav-cta-btn {
       display: inline-flex;
@@ -360,13 +365,13 @@
       font-size: 13px;
       font-weight: 600;
       padding: 8px 18px;
-      background: var(--text);
-      color: #fff;
+      background: #ffffff;
+      color: #050508;
       border-radius: 4px;
       transition: opacity 0.2s;
       margin-left: 10px;
     }
-    .nav-cta-btn:hover { opacity: 0.75; }
+    .nav-cta-btn:hover { opacity: 0.85; }
 
     /* ─── HAMBURGER BUTTON ─── */
     .nav-hamburger {
@@ -384,6 +389,7 @@
       position: relative;
     }
     .nav-hamburger span {
+      background: #ffffff !important;
       display: block;
       width: 22px;
       height: 2px;
@@ -476,22 +482,26 @@
     }
     @media (prefers-reduced-motion: reduce) { .hero { animation: none; } }
 
-    /* ── Glassy hero typography ── */
+    /* ── Glassy hero typography — shifts with bg animation ── */
     .hero-heading .display-xl {
-      background: linear-gradient(135deg,
-        rgba(255,255,255,1)    0%,
-        rgba(210,232,255,0.90) 30%,
-        rgba(255,255,255,0.82) 55%,
-        rgba(185,218,255,0.92) 80%,
-        rgba(255,255,255,0.96) 100%
+      background: linear-gradient(118deg,
+        rgba(255,255,255,0.70)  0%,
+        rgba(185,218,255,0.88) 22%,
+        rgba(255,255,255,1)    40%,
+        rgba(210,232,255,0.85) 58%,
+        rgba(255,255,255,0.95) 75%,
+        rgba(200,225,255,0.78) 88%,
+        rgba(255,255,255,0.92) 100%
       );
+      background-size: 220% 100%;
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      /* override em colour so it inherits glass */
+      animation: hero-sweep 18s ease-in-out infinite alternate;
     }
     .hero-heading .display-xl em {
       background: inherit;
+      background-size: inherit;
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -2357,10 +2367,17 @@
 
   /* ── SCROLL PROGRESS ── */
   const progressBar = document.getElementById('scroll-progress');
+  const mainNav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
     const h = document.documentElement.scrollHeight - window.innerHeight;
     const p = h > 0 ? (window.scrollY / h) * 100 : 0;
     progressBar.style.width = p + '%';
+    // Nav: translucent on scroll
+    if (window.scrollY > 40) {
+      mainNav.classList.add('nav--scrolled');
+    } else {
+      mainNav.classList.remove('nav--scrolled');
+    }
   }, { passive: true });
 
   /* ── INTERACTIVE DOT MATRIX ── */
