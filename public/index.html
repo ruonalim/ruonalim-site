@@ -466,62 +466,55 @@
       padding-bottom: 120px;
       position: relative;
       overflow: hidden;
+      background: linear-gradient(118deg, #050508 0%, #001060 28%, #0044E4 58%, #ffffff 100%);
+      background-size: 220% 100%;
+      animation: hero-sweep 18s ease-in-out infinite alternate;
     }
+    @keyframes hero-sweep {
+      0%   { background-position: 0% 50%;  }
+      100% { background-position: 55% 50%; }
+    }
+    @media (prefers-reduced-motion: reduce) { .hero { animation: none; } }
 
-    /* ── Animated gradient mesh ── */
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
+    /* ── Glassy hero typography ── */
+    .hero-heading .display-xl {
+      background: linear-gradient(135deg,
+        rgba(255,255,255,1)    0%,
+        rgba(210,232,255,0.90) 30%,
+        rgba(255,255,255,0.82) 55%,
+        rgba(185,218,255,0.92) 80%,
+        rgba(255,255,255,0.96) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      /* override em colour so it inherits glass */
     }
-    .hero-bg span {
-      position: absolute;
-      border-radius: 50%;
-      will-change: transform;
+    .hero-heading .display-xl em {
+      background: inherit;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: unset;
     }
-    /* Orb 1 — large dominant blue, top-right */
-    .hero-bg span:nth-child(1) {
-      width: 800px; height: 800px;
-      background: radial-gradient(circle at center, rgba(0,68,228,0.22) 0%, rgba(0,68,228,0.06) 45%, transparent 70%);
-      top: -200px; right: -100px;
-      filter: blur(40px);
-      animation: hb1 16s ease-in-out infinite alternate;
+    .hero .hero-eyebrow .label { color: rgba(255,255,255,0.55); }
+    .hero .eyebrow-dot         { background: rgba(255,255,255,0.40); }
+    .hero .hero-body           { color: rgba(255,255,255,0.62); white-space: nowrap; }
+    @media (max-width: 900px)  { .hero .hero-body { white-space: normal; } }
+    /* CTAs on dark bg */
+    .hero .btn-primary {
+      background: #ffffff;
+      color: #050508;
+      border: none;
     }
-    /* Orb 2 — mid navy, bottom-centre */
-    .hero-bg span:nth-child(2) {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle at center, rgba(0,28,128,0.18) 0%, rgba(0,28,128,0.04) 50%, transparent 70%);
-      bottom: -120px; right: 25%;
-      filter: blur(50px);
-      animation: hb2 20s ease-in-out infinite alternate;
+    .hero .btn-primary:hover { background: rgba(255,255,255,0.88); }
+    .hero .btn-ghost {
+      border-color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.80);
     }
-    /* Orb 3 — soft periwinkle, mid-left bleed */
-    .hero-bg span:nth-child(3) {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle at center, rgba(68,144,255,0.14) 0%, rgba(68,144,255,0.03) 50%, transparent 70%);
-      top: 30%; right: 50%;
-      filter: blur(55px);
-      animation: hb3 24s ease-in-out infinite alternate;
-    }
-    @keyframes hb1 {
-      0%   { transform: translate(0, 0)      scale(1);    }
-      40%  { transform: translate(-80px, 60px) scale(1.1); }
-      100% { transform: translate(40px, -50px) scale(0.95); }
-    }
-    @keyframes hb2 {
-      0%   { transform: translate(0, 0)      scale(1);    }
-      50%  { transform: translate(100px, -40px) scale(1.12); }
-      100% { transform: translate(-60px, 70px) scale(0.92); }
-    }
-    @keyframes hb3 {
-      0%   { transform: translate(0, 0)      scale(1);    }
-      60%  { transform: translate(70px, -80px) scale(1.15); }
-      100% { transform: translate(-50px, 50px) scale(0.88); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-bg span { animation: none; }
+    .hero .btn-ghost:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.55);
     }
 
     .hero-eyebrow {
@@ -549,9 +542,7 @@
       font-size: 17px;
       line-height: 1.65;
       color: var(--muted);
-      white-space: nowrap;
     }
-    @media (max-width: 900px) { .hero-body { white-space: normal; } }
     .hero-actions {
       display: flex;
       flex-direction: column;
@@ -1737,7 +1728,6 @@
 
 <!-- ─── HERO ─── -->
 <section class="hero">
-  <div class="hero-bg" aria-hidden="true"><span></span><span></span><span></span></div>
   <div class="container">
     <div class="hero-eyebrow" aria-hidden="true">
       <div class="eyebrow-dot"></div>
