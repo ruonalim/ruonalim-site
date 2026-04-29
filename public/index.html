@@ -473,7 +473,12 @@
       padding-bottom: 0;
       position: relative;
       overflow: hidden;
-      background: linear-gradient(118deg, #050508 0%, #001060 22%, #0044E4 52%, #c8e0ff 80%, #ffffff 100%);
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(118deg, #050508 0%, #001060 22%, #0044E4 52%, #3a6fd8 78%, #6690c8 100%);
       background-size: 280% 100%;
       animation: hero-sweep 12s ease-in-out infinite alternate;
     }
@@ -1908,7 +1913,7 @@
 
 <!-- ─── HERO ─── -->
 <section class="hero">
-  <div class="container">
+  <div class="container" style="flex:1;display:flex;flex-direction:column;justify-content:center;">
     <div class="hero-eyebrow" aria-hidden="true">
       <div class="eyebrow-dot"></div>
       <span class="label" id="hero-eyebrow-text">Dubai &nbsp;·&nbsp; Est. 2024 &nbsp;·&nbsp; Product Design</span>
