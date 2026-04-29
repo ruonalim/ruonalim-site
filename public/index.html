@@ -490,13 +490,13 @@
     .hero-heading { max-width: 960px; margin-bottom: 0; }
     .hero-sub-row {
       display: flex;
+      flex-direction: column;
       align-items: flex-start;
-      justify-content: space-between;
-      gap: 80px;
+      gap: 28px;
       margin-top: 44px;
+      max-width: 560px;
     }
     .hero-body {
-      max-width: 460px;
       font-size: 17px;
       line-height: 1.65;
       color: var(--muted);
@@ -504,12 +504,11 @@
     .hero-actions {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      align-items: flex-start;
       gap: 12px;
-      flex-shrink: 0;
     }
     .hero-actions-row { display: flex; gap: 12px; }
-    .hero-note { font-size: 12px; color: var(--muted); text-align: right; }
+    .hero-note { font-size: 12px; color: var(--muted); }
 
     /* ─────────────────────────────────────────────
        CLIENTS STRIP
@@ -1411,7 +1410,7 @@
       .nav-inner { padding: 0 32px; }
       .clients-inner { padding: 0 32px; }
       .footer-inner { padding: 0 32px; }
-      .hero-sub-row { flex-direction: column; gap: 32px; }
+      .hero-sub-row { gap: 24px; }
       .hero-actions { align-items: flex-start; }
       .stats-strip { padding: 60px 0; }
       .stats-grid { grid-template-columns: 1fr; gap: 0; }
@@ -1697,7 +1696,7 @@
       <h1 class="display-xl">We design products that drive <em style="white-space:nowrap">real growth.</em></h1>
     </div>
     <div class="hero-sub-row">
-      <p class="hero-body">Apps, websites and digital growth systems built for ambitious companies. Senior designers, embedded in your team. No layers, no hand-offs.</p>
+      <p class="hero-body">Apps, websites and digital growth systems designed for ambitious companies.</p>
       <div class="hero-actions">
         <div class="hero-actions-row">
           <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="btn btn-primary">Start a project</a>
@@ -2537,7 +2536,7 @@
     sections.forEach(s => { const el = document.getElementById(s.id); if (el) spyObs.observe(el); });
   })();
 
-  /* ── HERO WAVE CANVAS — Stripe-density woven threads, blue spectrum ── */
+  /* ── HERO WAVE CANVAS — DNA ribbon bundle, blue spectrum ── */
   (function() {
     var canvas = document.getElementById('hero-wave-canvas');
     if (!canvas) return;
@@ -2545,70 +2544,66 @@
     var ctx = canvas.getContext('2d');
     var animId, frame = 0;
 
-    // Blue spectrum from near-black navy → bright sky blue, derived from #0044E4
-    var palette = [
-      [0,   8,  38],   // #00081A darkest navy
-      [0,  11,  46],   // #000B2E
-      [0,  16,  68],   // #001044
-      [0,  22,  94],   // #00165E
-      [0,  28, 128],   // #001C80
-      [0,  36, 160],   // #0024A0
-      [0,  44, 196],   // #002CC4
-      [0,  52, 220],   // #0034DC
-      [0,  68, 228],   // #0044E4  brand blue
-      [17, 96, 245],   // #1160F5
-      [34,112, 255],   // #2270FF
-      [51,128, 255],   // #3380FF
-      [68,144, 255],   // #4490FF
-      [85,160, 255],   // #55A0FF
-      [102,174,255],   // #66AEFF
-      [122,187,255],   // #7ABBFF
-      [141,200,255],   // #8DC8FF
-      [160,208,255],   // #A0D0FF
-      [187,220,255],   // #BBDCFF lightest
+    // Blue spectrum, navy → sky, brand #0044E4 at index 8
+    var pal = [
+      [0,8,38],[0,11,46],[0,16,68],[0,22,94],[0,28,128],
+      [0,36,160],[0,44,196],[0,52,220],[0,68,228],
+      [17,96,245],[34,112,255],[51,128,255],[68,144,255],
+      [85,160,255],[102,174,255],[122,187,255],[141,200,255],[160,208,255]
     ];
 
-    // Seeded deterministic pseudo-random
-    function pr(i, salt) {
-      var x = Math.sin(i * 127.1 + salt * 311.7) * 43758.5453;
+    function pr(i, s) {
+      var x = Math.sin(i * 127.1 + s * 311.7) * 43758.5453;
       return x - Math.floor(x);
     }
 
-    // Build 280 threads — seeded so stable
-    var N = 280;
+    // 3 ribbon bundles — each bundle is a tight cluster of threads that
+    // undulate together in a sine wave (DNA / woven-ribbon look)
+    var BUNDLES = 3;
+    var THREADS_PER_BUNDLE = 90; // 270 total threads
+    var N = BUNDLES * THREADS_PER_BUNDLE;
+
     var threads = [];
-    for (var i = 0; i < N; i++) {
-      // Colour biased toward mid-spectrum (not all dark or all light)
-      var cIdx = Math.floor(2 + pr(i, 0) * (palette.length - 4));
-      var c = palette[cIdx];
+    for (var b = 0; b < BUNDLES; b++) {
+      // Each bundle has its own spine: a sinusoidal path across the canvas
+      // Vertical centre of bundle at canvas mid, offset per bundle
+      var bundleOffset = (b - 1) * 0.18; // -0.18, 0, +0.18 from centre
+      var bundlePhase  = b * (Math.PI * 2 / BUNDLES); // stagger phases
 
-      // Fan origin: threads fan from a tight vertical band on the right
-      // sy clustered in 0.35–0.65 (middle third of right edge), spreads on left
-      var syBase  = 0.35 + pr(i, 1) * 0.30;   // right: tight band mid-canvas
-      var eyBase  = pr(i, 2);                   // left: full 0–1 spread
+      for (var j = 0; j < THREADS_PER_BUNDLE; j++) {
+        var gi = b * THREADS_PER_BUNDLE + j;
+        // Thread offset within bundle — tight spread ±0.06 of canvas height
+        var offset = (pr(gi, 1) - 0.5) * 0.12;
+        var cIdx = Math.floor(pr(gi, 0) * pal.length);
+        var c = pal[cIdx];
 
-      // Bezier shape: pulled toward top-right corner to create fan convergence
-      var cp1yBase = 0.2 + pr(i, 3) * 0.55;
-      var cp2yBase = pr(i, 4);
-
-      threads.push({
-        r: c[0], g: c[1], b: c[2],
-        sy:   syBase,
-        ey:   eyBase,
-        cp1y: cp1yBase,
-        cp2y: cp2yBase,
-        lw:   0.3 + pr(i, 5) * 0.9,          // 0.3 – 1.2px — very fine
-        phase: pr(i, 6) * Math.PI * 2,
-        speed: 0.18 + pr(i, 7) * 0.38,        // very slow breathing
-        alpha: 0.28 + pr(i, 8) * 0.52,        // 0.28 – 0.8
-        driftAmp: 0.008 + pr(i, 9) * 0.022,   // subtle per-thread drift
-      });
+        threads.push({
+          r: c[0], g: c[1], b: c[2],
+          bundleOffset: bundleOffset,
+          bundlePhase:  bundlePhase,
+          offset:       offset,          // thread's deviation within bundle
+          lw:    0.25 + pr(gi, 5) * 0.85, // 0.25 – 1.1px
+          speed: 0.20 + pr(gi, 7) * 0.25, // slow undulation
+          alpha: 0.30 + pr(gi, 8) * 0.55,
+          phaseFine: pr(gi, 6) * Math.PI * 2, // fine per-thread phase
+        });
+      }
     }
 
     function resize() {
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width  = Math.round(canvas.offsetWidth  * dpr);
       canvas.height = Math.round(canvas.offsetHeight * dpr);
+    }
+
+    // Evaluate the spine Y at normalised x position [0..1]
+    // Returns Y as fraction of canvas height
+    function spineY(x, t, bundleOffset, bundlePhase, speed) {
+      // Centred on 0.5 + bundleOffset, undulates ±0.12
+      var centre = 0.5 + bundleOffset;
+      return centre
+        + Math.sin(x * Math.PI * 1.8 + t * speed + bundlePhase) * 0.13
+        + Math.sin(x * Math.PI * 3.2 - t * speed * 0.7 + bundlePhase + 1.4) * 0.05;
     }
 
     function draw() {
@@ -2620,29 +2615,29 @@
       ctx.save();
       ctx.scale(dpr, dpr);
 
-      var t = frame * 0.0025; // very slow
+      var t = frame * 0.0018; // very slow drift
 
       for (var i = 0; i < N; i++) {
         var th = threads[i];
-        var d  = Math.sin(t * th.speed + th.phase) * th.driftAmp;
-        var d2 = Math.cos(t * th.speed * 0.6 + th.phase + 1.1) * th.driftAmp * 0.7;
 
-        // Right → left. Threads start at right edge, taper into left.
-        var sx   = W * 1.01;
-        var sy   = H * (th.sy   + d);
-        var ex   = W * -0.02;
-        var ey   = H * (th.ey   + d2);
-        var cp1x = W * 0.72;
-        var cp1y = H * (th.cp1y + d);
-        var cp2x = W * 0.38;
-        var cp2y = H * (th.cp2y + d2);
+        // Sample 4 x-positions to build bezier control points
+        var x0 = 1.01, x1 = 0.72, x2 = 0.38, x3 = -0.01;
 
-        var grad = ctx.createLinearGradient(sx, sy, ex, ey);
+        var sx   = W * x0;
+        var sy   = H * (spineY(x0, t, th.bundleOffset, th.bundlePhase, th.speed) + th.offset);
+        var cp1x = W * x1;
+        var cp1y = H * (spineY(x1, t, th.bundleOffset, th.bundlePhase, th.speed) + th.offset * 0.9);
+        var cp2x = W * x2;
+        var cp2y = H * (spineY(x2, t, th.bundleOffset, th.bundlePhase, th.speed) + th.offset * 0.9);
+        var ex   = W * x3;
+        var ey   = H * (spineY(x3, t, th.bundleOffset, th.bundlePhase, th.speed) + th.offset);
+
+        var grad = ctx.createLinearGradient(sx, 0, ex, 0);
         var r = th.r, g = th.g, b = th.b, a = th.alpha;
         grad.addColorStop(0,    'rgba('+r+','+g+','+b+',0)');
-        grad.addColorStop(0.05, 'rgba('+r+','+g+','+b+','+(a * 0.8)+')');
-        grad.addColorStop(0.35, 'rgba('+r+','+g+','+b+','+a+')');
-        grad.addColorStop(0.72, 'rgba('+r+','+g+','+b+','+(a * 0.6)+')');
+        grad.addColorStop(0.06, 'rgba('+r+','+g+','+b+','+(a * 0.85)+')');
+        grad.addColorStop(0.4,  'rgba('+r+','+g+','+b+','+a+')');
+        grad.addColorStop(0.82, 'rgba('+r+','+g+','+b+','+(a * 0.6)+')');
         grad.addColorStop(1,    'rgba('+r+','+g+','+b+',0)');
 
         ctx.beginPath();
@@ -2661,7 +2656,7 @@
     }
 
     resize();
-    window.addEventListener('resize', function() { resize(); });
+    window.addEventListener('resize', resize);
     draw();
     document.addEventListener('visibilitychange', function() {
       if (document.hidden) { cancelAnimationFrame(animId); }
