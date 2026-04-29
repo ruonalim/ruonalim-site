@@ -126,28 +126,102 @@
       border-radius: 2px;
     }
 
-    /* ─── COPY TOAST ─── */
-    #copy-toast {
+    /* ─── COPY FLASH OVERLAY ─── */
+    #copy-flash {
       position: fixed;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%) translateY(12px);
-      background: #111111;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      padding: 10px 20px;
-      border-radius: 100px;
+      inset: 0;
+      z-index: 999998;
+      background: #0044E4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
       opacity: 0;
-      transition: opacity 0.22s, transform 0.22s cubic-bezier(0.16,1,0.3,1);
       pointer-events: none;
-      z-index: 9999;
-      white-space: nowrap;
+      transition: opacity 0.28s cubic-bezier(0.16,1,0.3,1);
     }
-    #copy-toast.visible {
+    #copy-flash.visible {
       opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .cf-check {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 28px;
+      transform: scale(0.6);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.05s;
+    }
+    #copy-flash.visible .cf-check { transform: scale(1); }
+    .cf-check svg { width: 32px; height: 32px; }
+    .cf-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 12px;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: opacity 0.3s ease 0.12s, transform 0.3s ease 0.12s;
+    }
+    #copy-flash.visible .cf-label { opacity: 1; transform: translateY(0); }
+    .cf-email {
+      font-size: clamp(20px, 4.5vw, 38px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 36px;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: opacity 0.3s ease 0.18s, transform 0.3s ease 0.18s;
+    }
+    #copy-flash.visible .cf-email { opacity: 1; transform: translateY(0); }
+    .cf-mailto {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.65);
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.20);
+      border-radius: 100px;
+      padding: 10px 22px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: opacity 0.3s ease 0.24s, transform 0.3s ease 0.24s, background 0.2s;
+      display: inline-block;
+    }
+    #copy-flash.visible .cf-mailto { opacity: 1; transform: translateY(0); }
+    .cf-mailto:hover { background: rgba(255,255,255,0.22); color: #fff; }
+    .cf-dismiss {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.12);
+      border: none; border-radius: 50%;
+      color: rgba(255,255,255,0.7);
+      font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cf-bar {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 3px;
+      background: rgba(255,255,255,0.35);
+      width: 100%;
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+    #copy-flash.visible .cf-bar {
+      animation: cf-progress 2.8s linear 0.3s forwards;
+    }
+    @keyframes cf-progress {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
     }
 
     /* ─── REDUCED MOTION ─── */
@@ -2371,6 +2445,20 @@
 </footer>
 
 
+<!-- Copy flash overlay -->
+<div id="copy-flash" role="status" aria-live="polite">
+  <button class="cf-dismiss" id="cf-dismiss" aria-label="Close">&#x2715;</button>
+  <div class="cf-check">
+    <svg viewBox="0 0 32 32" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6,17 13,24 26,10"/>
+    </svg>
+  </div>
+  <div class="cf-label">Copied to clipboard</div>
+  <div class="cf-email">hello@ruonalim.com</div>
+  <a class="cf-mailto" href="mailto:hello@ruonalim.com">Open email app →</a>
+  <div class="cf-bar"></div>
+</div>
+
 <!-- Video modal -->
 <div class="tl-modal" id="tl-modal" role="dialog" aria-modal="true" aria-label="Watch episode">
   <button class="tl-modal-close" id="tl-modal-close" aria-label="Close">&#x2715;</button>
@@ -2379,16 +2467,49 @@
 
 <script>
   /* ── COPY EMAIL ── */
+  function showCopyFlash() {
+    var flash = document.getElementById('copy-flash');
+    if (!flash) return;
+    flash.classList.add('visible');
+    clearTimeout(window._flashTimer);
+    window._flashTimer = setTimeout(hideCopyFlash, 3100);
+  }
+  function hideCopyFlash() {
+    var flash = document.getElementById('copy-flash');
+    if (flash) flash.classList.remove('visible');
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    var dismiss = document.getElementById('cf-dismiss');
+    if (dismiss) dismiss.addEventListener('click', hideCopyFlash);
+    var flash = document.getElementById('copy-flash');
+    if (flash) flash.addEventListener('click', function(e) {
+      if (e.target === flash) hideCopyFlash();
+    });
+  });
+
   function copyEmail(e) {
     e.preventDefault();
-    navigator.clipboard.writeText('hello@ruonalim.com').then(() => {
-      let toast = document.getElementById('copy-toast');
-      if (!toast) { toast = document.createElement('div'); toast.id = 'copy-toast'; document.body.appendChild(toast); }
-      toast.textContent = 'hello@ruonalim.com copied ✓';
-      toast.classList.add('visible');
-      clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => toast.classList.remove('visible'), 2200);
-    }).catch(() => { window.location.href = 'mailto:hello@ruonalim.com'; });
+    var email = 'hello@ruonalim.com';
+
+    function doFallback() {
+      // execCommand fallback — works on all mobile browsers
+      var ta = document.createElement('textarea');
+      ta.value = email;
+      ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch(err) {}
+      document.body.removeChild(ta);
+      if (ok) { showCopyFlash(); } else { window.location.href = 'mailto:' + email; }
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(email).then(showCopyFlash).catch(doFallback);
+    } else {
+      doFallback();
+    }
   }
 
   /* ── SELF ASSESSMENT QUIZ ── */
