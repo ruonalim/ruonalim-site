@@ -97,6 +97,64 @@
     .nav-cta-btn { font-size: 13px; font-weight: 600; padding: 9px 20px; background: var(--text); color: #fff; border-radius: 2px; transition: opacity 0.2s; }
     .nav-cta-btn:hover { opacity: 0.75; }
 
+    /* Hamburger */
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      width: 40px; height: 40px; background: none; border: none; padding: 8px;
+      cursor: pointer; z-index: 600; position: relative;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px;
+      transition: background 0.3s, transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.2s;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Drawer */
+    .nav-drawer {
+      display: none; position: fixed; top: 0; right: 0; bottom: 0;
+      width: min(320px, 85vw);
+      background: rgba(0,12,60,0.96);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-left: 1px solid rgba(100,160,255,0.12);
+      z-index: 490; transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+      padding: 88px 32px 40px;
+    }
+    .nav-drawer.open { transform: translateX(0); }
+    .nav-drawer-links {
+      list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px;
+    }
+    .nav-drawer-links a {
+      display: block; padding: 12px 0; font-size: 18px; font-weight: 600;
+      color: rgba(255,255,255,0.70); border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: color 0.2s;
+    }
+    .nav-drawer-links a:hover, .nav-drawer-links a.active { color: #fff; }
+    .nav-drawer-cta {
+      display: inline-block; margin-top: 24px; padding: 14px 28px;
+      background: #ffffff; color: #050508; font-size: 15px; font-weight: 700;
+      border-radius: 4px; text-align: center; width: 100%;
+    }
+    .nav-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,8,40,0.55); z-index: 480;
+      backdrop-filter: blur(4px); opacity: 0;
+      pointer-events: none; transition: opacity 0.3s;
+    }
+    .nav-overlay.open { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 768px) {
+      .nav-hamburger { display: flex; }
+      .nav-links { display: none; }
+      .nav-cta-btn { display: none; }
+      .nav-drawer { display: block; }
+      .nav-overlay { display: block; }
+      .nav-inner { padding: 0 24px; }
+    }
+
     /* PAGE */
     .page-wrap { padding-top: 64px; min-height: 100vh; position: relative; z-index: 1; }
 
@@ -294,8 +352,26 @@
     .skip-link:focus { top: 0; }
     :focus-visible { outline: 3px solid #0044E4; outline-offset: 3px; border-radius: 2px; }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; } #hero-dots { display: none !important; } }
-    #copy-toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(12px); background: #111; color: #fff; font-size: 13px; font-weight: 500; padding: 10px 20px; border-radius: 100px; opacity: 0; transition: opacity 0.22s, transform 0.22s cubic-bezier(0.16,1,0.3,1); pointer-events: none; z-index: 9999; white-space: nowrap; }
-    #copy-toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+    /* Copy flash */
+    #copy-flash {
+      position: fixed; inset: 0; z-index: 999998; background: #0044E4;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.28s cubic-bezier(0.16,1,0.3,1);
+    }
+    #copy-flash.visible { opacity: 1; pointer-events: auto; }
+    .cf-check { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 28px; transform: scale(0.6); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.05s; }
+    #copy-flash.visible .cf-check { transform: scale(1); }
+    .cf-check svg { width: 32px; height: 32px; }
+    .cf-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 12px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease 0.12s, transform 0.3s ease 0.12s; }
+    #copy-flash.visible .cf-label { opacity: 1; transform: translateY(0); }
+    .cf-email { font-size: clamp(20px,4.5vw,38px); font-weight: 800; letter-spacing: -0.03em; color: #fff; margin-bottom: 36px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease 0.18s, transform 0.3s ease 0.18s; }
+    #copy-flash.visible .cf-email { opacity: 1; transform: translateY(0); }
+    .cf-mailto { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.20); border-radius: 100px; padding: 10px 22px; text-decoration: none; display: inline-block; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease 0.24s, transform 0.3s ease 0.24s; }
+    #copy-flash.visible .cf-mailto { opacity: 1; transform: translateY(0); }
+    .cf-dismiss { position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; background: rgba(255,255,255,0.12); border: none; border-radius: 50%; color: rgba(255,255,255,0.7); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .cf-bar { position: absolute; bottom: 0; left: 0; height: 3px; background: rgba(255,255,255,0.35); width: 100%; transform-origin: left; transform: scaleX(0); }
+    #copy-flash.visible .cf-bar { animation: cfbar 3.1s linear forwards; }
+    @keyframes cfbar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
   </style>
 </head>
 <body>
@@ -305,6 +381,7 @@
 <div id="scroll-progress" aria-hidden="true"></div>
 
 <!-- NAV -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeDrawer()"></div>
 <nav aria-label="Main navigation">
   <div class="nav-inner">
     <a href="/" class="nav-logo" aria-label="ruonalim – home">ruonalim<span aria-hidden="true">.</span></a>
@@ -315,9 +392,23 @@
       <li><a href="/#about">About</a></li>
       <li><a href="/audit" class="nav-audit">UX Audit</a></li>
     </ul>
-    <a href="mailto:hello@ruonalim.com" onclick="copyEmail(event)" class="nav-cta-btn">Get in touch</a>
+    <a href="#" class="nav-cta-btn email-cta">Get in touch</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<!-- Mobile drawer -->
+<div class="nav-drawer" id="nav-drawer" role="dialog" aria-label="Navigation menu">
+  <ul class="nav-drawer-links">
+    <li><a href="/#services" onclick="closeDrawer()">Services</a></li>
+    <li><a href="/#work" onclick="closeDrawer()">Work</a></li>
+    <li><a href="/writing" class="active" onclick="closeDrawer()">Writing</a></li>
+    <li><a href="/#about" onclick="closeDrawer()">About</a></li>
+    <li><a href="/audit" onclick="closeDrawer()">UX Audit</a></li>
+  </ul>
+  <a href="#" class="nav-drawer-cta email-cta" data-close-drawer="true">Get in touch</a>
+</div>
 
 <main id="main-content">
 <div class="page-wrap">
@@ -403,20 +494,94 @@
   </div>
 </footer>
 
-<script>
-  function copyEmail(e) {
-    e.preventDefault();
-    navigator.clipboard.writeText('hello@ruonalim.com').then(() => {
-      let t = document.getElementById('copy-toast');
-      if (!t) { t = document.createElement('div'); t.id = 'copy-toast'; document.body.appendChild(t); }
-      t.textContent = 'hello@ruonalim.com copied ✓';
-      t.classList.add('visible');
-      clearTimeout(window._tt);
-      window._tt = setTimeout(() => t.classList.remove('visible'), 2200);
-    }).catch(() => { window.location.href = 'mailto:hello@ruonalim.com'; });
-  }
+<!-- Copy flash overlay -->
+<div id="copy-flash" role="dialog" aria-modal="true" aria-label="Email copied">
+  <button class="cf-dismiss" id="cf-dismiss" aria-label="Close">&#x2715;</button>
+  <div class="cf-check"><svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="15" stroke="white" stroke-width="1.5"/><path d="M9 16.5l5 5 9-10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="cf-label">Copied to clipboard</div>
+  <div class="cf-email">hello@ruonalim.com</div>
+  <a class="cf-mailto" href="mailto:hello@ruonalim.com">Open email app →</a>
+  <div class="cf-bar"></div>
+</div>
 
+<script>
   document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ── HAMBURGER / DRAWER ── */
+  function openDrawer() {
+    var h = document.getElementById('nav-hamburger');
+    var d = document.getElementById('nav-drawer');
+    var o = document.getElementById('nav-overlay');
+    if (!h || !d) return;
+    h.classList.add('open'); h.setAttribute('aria-expanded','true');
+    d.classList.add('open');
+    if (o) { o.classList.add('open'); }
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    var h = document.getElementById('nav-hamburger');
+    var d = document.getElementById('nav-drawer');
+    var o = document.getElementById('nav-overlay');
+    if (!h || !d) return;
+    h.classList.remove('open'); h.setAttribute('aria-expanded','false');
+    d.classList.remove('open');
+    if (o) { o.classList.remove('open'); }
+    document.body.style.overflow = '';
+  }
+  var _hb = document.getElementById('nav-hamburger');
+  if (_hb) _hb.addEventListener('click', function() {
+    _hb.classList.contains('open') ? closeDrawer() : openDrawer();
+  });
+
+  /* ── COPY FLASH / EMAIL CTA ── */
+  var EMAIL = 'hello@ruonalim.com';
+  function showCopyFlash() {
+    var flash = document.getElementById('copy-flash');
+    if (!flash) return;
+    flash.classList.add('visible');
+    clearTimeout(window._flashTimer);
+    window._flashTimer = setTimeout(hideCopyFlash, 3100);
+  }
+  function hideCopyFlash() {
+    var flash = document.getElementById('copy-flash');
+    if (flash) flash.classList.remove('visible');
+  }
+  function tryCopy() {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(EMAIL).catch(function(){});
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = EMAIL; ta.setAttribute('readonly','');
+        ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px;';
+        document.body.appendChild(ta); ta.setSelectionRange(0,99999);
+        try { document.execCommand('copy'); } catch(err){}
+        document.body.removeChild(ta);
+      }
+    } catch(err){}
+  }
+  (function attachCTAs() {
+    var _busy = false;
+    function handleCTA(e) {
+      e.preventDefault(); e.stopPropagation();
+      if (_busy) return; _busy = true; setTimeout(function(){ _busy=false; }, 600);
+      if (e.currentTarget.dataset.closeDrawer) { try { closeDrawer(); } catch(ex){} }
+      showCopyFlash(); tryCopy();
+    }
+    function wire() {
+      document.querySelectorAll('.email-cta').forEach(function(el) {
+        el.addEventListener('touchend', handleCTA, { passive: false });
+        el.addEventListener('click', handleCTA, false);
+      });
+      var dismiss = document.getElementById('cf-dismiss');
+      if (dismiss) {
+        dismiss.addEventListener('click', hideCopyFlash);
+        dismiss.addEventListener('touchend', function(e){ e.preventDefault(); hideCopyFlash(); }, {passive:false});
+      }
+    }
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', wire); }
+    else { wire(); }
+  })();
 
   /* ── SCROLL PROGRESS ── */
   const progressBar = document.getElementById('scroll-progress');
