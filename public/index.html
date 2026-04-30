@@ -561,10 +561,43 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      will-change: transform, opacity, filter;
+      will-change: transform, opacity;
       transform-origin: center 40%;
       position: relative;
       z-index: 1;
+    }
+    /* ── Glass panel ── */
+    .hero-glass {
+      position: relative;
+      background: rgba(255,255,255,0.055);
+      backdrop-filter: blur(36px) saturate(180%);
+      -webkit-backdrop-filter: blur(36px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 52px 56px 48px;
+      overflow: hidden;
+      /* Top-left light catch */
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.18),
+        inset 1px 0 0 rgba(255,255,255,0.08),
+        0 8px 64px rgba(0,0,0,0.18);
+    }
+    /* Diagonal highlight — catches gradient light at the top-left corner */
+    .hero-glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.10) 0%,
+        rgba(255,255,255,0.03) 35%,
+        transparent 65%
+      );
+      pointer-events: none;
+    }
+    @media (max-width: 768px) {
+      .hero-glass { padding: 36px 28px 32px; border-radius: 12px; }
     }
     @keyframes hero-sweep {
       0%   { background-position: 0% 50%;   }
@@ -2166,19 +2199,21 @@
   <div class="hero-gold-overlay" aria-hidden="true"></div>
   <div class="hero-inner">
   <div class="container">
-    <div class="hero-eyebrow" aria-hidden="true">
-      <div class="eyebrow-dot"></div>
-      <span class="label" id="hero-eyebrow-text">Dubai &nbsp;·&nbsp; Est. 2024 &nbsp;·&nbsp; Product Design</span>
-    </div>
-    <div class="hero-heading">
-      <h1 class="display-xl">We design products<br>that drive <em>real growth.</em></h1>
-    </div>
-    <div class="hero-sub-row">
-      <p class="hero-body">Apps, websites and digital growth systems designed for ambitious companies.</p>
-      <div class="hero-actions">
-        <div class="hero-actions-row">
-          <a href="#" class="btn btn-primary email-cta">Start a project</a>
-          <a href="/audit" class="btn btn-ghost">Free UX Audit →</a>
+    <div class="hero-glass">
+      <div class="hero-eyebrow" aria-hidden="true">
+        <div class="eyebrow-dot"></div>
+        <span class="label" id="hero-eyebrow-text">Dubai &nbsp;·&nbsp; Est. 2024 &nbsp;·&nbsp; Product Design</span>
+      </div>
+      <div class="hero-heading">
+        <h1 class="display-xl">We design products<br>that drive <em>real growth.</em></h1>
+      </div>
+      <div class="hero-sub-row">
+        <p class="hero-body">Apps, websites and digital growth systems designed for ambitious companies.</p>
+        <div class="hero-actions">
+          <div class="hero-actions-row">
+            <a href="#" class="btn btn-primary email-cta">Start a project</a>
+            <a href="/audit" class="btn btn-ghost">Free UX Audit →</a>
+          </div>
         </div>
       </div>
     </div>
@@ -2992,7 +3027,15 @@
 
     heroInner.style.transform = `translateY(${ty}px) scale(${scale})`;
     heroInner.style.opacity   = opacity;
-    heroInner.style.filter    = `blur(${blur}px)`;
+    // Only apply filter (and the stacking context it creates) when blur is meaningful
+    // — keeps backdrop-filter on .hero-glass working at rest
+    if (blur > 0.5) {
+      heroInner.style.willChange = 'transform, opacity, filter';
+      heroInner.style.filter = `blur(${blur}px)`;
+    } else {
+      heroInner.style.willChange = 'transform, opacity';
+      heroInner.style.filter = '';
+    }
 
     // Gold overlay: rises after content starts to fade
     const goldRaw = Math.min(Math.max((raw - 0.25) / 0.75, 0), 1);
