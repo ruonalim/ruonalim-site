@@ -688,35 +688,29 @@
     .hero-heading .display-xl { color: #ffffff; }
     .hero-heading .display-xl em { color: #FFD23F; font-style: italic; }
 
-    /* Word-by-word highlight: blur-to-sharp, lift-to-seat */
+    /* Word shimmer: text always visible, yellow colour block flows through */
     .hero-heading .display-xl .hl-w {
       display: inline-block;
-      opacity: 0.07;
-      filter: blur(5px);
-      transform: translateY(3px);
-      transition: opacity 0.48s cubic-bezier(0.22,1,0.36,1),
-                  filter 0.48s cubic-bezier(0.22,1,0.36,1),
-                  transform 0.48s cubic-bezier(0.22,1,0.36,1);
+    }
+    /* Non-em words: white → yellow → white */
+    @keyframes word-shimmer {
+      0%   { color: #ffffff; }
+      18%  { color: #FFD23F; }
+      55%  { color: #FFD23F; }
+      100% { color: #ffffff; }
+    }
+    /* em word (growth.): yellow → bright white → back to yellow */
+    @keyframes word-shimmer-em {
+      0%   { color: #FFD23F; }
+      18%  { color: #fffbe8; }
+      55%  { color: #fffbe8; }
+      100% { color: #FFD23F; }
     }
     .hero-heading .display-xl .hl-w.lit {
-      opacity: 1;
-      filter: none;
-      transform: none;
+      animation: word-shimmer 0.58s ease-out;
     }
-    /* Body text: same flow, lighter values */
-    .hero-body .hl-w {
-      display: inline-block;
-      opacity: 0;
-      filter: blur(3px);
-      transform: translateY(2px);
-      transition: opacity 0.44s cubic-bezier(0.22,1,0.36,1),
-                  filter 0.44s cubic-bezier(0.22,1,0.36,1),
-                  transform 0.44s cubic-bezier(0.22,1,0.36,1);
-    }
-    .hero-body .hl-w.lit {
-      opacity: 1;
-      filter: none;
-      transform: none;
+    .hero-heading .display-xl em .hl-w.lit {
+      animation: word-shimmer-em 0.58s ease-out;
     }
     .hero .hero-eyebrow .label { color: rgba(255,255,255,0.55); }
     .hero .eyebrow-dot         { background: rgba(255,255,255,0.40); }
@@ -2362,14 +2356,14 @@
         <span class="label" id="hero-eyebrow-text">Dubai &nbsp;·&nbsp; Est. 2024 &nbsp;·&nbsp; Product Design</span>
       </div>
       <div class="hero-heading">
-        <h1 class="display-xl"><span class="hl-w">We</span> <span class="hl-w">design</span> <span class="hl-w">products</span> <span class="hl-w">that</span> <span class="hl-w">drive</span> <em><span class="hl-w">real</span> <span class="hl-w">growth.</span></em></h1>
+        <h1 class="display-xl"><span class="hl-w">Design</span> <span class="hl-w">that</span> <span class="hl-w">drives</span> <em><span class="hl-w">growth.</span></em> <span class="hl-w">From</span> <span class="hl-w">0→1</span> <span class="hl-w">to</span> <span class="hl-w">scale.</span></h1>
       </div>
     </div>
 
     <!-- Bottom: subtext left, CTAs right -->
     <div class="hero-bottom hero-sub-row">
       <div class="hero-bottom-left">
-        <p class="hero-body"><span class="hl-w">Whether</span> <span class="hl-w">you're</span> <span class="hl-w">going</span> <span class="hl-w">0→1</span> <span class="hl-w">or</span> <span class="hl-w">scaling</span> <span class="hl-w">what's</span> <span class="hl-w">already</span> <span class="hl-w">working</span> <span class="hl-w">—</span> <span class="hl-w">we</span> <span class="hl-w">design</span> <span class="hl-w">what</span> <span class="hl-w">comes</span> <span class="hl-w">next.</span></p>
+        <p class="hero-body">Whether you're going 0→1 or scaling what's already working — we design what comes next.</p>
       </div>
       <div class="hero-bottom-right">
         <div class="hero-actions">
@@ -3231,7 +3225,6 @@
       const g = lerp(210, 68,  goldP);
       const b = lerp(63,  228, goldP);
       heroHeadEm.style.color = `rgb(${r},${g},${b})`;
-      heroHeadEm.style.webkitTextFillColor = `rgb(${r},${g},${b})`;
     }
     // Subtext: rgba(255,255,255,0.32) on dark → rgba(20,8,0,0.65) on gold
     if (heroBodyEl) {
@@ -3324,20 +3317,13 @@
   }
 
   /* ── SCROLL ANIMATION OBSERVER ── */
-  /* ── HERO HEADLINE + BODY WORD FLOW ── */
+  /* ── HERO HEADLINE YELLOW SHIMMER WAVE ── */
   (function() {
-    const headWords = document.querySelectorAll('.hero-heading .hl-w');
-    const bodyWords = document.querySelectorAll('.hero-body .hl-w');
-    const perWord   = 145;   // ms per word — fast but readable wave
-    const startDelay = 680;  // ms before first word lights
-    // Headline: left-to-right wave
-    headWords.forEach(function(w, i) {
+    var words = document.querySelectorAll('.hero-heading .hl-w');
+    var perWord    = 110;  // ms between each word — smooth flowing wave
+    var startDelay = 600;  // ms after load before wave begins
+    words.forEach(function(w, i) {
       setTimeout(function() { w.classList.add('lit'); }, startDelay + i * perWord);
-    });
-    // Body: continues the wave seamlessly from the last headline word
-    var bodyStart = startDelay + headWords.length * perWord + 40;
-    bodyWords.forEach(function(w, i) {
-      setTimeout(function() { w.classList.add('lit'); }, bodyStart + i * perWord);
     });
   })();
 
