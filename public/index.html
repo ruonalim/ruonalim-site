@@ -572,41 +572,13 @@
     }
     @media (prefers-reduced-motion: reduce) { .hero { animation: none; } }
 
-    /* ── Hero typography — diamond: solid, faceted, brilliant ── */
-    .hero-heading {
-      filter: drop-shadow(0 0 22px rgba(80,155,255,0.40))
-              drop-shadow(0 0 64px rgba(0,80,200,0.14));
-    }
+    /* ── Hero typography ── */
     .hero-heading .display-xl {
-      /* Fully opaque facets: brilliant white + deep navy shadow, no transparency.
-         The contrast between adjacent stops creates the diamond facet illusion. */
-      background: linear-gradient(118deg,
-        #80b8e8  0%,
-        #ffffff 11%,
-        #5590cc 21%,
-        #f0f8ff 31%,
-        #6aa4d8 40%,
-        #ffffff 50%,
-        #4a82c4 60%,
-        #e8f4ff 70%,
-        #5e96d4 79%,
-        #ffffff 89%,
-        #74a8e0 100%
-      );
-      background-size: 300% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: hero-sweep 18s ease-in-out infinite alternate;
+      color: #ffffff;
     }
     .hero-heading .display-xl em {
-      background: none;
-      -webkit-background-clip: unset;
-      background-clip: unset;
-      -webkit-text-fill-color: #FFD23F;
       color: #FFD23F;
       font-style: italic;
-      filter: drop-shadow(0 0 16px rgba(255,185,0,0.48));
     }
     .hero .hero-eyebrow .label { color: rgba(255,255,255,0.55); }
     .hero .eyebrow-dot         { background: rgba(255,255,255,0.40); }
