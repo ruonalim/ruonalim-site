@@ -574,9 +574,8 @@
 
     /* ── Ice hero typography ── */
     .hero-heading {
-      /* Crystalline catch-light filter + cold blue-ice glow */
-      filter: url(#ice-crystal)
-              drop-shadow(0 0 28px rgba(60,170,255,0.70))
+      /* Cold blue-ice glow */
+      filter: drop-shadow(0 0 28px rgba(60,170,255,0.70))
               drop-shadow(0 0 80px rgba(0,120,220,0.28));
     }
     .hero-heading .display-xl {
@@ -3324,34 +3323,6 @@
 
 </script>
 
-<!-- SVG filter: ice crystalline catch-lights on hero headline -->
-<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
-  <defs>
-    <filter id="ice-crystal" x="-4%" y="-20%" width="108%" height="140%" color-interpolation-filters="sRGB">
-      <!-- Crystalline facet noise — irregular, like refrozen ice surface -->
-      <feTurbulence
-        type="fractalNoise"
-        baseFrequency="0.042 0.068"
-        numOctaves="2"
-        seed="22"
-        result="noise" />
-      <!-- Directional specular: cold angled light catching crystal facets -->
-      <feSpecularLighting
-        in="noise"
-        surfaceScale="4"
-        specularConstant="1.1"
-        specularExponent="32"
-        lighting-color="rgba(215,240,255,0.82)"
-        result="specular">
-        <feDistantLight azimuth="315" elevation="55" />
-      </feSpecularLighting>
-      <!-- Clip the specular highlights to text shape only — no bleed outside letters -->
-      <feComposite in="specular" in2="SourceAlpha" operator="in" result="specularClipped" />
-      <!-- Layer crystalline catch-lights over the existing text rendering -->
-      <feComposite in="SourceGraphic" in2="specularClipped" operator="over" />
-    </filter>
-  </defs>
-</svg>
 
 </body>
 </html>
