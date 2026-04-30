@@ -574,6 +574,117 @@
     }
     @media (prefers-reduced-motion: reduce) { .hero { animation: none; } }
 
+    /* ── Aurora orbs — slow-drifting light behind everything ── */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-orb--a {
+      width: 90vw; height: 75vw;
+      max-width: 1100px; max-height: 900px;
+      background: radial-gradient(ellipse at center, rgba(0,68,228,0.45) 0%, rgba(0,20,120,0.12) 45%, transparent 70%);
+      top: -30%; right: -18%;
+      filter: blur(2px);
+      animation: orb-a 22s ease-in-out infinite alternate;
+    }
+    .hero-orb--b {
+      width: 70vw; height: 70vw;
+      max-width: 800px; max-height: 800px;
+      background: radial-gradient(ellipse at center, rgba(30,90,255,0.25) 0%, transparent 65%);
+      bottom: 0%; left: -18%;
+      filter: blur(3px);
+      animation: orb-b 28s ease-in-out infinite alternate;
+    }
+    .hero-orb--c {
+      width: 50vw; height: 50vw;
+      max-width: 600px; max-height: 600px;
+      background: radial-gradient(ellipse at center, rgba(0,44,180,0.22) 0%, transparent 65%);
+      top: 35%; left: 28%;
+      filter: blur(4px);
+      animation: orb-c 34s ease-in-out infinite alternate;
+    }
+    @keyframes orb-a {
+      0%   { transform: translate(0,0)     scale(1);    }
+      33%  { transform: translate(-4%,7%)  scale(1.07); }
+      66%  { transform: translate(3%,-4%)  scale(0.96); }
+      100% { transform: translate(-2%,9%)  scale(1.04); }
+    }
+    @keyframes orb-b {
+      0%   { transform: translate(0,0)    scale(1);    }
+      50%  { transform: translate(7%,-6%) scale(1.12); }
+      100% { transform: translate(-4%,4%) scale(0.91); }
+    }
+    @keyframes orb-c {
+      0%   { transform: translate(0,0)     scale(1);    }
+      50%  { transform: translate(-9%,7%)  scale(1.16); }
+      100% { transform: translate(6%,-8%)  scale(0.87); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-orb { animation: none !important; }
+      .scroll-line { animation: none !important; }
+    }
+
+    /* ── Film grain — tactile texture over the gradient ── */
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.055;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.74' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 260px 260px;
+    }
+
+    /* ── Hero layout — editorial top/bottom split ── */
+    .hero-inner .container {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(44px, 5.5vh, 72px);
+    }
+    .hero-top { position: relative; }
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 48px;
+    }
+    .hero-bottom-left  { flex: 1; max-width: 620px; }
+    .hero-bottom-right { flex-shrink: 0; display: flex; align-items: flex-end; }
+    @media (max-width: 768px) {
+      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 28px; }
+      .hero-bottom-right { align-items: flex-start; }
+    }
+
+    /* ── Scroll cue ── */
+    .hero-scroll-cue {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      opacity: 0.45;
+      transition: opacity 0.8s ease;
+      pointer-events: none;
+    }
+    .hero-scroll-cue.hidden { opacity: 0; }
+    .scroll-line {
+      width: 1px;
+      height: 52px;
+      background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.90) 100%);
+      animation: scroll-drop 3s ease-in-out infinite;
+      transform-origin: top center;
+    }
+    @keyframes scroll-drop {
+      0%   { transform: scaleY(0) translateY(0);   opacity: 0; }
+      15%  { opacity: 1; }
+      85%  { opacity: 1; }
+      100% { transform: scaleY(1) translateY(0);   opacity: 0; }
+    }
+
     /* ── Hero typography ── */
     .hero-heading .display-xl { color: #ffffff; }
     .hero-heading .display-xl em { color: #FFD23F; font-style: italic; }
@@ -1250,11 +1361,56 @@
        FOOTER
     ───────────────────────────────────────────── */
     footer {
-      background: #050508;
+      background: linear-gradient(145deg, #050508 0%, #000d50 20%, #0033b8 48%, #001060 72%, #050508 100%);
+      background-size: 250% 200%;
+      animation: footer-drift 24s ease-in-out infinite alternate;
       position: relative;
       overflow: hidden;
     }
-    /* CTA band — full viewport, hero gradient feel */
+    @keyframes footer-drift {
+      0%   { background-position: 0% 0%;    }
+      100% { background-position: 60% 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) { footer { animation: none; } }
+
+    /* Footer aurora orbs — same energy as hero */
+    .footer-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .footer-orb--a {
+      width: 80vw; height: 80vw;
+      max-width: 900px; max-height: 900px;
+      background: radial-gradient(ellipse at center, rgba(0,68,228,0.38) 0%, transparent 65%);
+      top: 5%; right: -20%;
+      filter: blur(2px);
+      animation: orb-a 26s ease-in-out infinite alternate;
+    }
+    .footer-orb--b {
+      width: 55vw; height: 55vw;
+      max-width: 650px; max-height: 650px;
+      background: radial-gradient(ellipse at center, rgba(20,60,200,0.22) 0%, transparent 65%);
+      bottom: 15%; left: -10%;
+      filter: blur(3px);
+      animation: orb-b 32s ease-in-out infinite alternate;
+    }
+
+    /* Footer grain — same tactile texture */
+    .footer-grain {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.045;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.74' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 260px 260px;
+    }
+
+    /* CTA band — full viewport, centered */
     .footer-cta-band {
       min-height: 100vh;
       display: flex;
@@ -1262,22 +1418,10 @@
       justify-content: center;
       padding: clamp(80px,10vw,140px) clamp(24px,5vw,80px);
       position: relative;
-      background: linear-gradient(118deg, #050508 0%, #001060 22%, #0044E4 52%, #0033b8 78%, #001060 100%);
-      overflow: hidden;
-    }
-    /* Soft light orb — mirrors hero energy */
-    .footer-cta-band::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 70% 60% at 75% 30%, rgba(0,68,228,0.30) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(0,16,96,0.40) 0%, transparent 65%);
-      pointer-events: none;
     }
     .footer-cta-inner {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       max-width: 960px;
     }
     .footer-cta-eyebrow {
@@ -1340,8 +1484,8 @@
     /* Divider */
     .footer-divider {
       border: none;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      margin: 0;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      margin: 0 clamp(24px,5vw,80px);
     }
     /* Grid */
     .footer-grid {
@@ -1352,7 +1496,7 @@
       grid-template-columns: 2fr 1fr 1fr 1.5fr;
       gap: 48px;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
     .footer-brand-col {}
     .footer-brand-logo {
@@ -1448,8 +1592,10 @@
     }
     /* Bottom bar */
     .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.07);
+      border-top: 1px solid rgba(255,255,255,0.08);
       padding: 20px 56px;
+      position: relative;
+      z-index: 2;
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
@@ -1595,13 +1741,13 @@
     [data-delay="5"] { transition-delay: 0.78s !important; }
     [data-delay="6"] { transition-delay: 0.94s !important; }
 
-    /* Hero inline animations (no observer needed) */
-    .hero-eyebrow  { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s both; }
-    .hero-heading  { animation: fadeUp 0.85s cubic-bezier(0.16,1,0.3,1) 0.22s both; }
-    .hero-sub-row  { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.42s both; }
+    /* Hero inline animations */
+    .hero-eyebrow  { animation: fadeUp 0.85s cubic-bezier(0.22,1,0.36,1) 0.08s  both; }
+    .hero-heading  { animation: fadeUp 1.05s cubic-bezier(0.22,1,0.36,1) 0.18s  both; }
+    .hero-bottom   { animation: fadeUp 0.90s cubic-bezier(0.22,1,0.36,1) 0.40s  both; }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(28px); }
+      from { opacity: 0; transform: translateY(52px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
@@ -2189,25 +2335,48 @@
 
 <!-- ─── HERO ─── -->
 <section class="hero">
+  <!-- Aurora depth layer -->
+  <div class="hero-orb hero-orb--a" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb--b" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb--c" aria-hidden="true"></div>
+  <!-- Film grain -->
+  <div class="hero-grain" aria-hidden="true"></div>
+  <!-- Gold scroll overlay -->
   <div class="hero-gold-overlay" aria-hidden="true"></div>
+
   <div class="hero-inner">
   <div class="container">
-    <div class="hero-eyebrow" aria-hidden="true">
-      <div class="eyebrow-dot"></div>
-      <span class="label" id="hero-eyebrow-text">Dubai &nbsp;·&nbsp; Est. 2024 &nbsp;·&nbsp; Product Design</span>
+
+    <!-- Top: eyebrow + headline -->
+    <div class="hero-top">
+      <div class="hero-eyebrow" aria-hidden="true">
+        <div class="eyebrow-dot"></div>
+        <span class="label" id="hero-eyebrow-text">Dubai &nbsp;·&nbsp; Est. 2024 &nbsp;·&nbsp; Product Design</span>
+      </div>
+      <div class="hero-heading">
+        <h1 class="display-xl"><span class="hl-w">We</span> <span class="hl-w">design</span> <span class="hl-w">products</span> <span class="hl-w">that</span> <span class="hl-w">drive</span> <em><span class="hl-w">real</span> <span class="hl-w">growth.</span></em></h1>
+      </div>
     </div>
-    <div class="hero-heading">
-      <h1 class="display-xl"><span class="hl-w">We</span> <span class="hl-w">design</span> <span class="hl-w">products</span> <span class="hl-w">that</span> <span class="hl-w">drive</span> <em><span class="hl-w">real</span> <span class="hl-w">growth.</span></em></h1>
-    </div>
-    <div class="hero-sub-row">
-      <p class="hero-body">Whether you're going 0→1 or scaling what's already working — we design what comes next.</p>
-      <div class="hero-actions">
-        <div class="hero-actions-row">
-          <a href="#" class="btn btn-primary email-cta">Start a project</a>
-          <a href="/audit" class="btn btn-ghost">Free UX Audit →</a>
+
+    <!-- Bottom: subtext left, CTAs right -->
+    <div class="hero-bottom hero-sub-row">
+      <div class="hero-bottom-left">
+        <p class="hero-body">Whether you're going 0→1 or scaling what's already working — we design what comes next.</p>
+      </div>
+      <div class="hero-bottom-right">
+        <div class="hero-actions">
+          <div class="hero-actions-row">
+            <a href="#" class="btn btn-primary email-cta">Start a project</a>
+            <a href="/audit" class="btn btn-ghost">Free UX Audit →</a>
+          </div>
         </div>
       </div>
     </div>
+
+  </div>
+  <!-- Scroll cue -->
+  <div class="hero-scroll-cue" id="hero-scroll-cue" aria-hidden="true">
+    <div class="scroll-line"></div>
   </div>
   </div><!-- /.hero-inner -->
   <!-- ─── CLIENTS TICKER (inside hero) ─── -->
@@ -2690,6 +2859,10 @@
 
 <!-- ─── FOOTER ─── -->
 <footer>
+  <!-- Aurora orbs & grain — matches hero feel -->
+  <div class="footer-orb footer-orb--a" aria-hidden="true"></div>
+  <div class="footer-orb footer-orb--b" aria-hidden="true"></div>
+  <div class="footer-grain" aria-hidden="true"></div>
   <!-- CTA band — full viewport, hero gradient -->
   <div class="footer-cta-band">
     <div class="footer-wordmark" aria-hidden="true">ruonalim.</div>
@@ -3068,6 +3241,7 @@
   updateHeroParallax();
 
   const mainNav = document.querySelector('.site-nav');
+  const scrollCueEl = document.getElementById('hero-scroll-cue');
   window.addEventListener('scroll', () => {
     const h = document.documentElement.scrollHeight - window.innerHeight;
     const p = h > 0 ? (window.scrollY / h) * 100 : 0;
@@ -3078,6 +3252,8 @@
     } else {
       mainNav.classList.remove('nav--scrolled');
     }
+    // Scroll cue: hide once user starts scrolling
+    if (scrollCueEl && window.scrollY > 40) scrollCueEl.classList.add('hidden');
   }, { passive: true });
 
   /* ── INTERACTIVE DOT MATRIX ── */
