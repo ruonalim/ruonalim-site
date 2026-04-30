@@ -625,14 +625,47 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 28px;
-      margin-top: 44px;
-      max-width: 560px;
+      gap: 24px;
+      margin-top: 40px;
+      max-width: 620px;
     }
     .hero-body {
       font-size: 19px;
       line-height: 1.6;
       color: var(--muted);
+    }
+    .hero-audience {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .hero-audience-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .hero-audience-chip:hover {
+      border-color: rgba(255,255,255,0.40);
+      color: #ffffff;
+      background: rgba(255,255,255,0.06);
+    }
+    .hero-audience-chip .chip-arrow {
+      opacity: 0.45;
+      font-size: 11px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .hero-audience-chip:hover .chip-arrow {
+      opacity: 0.9;
+      transform: translateX(3px);
     }
     .hero-actions {
       display: flex;
@@ -2165,6 +2198,11 @@
       <h1 class="display-xl"><span class="hl-w">We</span> <span class="hl-w">design</span> <span class="hl-w">products</span> <span class="hl-w">that</span> <span class="hl-w">drive</span> <em><span class="hl-w">real</span> <span class="hl-w">growth.</span></em></h1>
     </div>
     <div class="hero-sub-row">
+      <p class="hero-body">Whether you're going 0→1 or scaling what's already working — we design what comes next.</p>
+      <div class="hero-audience">
+        <a href="#service-zero-to-one" class="hero-audience-chip">0→1 Founders <span class="chip-arrow">→</span></a>
+        <a href="#service-plg" class="hero-audience-chip">Scale-up Teams <span class="chip-arrow">→</span></a>
+      </div>
       <div class="hero-actions">
         <div class="hero-actions-row">
           <a href="#" class="btn btn-primary email-cta">Start a project</a>
