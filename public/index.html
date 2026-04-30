@@ -572,12 +572,35 @@
     }
     @media (prefers-reduced-motion: reduce) { .hero { animation: none; } }
 
-    /* ── Hero typography ── */
+    /* ── Hero typography — translucent, gradient refracts through ── */
     .hero-heading .display-xl {
-      color: #ffffff;
+      /* Alternating near-transparent zones (background bleeds through) and
+         bright opaque zones (light-catching faces). No applied colour —
+         the hero gradient behind the type IS the colour you see. */
+      background: linear-gradient(118deg,
+        rgba(255,255,255,0.10)  0%,
+        rgba(255,255,255,0.96)  9%,
+        rgba(255,255,255,0.06) 20%,
+        rgba(255,255,255,0.92) 30%,
+        rgba(255,255,255,0.05) 42%,
+        rgba(255,255,255,0.94) 52%,
+        rgba(255,255,255,0.06) 63%,
+        rgba(255,255,255,0.90) 74%,
+        rgba(255,255,255,0.05) 86%,
+        rgba(255,255,255,0.88) 100%
+      );
+      background-size: 320% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: hero-sweep 14s ease-in-out infinite alternate;
     }
     .hero-heading .display-xl em {
-      color: #FFD23F;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      -webkit-text-fill-color: rgba(255,210,63,0.82);
+      color: rgba(255,210,63,0.82);
       font-style: italic;
     }
     .hero .hero-eyebrow .label { color: rgba(255,255,255,0.55); }
