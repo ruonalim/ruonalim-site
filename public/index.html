@@ -1244,36 +1244,217 @@
        FOOTER
     ───────────────────────────────────────────── */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 52px 0;
+      background: #050508;
+      position: relative;
+      overflow: hidden;
     }
-    .footer-inner {
+    .footer-cta-band {
+      padding: 100px 56px 80px;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       position: relative;
       z-index: 1;
     }
-    .footer-logo { font-size: 15px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
-    .footer-logo span { color: var(--accent); }
-    .footer-links { display: flex; gap: 28px; }
-    .footer-links a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
-    .footer-links a:hover { color: var(--text); }
-    .footer-copy { font-size: 12px; color: var(--muted); }
-    .footer-contact {
+    .footer-cta-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 24px;
+    }
+    .footer-cta-heading {
+      font-size: clamp(36px, 5.5vw, 76px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.0;
+      color: #ffffff;
+      margin-bottom: 40px;
+      max-width: 780px;
+    }
+    .footer-cta-heading em {
+      font-style: italic;
+      color: #FFD23F;
+    }
+    .footer-cta-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-cta-actions .btn-primary {
+      background: #0044E4;
+      color: #fff;
+      padding: 14px 32px;
+      font-size: 15px;
+    }
+    .footer-cta-actions .btn-primary:hover { background: #0035c0; }
+    .footer-cta-actions .btn-ghost {
+      border-color: rgba(255,255,255,0.20);
+      color: rgba(255,255,255,0.65);
+      padding: 14px 32px;
+      font-size: 15px;
+    }
+    .footer-cta-actions .btn-ghost:hover { border-color: rgba(255,255,255,0.50); color: #fff; }
+    /* Big bg wordmark */
+    .footer-wordmark {
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: clamp(80px, 12vw, 180px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+      z-index: 0;
+    }
+    /* Divider */
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin: 0;
+    }
+    /* Grid */
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 56px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 48px;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-brand-col {}
+    .footer-brand-logo {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+    .footer-brand-logo span { color: #0044E4; }
+    .footer-brand-desc {
       font-size: 13px;
-      color: var(--muted);
+      color: rgba(255,255,255,0.40);
+      line-height: 1.65;
+      max-width: 240px;
+      margin-bottom: 28px;
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+    }
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      color: rgba(255,255,255,0.45);
+      font-size: 13px;
+      font-weight: 600;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .footer-social a:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+    .footer-col-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 18px;
+    }
+    .footer-col-links {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      text-align: right;
+      gap: 10px;
     }
-    .footer-contact a { color: var(--muted); transition: color 0.2s; }
-    .footer-contact a:hover { color: var(--text); }
-    .footer-contact strong { color: var(--text); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .footer-col-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.50);
+      transition: color 0.2s;
+    }
+    .footer-col-links a:hover { color: #ffffff; }
+    .footer-contact-col {}
+    .footer-contact-email {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+    .footer-contact-email:hover { color: #FFD23F; }
+    .footer-contact-location {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .footer-contact-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 100px;
+      padding: 5px 12px;
+    }
+    .footer-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    /* Bottom bar */
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 20px 56px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.22);
+    }
+    .footer-copy a {
+      color: rgba(255,255,255,0.35);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+    }
+    .footer-copy a:hover { color: rgba(255,255,255,0.65); }
+
+    @media (max-width: 1024px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-brand-col { grid-column: 1 / -1; }
+      .footer-wordmark { display: none; }
+    }
+    @media (max-width: 600px) {
+      .footer-cta-band { padding: 72px 24px 56px; }
+      .footer-grid { grid-template-columns: 1fr; padding: 48px 24px; gap: 36px; }
+      .footer-brand-col { grid-column: auto; }
+      .footer-bottom { padding: 20px 24px; }
+    }
 
     /* ─────────────────────────────────────────────
        FAQ
@@ -1352,8 +1533,6 @@
     }
     @media (max-width: 900px) {
       .faq-inner { grid-template-columns: 1fr; gap: 40px; }
-      .footer-contact { text-align: left; }
-      .footer-inner { flex-wrap: wrap; gap: 28px; }
     }
 
     /* ─────────────────────────────────────────────
@@ -1551,7 +1730,6 @@
       .container { padding: 0 32px; }
       .nav-inner { padding: 0 32px; }
       .clients-inner { padding: 0 32px; }
-      .footer-inner { padding: 0 32px; }
       .hero-sub-row { gap: 24px; }
       .hero-actions { align-items: flex-start; }
       .stats-strip { padding: 60px 0; }
@@ -1570,10 +1748,6 @@
       .big-cta-right { align-items: flex-start; }
       .work-grid { grid-template-columns: 1fr; }
       .work-card.featured { aspect-ratio: 16/9; grid-column: span 1; }
-      .footer-inner { flex-direction: column; align-items: flex-start; gap: 24px; text-align: left; padding: 0 32px; }
-      .footer-contact { text-align: left; }
-      .footer-links { flex-wrap: wrap; gap: 16px; }
-      .footer-bottom-bar { padding-left: 32px !important; padding-right: 32px !important; }
       .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
     }
 
@@ -2490,27 +2664,68 @@
 
 <!-- ─── FOOTER ─── -->
 <footer>
-  <div class="footer-inner">
-    <a href="/" class="footer-logo" aria-label="ruonalim – home">ruonalim<span aria-hidden="true">.</span></a>
-    <nav aria-label="Footer navigation">
-      <div class="footer-links">
-        <a href="#service-zero-to-one">0→1 Design</a>
-        <a href="#services">Services</a>
-        <a href="#faq">FAQ</a>
-        <a href="/audit">UX Audit</a>
-        <a href="/writing">Writing</a>
-        <a href="/fractional-design-leadership">Fractional</a>
-      </div>
-    </nav>
-    <div class="footer-contact">
-      <strong>Get in touch</strong>
-      <a href="#" class="email-cta" title="Tap to get in touch">hello@ruonalim.com</a>
-      <span>Dubai &amp; London · Remote-first</span>
+  <!-- CTA band -->
+  <div class="footer-cta-band">
+    <div class="footer-wordmark" aria-hidden="true">ruonalim.</div>
+    <div class="footer-cta-eyebrow">Ready when you are</div>
+    <h2 class="footer-cta-heading">Let's build something<br><em>worth using.</em></h2>
+    <div class="footer-cta-actions">
+      <a href="#" class="btn btn-primary email-cta">Start a project</a>
+      <a href="#" class="btn btn-ghost email-cta">Book a 30-min call</a>
     </div>
   </div>
-  <div class="footer-bottom-bar" style="max-width:1200px;margin:0 auto;padding:16px 56px 0;border-top:1px solid var(--border);margin-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+
+  <hr class="footer-divider">
+
+  <!-- Grid -->
+  <div class="footer-grid">
+    <div class="footer-brand-col">
+      <a href="/" class="footer-brand-logo" aria-label="ruonalim – home">ruonalim<span aria-hidden="true">.</span></a>
+      <p class="footer-brand-desc">A senior product design studio. We build and ship digital products that grow real businesses — from first concept to market.</p>
+      <div class="footer-social">
+        <a href="https://linkedin.com/company/ruonalim" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>
+        <a href="https://youtube.com/@beyondtheinterface" target="_blank" rel="noopener noreferrer" aria-label="YouTube">▶</a>
+        <a href="https://jaytulloch.com" target="_blank" rel="noopener noreferrer" aria-label="Jay Tulloch">JT</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-label">Services</div>
+      <nav class="footer-col-links" aria-label="Services navigation">
+        <a href="#service-zero-to-one">0→1 Product Design</a>
+        <a href="#service-website">Website &amp; App Design</a>
+        <a href="#service-ai">AI-Powered Design</a>
+        <a href="#service-fractional">Fractional Leadership</a>
+        <a href="#service-plg">Product-Led Growth</a>
+      </nav>
+    </div>
+
+    <div>
+      <div class="footer-col-label">Company</div>
+      <nav class="footer-col-links" aria-label="Company navigation">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="/writing">Writing</a>
+        <a href="/audit">Free UX Audit</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+
+    <div class="footer-contact-col">
+      <div class="footer-col-label">Get in touch</div>
+      <a href="#" class="footer-contact-email email-cta">hello@ruonalim.com</a>
+      <p class="footer-contact-location">Dubai, UAE &amp; London, UK<br>Remote-first. Work worldwide.</p>
+      <span class="footer-contact-badge">
+        <span class="footer-badge-dot"></span>
+        Available for new projects
+      </span>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
     <span class="footer-copy">© 2026 ruonalim. All rights reserved.</span>
-    <span class="footer-copy">A studio <a href="https://jaytulloch.com" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:underline;text-underline-offset:2px;transition:color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">founded by</a> experienced product design leaders.</span>
+    <span class="footer-copy">Founded by <a href="https://jaytulloch.com" target="_blank" rel="noopener noreferrer">Jay Tulloch</a> · Senior product design leadership.</span>
   </div>
 </footer>
 
