@@ -566,55 +566,30 @@
       position: relative;
       z-index: 1;
     }
-    /* ── Glass panel ── */
-    .hero-glass {
-      position: relative;
-      background: rgba(255,255,255,0.055);
-      backdrop-filter: blur(36px) saturate(180%);
-      -webkit-backdrop-filter: blur(36px) saturate(180%);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 16px;
-      padding: 52px 56px 48px;
-      overflow: hidden;
-      /* Top-left light catch */
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.18),
-        inset 1px 0 0 rgba(255,255,255,0.08),
-        0 8px 64px rgba(0,0,0,0.18);
-    }
-    /* Diagonal highlight — catches gradient light at the top-left corner */
-    .hero-glass::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 16px;
-      background: linear-gradient(
-        135deg,
-        rgba(255,255,255,0.10) 0%,
-        rgba(255,255,255,0.03) 35%,
-        transparent 65%
-      );
-      pointer-events: none;
-    }
-    @media (max-width: 768px) {
-      .hero-glass { padding: 36px 28px 32px; border-radius: 12px; }
-    }
     @keyframes hero-sweep {
       0%   { background-position: 0% 50%;   }
       100% { background-position: 80% 50%;  }
     }
     @media (prefers-reduced-motion: reduce) { .hero { animation: none; } }
 
-    /* ── Glassy hero typography — shifts with bg animation ── */
+    /* ── Glassy hero typography ── */
+    .hero-heading {
+      /* Depth glow behind the letterforms — makes them feel like illuminated glass */
+      filter: drop-shadow(0 2px 18px rgba(0,44,180,0.50))
+              drop-shadow(0 0 56px rgba(80,140,255,0.20));
+    }
     .hero-heading .display-xl {
+      /* Glass: alternating specular whites + translucent tinted fills */
       background: linear-gradient(118deg,
-        rgba(255,255,255,0.70)  0%,
-        rgba(185,218,255,0.88) 22%,
-        rgba(255,255,255,1)    40%,
-        rgba(210,232,255,0.85) 58%,
-        rgba(255,255,255,0.95) 75%,
-        rgba(200,225,255,0.78) 88%,
-        rgba(255,255,255,0.92) 100%
+        rgba(255,255,255,0.45)  0%,
+        rgba(220,238,255,0.92) 12%,
+        rgba(255,255,255,1.00) 24%,
+        rgba(165,208,255,0.52) 38%,
+        rgba(255,255,255,0.98) 50%,
+        rgba(180,218,255,0.58) 64%,
+        rgba(255,255,255,0.90) 76%,
+        rgba(150,198,255,0.46) 90%,
+        rgba(255,255,255,0.68) 100%
       );
       background-size: 280% 100%;
       -webkit-background-clip: text;
@@ -629,10 +604,17 @@
       -webkit-text-fill-color: #FFD23F;
       color: #FFD23F;
       font-style: italic;
+      /* Amber glass — warm luminous glow behind the gold letters */
+      filter: drop-shadow(0 0 20px rgba(255,185,0,0.60))
+              drop-shadow(0 1px 6px rgba(160,70,0,0.28));
     }
     .hero .hero-eyebrow .label { color: rgba(255,255,255,0.55); }
     .hero .eyebrow-dot         { background: rgba(255,255,255,0.40); }
-    .hero .hero-body           { color: rgba(255,255,255,0.62); white-space: nowrap; }
+    .hero .hero-body {
+      color: rgba(255,255,255,0.58);
+      white-space: nowrap;
+      text-shadow: 0 1px 12px rgba(80,140,255,0.35), 0 0 40px rgba(100,160,255,0.15);
+    }
     @media (max-width: 900px)  { .hero .hero-body { white-space: normal; } }
     /* CTAs on dark bg */
     .hero .btn-primary {
@@ -2199,21 +2181,19 @@
   <div class="hero-gold-overlay" aria-hidden="true"></div>
   <div class="hero-inner">
   <div class="container">
-    <div class="hero-glass">
-      <div class="hero-eyebrow" aria-hidden="true">
-        <div class="eyebrow-dot"></div>
-        <span class="label" id="hero-eyebrow-text">Dubai &nbsp;·&nbsp; Est. 2024 &nbsp;·&nbsp; Product Design</span>
-      </div>
-      <div class="hero-heading">
-        <h1 class="display-xl">We design products<br>that drive <em>real growth.</em></h1>
-      </div>
-      <div class="hero-sub-row">
-        <p class="hero-body">Apps, websites and digital growth systems designed for ambitious companies.</p>
-        <div class="hero-actions">
-          <div class="hero-actions-row">
-            <a href="#" class="btn btn-primary email-cta">Start a project</a>
-            <a href="/audit" class="btn btn-ghost">Free UX Audit →</a>
-          </div>
+    <div class="hero-eyebrow" aria-hidden="true">
+      <div class="eyebrow-dot"></div>
+      <span class="label" id="hero-eyebrow-text">Dubai &nbsp;·&nbsp; Est. 2024 &nbsp;·&nbsp; Product Design</span>
+    </div>
+    <div class="hero-heading">
+      <h1 class="display-xl">We design products<br>that drive <em>real growth.</em></h1>
+    </div>
+    <div class="hero-sub-row">
+      <p class="hero-body">Apps, websites and digital growth systems designed for ambitious companies.</p>
+      <div class="hero-actions">
+        <div class="hero-actions-row">
+          <a href="#" class="btn btn-primary email-cta">Start a project</a>
+          <a href="/audit" class="btn btn-ghost">Free UX Audit →</a>
         </div>
       </div>
     </div>
