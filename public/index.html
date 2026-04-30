@@ -232,7 +232,7 @@
         transition-duration: 0.001ms !important;
       }
       [data-anim] { opacity: 1 !important; transform: none !important; }
-      .hl-w { opacity: 1 !important; transition: none !important; }
+      .hl-w { opacity: 1 !important; filter: none !important; transform: none !important; transition: none !important; }
       .hero .hero-body { opacity: 1 !important; transform: none !important; }
       .clients-track { animation: none !important; }
       #hero-dots { display: none !important; }
@@ -578,13 +578,21 @@
     .hero-heading .display-xl { color: #ffffff; }
     .hero-heading .display-xl em { color: #FFD23F; font-style: italic; }
 
-    /* Word-by-word highlight: each span starts dim, lights up in sequence */
+    /* Word-by-word highlight: blur-to-sharp, lift-to-seat */
     .hero-heading .display-xl .hl-w {
       display: inline-block;
-      opacity: 0.15;
-      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1);
+      opacity: 0.10;
+      filter: blur(10px);
+      transform: translateY(6px);
+      transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1),
+                  filter 0.65s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.65s cubic-bezier(0.22,1,0.36,1);
     }
-    .hero-heading .display-xl .hl-w.lit { opacity: 1; }
+    .hero-heading .display-xl .hl-w.lit {
+      opacity: 1;
+      filter: blur(0px);
+      transform: none;
+    }
     .hero .hero-eyebrow .label { color: rgba(255,255,255,0.55); }
     .hero .eyebrow-dot         { background: rgba(255,255,255,0.40); }
     .hero .hero-body {
@@ -640,39 +648,6 @@
       font-size: 19px;
       line-height: 1.6;
       color: var(--muted);
-    }
-    .hero-audience {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .hero-audience-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 8px 16px;
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 100px;
-      font-size: 13px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.65);
-      text-decoration: none;
-      letter-spacing: 0.01em;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .hero-audience-chip:hover {
-      border-color: rgba(255,255,255,0.40);
-      color: #ffffff;
-      background: rgba(255,255,255,0.06);
-    }
-    .hero-audience-chip .chip-arrow {
-      opacity: 0.45;
-      font-size: 11px;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-    .hero-audience-chip:hover .chip-arrow {
-      opacity: 0.9;
-      transform: translateX(3px);
     }
     .hero-actions {
       display: flex;
@@ -1279,29 +1254,48 @@
       position: relative;
       overflow: hidden;
     }
+    /* CTA band — full viewport, hero gradient feel */
     .footer-cta-band {
-      padding: 100px 56px 80px;
-      max-width: 1200px;
-      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(80px,10vw,140px) clamp(24px,5vw,80px);
+      position: relative;
+      background: linear-gradient(118deg, #050508 0%, #001060 22%, #0044E4 52%, #0033b8 78%, #001060 100%);
+      overflow: hidden;
+    }
+    /* Soft light orb — mirrors hero energy */
+    .footer-cta-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 75% 30%, rgba(0,68,228,0.30) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(0,16,96,0.40) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .footer-cta-inner {
       position: relative;
       z-index: 1;
+      max-width: 960px;
     }
     .footer-cta-eyebrow {
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 24px;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 28px;
     }
     .footer-cta-heading {
-      font-size: clamp(36px, 5.5vw, 76px);
+      font-size: clamp(44px, 6.2vw, 92px);
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.0;
       color: #ffffff;
-      margin-bottom: 40px;
-      max-width: 780px;
+      margin-bottom: 48px;
+      max-width: 860px;
     }
     .footer-cta-heading em {
       font-style: italic;
@@ -1312,35 +1306,36 @@
       gap: 16px;
       flex-wrap: wrap;
     }
+    /* Match hero button styles on the dark blue background */
     .footer-cta-actions .btn-primary {
-      background: #0044E4;
-      color: #fff;
+      background: #ffffff;
+      color: #050508;
       padding: 14px 32px;
       font-size: 15px;
     }
-    .footer-cta-actions .btn-primary:hover { background: #0035c0; }
+    .footer-cta-actions .btn-primary:hover { background: rgba(255,255,255,0.88); }
     .footer-cta-actions .btn-ghost {
-      border-color: rgba(255,255,255,0.20);
-      color: rgba(255,255,255,0.65);
+      border-color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.80);
       padding: 14px 32px;
       font-size: 15px;
     }
-    .footer-cta-actions .btn-ghost:hover { border-color: rgba(255,255,255,0.50); color: #fff; }
+    .footer-cta-actions .btn-ghost:hover { border-color: rgba(255,255,255,0.55); color: #fff; background: rgba(255,255,255,0.06); }
     /* Big bg wordmark */
     .footer-wordmark {
       position: absolute;
       right: -20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: clamp(80px, 12vw, 180px);
+      bottom: 0;
+      font-size: clamp(100px, 18vw, 280px);
       font-weight: 900;
       letter-spacing: -0.04em;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.05);
       pointer-events: none;
       user-select: none;
       white-space: nowrap;
       z-index: 0;
+      line-height: 0.85;
     }
     /* Divider */
     .footer-divider {
@@ -1578,27 +1573,27 @@
       opacity: 0;
       will-change: opacity, transform;
     }
-    [data-anim="fade-up"]    { transform: translateY(80px); }
-    [data-anim="fade-left"]  { transform: translateX(-80px); }
-    [data-anim="fade-right"] { transform: translateX(80px); }
+    [data-anim="fade-up"]    { transform: translateY(120px) scale(0.96); }
+    [data-anim="fade-left"]  { transform: translateX(-130px); }
+    [data-anim="fade-right"] { transform: translateX(130px); }
     [data-anim="fade"]       { transform: none; }
-    [data-anim="scale-in"]   { transform: scale(0.88) translateY(32px); }
+    [data-anim="scale-in"]   { transform: scale(0.80) translateY(50px); }
 
-    /* Animated state — longer travel, springy cubic */
+    /* Animated state — big travel, aggressive spring */
     [data-anim].is-visible {
       opacity: 1;
       transform: none;
-      transition: opacity 1.0s cubic-bezier(0.16,1,0.3,1),
-                  transform 1.0s cubic-bezier(0.16,1,0.3,1);
+      transition: opacity 1.1s cubic-bezier(0.22,1,0.36,1),
+                  transform 1.1s cubic-bezier(0.22,1,0.36,1);
     }
 
-    /* Stagger delays — wider spread */
-    [data-delay="1"] { transition-delay: 0.12s !important; }
-    [data-delay="2"] { transition-delay: 0.26s !important; }
-    [data-delay="3"] { transition-delay: 0.40s !important; }
-    [data-delay="4"] { transition-delay: 0.54s !important; }
-    [data-delay="5"] { transition-delay: 0.68s !important; }
-    [data-delay="6"] { transition-delay: 0.82s !important; }
+    /* Stagger — pronounced spread */
+    [data-delay="1"] { transition-delay: 0.14s !important; }
+    [data-delay="2"] { transition-delay: 0.30s !important; }
+    [data-delay="3"] { transition-delay: 0.46s !important; }
+    [data-delay="4"] { transition-delay: 0.62s !important; }
+    [data-delay="5"] { transition-delay: 0.78s !important; }
+    [data-delay="6"] { transition-delay: 0.94s !important; }
 
     /* Hero inline animations (no observer needed) */
     .hero-eyebrow  { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s both; }
@@ -2206,10 +2201,6 @@
     </div>
     <div class="hero-sub-row">
       <p class="hero-body">Whether you're going 0→1 or scaling what's already working — we design what comes next.</p>
-      <div class="hero-audience">
-        <a href="#service-zero-to-one" class="hero-audience-chip">0→1 Founders <span class="chip-arrow">→</span></a>
-        <a href="#service-plg" class="hero-audience-chip">Scale-up Teams <span class="chip-arrow">→</span></a>
-      </div>
       <div class="hero-actions">
         <div class="hero-actions-row">
           <a href="#" class="btn btn-primary email-cta">Start a project</a>
@@ -2699,14 +2690,16 @@
 
 <!-- ─── FOOTER ─── -->
 <footer>
-  <!-- CTA band -->
+  <!-- CTA band — full viewport, hero gradient -->
   <div class="footer-cta-band">
     <div class="footer-wordmark" aria-hidden="true">ruonalim.</div>
-    <div class="footer-cta-eyebrow">Ready when you are</div>
-    <h2 class="footer-cta-heading">Let's build something<br><em>worth using.</em></h2>
-    <div class="footer-cta-actions">
-      <a href="#" class="btn btn-primary email-cta">Start a project</a>
-      <a href="#" class="btn btn-ghost email-cta">Book a 30-min call</a>
+    <div class="footer-cta-inner">
+      <div class="footer-cta-eyebrow">Ready when you are</div>
+      <h2 class="footer-cta-heading">Let's build something<br><em>worth using.</em></h2>
+      <div class="footer-cta-actions">
+        <a href="#" class="btn btn-primary email-cta">Start a project</a>
+        <a href="#" class="btn btn-ghost email-cta">Book a 30-min call</a>
+      </div>
     </div>
   </div>
 
@@ -3006,6 +2999,7 @@
   const heroGoldOvl  = document.querySelector('.hero-gold-overlay');
   const heroHeadEm   = document.querySelector('.hero-heading .display-xl em');
   const heroHeadText = document.querySelector('.hero-heading .display-xl');
+  const heroBodyEl   = document.querySelector('.hero .hero-body');
 
   function easeIn(t)  { return t * t * t; }
   function easeOut(t) { return 1 - (1-t)*(1-t); }
@@ -3057,6 +3051,14 @@
       const b = lerp(63,  228, goldP);
       heroHeadEm.style.color = `rgb(${r},${g},${b})`;
       heroHeadEm.style.webkitTextFillColor = `rgb(${r},${g},${b})`;
+    }
+    // Subtext: rgba(255,255,255,0.32) on dark → rgba(20,8,0,0.65) on gold
+    if (heroBodyEl) {
+      const rB = lerp(255, 20,  goldP);
+      const gB = lerp(255, 8,   goldP);
+      const bB = lerp(255, 0,   goldP);
+      const aB = (0.32 + 0.33 * goldP).toFixed(2);
+      heroBodyEl.style.color = `rgba(${rB},${gB},${bB},${aB})`;
     }
 
     // Parallax: hero bg moves at 28% of scroll speed
