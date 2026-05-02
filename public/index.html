@@ -4297,17 +4297,26 @@
   /* ── CYCLING EYEBROW ── */
   const eyebrowEl = document.getElementById('hero-eyebrow-text');
   const eyebrowTexts = [
-    'Dubai &nbsp;·&nbsp; Product Design',
-    'London &nbsp;·&nbsp; Product Design',
-    'Abu Dhabi &nbsp;·&nbsp; Product Design',
-    'Riyadh &nbsp;·&nbsp; Product Design'
+    'Dubai · Product Design',
+    'London · Product Design',
+    'Abu Dhabi · Product Design',
+    'Riyadh · Product Design'
   ];
   let eyebrowIdx = 0;
+  let eyebrowBusy = false;
+  eyebrowEl.style.transition = 'opacity 0.35s ease';
   setInterval(() => {
-    eyebrowIdx = (eyebrowIdx + 1) % eyebrowTexts.length;
-    eyebrowEl.style.transition = 'opacity 0.4s';
+    if (eyebrowBusy) return;
+    eyebrowBusy = true;
     eyebrowEl.style.opacity = '0';
-    setTimeout(() => { eyebrowEl.innerHTML = eyebrowTexts[eyebrowIdx]; eyebrowEl.style.opacity = '1'; }, 400);
+    setTimeout(() => {
+      eyebrowIdx = (eyebrowIdx + 1) % eyebrowTexts.length;
+      eyebrowEl.textContent = eyebrowTexts[eyebrowIdx];
+      // Force reflow so the transition fires on the new content
+      void eyebrowEl.offsetWidth;
+      eyebrowEl.style.opacity = '1';
+      eyebrowBusy = false;
+    }, 380);
   }, 3500);
 
   /* ── MOBILE NAV DRAWER ── */
