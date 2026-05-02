@@ -39,7 +39,8 @@
   <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAAAIAD8AAAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAAAMNJREFUeJy9krENg1AMRM/8T8UEjELJnnQs8GlYANEjGlpmoAX7UoGC8lEiIXKdbfnpdLaQJG4oubP8HIAkzAyq+hUgv2RAEiISnfn3wsyQJAn6vkcIASKCaZrQNA1EJA7im7ZtI0m2bUvnHKuq4jiONDNeKQoIIbAsy1NfVaMAj4hIIssyqCrMDGmaXuYTvcK6rliWBc45eO9R1zW6rjtyugTsAeV5jqIojt4wDJjn+XB32nnklfdH2mVmH9afdfBXwAuGhszIMpe2iAAAAABJRU5ErkJggg=="/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -59,7 +60,7 @@
     body {
       background: var(--bg);
       color: var(--body);
-      font-family: 'Inter', -apple-system, Helvetica Neue, Arial, sans-serif;
+      font-family: 'Switzer', -apple-system, Helvetica Neue, Arial, sans-serif;
       font-weight: 400;
       line-height: 1.55;
       overflow-x: hidden;
@@ -80,58 +81,103 @@
 
     /* HEADER */
     .writing-header {
-      padding: 80px 56px 60px;
-      border-bottom: 1px solid var(--border);
-      max-width: 1200px; margin: 0 auto;
+      background: #050508;
+      padding: 80px 56px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+    .writing-header::after {
+      content: '';
+      position: absolute;
+      top: -120px; right: -80px;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(0,68,228,0.28) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .writing-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
     .writing-eyebrow {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 16px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.38); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .writing-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
     }
     .writing-title {
-      font-weight: 700;
-      font-size: clamp(36px, 5vw, 64px);
-      letter-spacing: -2px; line-height: 0.97;
-      color: var(--text); margin-bottom: 16px;
+      font-family: 'Switzer', sans-serif;
+      font-weight: 800;
+      font-size: clamp(40px, 5.5vw, 72px);
+      letter-spacing: -2.5px; line-height: 0.95;
+      color: #ffffff; margin-bottom: 20px;
     }
-    .writing-sub { font-size: 16px; color: var(--muted); max-width: 480px; line-height: 1.6; }
+    .writing-title em {
+      font-family: 'Abril Fatface', serif;
+      font-style: italic;
+      color: #FFD23F;
+    }
+    .writing-sub {
+      font-size: 16px; color: rgba(255,255,255,0.45);
+      max-width: 480px; line-height: 1.6;
+    }
 
     /* GRID */
-    .writing-grid {
+    .writing-grid-wrap {
       max-width: 1200px; margin: 0 auto;
       padding: 60px 56px 120px;
+    }
+    .writing-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+      gap: 20px;
     }
     @media (max-width: 1024px) { .writing-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 640px)  { .writing-grid { grid-template-columns: 1fr; padding: 40px 20px 80px; } }
-    @media (max-width: 768px)  { .writing-header { padding: 60px 24px 40px; } }
+    @media (max-width: 640px)  { .writing-grid { grid-template-columns: 1fr; } .writing-grid-wrap { padding: 40px 20px 80px; } }
+    @media (max-width: 768px)  { .writing-header { padding: 60px 24px 52px; } }
 
     /* CARD */
     .post-card {
-      background: var(--bg);
+      background: #ffffff;
       border: 1px solid var(--border);
-      padding: 36px 32px;
-      display: flex; flex-direction: column; gap: 16px;
-      transition: background 0.2s, border-color 0.2s;
+      border-radius: 12px;
+      padding: 32px 28px 28px;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: box-shadow 0.28s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.28s cubic-bezier(0.22,1,0.36,1),
+                  border-color 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
-    .post-card:hover { background: #F7F7F9; border-color: var(--accent); }
-    .post-meta { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+    .post-card:hover {
+      border-color: rgba(0,68,228,0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      transform: translateY(-3px);
+    }
+    .post-meta { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
     .post-topic { color: var(--accent); }
     .post-date { color: var(--muted); }
     .post-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
-    .post-title { font-weight: 700; font-size: 18px; letter-spacing: -0.4px; line-height: 1.2; color: var(--text); }
-    .post-excerpt { font-size: 14px; color: var(--muted); line-height: 1.65; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .post-title { font-weight: 700; font-size: 18px; letter-spacing: -0.5px; line-height: 1.2; color: var(--text); }
+    .post-excerpt { font-size: 14px; color: var(--muted); line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     .post-read {
-      margin-top: auto; padding-top: 8px;
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-top: auto; padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.05em;
       color: var(--accent); display: flex; align-items: center; gap: 6px;
+      transition: gap 0.2s;
     }
     .post-read svg { width: 12px; height: 12px; transition: transform 0.2s; }
-    .post-card:hover .post-read svg { transform: translateX(3px); }
+    .post-card:hover .post-read { gap: 10px; }
+    .post-card:hover .post-read svg { transform: translateX(2px); }
 
     /* STATES */
     .state-wrap { max-width: 1200px; margin: 0 auto; padding: 80px 56px; display: flex; flex-direction: column; gap: 12px; }
@@ -396,11 +442,11 @@
     <ul class="nav-links" role="list">
       <li><a href="/#services">Services</a></li>
       <li><a href="/#work">Work</a></li>
-      <li><a href="/writing" class="active" aria-current="page">Writing</a></li>
+      <li><a href="/writing" class="active" aria-current="page">Perspectives</a></li>
       <li><a href="/#about">About</a></li>
       <li><a href="/audit" class="nav-audit">UX Audit</a></li>
     </ul>
-    <a href="#" class="nav-cta-btn email-cta">Get in touch</a>
+    <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="nav-cta-btn">Book a free consultation</a>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
       <span></span><span></span><span></span>
     </button>
@@ -410,35 +456,39 @@
   <ul class="nav-drawer-links">
     <li><a href="/#services">Services</a></li>
     <li><a href="/#work">Work</a></li>
-    <li><a href="/writing" class="active">Writing</a></li>
+    <li><a href="/writing" class="active">Perspectives</a></li>
     <li><a href="/#about">About</a></li>
     <li><a href="/audit">UX Audit</a></li>
   </ul>
-  <a href="#" class="nav-drawer-cta email-cta" data-close-drawer="true">Get in touch</a>
+  <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="nav-drawer-cta" onclick="closeDrawer()">Book a free consultation</a>
 </div>
 <!-- Mobile drawer -->
 <div class="nav-drawer" id="nav-drawer" role="dialog" aria-label="Navigation menu">
   <ul class="nav-drawer-links">
     <li><a href="/#services" onclick="closeDrawer()">Services</a></li>
     <li><a href="/#work" onclick="closeDrawer()">Work</a></li>
-    <li><a href="/writing" class="active" onclick="closeDrawer()">Writing</a></li>
+    <li><a href="/writing" class="active" onclick="closeDrawer()">Perspectives</a></li>
     <li><a href="/#about" onclick="closeDrawer()">About</a></li>
     <li><a href="/audit" onclick="closeDrawer()">UX Audit</a></li>
   </ul>
-  <a href="#" class="nav-drawer-cta email-cta" data-close-drawer="true">Get in touch</a>
+  <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="nav-drawer-cta" onclick="closeDrawer()">Book a free consultation</a>
 </div>
 
 <main id="main-content">
 <div class="page-wrap">
   <div class="writing-header">
-    <div class="writing-eyebrow" aria-hidden="true">Perspectives</div>
-    <h1 class="writing-title">Things worth saying.</h1>
-    <p class="writing-sub">Sharp thinking on design, product, and the gap between what gets built and what should.</p>
+    <div class="writing-header-inner">
+      <div class="writing-eyebrow" aria-hidden="true">Perspectives</div>
+      <h1 class="writing-title">Things worth <em>saying.</em></h1>
+      <p class="writing-sub">Sharp thinking on design, product, and the gap between what gets built and what should.</p>
+    </div>
   </div>
-  <div class="writing-grid" id="writing-grid">
-    <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-h2"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div><div class="skeleton sk-p3"></div></div>
-    <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div><div class="skeleton sk-p3"></div></div>
-    <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-h2"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div></div>
+  <div class="writing-grid-wrap">
+    <div class="writing-grid" id="writing-grid">
+      <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-h2"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div><div class="skeleton sk-p3"></div></div>
+      <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div><div class="skeleton sk-p3"></div></div>
+      <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-h2"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div></div>
+    </div>
   </div>
 </div>
 
