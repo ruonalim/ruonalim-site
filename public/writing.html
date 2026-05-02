@@ -155,14 +155,37 @@
                   transform 0.28s cubic-bezier(0.22,1,0.36,1),
                   border-color 0.2s;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      text-decoration: none; color: inherit;
+      cursor: pointer;
+      border-left: 3px solid transparent;
     }
     .post-card:hover {
       border-color: rgba(0,68,228,0.3);
+      border-left-color: var(--card-accent, #0044E4);
       box-shadow: 0 8px 32px rgba(0,0,0,0.08);
       transform: translateY(-3px);
     }
+    /* Featured first card */
+    .post-card.featured {
+      grid-column: span 2;
+    }
+    .post-card.featured .post-title { font-size: 26px; letter-spacing: -0.8px; }
+    .post-card.featured .post-excerpt { -webkit-line-clamp: 4; }
+    @media (max-width: 1024px) { .post-card.featured { grid-column: span 2; } }
+    @media (max-width: 640px)  { .post-card.featured { grid-column: span 1; } .post-card.featured .post-title { font-size: 20px; } }
+
+    /* Topic accent colours */
+    .post-card[data-topic="AI & Design"]        { --card-accent: #0044E4; }
+    .post-card[data-topic="Design Leadership"]  { --card-accent: #7C3AED; }
+    .post-card[data-topic="Fractional Work"]    { --card-accent: #0891B2; }
+    .post-card[data-topic="Design Systems"]     { --card-accent: #059669; }
+    .post-card[data-topic="Product Strategy"]   { --card-accent: #D97706; }
+
+    /* Subtle left bar visible on hover */
+    .post-card:hover { border-left-color: var(--card-accent, #0044E4); }
+
     .post-meta { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-    .post-topic { color: var(--accent); }
+    .post-topic { color: var(--card-accent, var(--accent)); }
     .post-date { color: var(--muted); }
     .post-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
     .post-title { font-weight: 700; font-size: 18px; letter-spacing: -0.5px; line-height: 1.2; color: var(--text); }
@@ -172,12 +195,13 @@
       border-top: 1px solid var(--border);
       font-size: 12px; font-weight: 600;
       letter-spacing: 0.05em;
-      color: var(--accent); display: flex; align-items: center; gap: 6px;
+      color: var(--card-accent, var(--accent)); display: flex; align-items: center; gap: 6px;
       transition: gap 0.2s;
     }
     .post-read svg { width: 12px; height: 12px; transition: transform 0.2s; }
     .post-card:hover .post-read { gap: 10px; }
     .post-card:hover .post-read svg { transform: translateX(2px); }
+    .post-read-time { margin-left: auto; font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0; }
 
     /* STATES */
     .state-wrap { max-width: 1200px; margin: 0 auto; padding: 80px 56px; display: flex; flex-direction: column; gap: 12px; }
@@ -798,6 +822,11 @@
     if (e.key === 'ArrowRight') artNext.click();
   });
 
+  function readTime(post) {
+    const wc = post.wordCount || (post.body ? post.body.split(/\s+/).length : 0);
+    return Math.max(1, Math.round(wc / 200)) + ' min read';
+  }
+
   function renderGrid(posts) {
     const grid = document.getElementById('writing-grid');
     if (!posts.length) {
@@ -805,18 +834,23 @@
       return;
     }
     grid.innerHTML = posts.map((post, i) => `
-      <div class="post-card" data-index="${i}">
+      <a class="post-card${i === 0 ? ' featured' : ''}"
+         href="/writing?post=${post.id}"
+         data-index="${i}"
+         data-topic="${post.topic || ''}"
+         aria-label="${post.title}">
         <div class="post-meta">
           ${post.topic ? `<span class="post-topic">${post.topic}</span><div class="post-dot"></div>` : ''}
           <span class="post-date">${fmtDate(post.date)}</span>
         </div>
         <div class="post-title">${post.title}</div>
-        ${post.body ? `<div class="post-excerpt">${post.body.slice(0, 200).replace(/[#>]/g, '')}</div>` : ''}
-        <div class="post-read">Read <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg></div>
-      </div>
+        ${post.body ? `<div class="post-excerpt">${post.body.slice(0, 220).replace(/[#>]/g, '').trim()}</div>` : ''}
+        <div class="post-read">Read <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg><span class="post-read-time">${readTime(post)}</span></div>
+      </a>
     `).join('');
     grid.querySelectorAll('.post-card').forEach(card => {
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
         const i = parseInt(card.dataset.index);
         openArticle(posts[i], i);
       });
