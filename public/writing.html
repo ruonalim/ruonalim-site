@@ -252,6 +252,52 @@
     .article-body li { margin-bottom: 8px; }
     .article-body blockquote { border-left: 2px solid var(--accent); padding-left: 20px; margin: 32px 0; color: var(--muted); font-style: italic; }
 
+    /* FACT CHECK */
+    .fact-check {
+      margin-top: 56px;
+      border-radius: 12px;
+      background: #F5F6FF;
+      border: 1px solid rgba(0,68,228,0.12);
+      padding: 32px 32px 28px;
+    }
+    .fact-check-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 6px;
+    }
+    .fact-check-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #0044E4; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .fact-check-icon svg { width: 14px; height: 14px; }
+    .fact-check-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #0044E4;
+    }
+    .fact-check-intro {
+      font-size: 13px; color: var(--muted); line-height: 1.6;
+      margin-bottom: 24px; padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0,68,228,0.1);
+    }
+    .fact-item {
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(0,68,228,0.07);
+    }
+    .fact-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .fact-claim {
+      font-size: 14px; color: var(--text); line-height: 1.6;
+      font-weight: 500; margin-bottom: 6px;
+    }
+    .fact-source {
+      font-size: 12px; color: var(--muted); line-height: 1.5;
+    }
+    .fact-source a {
+      color: #0044E4; text-decoration: none; font-weight: 600;
+      border-bottom: 1px solid rgba(0,68,228,0.25);
+      transition: border-color 0.15s;
+    }
+    .fact-source a:hover { border-color: #0044E4; }
+
     /* ARTICLE NAV — sticky bottom of overlay, never overlaps content */
     .article-nav {
       position: sticky;
@@ -751,9 +797,8 @@
     return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
   }
 
-  function renderBody(text) {
-    if (!text) return '';
-    return text.split('\n').map(line => {
+  function renderLines(lines) {
+    return lines.map(line => {
       if (line.startsWith('## ')) return `<h2>${line.slice(3)}</h2>`;
       if (line.startsWith('### ')) return `<h3>${line.slice(4)}</h3>`;
       if (line.startsWith('# ')) return `<h2>${line.slice(2)}</h2>`;
@@ -761,6 +806,75 @@
       if (line.trim() === '') return '';
       return `<p>${line}</p>`;
     }).join('');
+  }
+
+  function linkifySource(src) {
+    // Match bare domains/URLs like trueup.io/layoffs or www.weareempirika.com
+    return src.replace(/\b((?:https?:\/\/)?(?:www\.)?[a-z0-9](?:[a-z0-9\-]{0,61}[a-z0-9])?(?:\.[a-z]{2,})+(?:\/[^\s,;]*)?)/gi, (match) => {
+      const href = match.startsWith('http') ? match : 'https://' + match;
+      const label = match.replace(/^https?:\/\//, '');
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+    });
+  }
+
+  function renderFactCheck(block) {
+    const lines = block.split('\n').map(l => l.trim()).filter(Boolean);
+    // Skip leading 'Fact Check' heading and intro line
+    let intro = '';
+    let items = [];
+    let i = 0;
+    // Consume heading
+    if (lines[i] && lines[i].toLowerCase() === 'fact check') i++;
+    // Consume intro paragraph (before first Claim:)
+    while (i < lines.length && !lines[i].startsWith('Claim:')) {
+      if (lines[i]) intro += lines[i] + ' ';
+      i++;
+    }
+    // Parse claim/source pairs
+    let current = null;
+    for (; i < lines.length; i++) {
+      const l = lines[i];
+      if (l.startsWith('Claim:')) {
+        if (current) items.push(current);
+        current = { claim: l.slice(6).trim(), source: '' };
+      } else if (l.startsWith('Source:') && current) {
+        current.source = l.slice(7).trim();
+      }
+    }
+    if (current) items.push(current);
+
+    const itemsHtml = items.map(item => `
+      <div class="fact-item">
+        <div class="fact-claim">${item.claim}</div>
+        ${item.source ? `<div class="fact-source"><strong>Source:</strong> ${linkifySource(item.source)}</div>` : ''}
+      </div>
+    `).join('');
+
+    return `
+      <aside class="fact-check" aria-label="Fact check">
+        <div class="fact-check-header">
+          <div class="fact-check-icon">
+            <svg viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 7l3.5 3.5L12 3"/>
+            </svg>
+          </div>
+          <span class="fact-check-label">Fact Check</span>
+        </div>
+        ${intro ? `<p class="fact-check-intro">${intro.trim()}</p>` : ''}
+        ${itemsHtml}
+      </aside>
+    `;
+  }
+
+  function renderBody(text) {
+    if (!text) return '';
+    const dividerIdx = text.indexOf('\n---');
+    if (dividerIdx !== -1) {
+      const mainText = text.slice(0, dividerIdx);
+      const factBlock = text.slice(dividerIdx + 4); // skip '\n---'
+      return renderLines(mainText.split('\n')) + renderFactCheck(factBlock);
+    }
+    return renderLines(text.split('\n'));
   }
 
   document.getElementById('share-linkedin').addEventListener('click', () => {
