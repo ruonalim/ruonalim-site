@@ -2293,6 +2293,172 @@
       .big-cta-btns { flex-direction: column; }
       .big-cta-btns .btn { text-align: center; }
     }
+
+    /* ═══════════════════════════════════════════════
+       QUALITY LIFT — hero → body visual bridge
+    ═══════════════════════════════════════════════ */
+
+    /* 1. Page-body: subtle blue tint at top fades to white —
+          softens the hard cut from dark hero */
+    .page-body {
+      background: linear-gradient(to bottom, #f0f3ff 0px, #ffffff 140px);
+      box-shadow: 0 -28px 100px rgba(0,0,20,0.40), 0 -1px 0 rgba(255,255,255,0.12);
+    }
+
+    /* 2. Section eyebrows: accent colour in body sections */
+    .services .label,
+    .work .label,
+    .proof .label,
+    .thought-lead .label,
+    .edge .label {
+      color: var(--accent);
+      letter-spacing: 0.14em;
+    }
+
+    /* 3. display-md: tighter, more confident */
+    .display-md {
+      letter-spacing: -1.5px;
+    }
+
+    /* 4. Stat numbers: more authority */
+    .stat-num {
+      font-size: clamp(52px, 5.5vw, 72px);
+      letter-spacing: -3px;
+    }
+
+    /* 5. Proof cards: elevation — subtle border + shadow vs flat white */
+    .proof-grid {
+      gap: 12px;
+      background: transparent;
+      border: none;
+      border-radius: 12px;
+    }
+    .proof-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03);
+      transition: border-color 0.3s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.3s cubic-bezier(0.22,1,0.36,1),
+                  background 0.3s,
+                  transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .proof-card:hover {
+      border-color: rgba(0,68,228,0.2);
+      box-shadow: 0 4px 20px rgba(0,68,228,0.08), 0 12px 48px rgba(0,0,0,0.07);
+      background: rgba(0,68,228,0.015);
+      transform: translateY(-3px);
+    }
+
+    /* 6. Service path blocks: slight elevation */
+    .service-path {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fafafd;
+      transition: border-color 0.22s, background 0.22s;
+    }
+    .service-path:hover {
+      border-color: rgba(0,68,228,0.2);
+      background: var(--tag-bg);
+    }
+
+    /* 7. Service rows: faint bg tint on hover */
+    .service-row:not(.service-row--flagship) {
+      transition: background 0.22s, padding-left 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    .service-row:not(.service-row--flagship):hover {
+      background: rgba(0,68,228,0.018);
+      padding-left: 8px;
+    }
+
+    /* 8. Audit card: premium elevation */
+    .audit-card {
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 8px 40px rgba(0,0,0,0.07);
+    }
+
+    /* 9. Work cards: spring transition */
+    .work-card {
+      background: #f1f1f7;
+      transition: background 0.4s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .work-card:hover {
+      background: #e8e8f2;
+      transform: translateY(-6px);
+    }
+
+    /* 10. Edge pills: accent-aware hover */
+    .edge-pill {
+      transition: border-color 0.22s cubic-bezier(0.22,1,0.36,1),
+                  background 0.22s, color 0.22s;
+    }
+    .edge-pill:hover {
+      border-color: rgba(0,68,228,0.35);
+      background: var(--tag-bg);
+      color: var(--accent);
+    }
+
+    /* 11. FAQ: spring easing + open state accent */
+    .faq-a {
+      transition: max-height 0.42s cubic-bezier(0.22,1,0.36,1),
+                  padding-bottom 0.42s cubic-bezier(0.22,1,0.36,1);
+    }
+    .faq-item.open .faq-q { color: var(--accent); }
+    .faq-item.open {
+      background: rgba(0,68,228,0.018);
+      margin: 0 -20px;
+      padding: 0 20px;
+      border-radius: 6px;
+    }
+
+    /* 12. Podcast cards: match hero spring easing */
+    .tl-ep-card {
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    .tl-ep-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+    }
+    .tl-ep-body {
+      background: #f4f5fb;
+    }
+
+    /* 13. Self-assessment: subtle tinted surface */
+    .self-assessment {
+      background: #f7f8ff;
+    }
+
+    /* 14. Primary buttons: spring lift + shadow */
+    .btn-primary {
+      box-shadow: 0 2px 8px rgba(0,68,228,0.15);
+      transition: transform 0.25s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.25s cubic-bezier(0.22,1,0.36,1),
+                  background 0.2s, opacity 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,68,228,0.22);
+    }
+    /* Override for hero (dark bg) — no coloured shadow needed */
+    .hero .btn-primary {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.20);
+    }
+    .hero .btn-primary:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.30);
+    }
+
+    /* 15. Section border-top: slightly stronger than default */
+    .services,
+    .proof,
+    .thought-lead,
+    .edge,
+    .audit-band,
+    .work {
+      border-top-color: #e0e0ea;
+    }
   </style>
 </head>
 <body>
