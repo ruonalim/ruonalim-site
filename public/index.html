@@ -3496,55 +3496,55 @@
     {
       q: "Where are you right now?",
       opts: [
-        { key: "A", text: "I have an idea but no product yet" },
-        { key: "B", text: "I have a live product that needs improving" },
-        { key: "C", text: "I'm growing but not fast enough" },
-        { key: "D", text: "My team is drowning in manual work" }
+        { key: "A", text: "I have an idea but nothing built yet" },
+        { key: "B", text: "I have a live product that isn't performing" },
+        { key: "C", text: "We're growing but design decisions are slowing us down" },
+        { key: "D", text: "We're about to launch and need to look the part" }
       ]
     },
     {
-      q: "What's your biggest blocker right now?",
+      q: "What's the most urgent thing to fix?",
       opts: [
-        { key: "A", text: "I don't know what to build or where to start" },
-        { key: "B", text: "Users aren't converting or churning too fast" },
-        { key: "C", text: "Our design quality doesn't match our ambition" },
-        { key: "D", text: "We're moving too slowly to stay competitive" }
+        { key: "A", text: "Getting from idea to something real and shippable" },
+        { key: "B", text: "Working out why users aren't converting or staying" },
+        { key: "C", text: "Our website doesn't reflect the quality of what we do" },
+        { key: "D", text: "Making smarter design calls without slowing down" }
       ]
     },
     {
-      q: "What does your team look like?",
+      q: "How do you want to work together?",
       opts: [
-        { key: "A", text: "Just me, or a small founding team" },
-        { key: "B", text: "We have engineers but no senior design" },
-        { key: "C", text: "We have designers but need strategic leadership" },
-        { key: "D", text: "We're a scaled team with complex tooling needs" }
+        { key: "A", text: "Embedded — I need a full design team, not just advice" },
+        { key: "B", text: "Sprint — a fast, focused project with a clear output" },
+        { key: "C", text: "Ongoing — regular input from someone who's done this before" },
+        { key: "D", text: "Foundational — build the brand identity we'll use for years" }
       ]
     },
     {
-      q: "What outcome matters most to you?",
+      q: "What does success look like?",
       opts: [
-        { key: "A", text: "Ship a credible MVP fast" },
-        { key: "B", text: "Improve conversion and reduce churn" },
-        { key: "C", text: "Raise a round or land enterprise clients" },
-        { key: "D", text: "Scale without burning out the team" }
+        { key: "A", text: "A product I can show investors or launch to customers" },
+        { key: "B", text: "A clear, prioritised list of what to fix and why" },
+        { key: "C", text: "A site I'm proud to send to every potential client" },
+        { key: "D", text: "Better design decisions and fewer expensive mistakes" }
       ]
     }
   ];
 
   // Each answer scores toward a service key
   const saScoreMap = {
-    Q1: { A: 'zero-to-one', B: 'audit',      C: 'advisory',    D: 'website'    },
-    Q2: { A: 'zero-to-one', B: 'audit',      C: 'advisory',    D: 'website'    },
-    Q3: { A: 'zero-to-one', B: 'website',    C: 'advisory',    D: 'zero-to-one' },
-    Q4: { A: 'zero-to-one', B: 'audit',      C: 'advisory',    D: 'website'    }
+    Q1: { A: 'zero-to-one', B: 'audit',      C: 'advisory', D: 'brand'     },
+    Q2: { A: 'zero-to-one', B: 'audit',      C: 'website',  D: 'advisory'  },
+    Q3: { A: 'zero-to-one', B: 'website',    C: 'advisory', D: 'brand'     },
+    Q4: { A: 'zero-to-one', B: 'audit',      C: 'website',  D: 'advisory'  }
   };
 
   const saResults = {
-    'zero-to-one': { tag: "0→1 Product Design",  heading: "You need to go from zero to credible. Fast.", body: "You have conviction but no product yet. Senior strategy, AI-augmented production, full UI craft, dev-ready specs. One engagement, no hand-offs, no wasted rounds.", href: "#service-zero-to-one", cta: "See 0→1 Product Design →" },
-    'advisory':    { tag: "Advisory",             heading: "You need senior thinking without the overhead.", body: "Monthly structured calls and async input on the decisions that matter. Direction without adding headcount. Built for founders and design leaders who need a senior sounding board.", href: "#service-advisory", cta: "See Advisory →" },
-    'website':     { tag: "AI Website Sprint",    heading: "You need a world-class site. Fast.", body: "End-to-end product website design and build. Fixed scope, fast delivery. AI-augmented production, senior-led direction. Shipped in weeks, not months.", href: "#service-website", cta: "See AI Website Sprint →" },
-    'brand':       { tag: "AI Brand Sprint",      heading: "You need a brand that works from day one.", body: "Visual identity at AI-native speed. Two weeks from brief to brand, applied across your product from the start.", href: "#service-brand", cta: "See AI Brand Sprint →" },
-    'audit':       { tag: "AI UX Audit",          heading: "Your product is leaking. And you know it.", body: "Submit any URL, Figma file, or screenshots. Scored against Nielsen's 10 Usability Heuristics. Top 3 issues free. Full report available.", href: "#service-audit", cta: "See AI UX Audit →" }
+    'zero-to-one': { tag: "0→1 Product Design",  heading: "You need to go from idea to real product.", body: "You have conviction but nothing built yet. We handle the full design process — strategy, UX, UI, and dev-ready specs — so you can move fast without compromising on quality.", href: "#service-zero-to-one", cta: "See 0→1 Product Design →" },
+    'advisory':    { tag: "Advisory",             heading: "You need senior thinking without the overhead.", body: "Monthly structured calls and async support on the decisions that actually matter. Senior design direction, no added headcount. Built for founders and product leaders who need a trusted sounding board.", href: "#service-advisory", cta: "See Advisory →" },
+    'website':     { tag: "Website Sprint",       heading: "You need a site that does your business justice.", body: "End-to-end website design and build in a fixed-scope sprint. Senior-led direction, delivered in weeks. No drawn-out agency timelines.", href: "#service-website", cta: "See Website Sprint →" },
+    'brand':       { tag: "Brand Sprint",         heading: "You need a brand that works from day one.", body: "A complete visual identity in two weeks. Logo, colour, type, and everything you need to show up professionally — built to last, not just to launch.", href: "#service-brand", cta: "See Brand Sprint →" },
+    'audit':       { tag: "UX Audit",             heading: "Your product is leaking. And you probably know it.", body: "Submit any live URL, Figma file, or screenshots. We score your product against proven usability standards and tell you exactly what's costing you conversions. Top 3 issues free.", href: "#service-audit", cta: "See UX Audit →" }
   };
 
   let saAnswers = [];
@@ -3611,7 +3611,7 @@
     document.querySelectorAll('.sa-seg').forEach(s => { s.classList.remove('active'); s.classList.add('done'); });
 
     // Score each answer against a service key
-    const scores = { website: 0, seo: 0, ai: 0, plg: 0, fractional: 0 };
+    const scores = { 'zero-to-one': 0, 'audit': 0, 'advisory': 0, 'website': 0, 'brand': 0 };
     saAnswers.forEach((ans, i) => {
       const key = saScoreMap[`Q${i + 1}`][ans];
       if (key) scores[key]++;
