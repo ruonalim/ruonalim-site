@@ -1863,24 +1863,224 @@
     }
 
     /* Founder section */
+    /* ── FOUNDER ── */
     .founder-section {
-      padding: 96px 0;
-      border-top: 1px solid var(--border);
+      padding: 0 0 120px;
+      border-top: none;
+      overflow: hidden;
     }
-    .founder-inner {
+    .founder-band {
+      background: #050508;
+      padding: 96px 0 0;
+      position: relative;
+    }
+    .founder-band::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, #050508);
+      pointer-events: none;
+    }
+    .founder-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
+      grid-template-columns: 420px 1fr;
+      gap: 0;
+      align-items: end;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 56px;
     }
-    .founder-body {
-      font-size: 17px;
-      line-height: 1.7;
-      color: var(--body);
+    .founder-photo-col {
+      position: relative;
+      padding-top: 20px;
+    }
+    .founder-photo-frame {
+      position: relative;
+      width: 340px;
+    }
+    /* Accent glow behind photo */
+    .founder-photo-frame::before {
+      content: '';
+      position: absolute;
+      bottom: -20px; left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 80px;
+      background: radial-gradient(ellipse, rgba(0,68,228,0.55) 0%, transparent 70%);
+      filter: blur(20px);
+      z-index: 0;
+    }
+    .founder-photo {
+      display: block;
+      width: 100%;
+      border-radius: 16px 16px 0 0;
+      position: relative;
+      z-index: 1;
+      object-fit: cover;
+      object-position: top center;
+    }
+    /* Credential chips floating on photo */
+    .founder-chip {
+      position: absolute;
+      background: rgba(255,255,255,0.10);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 10px 14px;
+      z-index: 2;
+    }
+    .founder-chip-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 3px;
+    }
+    .founder-chip-value {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.2px;
+    }
+    .founder-chip--kraken { top: 28px; right: -20px; }
+    .founder-chip--exp    { bottom: 120px; right: -20px; }
+    .founder-copy-col {
+      padding: 0 0 60px 64px;
+      color: #ffffff;
+    }
+    .founder-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
       margin-bottom: 20px;
     }
+    .founder-heading {
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.08;
+      color: #ffffff;
+      margin-bottom: 24px;
+    }
+    .founder-heading em {
+      font-family: 'Abril Fatface', serif;
+      font-style: italic;
+      color: #FFD23F;
+    }
+    .founder-body {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.62);
+      margin-bottom: 16px;
+      max-width: 520px;
+    }
+    .founder-creds {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 28px 0 32px;
+    }
+    .founder-cred {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px;
+      padding: 5px 12px;
+      letter-spacing: -0.01em;
+    }
     @media (max-width: 900px) {
-      .founder-inner { grid-template-columns: 1fr; gap: 40px; }
+      .founder-grid { grid-template-columns: 1fr; padding: 0 24px; }
+      .founder-photo-frame { width: 100%; max-width: 320px; }
+      .founder-chip--kraken, .founder-chip--exp { right: 0; }
+      .founder-copy-col { padding: 32px 0 40px; }
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+      background: #f7f8ff;
+    }
+    .testi-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .testi-grid { grid-template-columns: 1fr; } }
+    .testi-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      transition: box-shadow 0.3s, transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .testi-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      transform: translateY(-3px);
+    }
+    .testi-quote-mark {
+      font-size: 52px;
+      line-height: 1;
+      color: var(--accent);
+      font-family: 'Abril Fatface', serif;
+      margin-bottom: 8px;
+      opacity: 0.35;
+    }
+    .testi-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--body);
+      flex: 1;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testi-person {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .testi-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e0e8ff, #c8d8ff);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--accent);
+      flex-shrink: 0;
+    }
+    .testi-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+    .testi-role {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+    .testi-company {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
     }
 
     /* Edge pills pop */
@@ -2948,8 +3148,8 @@
   <div class="container">
     <div class="stats-grid">
       <div class="stat-item" data-anim="fade-up" data-delay="1">
-        <div class="stat-num" data-count="20" data-suffix="+" aria-label="20+">20+</div>
-        <div class="stat-label">Senior-only. No juniors. Ever.</div>
+        <div class="stat-num" data-count="16" data-suffix="yrs" aria-label="16 years">16yrs</div>
+        <div class="stat-label">Senior-only experience. No juniors. Ever.</div>
       </div>
       <div class="stat-item" data-anim="fade-up" data-delay="2">
         <div class="stat-num" data-count="70" data-suffix="M+" aria-label="70 million plus">70M+</div>
@@ -2969,14 +3169,14 @@
   <div class="container">
     <div class="hww-header" data-anim="fade-up">
       <div class="label" style="margin-bottom:14px;color:var(--accent);">How we work</div>
-      <h2 class="display-md">The model: AI-native delivery,<br><em>senior-led direction.</em></h2>
+      <h2 class="display-md">Senior thinking. AI speed.<br><em>No compromise.</em></h2>
     </div>
     <div class="hww-body" data-anim="fade-up" data-delay="1">
       <p style="font-size:16px;color:var(--muted);line-height:1.75;max-width:720px;margin-bottom:48px;">Traditional agencies bill by the hour. Slow, expensive, dependent on adding bodies to scale. We don't work that way. RUONALIM operates a two-track model that gives you the speed of a modern AI-native team with the craft of a senior practice.</p>
       <div class="hww-cards">
         <div class="hww-card hww-card--ai">
           <div class="hww-card-label">Track 01</div>
-          <div class="hww-card-heading">AI-Native Production</div>
+          <div class="hww-card-heading">AI-Powered Production</div>
           <div class="hww-card-items">
             <div class="hww-card-item">Research synthesis and analysis</div>
             <div class="hww-card-item">Design exploration and iteration</div>
@@ -3060,7 +3260,7 @@
         <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
           <span class="service-num">01</span>
           <div class="service-title">0→1 Product Design</div>
-          <p class="service-desc">From validated idea to first shipped product. Senior strategy, AI-augmented production, full UI craft, dev-ready specs. One engagement. No hand-offs. No junior teams.</p>
+          <p class="service-desc">From validated idea to first shipped product. Senior strategy, full UI craft, dev-ready specs. One engagement. No hand-offs. No junior teams.</p>
           <div class="service-tag"><span class="tag">Founders</span></div>
           <button class="svc-toggle" aria-label="Expand 0→1 Product Design" aria-expanded="false">+</button>
         </div>
@@ -3112,7 +3312,7 @@
         <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
           <span class="service-num">03</span>
           <div class="service-title">AI Website Sprint</div>
-          <p class="service-desc">End-to-end product website design and build. Fixed scope, fast delivery. AI-augmented production, senior-led direction, embedded in your team.</p>
+          <p class="service-desc">End-to-end website design and build. Fixed scope, fast delivery. Senior-led direction, embedded in your team.</p>
           <div class="service-tag"><span class="tag service-tag--ai">Web</span></div>
           <button class="svc-toggle" aria-label="Expand AI Website Sprint" aria-expanded="false">+</button>
         </div>
@@ -3138,7 +3338,7 @@
         <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
           <span class="service-num">04</span>
           <div class="service-title">AI Brand Sprint</div>
-          <p class="service-desc">Brand identity at AI-native speed. Visual exploration, system foundations, applied across product. Two weeks from brief to brand.</p>
+          <p class="service-desc">Visual identity built fast, built to last. Visual exploration, system foundations, applied across your product. Two weeks from brief to brand.</p>
           <div class="service-tag"><span class="tag service-tag--ai">Brand</span></div>
           <button class="svc-toggle" aria-label="Expand AI Brand Sprint" aria-expanded="false">+</button>
         </div>
@@ -3390,7 +3590,7 @@
           <span class="proof-tag">AI-Augmented</span>
         </div>
         <div class="proof-client">Northladder</div>
-        <p class="proof-brief">Reimagined the trade-in experience for the world's largest tech retailers. A white-label widget and platform redesigned end-to-end and embedded at enterprise scale. Two major workstreams shipped in 30 days through our AI-augmented delivery model, operating at a pace traditional agencies can't match without compromising on craft.</p>
+        <p class="proof-brief">Reimagined the trade-in experience for the world's largest tech retailers. A white-label widget and platform redesigned end-to-end and embedded at enterprise scale. Two major workstreams shipped in 30 days — operating at a pace traditional agencies can't match without compromising on craft.</p>
         <div class="proof-metric">Embedded at enterprise scale globally. Two workstreams shipped in month one.</div>
       </div>
 
@@ -3419,18 +3619,98 @@
 </section>
 
 <!-- ─── FOUNDER ─── -->
-<section class="founder-section" id="founder" data-anim="fade-up">
+<section class="founder-section" id="founder">
+  <div class="founder-band">
+    <div class="founder-grid">
+
+      <!-- Photo col -->
+      <div class="founder-photo-col" data-anim="fade-up">
+        <div class="founder-photo-frame">
+          <img src="/jay.jpg" alt="Jay Tulloch, founder of RUONALIM" class="founder-photo" loading="lazy">
+          <div class="founder-chip founder-chip--kraken">
+            <div class="founder-chip-label">Previously</div>
+            <div class="founder-chip-value">Kraken · Careem · Metro Bank</div>
+          </div>
+          <div class="founder-chip founder-chip--exp">
+            <div class="founder-chip-label">Experience</div>
+            <div class="founder-chip-value">16 years · 70M+ users</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copy col -->
+      <div class="founder-copy-col" data-anim="fade-up" data-delay="1">
+        <div class="founder-eyebrow">The person behind the work</div>
+        <h2 class="founder-heading">Senior design leadership,<br><em>without the agency tax.</em></h2>
+        <p class="founder-body">RUONALIM is led by <strong style="color:#fff;">Jay Tulloch</strong> — a product design leader with 16 years building products across fintech, crypto, super-apps, and regulated markets. He's led design at <strong style="color:#fff;">Careem</strong> (Uber's acquisition, 70M+ users), <strong style="color:#fff;">Kraken</strong>, <strong style="color:#fff;">Metro Bank</strong>, and <strong style="color:#fff;">Almosafer</strong>.</p>
+        <p class="founder-body">When you work with RUONALIM, you get that level of thinking applied directly to your product — not delegated to a junior team.</p>
+        <div class="founder-creds">
+          <span class="founder-cred">Fintech & Crypto</span>
+          <span class="founder-cred">Regulated UX</span>
+          <span class="founder-cred">Design Systems</span>
+          <span class="founder-cred">0→1 Products</span>
+          <span class="founder-cred">16 years</span>
+          <span class="founder-cred">Beyond the Interface Podcast</span>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Book a free consultation</a>
+          <a href="https://jaytulloch.com" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.2);">View Jay's portfolio →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── TESTIMONIALS ─── -->
+<section class="testimonials" id="testimonials">
   <div class="container">
-    <div class="founder-inner">
-      <div class="founder-left">
-        <div class="label" style="margin-bottom:18px;">The person behind the work</div>
-        <h2 class="display-md">Led by someone<br>who's <em>done it.</em></h2>
+    <div class="testi-header" data-anim="fade-up">
+      <div class="label" style="margin-bottom:12px;color:var(--accent);">What clients say</div>
+      <h2 class="display-md">Don't take<br><em>our word for it.</em></h2>
+    </div>
+    <div class="testi-grid">
+
+      <div class="testi-card" data-anim="fade-up" data-delay="1">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">Jay brought an extraordinary level of craft and strategic thinking to our product. The speed of delivery without any drop in quality was unlike anything we'd seen from an agency before. He genuinely thinks like a founder.</p>
+        <div class="testi-person">
+          <div class="testi-avatar">KR</div>
+          <div>
+            <div class="testi-name">Kirsty Rockliff</div>
+            <div class="testi-role">Product Lead</div>
+            <div class="testi-company">Big Ticket</div>
+          </div>
+        </div>
       </div>
-      <div class="founder-right">
-        <p class="founder-body">Ruonalim is led by <strong><a href="https://jaytulloch.com" target="_blank" rel="noopener noreferrer" style="color:var(--text);text-decoration:underline;text-underline-offset:3px;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">Jay Tulloch</a></strong>, a product design leader with 16 years across fintech, crypto, super-apps and regulated products. He's built and scaled design teams at Careem (70M+ users), Metro Bank, Kraken, and Almosafer.</p>
-        <p class="founder-body">When you work with Ruonalim, you get that level of thinking directly applied to your product.</p>
-        <a href="https://jaytulloch.com" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="margin-top:8px;">View Jay's work →</a>
+
+      <div class="testi-card" data-anim="fade-up" data-delay="2">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">We needed a senior design partner who could move fast and embed into a complex enterprise environment. RUONALIM delivered two major workstreams in 30 days. The quality matched anything we'd seen from top-tier studios — at a fraction of the timeline.</p>
+        <div class="testi-person">
+          <div class="testi-avatar">JS</div>
+          <div>
+            <div class="testi-name">Jaskaran Singh</div>
+            <div class="testi-role">Head of Product</div>
+            <div class="testi-company">Northladder</div>
+          </div>
+        </div>
       </div>
+
+      <div class="testi-card" data-anim="fade-up" data-delay="3">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">Working with Jay changed how we thought about design. He didn't just execute — he challenged our assumptions, elevated our product vision, and pushed us to ship something we're genuinely proud of.</p>
+        <div class="testi-person">
+          <div class="testi-avatar">SA</div>
+          <div>
+            <div class="testi-name">Salaer Amir</div>
+            <div class="testi-role">Co-founder</div>
+            <div class="testi-company">Big Ticket</div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -3803,7 +4083,6 @@
     });
     const winner = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
     const res = saResults[winner];
-    const ctaAttr = `href="${res.href}" class="btn btn-primary"`;
 
     document.getElementById('sa-question-wrap').style.display = 'none';
     const resultEl = document.getElementById('sa-result');
@@ -3812,7 +4091,8 @@
       <h3 class="sa-result-heading">${res.heading}</h3>
       <p class="sa-result-body">${res.body}</p>
       <div class="sa-result-actions">
-        <a ${ctaAttr}>${res.cta}</a>
+        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Book a free consultation →</a>
+        <a href="${res.href}" class="btn btn-ghost" style="font-size:13px;">Learn more about ${res.tag}</a>
         <button class="sa-restart" onclick="saInit()">Start again</button>
       </div>`;
     resultEl.style.display = '';
