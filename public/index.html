@@ -2459,6 +2459,184 @@
     .work {
       border-top-color: #e0e0ea;
     }
+
+    /* Hero sub-line */
+    .hero-sub {
+      font-size: clamp(13px, 1.2vw, 16px);
+      color: rgba(255,255,255,0.48);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      line-height: 1.5;
+    }
+
+    /* How We Work section */
+    .how-we-work {
+      padding: 100px 0;
+      border-top: 1px solid #e0e0ea;
+    }
+    .hww-header { margin-bottom: 60px; }
+    .hww-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 860px;
+    }
+    @media (max-width: 768px) { .hww-cards { grid-template-columns: 1fr; } }
+    .hww-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px 32px;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03);
+    }
+    .hww-card--ai {
+      background: linear-gradient(145deg, #f0f4ff 0%, #f8f9ff 100%);
+      border-color: rgba(0,68,228,0.18);
+    }
+    .hww-card-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .hww-card-heading {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .hww-card-items {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-top: 16px;
+    }
+    .hww-card-item {
+      font-size: 13px;
+      color: var(--body);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .hww-card-item::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .hww-proof {
+      margin-top: 48px;
+      padding: 24px 28px;
+      border: 1px solid rgba(0,68,228,0.18);
+      border-radius: 10px;
+      background: rgba(0,68,228,0.025);
+      max-width: 860px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .hww-proof-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .hww-proof-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .hww-proof-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.2px;
+      line-height: 1.45;
+    }
+    .hww-proof-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* Service row: expandable structure */
+    .service-row { display: flex !important; flex-direction: column; padding: 0; }
+    .service-row::after { display: none !important; }
+    .service-row-summary {
+      display: grid;
+      grid-template-columns: 52px 1fr 1fr 80px 28px;
+      align-items: center;
+      gap: 40px;
+      padding: 36px 0;
+      cursor: pointer;
+      position: relative;
+    }
+    .service-row-summary::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: 0;
+      height: 1px; width: 0;
+      background: var(--accent);
+      transition: width 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .service-row:hover .service-row-summary::after { width: 100%; }
+    .service-row--flagship .service-row-summary::after,
+    .service-row--flagship:hover .service-row-summary::after { display: none; }
+    .svc-toggle {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 300; color: var(--muted);
+      transition: background 0.22s, border-color 0.22s, color 0.22s,
+                  transform 0.32s cubic-bezier(0.22,1,0.36,1);
+      flex-shrink: 0; line-height: 1; padding: 0;
+      font-family: 'Switzer', sans-serif;
+    }
+    .service-row.open .svc-toggle {
+      background: var(--accent); border-color: var(--accent);
+      color: #ffffff; transform: rotate(45deg);
+    }
+    .service-detail {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.48s cubic-bezier(0.22,1,0.36,1);
+    }
+    .service-row.open .service-detail { max-height: 500px; }
+    .service-detail-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      padding: 24px 0 36px 132px;
+      border-top: 1px solid var(--border);
+    }
+    .service-detail-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.13em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .service-detail-text {
+      font-size: 13px; color: var(--muted); line-height: 1.65;
+    }
+    @media (max-width: 860px) {
+      .service-row-summary { grid-template-columns: 40px 1fr 24px; gap: 16px; }
+      .service-row-summary .service-tag,
+      .service-row-summary .service-desc { display: none; }
+      .service-detail-inner { grid-template-columns: 1fr; padding-left: 0; gap: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -2528,7 +2706,9 @@
 
     <!-- Bottom: subtext left, CTAs right -->
     <div class="hero-bottom hero-sub-row">
-      <div class="hero-bottom-left"></div>
+      <div class="hero-bottom-left">
+        <p class="hero-sub">AI-native delivery. Senior-led direction. Shipped in weeks, not months.</p>
+      </div>
       <div class="hero-bottom-right">
         <div class="hero-actions">
           <div class="hero-actions-row">
@@ -2599,6 +2779,51 @@
 </section>
 
 
+<!-- ─── HOW WE WORK ─── -->
+<section class="how-we-work" id="how-we-work">
+  <div class="container">
+    <div class="hww-header" data-anim="fade-up">
+      <div class="label" style="margin-bottom:14px;color:var(--accent);">How we work</div>
+      <h2 class="display-md">The model: AI-native delivery,<br><em>senior-led direction.</em></h2>
+    </div>
+    <div class="hww-body" data-anim="fade-up" data-delay="1">
+      <p style="font-size:16px;color:var(--muted);line-height:1.75;max-width:720px;margin-bottom:48px;">Traditional agencies bill by the hour. Slow, expensive, dependent on adding bodies to scale. We don't work that way. RUONALIM operates a two-track model that gives you the speed of a modern AI-native team with the craft of a senior practice.</p>
+      <div class="hww-cards">
+        <div class="hww-card hww-card--ai">
+          <div class="hww-card-label">Track 01</div>
+          <div class="hww-card-heading">AI-Native Production</div>
+          <div class="hww-card-items">
+            <div class="hww-card-item">Research synthesis and analysis</div>
+            <div class="hww-card-item">Design exploration and iteration</div>
+            <div class="hww-card-item">Component and copy system generation</div>
+            <div class="hww-card-item">Audit analysis and heuristic scoring</div>
+            <div class="hww-card-item">Spec documentation and handoff</div>
+          </div>
+        </div>
+        <div class="hww-card">
+          <div class="hww-card-label">Track 02</div>
+          <div class="hww-card-heading">Expert Direction</div>
+          <div class="hww-card-items">
+            <div class="hww-card-item">Strategy and problem framing</div>
+            <div class="hww-card-item">Taste, judgment, and craft decisions</div>
+            <div class="hww-card-item">Systems thinking and architecture</div>
+            <div class="hww-card-item">Stakeholder alignment and direction</div>
+            <div class="hww-card-item">Quality review and final sign-off</div>
+          </div>
+        </div>
+      </div>
+      <div class="hww-proof">
+        <div class="hww-proof-dot"></div>
+        <div>
+          <div class="hww-proof-label">Live proof</div>
+          <div class="hww-proof-text">Northladder: two major workstreams shipped in 30 days.</div>
+          <div class="hww-proof-sub">The world's largest tech retailers' trade-in platform, redesigned and embedded at enterprise scale. AI-augmented production, senior-led direction. The same standards. Faster delivery.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ─── SELF ASSESSMENT ─── -->
 <section class="self-assessment" id="assessment" aria-label="Business needs assessment">
   <div class="container">
@@ -2624,70 +2849,158 @@
     <div class="section-header">
       <div>
         <div class="label" style="margin-bottom:14px;">What we do</div>
-        <h2 class="display-md">Six ways we work <em>with you.</em></h2>
+        <h2 class="display-md">Five ways we work <em>with you.</em></h2>
       </div>
     </div>
     <div class="service-paths" data-anim="fade-up">
       <div class="service-path">
-        <p class="sp-label">Building from scratch?</p>
+        <p class="sp-label">Building something new?</p>
         <div class="sp-links">
           <a href="#service-zero-to-one" class="sp-link">0→1 Product Design</a>
-          <a href="#service-website" class="sp-link">Website & App Design</a>
-          <a href="#service-ai" class="sp-link">AI-Powered Design</a>
+          <a href="#service-website" class="sp-link">AI Website Sprint</a>
+          <a href="#service-brand" class="sp-link">AI Brand Sprint</a>
         </div>
       </div>
       <div class="service-path">
-        <p class="sp-label">Scaling or need embedded leadership?</p>
+        <p class="sp-label">Need senior direction or a quick win?</p>
         <div class="sp-links">
-          <a href="#service-fractional" class="sp-link">Fractional Leadership</a>
-          <a href="#service-plg" class="sp-link">Product-Led Growth</a>
-          <a href="#service-website" class="sp-link">Website & App Design</a>
+          <a href="#service-advisory" class="sp-link">Advisory</a>
+          <a href="#service-audit" class="sp-link">AI UX Audit</a>
         </div>
       </div>
     </div>
     <div class="services-list">
+
       <div class="service-row service-row--flagship" id="service-zero-to-one">
-        <span class="service-num">01</span>
-        <div class="service-title">0→1 Product Design</div>
-        <p class="service-desc">From validated idea to first shipped product. We take founders and funded scale-ups from a brief to a working, designed product: problem framing, UX strategy, full UI, and dev-ready specs. One engagement. No hand-offs. No wasted rounds.</p>
-        <div class="service-tag"><span class="tag">Founders</span></div>
-        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
+        <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
+          <span class="service-num">01</span>
+          <div class="service-title">0→1 Product Design</div>
+          <p class="service-desc">From validated idea to first shipped product. Senior strategy, AI-augmented production, full UI craft, dev-ready specs. One engagement. No hand-offs. No junior teams.</p>
+          <div class="service-tag"><span class="tag">Founders</span></div>
+          <button class="svc-toggle" aria-label="Expand 0→1 Product Design" aria-expanded="false">+</button>
+        </div>
+        <div class="service-detail">
+          <div class="service-detail-inner">
+            <div>
+              <div class="service-detail-label">Who it's for</div>
+              <div class="service-detail-text">Founders and funded scale-ups building a product for the first time. You have conviction, budget, and engineers. You need a senior design partner who's done this at scale before.</div>
+            </div>
+            <div>
+              <div class="service-detail-label">What's included</div>
+              <div class="service-detail-text">Problem framing. UX strategy. Information architecture. Full UI design. Component library. Design system foundations. Dev-ready specs and handoff.</div>
+            </div>
+            <div>
+              <div class="service-detail-label">Outcome</div>
+              <div class="service-detail-text">A working, shipped product. Not a prototype. Not a deck. Something your engineers can build and your customers can use from day one.</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="service-row" id="service-website" data-anim="fade-up" data-delay="1">
-        <span class="service-num">02</span>
-        <div class="service-title">Website &amp; App Design</div>
-        <p class="service-desc">End-to-end design for mobile apps, web apps, and marketing sites. Problem framing through to pixel-perfect UI and developer handoff.</p>
-        <div class="service-tag"><span class="tag">Design</span></div>
-        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
+
+      <div class="service-row" id="service-advisory" data-anim="fade-up" data-delay="1">
+        <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
+          <span class="service-num">02</span>
+          <div class="service-title">Advisory</div>
+          <p class="service-desc">Senior thinking on retainer. Monthly structured calls. Async input on the decisions that matter. Direction without overhead.</p>
+          <div class="service-tag"><span class="tag">Leadership</span></div>
+          <button class="svc-toggle" aria-label="Expand Advisory" aria-expanded="false">+</button>
+        </div>
+        <div class="service-detail">
+          <div class="service-detail-inner">
+            <div>
+              <div class="service-detail-label">Who it's for</div>
+              <div class="service-detail-text">Founders pre-design hire, new heads of design, and companies between leadership engagements. You need senior judgment without adding headcount.</div>
+            </div>
+            <div>
+              <div class="service-detail-label">What's included</div>
+              <div class="service-detail-text">Two structured calls per month. Async input on critical decisions. Figma and Slack access. Direct line to Jay.</div>
+            </div>
+            <div>
+              <div class="service-detail-label">Outcome</div>
+              <div class="service-detail-text">Senior judgment on the decisions that shape your product and team. Positioning, hiring, system architecture, design org maturity.</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="service-row" id="service-seo" data-anim="fade-up" data-delay="2">
-        <span class="service-num">03</span>
-        <div class="service-title">SEO Optimisation</div>
-        <p class="service-desc">Technical and on-page SEO built into every project from day one, not bolted on afterwards. Discoverability as a first principle.</p>
-        <div class="service-tag"><span class="tag">Growth</span></div>
-        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
+
+      <div class="service-row" id="service-website" data-anim="fade-up" data-delay="2">
+        <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
+          <span class="service-num">03</span>
+          <div class="service-title">AI Website Sprint</div>
+          <p class="service-desc">End-to-end product website design and build. Fixed scope, fast delivery. AI-augmented production, senior-led direction, embedded in your team.</p>
+          <div class="service-tag"><span class="tag">Web</span></div>
+          <button class="svc-toggle" aria-label="Expand AI Website Sprint" aria-expanded="false">+</button>
+        </div>
+        <div class="service-detail">
+          <div class="service-detail-inner">
+            <div>
+              <div class="service-detail-label">Who it's for</div>
+              <div class="service-detail-text">Startups and scale-ups that need a world-class product website fast. Typically at a point of inflection: fundraise, market entry, rebrand, or launch.</div>
+            </div>
+            <div>
+              <div class="service-detail-label">What's included</div>
+              <div class="service-detail-text">Site strategy and structure. Design and build. Copy guidance. Responsive across all devices. SEO foundations baked in. Launch-ready.</div>
+            </div>
+            <div>
+              <div class="service-detail-label">Outcome</div>
+              <div class="service-detail-text">A site that converts. Built at AI-native speed without compromising craft. Shipped in weeks, not months.</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="service-row" id="service-ai" data-anim="fade-up" data-delay="3">
-        <span class="service-num">04</span>
-        <div class="service-title">AI-Powered Product Design</div>
-        <p class="service-desc">AI embedded into every phase of design: faster research synthesis, smarter prototyping, LLM-integrated product experiences, and AI-native UX thinking from day one.</p>
-        <div class="service-tag"><span class="tag">AI</span></div>
-        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
+
+      <div class="service-row" id="service-brand" data-anim="fade-up" data-delay="3">
+        <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
+          <span class="service-num">04</span>
+          <div class="service-title">AI Brand Sprint</div>
+          <p class="service-desc">Brand identity at AI-native speed. Visual exploration, system foundations, applied across product. Two weeks from brief to brand.</p>
+          <div class="service-tag"><span class="tag">Brand</span></div>
+          <button class="svc-toggle" aria-label="Expand AI Brand Sprint" aria-expanded="false">+</button>
+        </div>
+        <div class="service-detail">
+          <div class="service-detail-inner">
+            <div>
+              <div class="service-detail-label">Who it's for</div>
+              <div class="service-detail-text">Companies at a point of inflection: new product launch, fundraise, market entry, or repositioning. You need a brand that works from day one.</div>
+            </div>
+            <div>
+              <div class="service-detail-label">What's included</div>
+              <div class="service-detail-text">Visual identity foundations. Typography and colour system. Logo and mark. Brand guidelines. Applied across digital product touchpoints.</div>
+            </div>
+            <div>
+              <div class="service-detail-label">Outcome</div>
+              <div class="service-detail-text">A coherent visual identity that works across every touchpoint. Delivered in two weeks. No months-long discovery phases.</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="service-row" id="service-plg" data-anim="fade-up" data-delay="4">
-        <span class="service-num">05</span>
-        <div class="service-title">Product-Led Growth Design</div>
-        <p class="service-desc">Design your product to be the growth engine. Activation flows, retention loops, and conversion mechanics embedded into UX from day one.</p>
-        <div class="service-tag"><span class="tag">PLG</span></div>
-        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
+
+      <div class="service-row" id="service-audit" data-anim="fade-up" data-delay="4">
+        <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
+          <span class="service-num">05</span>
+          <div class="service-title">AI UX Audit</div>
+          <p class="service-desc">Submit any URL, Figma file, or screenshots. Scored against Nielsen's 10 Usability Heuristics. Top 3 issues free. Full report available.</p>
+          <div class="service-tag"><span class="tag">Audit</span></div>
+          <button class="svc-toggle" aria-label="Expand AI UX Audit" aria-expanded="false">+</button>
+        </div>
+        <div class="service-detail">
+          <div class="service-detail-inner">
+            <div>
+              <div class="service-detail-label">Who it's for</div>
+              <div class="service-detail-text">Product teams that know something's wrong but can't pinpoint it. Any product at any stage. If people aren't converting, retaining, or completing flows, this finds out why.</div>
+            </div>
+            <div>
+              <div class="service-detail-label">What's included</div>
+              <div class="service-detail-text">Heuristic analysis across all submitted screens. Prioritised issues ranked by severity. Actionable recommendations. Top 3 issues free. Full report and enterprise options available.</div>
+            </div>
+            <div>
+              <div class="service-detail-label">Outcome</div>
+              <div class="service-detail-text">Clear, prioritised issues to fix. No fluff, no vague findings. Delivered within 48 hours of submission.</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="service-row" id="service-fractional" data-anim="fade-up" data-delay="5">
-        <span class="service-num">06</span>
-        <div class="service-title">Fractional Design Leadership</div>
-        <p class="service-desc">Embedded design direction on a retained basis. Strategic design capability without the full-time overhead. Critiques, alignment, roadmap input.</p>
-        <div class="service-tag"><span class="tag">Leadership</span></div>
-        <button class="svc-toggle" aria-label="Expand service" aria-expanded="false">+</button>
-      </div>
+
     </div>
     <div style="padding-top: 40px; border-top: 1px solid var(--border);">
       <a href="#" class="btn btn-ghost email-cta">Discuss your project →</a>
@@ -2708,7 +3021,7 @@
           <span class="label">Free AI Tool</span>
         </div>
         <h2 class="audit-heading">Get a UX audit score<br>in 30 seconds.</h2>
-        <p class="audit-body">Submit any URL, Figma file, or screenshots. Scored against Nielsen's 10 Usability Heuristics. Top 3 issues free. Full report from AED 120.</p>
+        <p class="audit-body">Submit any URL, Figma file, or screenshots. Scored against Nielsen's 10 Usability Heuristics. Top 3 issues free. Full report available.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           <a href="/audit/run" class="btn btn-accent">Run my free audit →</a>
           <a href="/audit" class="btn btn-ghost">See how it works</a>
@@ -2739,7 +3052,7 @@
             <span class="audit-issue-sev">Low</span>
           </div>
         </div>
-        <div class="audit-card-footer">Full report from AED 120 · 25-point heuristic breakdown</div>
+        <div class="audit-card-footer">Full report available · 25-point heuristic breakdown</div>
       </div>
     </div>
   </div>
@@ -2755,9 +3068,10 @@
         <h2 class="edge-heading"><em>Deliver faster.</em><br>Grow smarter.<br>Zero compromise.</h2>
       </div>
       <div class="edge-body" data-anim="fade-up" data-delay="2">
-        <p>Ruonalim is a product design and growth agency. Our team has produced website and mobile app experiences across fashion, FinTech, crypto, lottery and hospitality, including <strong>platforms used by millions of users</strong>. We bring senior digital design experience that most agencies can't match and the speed that ambitious businesses actually need.</p>
-        <p>There's a gap most founders don't see until it costs them. Ambitious companies consistently ship websites, apps and digital products that feel a step behind their competition. Not because they lack vision. Because they haven't had a partner capable of executing at that level.</p>
-        <p>Ruonalim exists to close that gap. <strong>Senior web and app designers working directly on your product.</strong> No hand-offs, no junior teams. Just sharp craft, fast execution and results that compound growth for your business.</p>
+        <p>RUONALIM is a product design agency built for the next era. Our team has produced website and mobile app experiences across fashion, FinTech, crypto, lottery, hospitality and enterprise platforms, including <strong>products used by tens of millions of users</strong>.</p>
+        <p>We operate differently from traditional agencies. AI-native production gives us speed. Senior leadership gives us judgment. You get a partner that ships at the pace of modern startups with the craft of a top-tier studio.</p>
+        <p>There's a gap most founders don't see until it costs them. Ambitious companies consistently ship products that feel a step behind the competition. Not because they lack vision. Because they haven't had a partner capable of executing at that level, fast enough to matter.</p>
+        <p>RUONALIM exists to close that gap.</p>
         <div class="edge-pills">
           <span class="edge-pill">Fintech & Crypto</span>
           <span class="edge-pill">SaaS & Platform</span>
@@ -2888,11 +3202,11 @@
       <div class="proof-card">
         <div class="proof-tags">
           <span class="proof-tag">Enterprise</span>
-          <span class="proof-tag">E-commerce</span>
+          <span class="proof-tag">AI-Augmented</span>
         </div>
         <div class="proof-client">Northladder</div>
-        <p class="proof-brief">Reimagined the trade-in experience for the world's largest tech retailers. A white-label widget redesigned end-to-end and embedded at enterprise scale — meeting the bar of companies that set the bar.</p>
-        <div class="proof-metric">Embedded at enterprise scale globally.</div>
+        <p class="proof-brief">Reimagined the trade-in experience for the world's largest tech retailers. A white-label widget and platform redesigned end-to-end and embedded at enterprise scale. Two major workstreams shipped in 30 days through our AI-augmented delivery model, operating at a pace traditional agencies can't match without compromising on craft.</p>
+        <div class="proof-metric">Embedded at enterprise scale globally. Two workstreams shipped in month one.</div>
       </div>
 
       <div class="proof-card">
@@ -2971,7 +3285,23 @@
             What is 0→1 Product Design, and who is it for?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
-          <div class="faq-a">It's our flagship engagement for founders and funded scale-ups building a product for the first time. We take you from a validated idea to a fully designed, dev-ready product, covering problem framing, UX strategy, end-to-end UI design, and handoff specs. It's a single, senior-led engagement with no hand-offs and no junior work. Ideal if you've raised a round, have engineers lined up, and need a design partner who's done this at scale before.</div>
+          <div class="faq-a">Our flagship engagement for founders and funded scale-ups building a product for the first time. We take you from a validated idea to a fully designed, dev-ready product: problem framing, UX strategy, end-to-end UI design, and handoff specs. Single senior-led engagement, no hand-offs, no junior work. Ideal if you've raised a round, have engineers lined up, and need a design partner who's done this at scale before.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
+            What does Advisory mean, and who is it for?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a">Advisory is a monthly retainer for senior product design thinking. Two structured calls per month, async input on critical decisions, no team overhead. Built for founders pre-design hire, design leads in new senior roles, and companies between full-time leadership engagements. You get direct attention on the questions that move the needle: positioning, hiring, system architecture, growth mechanics, design org maturity.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
+            How does AI-native delivery work in practice?
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a">AI handles the production work that used to require junior teams: research synthesis, design exploration, component generation, copy variants, audit analysis. Senior leadership owns the layer AI can't: strategy, taste, system thinking, judgment. The result is faster delivery without compromising craft. Northladder is the proof: two major workstreams shipped in 30 days, embedded at enterprise scale.</div>
         </div>
 
         <div class="faq-item" role="listitem">
@@ -2979,23 +3309,7 @@
             How quickly can you start?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
-          <div class="faq-a">Fast. For most projects we can onboard within 48 hours of brief. We keep capacity reserved specifically so we don't keep clients waiting while we clear a backlog.</div>
-        </div>
-
-        <div class="faq-item" role="listitem">
-          <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
-            What does "embedded in your team" actually mean?
-            <span class="faq-icon" aria-hidden="true"></span>
-          </button>
-          <div class="faq-a">It means we work inside your tools: Figma, Slack, Notion, Jira, alongside your engineers and PMs. No weekly handoff calls, no waiting for deliverable drops. We're in the work with you, not reporting to you from outside it.</div>
-        </div>
-
-        <div class="faq-item" role="listitem">
-          <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
-            Do you work on fixed projects or retainers?
-            <span class="faq-icon" aria-hidden="true"></span>
-          </button>
-          <div class="faq-a">Both. Sprint engagements work well for defined problems: a new product, a redesign, a specific flow. Retainers work better when you need ongoing design capacity and leadership embedded in your team month to month. We'll recommend what fits your situation.</div>
+          <div class="faq-a">Fast. For most projects we can onboard within 48 hours of brief. We keep capacity reserved so we don't keep clients waiting while clearing a backlog.</div>
         </div>
 
         <div class="faq-item" role="listitem">
@@ -3003,7 +3317,7 @@
             What industries do you specialise in?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
-          <div class="faq-a">Fintech and crypto, SaaS, consumer apps, regulated products (gaming, lottery, financial services), and hospitality. We've shipped across all of them at scale. The underlying principles transfer. If you're building something complex, we're comfortable there.</div>
+          <div class="faq-a">Fintech and crypto, SaaS, consumer apps, regulated products (gaming, lottery, financial services), enterprise platforms, and hospitality. We've shipped across all of them at scale. If you're building something complex, we're comfortable there.</div>
         </div>
 
         <div class="faq-item" role="listitem">
@@ -3060,10 +3374,10 @@
       <div class="footer-col-label">Services</div>
       <nav class="footer-col-links" aria-label="Services navigation">
         <a href="#service-zero-to-one">0→1 Product Design</a>
-        <a href="#service-website">Website &amp; App Design</a>
-        <a href="#service-ai">AI-Powered Design</a>
-        <a href="#service-fractional">Fractional Leadership</a>
-        <a href="#service-plg">Product-Led Growth</a>
+        <a href="#service-advisory">Advisory</a>
+        <a href="#service-website">AI Website Sprint</a>
+        <a href="#service-brand">AI Brand Sprint</a>
+        <a href="#service-audit">AI UX Audit</a>
       </nav>
     </div>
 
@@ -3219,18 +3533,18 @@
 
   // Each answer scores toward a service key
   const saScoreMap = {
-    Q1: { A: 'website', B: 'plg',        C: 'seo',        D: 'ai'         },
-    Q2: { A: 'website', B: 'plg',        C: 'fractional', D: 'ai'         },
-    Q3: { A: 'website', B: 'website',    C: 'fractional', D: 'ai'         },
-    Q4: { A: 'website', B: 'plg',        C: 'fractional', D: 'ai'         }
+    Q1: { A: 'zero-to-one', B: 'audit',      C: 'advisory',    D: 'website'    },
+    Q2: { A: 'zero-to-one', B: 'audit',      C: 'advisory',    D: 'website'    },
+    Q3: { A: 'zero-to-one', B: 'website',    C: 'advisory',    D: 'zero-to-one' },
+    Q4: { A: 'zero-to-one', B: 'audit',      C: 'advisory',    D: 'website'    }
   };
 
   const saResults = {
-    website:    { tag: "0→1 Product Design",            heading: "You need to go from zero to credible. Fast.",          body: "You have conviction but no product yet. We'll frame the problem, design the core flows, and ship something that looks and feels like a serious product. In weeks, not months. This is our flagship engagement for founders.",             href: "#service-zero-to-one", cta: "See 0→1 Product Design →" },
-    seo:        { tag: "SEO Optimisation",           heading: "You're building in the dark without discoverability.",   body: "Great design means nothing if no one finds you. We bake SEO into the build from day one: technical foundations, on-page structure, and content architecture that compounds over time.",                                              href: "#service-seo",        cta: "See SEO Optimisation →" },
-    ai:         { tag: "AI-Powered Product Design",   heading: "Your team needs leverage, not more headcount.",          body: "You're not short on people. You're short on time. We embed AI into every phase of design: faster research, smarter prototyping, LLM-native experiences, and AI product thinking from day one.",                                    href: "#service-ai",         cta: "See AI-Powered Design →" },
-    plg:        { tag: "Product-Led Growth Design",  heading: "Your product is leaking. And you know it.",            body: "You have users but the numbers aren't moving. We'll audit your flows, identify the drop-off points, and redesign the experience to turn browsers into buyers.",                                                                      href: "#service-plg",        cta: "See PLG Design →" },
-    fractional: { tag: "Fractional Design Leadership", heading: "You need senior design thinking at the top.",         body: "Your team has talent but lacks direction. We embed at leadership level: setting design standards, mentoring the team, and making sure quality matches your vision.",                                                                 href: "/fractional-design-leadership", cta: "Explore Design Leadership →" }
+    'zero-to-one': { tag: "0→1 Product Design",  heading: "You need to go from zero to credible. Fast.", body: "You have conviction but no product yet. Senior strategy, AI-augmented production, full UI craft, dev-ready specs. One engagement, no hand-offs, no wasted rounds.", href: "#service-zero-to-one", cta: "See 0→1 Product Design →" },
+    'advisory':    { tag: "Advisory",             heading: "You need senior thinking without the overhead.", body: "Monthly structured calls and async input on the decisions that matter. Direction without adding headcount. Built for founders and design leaders who need a senior sounding board.", href: "#service-advisory", cta: "See Advisory →" },
+    'website':     { tag: "AI Website Sprint",    heading: "You need a world-class site. Fast.", body: "End-to-end product website design and build. Fixed scope, fast delivery. AI-augmented production, senior-led direction. Shipped in weeks, not months.", href: "#service-website", cta: "See AI Website Sprint →" },
+    'brand':       { tag: "AI Brand Sprint",      heading: "You need a brand that works from day one.", body: "Visual identity at AI-native speed. Two weeks from brief to brand, applied across your product from the start.", href: "#service-brand", cta: "See AI Brand Sprint →" },
+    'audit':       { tag: "AI UX Audit",          heading: "Your product is leaking. And you know it.", body: "Submit any URL, Figma file, or screenshots. Scored against Nielsen's 10 Usability Heuristics. Top 3 issues free. Full report available.", href: "#service-audit", cta: "See AI UX Audit →" }
   };
 
   let saAnswers = [];
@@ -3478,6 +3792,21 @@
     initDots();
     drawDots();
     window.addEventListener('resize', initDots);
+  }
+
+  /* ── SERVICE ROW EXPANDABLE ── */
+  function svcToggle(row) {
+    var isOpen = row.classList.contains('open');
+    document.querySelectorAll('.service-row.open').forEach(function(r) {
+      r.classList.remove('open');
+      var b = r.querySelector('.svc-toggle');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) {
+      row.classList.add('open');
+      var btn = row.querySelector('.svc-toggle');
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+    }
   }
 
   /* ── SCROLL ANIMATION OBSERVER ── */
