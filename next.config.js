@@ -2,12 +2,6 @@
 const nextConfig = {
   async rewrites() {
     return [
-      // admin.ruonalim.com → editorial portal
-      {
-        has: [{ type: 'host', value: 'admin.ruonalim.com' }],
-        source: '/:path*',
-        destination: '/editorial.html',
-      },
       // Serve static HTML pages from public/
       { source: '/', destination: '/index.html' },
       { source: '/writing', destination: '/writing.html' },
