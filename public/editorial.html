@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — ruonalim. content</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F8F8FA;
+      --surface: #ffffff;
+      --border: #E4E4E8;
+      --text: #111111;
+      --muted: #767676;
+      --accent: #0044E4;
+      --accent-bg: #EAF0FF;
+      --danger: #DC2626;
+      --success: #059669;
+      --warn: #D97706;
+      --radius: 10px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Switzer', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* ── AUTH SCREEN ── */
+    #auth-screen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    }
+    .auth-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 48px 40px; width: 380px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .auth-logo { font-weight: 700; font-size: 20px; letter-spacing: -0.5px; margin-bottom: 4px; }
+    .auth-logo span { color: var(--accent); }
+    .auth-sub { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+    .auth-error { font-size: 12px; color: var(--danger); margin-top: 8px; min-height: 16px; }
+
+    /* ── APP SHELL ── */
+    #app { display: none; min-height: 100vh; }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar-logo { font-weight: 700; font-size: 15px; letter-spacing: -0.4px; }
+    .topbar-logo span { color: var(--accent); }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .topbar-status { font-size: 12px; color: var(--muted); }
+    .topbar-status.saving { color: var(--warn); }
+    .topbar-status.saved  { color: var(--success); }
+    .topbar-status.error  { color: var(--danger); }
+
+    .layout { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100vh - 56px); }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      border-right: 1px solid var(--border);
+      background: var(--surface);
+      overflow-y: auto; height: calc(100vh - 56px);
+      position: sticky; top: 56px;
+    }
+    .sidebar-header {
+      padding: 20px 20px 12px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .article-list { padding: 8px; }
+    .article-item {
+      padding: 12px 14px; border-radius: 8px; cursor: pointer;
+      transition: background 0.15s; margin-bottom: 2px;
+    }
+    .article-item:hover { background: var(--bg); }
+    .article-item.active { background: var(--accent-bg); }
+    .article-item-title {
+      font-size: 13px; font-weight: 600; line-height: 1.35;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .article-item.active .article-item-title { color: var(--accent); }
+    .article-item-meta { font-size: 11px; color: var(--muted); display: flex; gap: 8px; }
+    .article-item-topic { color: var(--accent); font-weight: 600; }
+
+    /* ── EDITOR ── */
+    .editor-pane {
+      padding: 40px 48px 80px;
+      max-width: 900px;
+    }
+    .editor-empty {
+      display: flex; align-items: center; justify-content: center;
+      height: 60vh; color: var(--muted); font-size: 14px;
+    }
+
+    .editor-header { margin-bottom: 32px; }
+    .editor-eyebrow {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+    }
+    .editor-article-title {
+      font-size: 22px; font-weight: 700; letter-spacing: -0.5px;
+      line-height: 1.2; color: var(--text);
+    }
+
+    /* form fields */
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .field-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+    .field-group { display: flex; flex-direction: column; gap: 6px; }
+    .field-group.full { grid-column: 1 / -1; }
+    label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    input, select, textarea {
+      font-family: inherit; font-size: 14px; color: var(--text);
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 10px 14px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0,68,228,0.08);
+    }
+
+    .body-editor-wrap { position: relative; margin-bottom: 20px; }
+    .body-editor-tabs {
+      display: flex; gap: 0; margin-bottom: -1px; position: relative; z-index: 1;
+    }
+    .body-tab {
+      padding: 8px 18px; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.04em; border: 1px solid var(--border);
+      background: var(--bg); color: var(--muted); cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .body-tab:first-child { border-radius: 8px 0 0 0; }
+    .body-tab:last-child  { border-radius: 0 8px 0 0; }
+    .body-tab.active { background: var(--surface); color: var(--text); border-bottom-color: var(--surface); }
+
+    textarea.body-textarea {
+      min-height: 420px; resize: vertical; font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 13px; line-height: 1.7; border-radius: 0 8px 8px 8px;
+      background: var(--surface);
+    }
+    textarea.fc-textarea {
+      min-height: 280px; resize: vertical; font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 13px; line-height: 1.7; border-radius: 0 8px 8px 8px;
+      background: var(--surface);
+    }
+
+    /* fact check panel */
+    .fc-info {
+      background: #F5F6FF; border: 1px solid rgba(0,68,228,0.15);
+      border-radius: 8px; padding: 14px 16px; margin-bottom: 12px;
+      font-size: 12px; color: #0044E4; line-height: 1.6;
+    }
+    .fc-info strong { font-weight: 600; }
+
+    .save-bar {
+      display: flex; align-items: center; gap: 12px;
+      padding-top: 20px; border-top: 1px solid var(--border);
+    }
+
+    /* buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 8px; font-size: 13px;
+      font-weight: 600; font-family: inherit; border: none;
+      cursor: pointer; transition: opacity 0.15s, transform 0.1s;
+      letter-spacing: 0.01em;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-primary:disabled { opacity: 0.4; cursor: default; }
+    .btn-ghost {
+      background: none; border: 1px solid var(--border); color: var(--text);
+    }
+    .btn-ghost:hover { background: var(--bg); }
+    .btn-danger { background: none; border: 1px solid transparent; color: var(--danger); font-size: 12px; padding: 8px 12px; }
+    .btn-danger:hover { background: #FEF2F2; }
+
+    .commit-msg-wrap { flex: 1; }
+    .commit-msg-wrap input { font-family: 'SF Mono', monospace; font-size: 12px; }
+
+    /* preview pane */
+    .preview-pane {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 32px 36px;
+      max-height: 540px; overflow-y: auto;
+      font-size: 15px; line-height: 1.8; color: #141414;
+    }
+    .preview-pane h2 { font-weight: 700; font-size: 20px; margin: 32px 0 12px; }
+    .preview-pane h3 { font-weight: 700; font-size: 17px; margin: 24px 0 10px; }
+    .preview-pane p  { margin-bottom: 18px; }
+    .preview-pane blockquote {
+      border-left: 2px solid #0044E4; padding-left: 16px;
+      color: var(--muted); font-style: italic; margin: 24px 0;
+    }
+    .preview-fact-check {
+      background: #F5F6FF; border: 1px solid rgba(0,68,228,0.12);
+      border-radius: 10px; padding: 24px 28px; margin-top: 40px;
+    }
+    .preview-fc-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #0044E4; margin-bottom: 16px;
+    }
+    .preview-fc-item { padding: 12px 0; border-bottom: 1px solid rgba(0,68,228,0.07); }
+    .preview-fc-item:last-child { border-bottom: none; }
+    .preview-fc-claim { font-weight: 500; font-size: 13px; margin-bottom: 4px; }
+    .preview-fc-src { font-size: 12px; color: var(--muted); }
+    .preview-fc-src a { color: #0044E4; }
+
+    .diff-highlight { background: #FEF3C7; border-radius: 2px; padding: 0 2px; }
+
+    /* toast */
+    #toast {
+      position: fixed; bottom: 32px; right: 32px; z-index: 999;
+      padding: 12px 20px; border-radius: 10px; font-size: 13px;
+      font-weight: 600; transform: translateY(80px); opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+      pointer-events: none;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.success { background: #111; color: #fff; }
+    #toast.error   { background: var(--danger); color: #fff; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { height: auto; position: static; border-right: none; border-bottom: 1px solid var(--border); }
+      .editor-pane { padding: 24px 20px 60px; }
+      .field-row, .field-row.triple { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── AUTH ── -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-logo">ruonalim<span>.</span></div>
+    <div class="auth-sub">Content admin</div>
+    <div class="field-group" style="margin-bottom:16px">
+      <label>GitHub token</label>
+      <input type="password" id="token-input" placeholder="ghp_..." autocomplete="current-password" />
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="authenticate()">Sign in</button>
+    <div class="auth-error" id="auth-error"></div>
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-logo">ruonalim<span>.</span> admin</div>
+    <div class="topbar-right">
+      <span class="topbar-status" id="top-status"></span>
+      <a href="https://ruonalim.com/writing" target="_blank" class="btn btn-ghost" style="padding:6px 14px;font-size:12px">View live →</a>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">Articles (<span id="article-count">0</span>)</div>
+      <div class="article-list" id="article-list"></div>
+    </div>
+
+    <!-- editor -->
+    <div class="editor-pane" id="editor-pane">
+      <div class="editor-empty" id="editor-empty">Select an article to edit</div>
+      <div id="editor-form" style="display:none">
+
+        <div class="editor-header">
+          <div class="editor-eyebrow" id="ed-eyebrow">Editing</div>
+          <div class="editor-article-title" id="ed-title-display"></div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Title</label>
+            <input type="text" id="f-title" />
+          </div>
+          <div class="field-group">
+            <label>Topic</label>
+            <select id="f-topic">
+              <option>AI &amp; Design</option>
+              <option>Design Leadership</option>
+              <option>Fractional Work</option>
+              <option>Design Systems</option>
+              <option>Product Strategy</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row triple">
+          <div class="field-group">
+            <label>Publish date</label>
+            <input type="date" id="f-date" />
+          </div>
+          <div class="field-group">
+            <label>Word count</label>
+            <input type="number" id="f-wordcount" />
+          </div>
+          <div class="field-group">
+            <label>Auto word count</label>
+            <button class="btn btn-ghost" style="margin-top:2px" onclick="recountWords()">Recount from body</button>
+          </div>
+        </div>
+
+        <!-- body tabs -->
+        <div class="body-editor-wrap">
+          <div class="body-editor-tabs">
+            <button class="body-tab active" id="tab-body" onclick="switchTab('body')">Article body</button>
+            <button class="body-tab" id="tab-fc"   onclick="switchTab('fc')">Fact Check</button>
+            <button class="body-tab" id="tab-preview" onclick="switchTab('preview')">Preview</button>
+          </div>
+
+          <div id="panel-body">
+            <div class="field-group">
+              <textarea class="body-textarea" id="f-body" oninput="onBodyChange()"></textarea>
+            </div>
+          </div>
+
+          <div id="panel-fc" style="display:none">
+            <div class="fc-info">
+              <strong>Format:</strong> Each entry on two lines.<br>
+              <code>Claim: [exact claim from article]</code><br>
+              <code>Source: [description]. domain.com/path</code><br>
+              Domains/URLs are auto-linked on the live site.
+            </div>
+            <div class="field-group">
+              <textarea class="fc-textarea" id="f-fc" placeholder="Claim: ...&#10;Source: ...&#10;&#10;Claim: ...&#10;Source: ..."></textarea>
+            </div>
+          </div>
+
+          <div id="panel-preview" style="display:none">
+            <div class="preview-pane" id="preview-output"></div>
+          </div>
+        </div>
+
+        <div class="save-bar">
+          <div class="commit-msg-wrap">
+            <input type="text" id="f-commit" placeholder="Describe your change, e.g. Fix Kraken IC ladder framing" />
+          </div>
+          <button class="btn btn-primary" id="save-btn" onclick="saveArticle()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 7l3.5 3.5L12 3"/></svg>
+            Publish
+          </button>
+          <button class="btn btn-danger" onclick="discardChanges()">Discard</button>
+        </div>
+
+        <div style="margin-top:10px;font-size:11px;color:var(--muted)">
+          Saves directly to GitHub and triggers a Vercel deploy (~60s to go live).
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+  // ── config ──
+  const OWNER = 'ruonalim';
+  const REPO  = 'ruonalim-site';
+  const FILE  = 'public/posts.json';
+  const BRANCH = 'main';
+
+  let token = '';
+  let allPosts = [];
+  let fileSha = '';
+  let activeIndex = -1;
+
+  // ── auth ──
+  document.getElementById('token-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') authenticate();
+  });
+
+  async function authenticate() {
+    token = document.getElementById('token-input').value.trim();
+    if (!token) return;
+    const err = document.getElementById('auth-error');
+    err.textContent = 'Checking…';
+    try {
+      const ok = await loadPosts();
+      if (ok) {
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        renderSidebar();
+      } else {
+        err.textContent = 'Invalid token or repo not accessible.';
+      }
+    } catch(e) {
+      err.textContent = 'Error: ' + e.message;
+    }
+  }
+
+  // ── GitHub API ──
+  async function ghGet(path) {
+    const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}?ref=${BRANCH}`, {
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' }
+    });
+    if (!r.ok) throw new Error(r.status + ' ' + r.statusText);
+    return r.json();
+  }
+
+  async function ghPut(path, content, message, sha) {
+    const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message, content: btoa(unescape(encodeURIComponent(content))), sha, branch: BRANCH })
+    });
+    if (!r.ok) {
+      const body = await r.json().catch(() => ({}));
+      throw new Error((body.message || r.statusText));
+    }
+    return r.json();
+  }
+
+  async function loadPosts() {
+    const data = await ghGet(FILE);
+    fileSha = data.sha;
+    const decoded = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
+    allPosts = JSON.parse(decoded);
+    return true;
+  }
+
+  // ── sidebar ──
+  function renderSidebar() {
+    document.getElementById('article-count').textContent = allPosts.length;
+    const list = document.getElementById('article-list');
+    list.innerHTML = allPosts.map((p, i) => `
+      <div class="article-item${i === activeIndex ? ' active' : ''}" onclick="selectArticle(${i})">
+        <div class="article-item-title">${p.title}</div>
+        <div class="article-item-meta">
+          ${p.topic ? `<span class="article-item-topic">${p.topic}</span>` : ''}
+          <span>${p.date}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ── split / join body ──
+  function splitBody(fullBody) {
+    const divider = '\n---';
+    const idx = fullBody.indexOf(divider);
+    if (idx === -1) return { body: fullBody, fc: '' };
+    const mainBody = fullBody.slice(0, idx);
+    const afterDash = fullBody.slice(idx + divider.length);
+    // Strip the 'Fact Check\n\nEvery factual claim...\n\n' header
+    const fcContent = afterDash
+      .replace(/^\n+/, '')
+      .replace(/^Fact Check\n+/, '')
+      .replace(/^Every factual claim[^\n]*\n+/, '')
+      .trim();
+    return { body: mainBody, fc: fcContent };
+  }
+
+  function joinBody(bodyText, fcText) {
+    if (!fcText.trim()) return bodyText;
+    return bodyText + '\n---\n\nFact Check\n\nEvery factual claim in this article, with its source.\n\n' + fcText.trim();
+  }
+
+  // ── select & load ──
+  function selectArticle(i) {
+    activeIndex = i;
+    const p = allPosts[i];
+    renderSidebar();
+    document.getElementById('editor-empty').style.display = 'none';
+    document.getElementById('editor-form').style.display = 'block';
+
+    document.getElementById('ed-eyebrow').textContent = 'Editing';
+    document.getElementById('ed-title-display').textContent = p.title;
+    document.getElementById('f-title').value = p.title;
+    document.getElementById('f-topic').value = p.topic || 'AI & Design';
+    document.getElementById('f-date').value = p.date;
+    document.getElementById('f-wordcount').value = p.wordCount || '';
+
+    const { body, fc } = splitBody(p.body || '');
+    document.getElementById('f-body').value = body;
+    document.getElementById('f-fc').value = fc;
+
+    // default commit message
+    document.getElementById('f-commit').value = `Edit: ${p.title.slice(0, 50)}`;
+
+    switchTab('body');
+    setStatus('');
+  }
+
+  // ── tabs ──
+  function switchTab(tab) {
+    ['body','fc','preview'].forEach(t => {
+      document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+      document.getElementById('panel-' + t).style.display = t === tab ? '' : 'none';
+    });
+    if (tab === 'preview') renderPreview();
+  }
+
+  function onBodyChange() {
+    // live word count hint
+    const wc = document.getElementById('f-body').value.trim().split(/\s+/).filter(Boolean).length;
+    document.getElementById('f-wordcount').placeholder = wc + ' (body only)';
+  }
+
+  function recountWords() {
+    const body = document.getElementById('f-body').value;
+    const fc   = document.getElementById('f-fc').value;
+    const full = body + '\n' + fc;
+    const wc   = full.trim().split(/\s+/).filter(Boolean).length;
+    document.getElementById('f-wordcount').value = wc;
+  }
+
+  // ── preview ──
+  function renderPreview() {
+    const body = document.getElementById('f-body').value;
+    const fc   = document.getElementById('f-fc').value;
+    let html = renderLines(body.split('\n'));
+    if (fc.trim()) html += renderFcPreview(fc);
+    document.getElementById('preview-output').innerHTML = html;
+  }
+
+  function renderLines(lines) {
+    return lines.map(l => {
+      if (l.startsWith('## ')) return `<h2>${esc(l.slice(3))}</h2>`;
+      if (l.startsWith('### ')) return `<h3>${esc(l.slice(4))}</h3>`;
+      if (l.startsWith('> ')) return `<blockquote>${esc(l.slice(2))}</blockquote>`;
+      if (!l.trim()) return '';
+      return `<p>${esc(l)}</p>`;
+    }).join('');
+  }
+
+  function renderFcPreview(fcText) {
+    const lines = fcText.split('\n').map(l => l.trim()).filter(Boolean);
+    let items = []; let cur = null;
+    for (const l of lines) {
+      if (l.startsWith('Claim:')) { if (cur) items.push(cur); cur = { claim: l.slice(6).trim(), src: '' }; }
+      else if (l.startsWith('Source:') && cur) cur.src = l.slice(7).trim();
+    }
+    if (cur) items.push(cur);
+    const rows = items.map(it => `
+      <div class="preview-fc-item">
+        <div class="preview-fc-claim">${esc(it.claim)}</div>
+        ${it.src ? `<div class="preview-fc-src"><strong>Source:</strong> ${linkify(it.src)}</div>` : ''}
+      </div>
+    `).join('');
+    return `<div class="preview-fact-check"><div class="preview-fc-label">Fact Check</div>${rows}</div>`;
+  }
+
+  function linkify(src) {
+    return esc(src).replace(/\b((?:https?:\/\/)?(?:www\.)?[a-z0-9][a-z0-9\-]{0,61}[a-z0-9](?:\.[a-z]{2,})+(?:\/[^\s,;]*)?)/gi, match => {
+      const href = match.startsWith('http') ? match : 'https://' + match;
+      return `<a href="${href}" target="_blank">${match}</a>`;
+    });
+  }
+
+  function esc(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ── save ──
+  async function saveArticle() {
+    const commitMsg = document.getElementById('f-commit').value.trim();
+    if (!commitMsg) { toast('Add a commit message first', 'error'); return; }
+
+    const btn = document.getElementById('save-btn');
+    btn.disabled = true;
+    setStatus('saving', 'Saving…');
+
+    // Build updated post
+    const updated = { ...allPosts[activeIndex] };
+    updated.title     = document.getElementById('f-title').value.trim();
+    updated.topic     = document.getElementById('f-topic').value;
+    updated.date      = document.getElementById('f-date').value;
+    updated.wordCount = parseInt(document.getElementById('f-wordcount').value) || updated.wordCount;
+    updated.body      = joinBody(
+      document.getElementById('f-body').value,
+      document.getElementById('f-fc').value
+    );
+
+    const newPosts = [...allPosts];
+    newPosts[activeIndex] = updated;
+    newPosts.sort((a, b) => b.date.localeCompare(a.date));
+
+    const content = JSON.stringify(newPosts, null, 2) + '\n';
+
+    try {
+      const result = await ghPut(FILE, content, commitMsg, fileSha);
+      fileSha  = result.content.sha;
+      allPosts = newPosts;
+      // re-find active index after sort
+      activeIndex = allPosts.findIndex(p => p.id === updated.id);
+
+      renderSidebar();
+      setStatus('saved', 'Saved — deploying…');
+      toast('Published. Live in ~60s', 'success');
+      document.getElementById('ed-title-display').textContent = updated.title;
+
+      // Clear "deploying" status after 70s
+      setTimeout(() => setStatus('', ''), 70000);
+    } catch(e) {
+      setStatus('error', 'Error: ' + e.message);
+      toast('Save failed: ' + e.message, 'error');
+    }
+
+    btn.disabled = false;
+  }
+
+  function discardChanges() {
+    if (activeIndex >= 0) selectArticle(activeIndex);
+  }
+
+  // ── status / toast ──
+  function setStatus(cls, msg) {
+    const el = document.getElementById('top-status');
+    el.className = 'topbar-status ' + (cls || '');
+    el.textContent = msg;
+  }
+
+  function toast(msg, type) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'show ' + type;
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => { el.className = type; }, 3500);
+  }
+</script>
+</body>
+</html>
