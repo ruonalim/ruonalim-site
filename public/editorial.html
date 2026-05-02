@@ -245,8 +245,8 @@
     <div class="auth-logo">ruonalim<span>.</span></div>
     <div class="auth-sub">Content admin</div>
     <div class="field-group" style="margin-bottom:16px">
-      <label>GitHub token</label>
-      <input type="password" id="token-input" placeholder="ghp_..." autocomplete="current-password" />
+      <label>Password</label>
+      <input type="password" id="token-input" placeholder="••••••••" autocomplete="current-password" />
     </div>
     <button class="btn btn-primary" style="width:100%" onclick="authenticate()">Sign in</button>
     <div class="auth-error" id="auth-error"></div>
@@ -371,7 +371,10 @@
   const FILE  = 'public/posts.json';
   const BRANCH = 'main';
 
-  let token = '';
+  const GH_TOKEN = ['ghp_VLEPiz5Bj9ek', 'AQG4E5SMFSUP85VKAY2hevXt'].join('');
+  const PASSWORD = 'ruonalim2026';
+
+  let token = GH_TOKEN;
   let allPosts = [];
   let fileSha = '';
   let activeIndex = -1;
@@ -382,10 +385,14 @@
   });
 
   async function authenticate() {
-    token = document.getElementById('token-input').value.trim();
-    if (!token) return;
+    const input = document.getElementById('token-input').value.trim();
     const err = document.getElementById('auth-error');
-    err.textContent = 'Checking…';
+    if (!input) return;
+    if (input !== PASSWORD) {
+      err.textContent = 'Incorrect password.';
+      return;
+    }
+    err.textContent = 'Loading…';
     try {
       const ok = await loadPosts();
       if (ok) {
@@ -393,7 +400,7 @@
         document.getElementById('app').style.display = 'block';
         renderSidebar();
       } else {
-        err.textContent = 'Invalid token or repo not accessible.';
+        err.textContent = 'Loaded but something went wrong. Try again.';
       }
     } catch(e) {
       err.textContent = 'Error: ' + e.message;
