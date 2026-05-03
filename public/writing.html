@@ -195,13 +195,15 @@
       border-top: 1px solid var(--border);
       font-size: 12px; font-weight: 600;
       letter-spacing: 0.05em;
-      color: var(--card-accent, var(--accent)); display: flex; align-items: center; gap: 6px;
+      color: var(--card-accent, var(--accent));
+      display: flex; align-items: center; justify-content: space-between;
       transition: gap 0.2s;
     }
+    .post-read-cta { display: flex; align-items: center; gap: 6px; transition: gap 0.2s; }
     .post-read svg { width: 12px; height: 12px; transition: transform 0.2s; }
-    .post-card:hover .post-read { gap: 10px; }
+    .post-card:hover .post-read-cta { gap: 10px; }
     .post-card:hover .post-read svg { transform: translateX(2px); }
-    .post-read-time { margin-left: auto; font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0; }
+    .post-read-time { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: 0; }
 
     /* STATES */
     .state-wrap { max-width: 1200px; margin: 0 auto; padding: 80px 56px; display: flex; flex-direction: column; gap: 12px; }
@@ -959,7 +961,7 @@
         </div>
         <div class="post-title">${post.title}</div>
         ${post.body ? `<div class="post-excerpt">${post.body.slice(0, 220).replace(/[#>]/g, '').trim()}</div>` : ''}
-        <div class="post-read">Read <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg><span class="post-read-time">${readTime(post)}</span></div>
+        <div class="post-read"><span class="post-read-time">${readTime(post)}</span><span class="post-read-cta">Read <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg></span></div>
       </a>
     `).join('');
     grid.querySelectorAll('.post-card').forEach(card => {
