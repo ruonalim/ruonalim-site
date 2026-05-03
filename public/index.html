@@ -538,7 +538,7 @@
        HERO
     ───────────────────────────────────────────── */
     .hero {
-      padding-top: 160px;
+      padding-top: 112px;
       padding-bottom: 0;
       position: sticky;
       top: 0;
@@ -861,7 +861,7 @@
     /* ─────────────────────────────────────────────
        STATS STRIP
     ───────────────────────────────────────────── */
-    .stats-strip { padding: 80px 0; }
+    .stats-strip { padding: 56px 0; }
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -918,7 +918,7 @@
        SELF ASSESSMENT
     ───────────────────────────────────────────── */
     .self-assessment {
-      padding: 100px 0;
+      padding: 68px 0;
       border-top: 1px solid var(--border);
     }
     .sa-inner {
@@ -1069,14 +1069,14 @@
        SERVICES
     ───────────────────────────────────────────── */
     .services {
-      padding: 100px 0;
+      padding: 68px 0;
       border-top: 1px solid var(--border);
     }
     .section-header {
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      margin-bottom: 64px;
+      margin-bottom: 44px;
     }
     .services-list { display: flex; flex-direction: column; }
     .service-row { cursor: pointer; }
@@ -1129,7 +1129,7 @@
        WORK
     ───────────────────────────────────────────── */
     .work {
-      padding: 100px 0;
+      padding: 68px 0;
       border-top: 1px solid var(--border);
     }
     .work-grid {
@@ -1231,7 +1231,7 @@
        AUDIT BAND
     ───────────────────────────────────────────── */
     .audit-band {
-      padding: 80px 0;
+      padding: 56px 0;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
@@ -1303,7 +1303,7 @@
        EDGE / ABOUT
     ───────────────────────────────────────────── */
     .edge {
-      padding: 100px 0;
+      padding: 68px 0;
       border-top: 1px solid var(--border);
     }
     .edge-grid {
@@ -1338,7 +1338,7 @@
     /* ─────────────────────────────────────────────
        BIG CTA
     ───────────────────────────────────────────── */
-    .big-cta { padding: 140px 0; }
+    .big-cta { padding: 96px 0; }
     .big-cta-inner {
       display: flex;
       align-items: flex-end;
@@ -1423,7 +1423,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: clamp(80px,10vw,140px) clamp(24px,5vw,80px);
+      padding: clamp(60px,7vw,100px) clamp(24px,5vw,80px);
       position: relative;
     }
     .footer-cta-inner {
@@ -1498,7 +1498,7 @@
     .footer-grid {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 60px 56px;
+      padding: 44px 56px;
       display: grid;
       grid-template-columns: 2fr 1fr 1fr 1.5fr;
       gap: 48px;
@@ -1639,7 +1639,7 @@
        FAQ
     ───────────────────────────────────────────── */
     .faq {
-      padding: 100px 0;
+      padding: 68px 0;
       border-top: 1px solid var(--border);
     }
     .faq-inner {
@@ -1868,7 +1868,7 @@
     /* Founder section */
     /* ── FOUNDER ── */
     .founder-section {
-      padding: 0 0 120px;
+      padding: 0 0 80px;
       border-top: none;
       overflow: hidden;
     }
@@ -2007,7 +2007,7 @@
 
     /* ── TESTIMONIALS ── */
     .testimonials {
-      padding: 100px 0;
+      padding: 68px 0;
       border-top: 1px solid var(--border);
       background: #f7f8ff;
     }
@@ -2225,7 +2225,7 @@
     }
 
     /* ─── NEW: PROOF SECTION ─── */
-    .proof { padding: 100px 0; border-top: 1px solid var(--border); }
+    .proof { padding: 68px 0; border-top: 1px solid var(--border); }
     .proof-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -2277,11 +2277,11 @@
     }
     @media (max-width: 600px) {
       .proof-grid { grid-template-columns: 1fr; }
-      .proof { padding: 60px 0; }
+      .proof { padding: 44px 0; }
     }
 
     /* ─── THOUGHT LEADERSHIP ─── */
-    .thought-lead { padding: 100px 0; border-top: 1px solid var(--border); }
+    .thought-lead { padding: 68px 0; border-top: 1px solid var(--border); }
     .tl-header-row {
       display: flex;
       align-items: flex-end;
@@ -2391,7 +2391,7 @@
     }
 
     @media (max-width: 900px) {
-      .thought-lead { padding: 60px 0; }
+      .thought-lead { padding: 44px 0; }
       .tl-header-row { flex-direction: column; align-items: flex-start; }
       .tl-episodes { grid-template-columns: repeat(2, 1fr); }
     }
@@ -2861,7 +2861,7 @@
 
     /* How We Work section */
     .how-we-work {
-      padding: 100px 0;
+      padding: 68px 0;
       border-top: 1px solid #e0e0ea;
     }
     .hww-header { margin-bottom: 60px; }
@@ -4423,6 +4423,66 @@
     if (modalClose) modalClose.addEventListener('click', closeModal);
     if (modal) modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+  })();
+
+  // ── DELIGHT LAYER ──────────────────────────────────
+
+  // 1. Scroll progress bar
+  (function() {
+    const bar = document.createElement('div');
+    bar.id = 'scroll-progress';
+    document.body.prepend(bar);
+    window.addEventListener('scroll', () => {
+      const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+      bar.style.width = Math.min(pct, 100) + '%';
+    }, { passive: true });
+  })();
+
+  // 2. Cursor glow on dark sections
+  (function() {
+    const glow = document.createElement('div');
+    glow.className = 'cursor-glow';
+    document.body.appendChild(glow);
+    document.addEventListener('mousemove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top  = e.clientY + 'px';
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      const darkSels = ['.hero', '.big-cta', '.footer-cta-band'];
+      const inDark = el && darkSels.some(s => el.closest(s));
+      glow.style.opacity = inDark ? '1' : '0';
+    }, { passive: true });
+  })();
+
+  // 3. Magnetic primary buttons
+  document.querySelectorAll('.btn-primary').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const r = btn.getBoundingClientRect();
+      btn.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      btn.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
+      const dx = (e.clientX - (r.left + r.width/2))  * 0.16;
+      const dy = (e.clientY - (r.top  + r.height/2)) * 0.16;
+      btn.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+  });
+
+  // 4. Card 3D tilt
+  document.querySelectorAll('.work-card, .proof-card, .testi-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientY - r.top  - r.height/2) / r.height * -7;
+      const y = (e.clientX - r.left - r.width/2)  / r.width  *  7;
+      card.style.transform = `perspective(900px) rotateX(${x}deg) rotateY(${y}deg) translateY(-3px)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+
+  // 5. Staggered fade-up on section entry
+  (function() {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('[data-anim="fade-up"]').forEach(el => io.observe(el));
   })();
 
 
