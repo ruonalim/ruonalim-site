@@ -81,18 +81,13 @@
 
     /* HEADER */
     .writing-header {
-      background: #050508;
+      background: #000000;
       padding: 136px 56px 72px;
       position: relative;
       overflow: hidden;
     }
     .writing-header::after {
-      content: '';
-      position: absolute;
-      top: -120px; right: -80px;
-      width: 520px; height: 520px;
-      background: radial-gradient(circle, rgba(0,68,228,0.28) 0%, transparent 65%);
-      pointer-events: none;
+      display: none;
     }
     .writing-header-inner {
       max-width: 1200px;
@@ -394,7 +389,7 @@
     /* ─── NAV ─── */
     nav.site-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-      background: #050508;
+      background: #000000;
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255,255,255,0.06);
       transition: background 0.35s, border-color 0.35s, box-shadow 0.35s;
