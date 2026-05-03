@@ -1898,21 +1898,36 @@
       position: relative;
       padding-top: 20px;
     }
+    /* Blue left accent bar */
+    .founder-photo-col::before {
+      content: '';
+      position: absolute;
+      top: 20px; left: -24px;
+      width: 2px;
+      height: 55%;
+      background: linear-gradient(to bottom, #0044E4 0%, rgba(0,68,228,0) 100%);
+      border-radius: 2px;
+    }
     .founder-photo-frame {
       position: relative;
       width: 340px;
     }
-    /* Accent glow behind photo */
+    /* Animated glow pulse beneath photo */
     .founder-photo-frame::before {
       content: '';
       position: absolute;
       bottom: -20px; left: 50%;
       transform: translateX(-50%);
-      width: 70%;
-      height: 80px;
-      background: radial-gradient(ellipse, rgba(0,68,228,0.55) 0%, transparent 70%);
-      filter: blur(20px);
+      width: 80%;
+      height: 100px;
+      background: radial-gradient(ellipse, rgba(0,68,228,0.65) 0%, transparent 70%);
+      filter: blur(24px);
       z-index: 0;
+      animation: founderGlowPulse 4s ease-in-out infinite alternate;
+    }
+    @keyframes founderGlowPulse {
+      from { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+      to   { opacity: 1;   transform: translateX(-50%) scale(1.1); }
     }
     .founder-photo {
       display: block;
@@ -1922,25 +1937,61 @@
       z-index: 1;
       object-fit: cover;
       object-position: top center;
+      transition: filter 0.5s ease;
     }
+    .founder-photo-frame:hover .founder-photo {
+      filter: contrast(1.04) saturate(1.06);
+    }
+    /* Film grain overlay */
+    .founder-photo-grain {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px 16px 0 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      opacity: 0.045;
+      z-index: 2;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+    /* Corner bracket accents */
+    .founder-bracket {
+      position: absolute;
+      width: 18px; height: 18px;
+      border-color: #0044E4;
+      border-style: solid;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.75;
+      transition: width 0.45s cubic-bezier(0.23,1,0.32,1),
+                  height 0.45s cubic-bezier(0.23,1,0.32,1),
+                  opacity 0.45s;
+    }
+    .founder-photo-frame:hover .founder-bracket {
+      width: 26px; height: 26px; opacity: 1;
+    }
+    .founder-bracket--tl { top: -6px; left: -6px; border-width: 2px 0 0 2px; }
+    .founder-bracket--tr { top: -6px; right: -6px; border-width: 2px 2px 0 0; }
+    .founder-bracket--bl { bottom: -6px; left: -6px; border-width: 0 0 2px 2px; }
+    .founder-bracket--br { bottom: -6px; right: -6px; border-width: 0 2px 2px 0; }
     /* Credential chips floating on photo */
     .founder-chip {
       position: absolute;
-      background: rgba(5,5,8,0.82);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(5,5,8,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 8px;
       padding: 10px 14px;
-      z-index: 2;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      z-index: 4;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
     }
     .founder-chip-label {
       font-size: 9px;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.4);
       margin-bottom: 3px;
     }
     .founder-chip-value {
@@ -2003,6 +2054,7 @@
       .founder-photo-frame { width: 100%; max-width: 320px; }
       .founder-chip--kraken, .founder-chip--exp { right: 0; }
       .founder-copy-col { padding: 32px 0 40px; }
+      .founder-photo-col::before { display: none; }
     }
 
     /* ── TESTIMONIALS ── */
@@ -3630,7 +3682,20 @@
       <!-- Photo col -->
       <div class="founder-photo-col" data-anim="fade-up">
         <div class="founder-photo-frame">
+          <div class="founder-bracket founder-bracket--tl"></div>
+          <div class="founder-bracket founder-bracket--tr"></div>
+          <div class="founder-bracket founder-bracket--bl"></div>
+          <div class="founder-bracket founder-bracket--br"></div>
+          <div class="founder-photo-grain"></div>
           <img src="/jay.jpg" alt="Jay Tulloch, founder of RUONALIM" class="founder-photo" loading="lazy">
+          <div class="founder-chip founder-chip--kraken">
+            <div class="founder-chip-label">Previously</div>
+            <div class="founder-chip-value">Kraken · Careem</div>
+          </div>
+          <div class="founder-chip founder-chip--exp">
+            <div class="founder-chip-label">Experience</div>
+            <div class="founder-chip-value">16 years</div>
+          </div>
         </div>
       </div>
 
