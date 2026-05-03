@@ -2916,18 +2916,30 @@
       padding: 68px 0;
       border-top: 1px solid #e0e0ea;
     }
-    .hww-header { margin-bottom: 60px; }
-    .hww-cards {
+    /* Two-column: story left, tracks right */
+    .hww-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      max-width: 860px;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 0 72px;
+      align-items: start;
     }
-    @media (max-width: 768px) { .hww-cards { grid-template-columns: 1fr; } }
+    .hww-header { margin-bottom: 16px; }
+    .hww-intro {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.72;
+      max-width: 380px;
+      margin-bottom: 28px;
+    }
+    .hww-right {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
     .hww-card {
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 36px 32px;
+      padding: 28px 28px;
       background: #ffffff;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03);
     }
@@ -2941,76 +2953,83 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
     .hww-card-heading {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       letter-spacing: -0.4px;
       color: var(--text);
-      margin-bottom: 12px;
+      margin-bottom: 0;
       line-height: 1.2;
     }
     .hww-card-items {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px 16px;
+      margin-top: 14px;
     }
     .hww-card-item {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--body);
       display: flex;
       align-items: flex-start;
-      gap: 10px;
+      gap: 8px;
       line-height: 1.5;
     }
     .hww-card-item::before {
       content: '';
-      width: 4px;
-      height: 4px;
+      width: 3px;
+      height: 3px;
       border-radius: 50%;
       background: var(--accent);
       flex-shrink: 0;
       margin-top: 6px;
     }
     .hww-proof {
-      margin-top: 48px;
-      padding: 24px 28px;
+      margin-top: 0;
+      padding: 20px 24px;
       border-radius: 10px;
-      background: rgba(0,68,228,0.025);
-      max-width: 860px;
+      background: rgba(0,68,228,0.03);
+      border: 1px solid rgba(0,68,228,0.1);
       display: flex;
       align-items: flex-start;
-      gap: 20px;
+      gap: 16px;
     }
     .hww-proof-dot {
-      width: 8px; height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: var(--accent);
       flex-shrink: 0;
-      margin-top: 6px;
+      margin-top: 5px;
     }
     .hww-proof-label {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
       letter-spacing: 0.13em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .hww-proof-text {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       color: var(--text);
       letter-spacing: -0.2px;
-      line-height: 1.45;
+      line-height: 1.4;
     }
     .hww-proof-sub {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--muted);
-      margin-top: 4px;
-      line-height: 1.5;
+      margin-top: 3px;
+      line-height: 1.55;
+    }
+    @media (max-width: 900px) {
+      .hww-layout { grid-template-columns: 1fr; gap: 36px 0; }
+      .hww-intro { max-width: 100%; }
+    }
+    @media (max-width: 560px) {
+      .hww-card-items { grid-template-columns: 1fr; }
     }
 
     /* Service row: expandable structure */
@@ -3223,21 +3242,35 @@
 <!-- ─── HOW WE WORK ─── -->
 <section class="how-we-work" id="how-we-work">
   <div class="container">
-    <div class="hww-header" data-anim="fade-up">
-      <div class="label" style="margin-bottom:14px;color:var(--accent);">How we work</div>
-      <h2 class="display-md">Senior thinking. AI speed.<br><em>No compromise.</em></h2>
-    </div>
-    <div class="hww-body" data-anim="fade-up" data-delay="1">
-      <p style="font-size:16px;color:var(--muted);line-height:1.75;max-width:720px;margin-bottom:48px;">Traditional agencies bill by the hour. Slow, expensive, dependent on adding bodies to scale. We don't work that way. RUONALIM operates a two-track model that gives you the speed of a modern AI-native team with the craft of a senior practice.</p>
-      <div class="hww-cards">
+    <div class="hww-layout">
+
+      <!-- Left: narrative -->
+      <div class="hww-left" data-anim="fade-up">
+        <div class="hww-header">
+          <div class="label" style="margin-bottom:12px;color:var(--accent);">How we work</div>
+          <h2 class="display-md">Senior thinking. AI speed.<br><em>No compromise.</em></h2>
+        </div>
+        <p class="hww-intro">Traditional agencies bill by the hour. Slow, expensive, dependent on bodies. RUONALIM runs a two-track model — AI-speed production, senior-level direction. No compromise on either.</p>
+        <div class="hww-proof">
+          <div class="hww-proof-dot"></div>
+          <div>
+            <div class="hww-proof-label">Live proof</div>
+            <div class="hww-proof-text">Northladder: two major workstreams shipped in 30 days.</div>
+            <div class="hww-proof-sub">The world's largest tech retailers' trade-in platform, redesigned and embedded at enterprise scale. AI-augmented production, senior-led direction.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: tracks -->
+      <div class="hww-right" data-anim="fade-up" data-delay="1">
         <div class="hww-card hww-card--ai">
           <div class="hww-card-label">Track 01</div>
           <div class="hww-card-heading">AI-Powered Production</div>
           <div class="hww-card-items">
             <div class="hww-card-item">Research synthesis and analysis</div>
             <div class="hww-card-item">Design exploration and iteration</div>
-            <div class="hww-card-item">Component and copy system generation</div>
-            <div class="hww-card-item">Audit analysis and heuristic scoring</div>
+            <div class="hww-card-item">Component and copy generation</div>
+            <div class="hww-card-item">Audit analysis and scoring</div>
             <div class="hww-card-item">Spec documentation and handoff</div>
           </div>
         </div>
@@ -3246,21 +3279,14 @@
           <div class="hww-card-heading">Expert Direction</div>
           <div class="hww-card-items">
             <div class="hww-card-item">Strategy and problem framing</div>
-            <div class="hww-card-item">Taste, judgment, and craft decisions</div>
+            <div class="hww-card-item">Taste, judgment, and craft</div>
             <div class="hww-card-item">Systems thinking and architecture</div>
-            <div class="hww-card-item">Stakeholder alignment and direction</div>
+            <div class="hww-card-item">Stakeholder alignment</div>
             <div class="hww-card-item">Quality review and final sign-off</div>
           </div>
         </div>
       </div>
-      <div class="hww-proof">
-        <div class="hww-proof-dot"></div>
-        <div>
-          <div class="hww-proof-label">Live proof</div>
-          <div class="hww-proof-text">Northladder: two major workstreams shipped in 30 days.</div>
-          <div class="hww-proof-sub">The world's largest tech retailers' trade-in platform, redesigned and embedded at enterprise scale. AI-augmented production, senior-led direction. The same standards. Faster delivery.</div>
-        </div>
-      </div>
+
     </div>
   </div>
 </section>
