@@ -920,15 +920,26 @@
     `;
   }
 
+  function normaliseBody(text) {
+    // Convert <br> tags (from admin portal) to newlines so renderLines works correctly
+    return text
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/&nbsp;/gi, ' ')
+      .replace(/&amp;/gi, '&')
+      .replace(/&lt;/gi, '<')
+      .replace(/&gt;/gi, '>');
+  }
+
   function renderBody(text) {
     if (!text) return '';
-    const dividerIdx = text.indexOf('\n---');
+    const normalised = normaliseBody(text);
+    const dividerIdx = normalised.indexOf('\n---');
     if (dividerIdx !== -1) {
-      const mainText = text.slice(0, dividerIdx);
-      const factBlock = text.slice(dividerIdx + 4); // skip '\n---'
+      const mainText = normalised.slice(0, dividerIdx);
+      const factBlock = normalised.slice(dividerIdx + 4); // skip '\n---'
       return renderLines(mainText.split('\n')) + renderFactCheck(factBlock);
     }
-    return renderLines(text.split('\n'));
+    return renderLines(normalised.split('\n'));
   }
 
   document.getElementById('share-linkedin').addEventListener('click', () => {
@@ -1012,7 +1023,7 @@
           <span class="post-date">${fmtDate(post.date)}</span>
         </div>
         <div class="post-title">${post.title}</div>
-        ${post.body ? `<div class="post-excerpt">${post.body.slice(0, 220).replace(/[#>]/g, '').trim()}</div>` : ''}
+        ${post.body ? `<div class="post-excerpt">${post.body.replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/[#*_]/g, '').slice(0, 220).trim()}</div>` : ''}
         <div class="post-read"><span class="post-read-time">${readTime(post)}</span><span class="post-read-cta">Read <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg></span></div>
       </a>
     `).join('');
