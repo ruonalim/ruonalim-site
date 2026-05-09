@@ -250,51 +250,71 @@
     .article-body li { margin-bottom: 8px; }
     .article-body blockquote { border-left: 2px solid var(--accent); padding-left: 20px; margin: 32px 0; color: var(--muted); font-style: italic; }
 
-    /* FACT CHECK */
+    /* FACT CHECK — dark inverted panel */
     .fact-check {
-      margin-top: 56px;
-      border-radius: 12px;
-      background: #F5F6FF;
-      border: 1px solid rgba(0,68,228,0.12);
-      padding: 32px 32px 28px;
+      margin: 56px -32px 0;
+      background: #0A0A12;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 40px 32px 36px;
     }
     .fact-check-header {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 6px;
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 8px;
     }
-    .fact-check-icon {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: #0044E4; display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+    .fact-check-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(0,68,228,0.18);
+      border: 1px solid rgba(0,68,228,0.35);
+      border-radius: 4px;
+      padding: 4px 10px;
     }
-    .fact-check-icon svg { width: 14px; height: 14px; }
+    .fact-check-badge svg { width: 11px; height: 11px; flex-shrink: 0; }
     .fact-check-label {
-      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: #0044E4;
+      font-size: 10px; font-weight: 800; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #6B9BFF;
     }
     .fact-check-intro {
-      font-size: 13px; color: var(--muted); line-height: 1.6;
-      margin-bottom: 24px; padding-bottom: 20px;
-      border-bottom: 1px solid rgba(0,68,228,0.1);
+      font-size: 13px; color: rgba(255,255,255,0.38); line-height: 1.6;
+      margin: 12px 0 28px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
     .fact-item {
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(0,68,228,0.07);
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 0 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      align-items: start;
     }
     .fact-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .fact-num {
+      font-size: 11px; font-weight: 700; color: rgba(0,68,228,0.7);
+      letter-spacing: 0.05em; padding-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+    .fact-content {}
     .fact-claim {
-      font-size: 14px; color: var(--text); line-height: 1.6;
-      font-weight: 500; margin-bottom: 6px;
+      font-size: 14px; color: rgba(255,255,255,0.88); line-height: 1.65;
+      font-weight: 500; margin-bottom: 8px;
     }
     .fact-source {
-      font-size: 12px; color: var(--muted); line-height: 1.5;
+      font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.5;
+      display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap;
+    }
+    .fact-source-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.22);
+      flex-shrink: 0;
     }
     .fact-source a {
-      color: #0044E4; text-decoration: none; font-weight: 600;
-      border-bottom: 1px solid rgba(0,68,228,0.25);
-      transition: border-color 0.15s;
+      color: #5B8FFF; text-decoration: none;
+      border-bottom: 1px solid rgba(91,143,255,0.3);
+      transition: color 0.15s, border-color 0.15s;
+      word-break: break-all;
     }
-    .fact-source a:hover { border-color: #0044E4; }
+    .fact-source a:hover { color: #7AAAFF; border-color: rgba(91,143,255,0.7); }
+    .fact-source-arrow { color: rgba(91,143,255,0.5); font-size: 11px; }
 
     /* ARTICLE NAV — sticky bottom of overlay, never overlaps content */
     .article-nav {
@@ -818,29 +838,30 @@
     }).join('');
   }
 
-  function linkifySource(src) {
-    // Match bare domains/URLs like trueup.io/layoffs or www.weareempirika.com
-    return src.replace(/\b((?:https?:\/\/)?(?:www\.)?[a-z0-9](?:[a-z0-9\-]{0,61}[a-z0-9])?(?:\.[a-z]{2,})+(?:\/[^\s,;]*)?)/gi, (match) => {
-      const href = match.startsWith('http') ? match : 'https://' + match;
-      const label = match.replace(/^https?:\/\//, '');
-      return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
-    });
+  function extractSourceLink(src) {
+    // Pull the URL/domain from the end of source text, return { label, href, citation }
+    // Matches: something.com, something.com/path, https://something.com/path
+    const urlRx = /\b((?:https?:\/\/)?(?:www\.)?[a-z0-9](?:[a-z0-9\-]{0,61}[a-z0-9])?(?:\.[a-z]{2,})+(?:\/[^\s,;.]*)?)/gi;
+    const matches = [...src.matchAll(urlRx)];
+    if (!matches.length) return { citation: src, href: null, linkText: null };
+    const raw = matches[matches.length - 1][0]; // last URL-like token is the domain
+    const href = raw.startsWith('http') ? raw : 'https://' + raw;
+    // Citation = everything before the URL
+    const citation = src.slice(0, src.lastIndexOf(raw)).replace(/[.\s]+$/, '').trim();
+    const linkText = raw.replace(/^https?:\/\//, '').replace(/^www\./, '');
+    return { citation, href, linkText };
   }
 
   function renderFactCheck(block) {
     const lines = block.split('\n').map(l => l.trim()).filter(Boolean);
-    // Skip leading 'Fact Check' heading and intro line
     let intro = '';
     let items = [];
     let i = 0;
-    // Consume heading
     if (lines[i] && lines[i].toLowerCase() === 'fact check') i++;
-    // Consume intro paragraph (before first Claim:)
     while (i < lines.length && !lines[i].startsWith('Claim:')) {
       if (lines[i]) intro += lines[i] + ' ';
       i++;
     }
-    // Parse claim/source pairs
     let current = null;
     for (; i < lines.length; i++) {
       const l = lines[i];
@@ -849,26 +870,49 @@
         current = { claim: l.slice(6).trim(), source: '' };
       } else if (l.startsWith('Source:') && current) {
         current.source = l.slice(7).trim();
+      } else if (current && !l.startsWith('Claim:') && !l.startsWith('Source:')) {
+        // continuation of previous source or unsourced block
+        if (current.source) current.source += ' ' + l;
       }
     }
     if (current) items.push(current);
 
-    const itemsHtml = items.map(item => `
-      <div class="fact-item">
-        <div class="fact-claim">${item.claim}</div>
-        ${item.source ? `<div class="fact-source"><strong>Source:</strong> ${linkifySource(item.source)}</div>` : ''}
-      </div>
-    `).join('');
+    const itemsHtml = items.map((item, idx) => {
+      const num = String(idx + 1).padStart(2, '0');
+      let sourceHtml = '';
+      if (item.source) {
+        const { citation, href, linkText } = extractSourceLink(item.source);
+        if (href) {
+          sourceHtml = `
+            <div class="fact-source">
+              <span class="fact-source-label">Source</span>
+              ${citation ? `<span>${citation}</span>` : ''}
+              <span class="fact-source-arrow">→</span>
+              <a href="${href}" target="_blank" rel="noopener noreferrer">${linkText}</a>
+            </div>`;
+        } else {
+          sourceHtml = `<div class="fact-source"><span class="fact-source-label">Source</span> <span>${item.source}</span></div>`;
+        }
+      }
+      return `
+        <div class="fact-item">
+          <span class="fact-num">${num}</span>
+          <div class="fact-content">
+            <div class="fact-claim">${item.claim}</div>
+            ${sourceHtml}
+          </div>
+        </div>`;
+    }).join('');
 
     return `
       <aside class="fact-check" aria-label="Fact check">
         <div class="fact-check-header">
-          <div class="fact-check-icon">
-            <svg viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 7l3.5 3.5L12 3"/>
+          <div class="fact-check-badge">
+            <svg viewBox="0 0 12 12" fill="none" stroke="#6B9BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1.5 6l3 3 6-6"/>
             </svg>
+            <span class="fact-check-label">Fact Check</span>
           </div>
-          <span class="fact-check-label">Fact Check</span>
         </div>
         ${intro ? `<p class="fact-check-intro">${intro.trim()}</p>` : ''}
         ${itemsHtml}
