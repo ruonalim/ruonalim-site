@@ -3097,6 +3097,35 @@
       .service-row-summary .service-desc { display: none; }
       .service-detail-inner { grid-template-columns: 1fr; padding-left: 0; gap: 16px; }
     }
+
+    /* ── HOW IT WORKS STEPS ── */
+    .hww-step {
+      padding: 36px 0;
+      border-top: 1px solid var(--border);
+    }
+    .hww-step-num {
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 16px;
+    }
+    .hww-step-heading {
+      font-size: 18px; font-weight: 700; color: var(--fg);
+      letter-spacing: -.02em; margin-bottom: 12px; line-height: 1.3;
+    }
+    .hww-step-body {
+      font-size: 14px; color: var(--muted); line-height: 1.7; margin: 0;
+    }
+    @media (max-width: 860px) {
+      .hww-steps { grid-template-columns: 1fr 1fr !important; }
+    }
+    @media (max-width: 560px) {
+      .hww-steps { grid-template-columns: 1fr !important; }
+    }
+
+    /* ── PRICING ── */
+    .pricing-section { padding: 120px 0; }
+    @media (max-width: 900px) {
+      .pricing-grid { grid-template-columns: 1fr !important; max-width: 480px; margin: 0 auto; }
+    }
   </style>
 </head>
 <body>
@@ -3110,12 +3139,11 @@
   <div class="nav-inner">
     <a href="/" class="nav-logo" aria-label="ruonalim – home">ruonalim<span aria-hidden="true">.</span></a>
     <ul class="nav-links" role="list">
-      <li><a href="#services">Services</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="/writing">Perspectives</a></li>
-      <li><a href="/audit" class="nav-audit">UX Audit</a></li>
     </ul>
-    <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="nav-cta-btn nav-cta-desktop">Book a free consultation</a>
+    <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="nav-cta-btn nav-cta-desktop">Get Started</a>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
       <span></span><span></span><span></span>
     </button>
@@ -3126,12 +3154,11 @@
 <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
   <div class="nav-drawer-inner">
     <ul class="nav-drawer-links" role="list">
-      <li><a href="#services" onclick="closeDrawer()">Services</a></li>
+      <li><a href="#how-it-works" onclick="closeDrawer()">How It Works</a></li>
       <li><a href="#about" onclick="closeDrawer()">About</a></li>
       <li><a href="/writing" onclick="closeDrawer()">Perspectives</a></li>
-      <li><a href="/audit" onclick="closeDrawer()">UX Audit</a></li>
     </ul>
-    <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary nav-drawer-cta" onclick="closeDrawer()">Book a free consultation</a>
+    <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary nav-drawer-cta" onclick="closeDrawer()">Get Started</a>
   </div>
 </div>
 <div class="nav-overlay" id="nav-overlay" onclick="closeDrawer()"></div>
@@ -3157,23 +3184,22 @@
     <div class="hero-top">
       <div class="hero-eyebrow" aria-hidden="true">
         <div class="eyebrow-dot"></div>
-        <span class="label" id="hero-eyebrow-text">Dubai &nbsp;·&nbsp; Product Design</span>
+        <span class="label" id="hero-eyebrow-text">For early stage founders</span>
       </div>
       <div class="hero-heading">
-        <h1 class="display-xl"><span class="hl-w">We</span> <span class="hl-w">design</span> <span class="hl-w">digital</span> <span class="hl-w">products</span> <span class="hl-w">that</span> <span class="hl-w">drive</span> <em><span class="hl-w">real</span> <span class="hl-w">growth.</span></em></h1>
+        <h1 class="display-xl"><span class="hl-w">From</span> <span class="hl-w">brief</span> <span class="hl-w">to</span> <span class="hl-w">prototype</span> <em><span class="hl-w">in</span> <span class="hl-w">seven</span> <span class="hl-w">days.</span></em></h1>
       </div>
     </div>
 
     <!-- Bottom: subtext left, CTAs right -->
     <div class="hero-bottom hero-sub-row">
       <div class="hero-bottom-left">
-        <p class="hero-sub">AI-native delivery. Senior-led direction. Shipped in weeks, not months.</p>
+        <p class="hero-sub">Senior product design. AI-accelerated execution. Fixed price, fixed timeline. No retainer, no embedded team.</p>
       </div>
       <div class="hero-bottom-right">
         <div class="hero-actions">
           <div class="hero-actions-row">
-            <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Book a free consultation</a>
-            <a href="/audit" class="btn btn-ghost">Free UX Audit →</a>
+            <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Start your sprint →</a>
           </div>
         </div>
       </div>
@@ -3186,10 +3212,10 @@
   </div>
   </div><!-- /.hero-inner -->
   <!-- ─── CREDIBILITY LINE ─── -->
-  <div class="clients-strip" role="region" aria-label="Our clients">
+  <div class="clients-strip" role="region" aria-label="Our credibility">
   <div class="clients-header">
-    <span class="clients-eyebrow">Our clients</span>
-    <h2 class="clients-headline">We've delivered for clients across <em>fintech, lottery, and consumer tech.</em></h2>
+    <span class="clients-eyebrow">Senior-led. Fixed price. Done in 7 days.</span>
+    <h2 class="clients-headline">Used by founders building for <em>fintech, lottery, and consumer tech.</em></h2>
   </div>
   </div>
 </section>
@@ -3202,254 +3228,213 @@
   <div class="container">
     <div class="stats-grid">
       <div class="stat-item" data-anim="fade-up" data-delay="1">
-        <div class="stat-num" data-count="18" data-suffix="yrs+" aria-label="18+ years">18yrs+</div>
-        <div class="stat-label">Senior-only experience. No juniors. Ever.</div>
+        <div class="stat-num" aria-label="7 days">7 days</div>
+        <div class="stat-label">Brief to prototype. Every sprint, guaranteed.</div>
       </div>
       <div class="stat-item" data-anim="fade-up" data-delay="2">
-        <div class="stat-num" data-count="70" data-suffix="M+" aria-label="70 million plus">70M+</div>
-        <div class="stat-label">Users have used products we designed.</div>
+        <div class="stat-num" aria-label="Fixed price">Fixed price</div>
+        <div class="stat-label">No surprises. No scope creep. No hourly billing.</div>
       </div>
       <div class="stat-item" data-anim="fade-up" data-delay="3">
-        <div class="stat-num" data-count="48" data-suffix="h" aria-label="48 hours">48h</div>
-        <div class="stat-label">Brief to first designs. Guaranteed.</div>
+        <div class="stat-num" data-count="16" data-suffix="yrs+" aria-label="16+ years">16yrs+</div>
+        <div class="stat-label">Senior design experience applied directly to your product.</div>
       </div>
     </div>
   </div>
 </section>
 
 
-<!-- ─── HOW WE WORK ─── -->
-<section class="how-we-work" id="how-we-work">
+<!-- ─── HOW IT WORKS ─── -->
+<section class="how-we-work" id="how-it-works">
   <div class="container">
-    <div class="hww-layout">
+    <div class="section-header" style="margin-bottom:56px;">
+      <div>
+        <div class="label" style="margin-bottom:14px;color:var(--accent);">How it works</div>
+        <h2 class="display-md">Seven days.<br><em>No hand-offs. No surprises.</em></h2>
+      </div>
+    </div>
+    <div class="hww-steps" data-anim="fade-up" style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;">
 
-      <!-- Left: narrative -->
-      <div class="hww-left" data-anim="fade-up">
-        <div class="hww-header">
-          <div class="label" style="margin-bottom:12px;color:var(--accent);">How we work</div>
-          <h2 class="display-md">Senior thinking. AI speed.<br><em>No compromise.</em></h2>
-        </div>
-        <p class="hww-intro">Traditional agencies bill by the hour. Slow, expensive, dependent on bodies. RUONALIM runs a two-track model — AI-speed production, senior-level direction. No compromise on either.</p>
-        <div class="hww-proof">
-          <div class="hww-proof-dot"></div>
-          <div>
-            <div class="hww-proof-label">Live proof</div>
-            <div class="hww-proof-text">Northladder: two major workstreams shipped in 30 days.</div>
-            <div class="hww-proof-sub">The world's largest tech retailers' trade-in platform, redesigned and embedded at enterprise scale. AI-augmented production, senior-led direction.</div>
-          </div>
-        </div>
+      <div class="hww-step">
+        <div class="hww-step-num">01</div>
+        <div class="hww-step-heading">Submit your brief</div>
+        <p class="hww-step-body">Tell us what you're building, who it's for, and what outcome you need. We'll confirm fit and scope within 24 hours.</p>
       </div>
 
-      <!-- Right: tracks -->
-      <div class="hww-right" data-anim="fade-up" data-delay="1">
-        <div class="hww-card hww-card--ai">
-          <div class="hww-card-label">Track 01</div>
-          <div class="hww-card-heading">AI-Powered Production</div>
-          <div class="hww-card-items">
-            <div class="hww-card-item">Research synthesis and analysis</div>
-            <div class="hww-card-item">Design exploration and iteration</div>
-            <div class="hww-card-item">Component and copy generation</div>
-            <div class="hww-card-item">Audit analysis and scoring</div>
-            <div class="hww-card-item">Spec documentation and handoff</div>
-          </div>
-        </div>
-        <div class="hww-card">
-          <div class="hww-card-label">Track 02</div>
-          <div class="hww-card-heading">Expert Direction</div>
-          <div class="hww-card-items">
-            <div class="hww-card-item">Strategy and problem framing</div>
-            <div class="hww-card-item">Taste, judgment, and craft</div>
-            <div class="hww-card-item">Systems thinking and architecture</div>
-            <div class="hww-card-item">Stakeholder alignment</div>
-            <div class="hww-card-item">Quality review and final sign-off</div>
-          </div>
-        </div>
+      <div class="hww-step">
+        <div class="hww-step-num">02</div>
+        <div class="hww-step-heading">Strategy and direction</div>
+        <p class="hww-step-body">Day one is senior-led. We align on problem framing, user flows, and the design direction before a pixel is placed.</p>
+      </div>
+
+      <div class="hww-step">
+        <div class="hww-step-num">03</div>
+        <div class="hww-step-heading">AI-accelerated design</div>
+        <p class="hww-step-body">Days two to six. Senior design + AI tooling in parallel. Rapid iteration without compromising craft or detail.</p>
+      </div>
+
+      <div class="hww-step">
+        <div class="hww-step-num">04</div>
+        <div class="hww-step-heading">Delivery on day seven</div>
+        <p class="hww-step-body">Final Figma files, prototype, and handoff specs. Ready for investors, engineers, or your next funding conversation.</p>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ─── SELF ASSESSMENT ─── -->
-<section class="self-assessment" id="assessment" aria-label="Business needs assessment">
-  <div class="container">
-    <div class="sa-inner">
-      <div class="sa-eyebrow" aria-hidden="true">60 seconds. 4 questions.</div>
-      <h2 class="sa-heading">What does your business<br><em>actually need?</em></h2>
-      <div class="sa-progress" id="sa-progress" role="progressbar" aria-label="Question progress" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1">
-        <div class="sa-seg active"></div>
-        <div class="sa-seg"></div>
-        <div class="sa-seg"></div>
-        <div class="sa-seg"></div>
-      </div>
-      <div id="sa-question-wrap" aria-live="polite"></div>
-      <div class="sa-result" id="sa-result" style="display:none;" aria-live="polite"></div>
-    </div>
-  </div>
-</section>
 
 
-<!-- ─── SERVICES ─── -->
+<!-- ─── SERVICES / SPRINT TIERS ─── -->
 <section class="services" id="services">
   <div class="container">
     <div class="section-header">
       <div>
         <div class="label" style="margin-bottom:14px;">What we do</div>
-        <h2 class="display-md">Five ways we work <em>with you.</em></h2>
-      </div>
-    </div>
-    <div class="service-paths" data-anim="fade-up">
-      <div class="service-path">
-        <p class="sp-label">Building something new?</p>
-        <div class="sp-links">
-          <a href="#service-zero-to-one" class="sp-link">0→1 Product Design</a>
-          <a href="#service-website" class="sp-link">AI Website Sprint</a>
-          <a href="#service-brand" class="sp-link">AI Brand Sprint</a>
-        </div>
-      </div>
-      <div class="service-path">
-        <p class="sp-label">Need senior direction or a quick win?</p>
-        <div class="sp-links">
-          <a href="#service-advisory" class="sp-link">Advisory</a>
-          <a href="#service-audit" class="sp-link">AI UX Audit</a>
-        </div>
+        <h2 class="display-md">Three sprints.<br><em>One clear outcome each.</em></h2>
       </div>
     </div>
     <div class="services-list">
 
-      <div class="service-row service-row--flagship" id="service-zero-to-one">
+      <div class="service-row service-row--flagship" id="service-investor">
         <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
           <span class="service-num">01</span>
-          <div class="service-title">0→1 Product Design</div>
-          <p class="service-desc">From validated idea to first shipped product. Senior strategy, full UI craft, dev-ready specs. One engagement. No hand-offs. No junior teams.</p>
-          <div class="service-tag"><span class="tag">Founders</span></div>
-          <button class="svc-toggle" aria-label="Expand 0→1 Product Design" aria-expanded="false">+</button>
+          <div class="service-title">Investor Demo Sprint</div>
+          <p class="service-desc">A high-fidelity prototype and polished deck-ready screens, designed to close your next round. Built for founders going into a fundraise.</p>
+          <div class="service-tag"><span class="tag">Fundraise</span></div>
+          <button class="svc-toggle" aria-label="Expand Investor Demo Sprint" aria-expanded="false">+</button>
         </div>
         <div class="service-detail">
           <div class="service-detail-inner">
             <div>
               <div class="service-detail-label">Who it's for</div>
-              <div class="service-detail-text">Founders and funded scale-ups building a product for the first time. You have conviction, budget, and engineers. You need a senior design partner who's done this at scale before.</div>
+              <div class="service-detail-text">Pre-seed and seed founders preparing for investor meetings. You have the idea and the deck. You need the product to look and feel like the real thing.</div>
             </div>
             <div>
               <div class="service-detail-label">What's included</div>
-              <div class="service-detail-text">Problem framing. UX strategy. Information architecture. Full UI design. Component library. Design system foundations. Dev-ready specs and handoff.</div>
+              <div class="service-detail-text">UX strategy and user flow mapping. High-fidelity UI screens. Interactive prototype. Investor-ready presentation assets. Delivered in 7 days.</div>
             </div>
             <div>
               <div class="service-detail-label">Outcome</div>
-              <div class="service-detail-text">A working, shipped product. Not a prototype. Not a deck. Something your engineers can build and your customers can use from day one.</div>
+              <div class="service-detail-text">A prototype that makes investors believe in your vision. Something you can demo live in a pitch, not describe from a slide.</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="service-row" id="service-advisory" data-anim="fade-up" data-delay="1">
+      <div class="service-row" id="service-handoff" data-anim="fade-up" data-delay="1">
         <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
           <span class="service-num">02</span>
-          <div class="service-title">Advisory</div>
-          <p class="service-desc">Senior thinking on retainer. Monthly structured calls. Async input on the decisions that matter. Direction without overhead.</p>
-          <div class="service-tag"><span class="tag">Leadership</span></div>
-          <button class="svc-toggle" aria-label="Expand Advisory" aria-expanded="false">+</button>
+          <div class="service-title">Developer Handoff Sprint</div>
+          <p class="service-desc">Production-ready designs your engineering team can build from immediately. Full specs, edge cases, and component structure included.</p>
+          <div class="service-tag"><span class="tag">Engineering</span></div>
+          <button class="svc-toggle" aria-label="Expand Developer Handoff Sprint" aria-expanded="false">+</button>
         </div>
         <div class="service-detail">
           <div class="service-detail-inner">
             <div>
               <div class="service-detail-label">Who it's for</div>
-              <div class="service-detail-text">Founders pre-design hire, new heads of design, and companies between leadership engagements. You need senior judgment without adding headcount.</div>
+              <div class="service-detail-text">Founders with engineers ready to build. You've validated the idea. You need designs that remove ambiguity and let your team ship fast without constant back-and-forth.</div>
             </div>
             <div>
               <div class="service-detail-label">What's included</div>
-              <div class="service-detail-text">Two structured calls per month. Async input on critical decisions. Figma and Slack access. Direct access to our principal team.</div>
+              <div class="service-detail-text">End-to-end screen design. Component structure. Interaction states and edge cases. Figma dev mode annotations. Handoff documentation. Delivered in 7 days.</div>
             </div>
             <div>
               <div class="service-detail-label">Outcome</div>
-              <div class="service-detail-text">Senior judgment on the decisions that shape your product and team. Positioning, hiring, system architecture, design org maturity.</div>
+              <div class="service-detail-text">Designs your engineers can open in Figma and build from today. No design debt baked in from day one.</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="service-row" id="service-website" data-anim="fade-up" data-delay="2">
+      <div class="service-row" id="service-validation" data-anim="fade-up" data-delay="2">
         <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
           <span class="service-num">03</span>
-          <div class="service-title">AI Website Sprint</div>
-          <p class="service-desc">End-to-end website design and build. Fixed scope, fast delivery. Senior-led direction, embedded in your team.</p>
-          <div class="service-tag"><span class="tag service-tag--ai">Web</span></div>
-          <button class="svc-toggle" aria-label="Expand AI Website Sprint" aria-expanded="false">+</button>
+          <div class="service-title">Validation Sprint</div>
+          <p class="service-desc">A testable prototype built to validate core assumptions with real users before you commit budget to development.</p>
+          <div class="service-tag"><span class="tag">Research</span></div>
+          <button class="svc-toggle" aria-label="Expand Validation Sprint" aria-expanded="false">+</button>
         </div>
         <div class="service-detail">
           <div class="service-detail-inner">
             <div>
               <div class="service-detail-label">Who it's for</div>
-              <div class="service-detail-text">Startups and scale-ups that need a world-class product website fast. Typically at a point of inflection: fundraise, market entry, rebrand, or launch.</div>
+              <div class="service-detail-text">Founders who want to test before they build. You have a hypothesis about what users want — this sprint gives you something real to put in front of them within a week.</div>
             </div>
             <div>
               <div class="service-detail-label">What's included</div>
-              <div class="service-detail-text">Site strategy and structure. Design and build. Copy guidance. Responsive across all devices. SEO foundations baked in. Launch-ready.</div>
+              <div class="service-detail-text">Core flow design. Clickable prototype. Test scenarios and script. Usability session facilitation guidance. Insight summary. Delivered in 7 days.</div>
             </div>
             <div>
               <div class="service-detail-label">Outcome</div>
-              <div class="service-detail-text">A site that converts. Built at AI-native speed without compromising craft. Shipped in weeks, not months.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="service-row" id="service-brand" data-anim="fade-up" data-delay="3">
-        <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
-          <span class="service-num">04</span>
-          <div class="service-title">AI Brand Sprint</div>
-          <p class="service-desc">Visual identity built fast, built to last. Visual exploration, system foundations, applied across your product. Two weeks from brief to brand.</p>
-          <div class="service-tag"><span class="tag service-tag--ai">Brand</span></div>
-          <button class="svc-toggle" aria-label="Expand AI Brand Sprint" aria-expanded="false">+</button>
-        </div>
-        <div class="service-detail">
-          <div class="service-detail-inner">
-            <div>
-              <div class="service-detail-label">Who it's for</div>
-              <div class="service-detail-text">Companies at a point of inflection: new product launch, fundraise, market entry, or repositioning. You need a brand that works from day one.</div>
-            </div>
-            <div>
-              <div class="service-detail-label">What's included</div>
-              <div class="service-detail-text">Visual identity foundations. Typography and colour system. Logo and mark. Brand guidelines. Applied across digital product touchpoints.</div>
-            </div>
-            <div>
-              <div class="service-detail-label">Outcome</div>
-              <div class="service-detail-text">A coherent visual identity that works across every touchpoint. Delivered in two weeks. No months-long discovery phases.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="service-row" id="service-audit" data-anim="fade-up" data-delay="4">
-        <div class="service-row-summary" onclick="svcToggle(this.parentElement)">
-          <span class="service-num">05</span>
-          <div class="service-title">AI UX Audit</div>
-          <p class="service-desc">Submit any URL, Figma file, or screenshots. Scored against Nielsen's 10 Usability Heuristics. Top 3 issues free. Full report available.</p>
-          <div class="service-tag"><span class="tag service-tag--ai">Audit</span></div>
-          <button class="svc-toggle" aria-label="Expand AI UX Audit" aria-expanded="false">+</button>
-        </div>
-        <div class="service-detail">
-          <div class="service-detail-inner">
-            <div>
-              <div class="service-detail-label">Who it's for</div>
-              <div class="service-detail-text">Product teams that know something's wrong but can't pinpoint it. Any product at any stage. If people aren't converting, retaining, or completing flows, this finds out why.</div>
-            </div>
-            <div>
-              <div class="service-detail-label">What's included</div>
-              <div class="service-detail-text">Heuristic analysis across all submitted screens. Prioritised issues ranked by severity. Actionable recommendations. Top 3 issues free. Full report and enterprise options available.</div>
-            </div>
-            <div>
-              <div class="service-detail-label">Outcome</div>
-              <div class="service-detail-text">Clear, prioritised issues to fix. No fluff, no vague findings. Delivered within 48 hours of submission.</div>
+              <div class="service-detail-text">Validated direction before a line of code is written. Spend confidently, build the right thing first.</div>
             </div>
           </div>
         </div>
       </div>
 
     </div>
-    <div style="padding-top: 40px; border-top: 1px solid var(--border);">
-      <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-ghost">Book a free consultation →</a>
+  </div>
+</section>
+
+
+<!-- ─── PRICING ─── -->
+<section class="pricing-section" id="pricing" data-anim="fade-up">
+  <div class="container">
+    <div class="section-header" style="margin-bottom:56px;">
+      <div>
+        <div class="label" style="margin-bottom:14px;">Pricing</div>
+        <h2 class="display-md">Fixed price.<br><em>No surprises.</em></h2>
+      </div>
+    </div>
+    <div class="pricing-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+
+      <div class="pricing-card" style="border:1px solid var(--border);border-radius:12px;padding:40px 32px;">
+        <div class="pricing-tier" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Starter</div>
+        <div class="pricing-price" style="font-size:42px;font-weight:700;letter-spacing:-.03em;color:var(--fg);line-height:1;margin-bottom:8px;">£3,500</div>
+        <div class="pricing-desc" style="font-size:14px;color:var(--muted);margin-bottom:32px;">5 screens + interactive prototype</div>
+        <div class="pricing-features" style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Up to 5 UI screens</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Interactive Figma prototype</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> 1 revision round</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Delivered in 7 days</div>
+        </div>
+        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-ghost" style="width:100%;text-align:center;">Get started →</a>
+      </div>
+
+      <div class="pricing-card pricing-card--featured" style="border:2px solid var(--accent);border-radius:12px;padding:40px 32px;position:relative;">
+        <div style="position:absolute;top:-12px;left:32px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:4px;">Most popular</div>
+        <div class="pricing-tier" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;">Growth</div>
+        <div class="pricing-price" style="font-size:42px;font-weight:700;letter-spacing:-.03em;color:var(--fg);line-height:1;margin-bottom:8px;">£5,500</div>
+        <div class="pricing-desc" style="font-size:14px;color:var(--muted);margin-bottom:32px;">10 screens + flows + dev handoff</div>
+        <div class="pricing-features" style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Up to 10 UI screens</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Full user flows mapped</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Interactive prototype</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Dev-ready handoff specs</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> 2 revision rounds</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Delivered in 7 days</div>
+        </div>
+        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;text-align:center;">Get started →</a>
+      </div>
+
+      <div class="pricing-card" style="border:1px solid var(--border);border-radius:12px;padding:40px 32px;">
+        <div class="pricing-tier" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Full Sprint</div>
+        <div class="pricing-price" style="font-size:42px;font-weight:700;letter-spacing:-.03em;color:var(--fg);line-height:1;margin-bottom:8px;">£7,500</div>
+        <div class="pricing-desc" style="font-size:14px;color:var(--muted);margin-bottom:32px;">15+ screens + IA + prototype + investor deck</div>
+        <div class="pricing-features" style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> 15+ UI screens</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Information architecture</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Full interactive prototype</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Investor deck assets</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Dev-ready handoff specs</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Unlimited revisions in sprint</div>
+          <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Delivered in 7 days</div>
+        </div>
+        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-ghost" style="width:100%;text-align:center;">Get started →</a>
+      </div>
+
     </div>
   </div>
 </section>
@@ -3505,33 +3490,6 @@
 </section>
 
 
-<!-- ─── EDGE ─── -->
-<section class="edge" id="about">
-  <div class="container">
-    <div class="edge-grid">
-      <div data-anim="fade-up">
-        <div class="label" style="margin-bottom:18px;">Our edge</div>
-        <h2 class="edge-heading"><em>Deliver faster.</em><br>Grow smarter.<br>Zero compromise.</h2>
-      </div>
-      <div class="edge-body" data-anim="fade-up" data-delay="2">
-        <p>RUONALIM is a product design agency built for the next era. Our team has produced website and mobile app experiences across fashion, FinTech, crypto, lottery, hospitality and enterprise platforms, including <strong>products used by tens of millions of users</strong>.</p>
-        <p>We operate differently from traditional agencies. AI-native production gives us speed. Senior leadership gives us judgment. You get a partner that ships at the pace of modern startups with the craft of a top-tier studio.</p>
-        <p>There's a gap most founders don't see until it costs them. Ambitious companies consistently ship products that feel a step behind the competition. Not because they lack vision. Because they haven't had a partner capable of executing at that level, fast enough to matter.</p>
-        <p>RUONALIM exists to close that gap.</p>
-        <div class="edge-pills">
-          <span class="edge-pill">Fintech & Crypto</span>
-          <span class="edge-pill">SaaS & Platform</span>
-          <span class="edge-pill">Lottery & Gaming</span>
-          <span class="edge-pill">Hospitality</span>
-          <span class="edge-pill">E-commerce</span>
-          <span class="edge-pill">Design Systems</span>
-          <span class="edge-pill">Regulated UX</span>
-          <span class="edge-pill">Selective about who we work with</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 
 <!-- ─── THOUGHT LEADERSHIP ─── -->
@@ -3687,19 +3645,20 @@
       <!-- Copy col -->
       <div class="founder-copy-col" data-anim="fade-up" data-delay="1">
         <div class="founder-eyebrow">Who we are</div>
-        <h2 class="founder-heading">Senior design leadership,<br><em>without the agency tax.</em></h2>
-        <p class="founder-body">RUONALIM is a senior product design studio. We work directly on your product — no juniors, no hand-offs, no account managers in the middle.</p>
-        <p class="founder-body">Our team brings 18+ years of design leadership across fintech, crypto, super-apps, and regulated markets. When you work with us, that depth of experience is applied directly to your problem.</p>
+        <h2 class="founder-heading">Senior design experience.<br><em>Applied directly to your sprint.</em></h2>
+        <p class="founder-body">RUONALIM is led by Jay Tulloch — 16 years of product design leadership across Careem, Kraken, Metro Bank, and Almosafer. Work that's been used by tens of millions of people.</p>
+        <p class="founder-body">When you book a sprint, you're not handed to a junior team. You get the same senior judgment and craft applied directly to your product, delivered in a fixed timeline at a fixed price.</p>
         <div class="founder-creds">
-          <span class="founder-cred">18+ years</span>
-          <span class="founder-cred">70M+ users shipped</span>
+          <span class="founder-cred">16 years experience</span>
+          <span class="founder-cred">Careem · Kraken · Metro Bank</span>
           <span class="founder-cred">Fintech & Crypto</span>
           <span class="founder-cred">Regulated UX</span>
           <span class="founder-cred">AI Product Design</span>
           <span class="founder-cred">Beyond the Interface Podcast</span>
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Book a free consultation</a>
+          <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Start your sprint →</a>
+          <a href="https://jaytulloch.com" target="_blank" rel="noopener" class="btn btn-ghost">jaytulloch.com →</a>
         </div>
       </div>
 
@@ -3715,11 +3674,11 @@
   <div class="container">
     <div class="big-cta-inner">
       <div data-anim="fade-up">
-        <h2 class="big-cta-heading">Let's build<br><em>something ambitious.</em></h2>
+        <h2 class="big-cta-heading">Seven days to<br><em>your next milestone.</em></h2>
       </div>
       <div class="big-cta-right" data-anim="fade-up" data-delay="2">
         <div class="big-cta-btns">
-          <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:15px;padding:15px 32px;">Book a free consultation →</a>
+          <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:15px;padding:15px 32px;">Start your sprint →</a>
           <a href="mailto:hello@ruonalim.com" class="btn btn-ghost" style="font-size:15px;padding:15px 32px;">Email us</a>
         </div>
         <p class="big-cta-note">We typically reply within 4 hours during Dubai business hours.</p>
@@ -3741,50 +3700,50 @@
 
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
-            What is 0→1 Product Design, and who is it for?
+            Does it actually take 7 days?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
-          <div class="faq-a">Our flagship engagement for founders and funded scale-ups building a product for the first time. We take you from a validated idea to a fully designed, dev-ready product: problem framing, UX strategy, end-to-end UI design, and handoff specs. Single senior-led engagement, no hand-offs, no junior work. Ideal if you've raised a round, have engineers lined up, and need a design partner who's done this at scale before.</div>
+          <div class="faq-a">Yes. The sprint is structured to deliver in 7 working days from brief confirmation. Day one is strategy and direction. Days two to six are design. Day seven is final delivery: Figma files, prototype, and handoff specs. We hold that commitment unless scope changes significantly mid-sprint.</div>
         </div>
 
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
-            What does Advisory mean, and who is it for?
+            Which sprint should I choose?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
-          <div class="faq-a">Advisory is a monthly retainer for senior product design thinking. Two structured calls per month, async input on critical decisions, no team overhead. Built for founders pre-design hire, design leads in new senior roles, and companies between full-time leadership engagements. You get direct attention on the questions that move the needle: positioning, hiring, system architecture, growth mechanics, design org maturity.</div>
+          <div class="faq-a">Investor Demo Sprint if you're heading into a fundraise and need a prototype to show. Developer Handoff Sprint if you have engineers ready to build and need designs they can actually work from. Validation Sprint if you want to test assumptions with real users before committing to development. Not sure? Book a call — we'll tell you which one fits.</div>
         </div>
 
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
-            How does AI-native delivery work in practice?
+            How does AI-accelerated design work?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
-          <div class="faq-a">AI handles the production work that used to require junior teams: research synthesis, design exploration, component generation, copy variants, audit analysis. Senior leadership owns the layer AI can't: strategy, taste, system thinking, judgment. The result is faster delivery without compromising craft. Northladder is the proof: two major workstreams shipped in 30 days, embedded at enterprise scale.</div>
+          <div class="faq-a">AI handles the production work that previously required junior teams: rapid design exploration, component generation, copy variants, iteration cycles. Senior leadership owns what AI can't replicate: strategy, taste, system thinking, final judgment. The result is faster delivery at the same craft level. Northladder is the proof: two major workstreams shipped in 30 days, embedded at enterprise scale.</div>
         </div>
 
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
-            How quickly can you start?
+            Can I run multiple sprints?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
-          <div class="faq-a">Fast. For most projects we can onboard within 48 hours of brief. We keep capacity reserved so we don't keep clients waiting while clearing a backlog.</div>
+          <div class="faq-a">Yes. Many founders run sequential sprints — a Validation Sprint first to test the concept, then a Developer Handoff Sprint once direction is confirmed. We can also chain sprints together with a brief planning session between each. Talk to us about what sequence makes sense for where you are.</div>
         </div>
 
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
-            What industries do you specialise in?
+            What do I need to provide?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
-          <div class="faq-a">Fintech and crypto, SaaS, consumer apps, regulated products (gaming, lottery, financial services), enterprise platforms, and hospitality. We've shipped across all of them at scale. If you're building something complex, we're comfortable there.</div>
+          <div class="faq-a">A clear brief. We'll send you a short template when you book — what you're building, who it's for, what outcome you need from the sprint. We don't need lengthy documentation. One focused session at the start of day one is usually enough to align on direction.</div>
         </div>
 
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
-            How do we get started?
+            How do I start?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
-          <div class="faq-a">Drop us a message at hello@ruonalim.com with a brief on what you're working on. We'll respond within 24 hours, ask a few questions, and if it's the right fit we'll get something in the calendar. No lengthy sales process.</div>
+          <div class="faq-a">Book a call via the link on this page or email hello@ruonalim.com with a short description of what you're building. We'll confirm fit, agree the sprint type, and lock in a start date. No lengthy sales process. Most sprints start within a week of first contact.</div>
         </div>
 
       </div>
