@@ -58,7 +58,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 16px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
     body {
-      background: #000000;
+      background: #050508;
       color: var(--body);
       font-family: 'Switzer', -apple-system, Helvetica Neue, Arial, sans-serif;
       font-weight: 400;
@@ -71,7 +71,7 @@
     }
     a { color: inherit; text-decoration: none; }
 
-    #hero-dots { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    #hero-dots { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
     @media (max-width: 768px) { #hero-dots { display: none; } }
 
     #scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: var(--accent); z-index: 9999; }
@@ -82,7 +82,7 @@
 
     /* HEADER */
     .writing-header {
-      background: #000000;
+      background: #050508;
       padding: 136px 56px 72px;
       position: relative;
       overflow: hidden;
@@ -529,7 +529,6 @@
 <body>
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
-<canvas id="hero-dots" aria-hidden="true" role="presentation"></canvas>
 <div id="scroll-progress" aria-hidden="true"></div>
 
 <!-- NAV -->
@@ -575,6 +574,7 @@
 <main id="main-content">
 <div class="page-wrap">
   <div class="writing-header">
+    <canvas id="hero-dots" aria-hidden="true" role="presentation"></canvas>
     <div class="writing-header-inner">
       <div class="writing-eyebrow" aria-hidden="true">Perspectives</div>
       <h1 class="writing-title">Things worth <em>saying.</em></h1>
@@ -772,13 +772,17 @@
     progressBar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
   }, { passive: true });
 
-  /* ── DOT MATRIX ── */
+  /* ── DOT MATRIX (header-scoped, white dots on dark bg) ── */
   const canvas = document.getElementById('hero-dots');
   const ctx = canvas.getContext('2d');
+  const writingHeader = document.querySelector('.writing-header');
   let dotMouseX = -1000, dotMouseY = -1000, dots = [];
   const DOT_SPACING = 32, DOT_RADIUS = 1.1, INFLUENCE_R = 180, BULGE = 20;
   function initDots() {
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight; dots = [];
+    const rect = writingHeader.getBoundingClientRect();
+    canvas.width  = writingHeader.offsetWidth;
+    canvas.height = writingHeader.offsetHeight;
+    dots = [];
     const cols = Math.ceil(canvas.width / DOT_SPACING) + 1;
     const rows = Math.ceil(canvas.height / DOT_SPACING) + 1;
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++)
@@ -786,19 +790,22 @@
   }
   function drawDots() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const hRect = writingHeader.getBoundingClientRect();
+    const localX = dotMouseX - hRect.left;
+    const localY = dotMouseY - hRect.top;
     for (const d of dots) {
-      const dx = dotMouseX - d.baseX, dy = dotMouseY - d.baseY;
+      const dx = localX - d.baseX, dy = localY - d.baseY;
       const dist = Math.sqrt(dx*dx + dy*dy);
-      let drawX = d.baseX, drawY = d.baseY, alpha = 0.07, radius = DOT_RADIUS;
+      let drawX = d.baseX, drawY = d.baseY, alpha = 0.09, radius = DOT_RADIUS;
       if (dist < INFLUENCE_R) {
         const force = 1 - dist / INFLUENCE_R, angle = Math.atan2(dy, dx);
         drawX = d.baseX - Math.cos(angle) * force * BULGE;
         drawY = d.baseY - Math.sin(angle) * force * BULGE;
-        alpha = 0.07 + force * 0.38; radius = DOT_RADIUS + force * 1.5;
+        alpha = 0.09 + force * 0.42; radius = DOT_RADIUS + force * 1.5;
       }
       d.x += (drawX - d.x) * 0.12; d.y += (drawY - d.y) * 0.12;
       ctx.beginPath(); ctx.arc(d.x, d.y, radius, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(17,17,17,${alpha})`; ctx.fill();
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`; ctx.fill();
     }
     requestAnimationFrame(drawDots);
   }
