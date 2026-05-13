@@ -861,7 +861,7 @@
     /* ─────────────────────────────────────────────
        STATS STRIP
     ───────────────────────────────────────────── */
-    .stats-strip { padding: 56px 0; }
+    .stats-strip { padding: 72px 0; background: #ffffff; }
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1070,8 +1070,8 @@
        SERVICES
     ───────────────────────────────────────────── */
     .services {
-      padding: 68px 0;
-      border-top: 1px solid var(--border);
+      padding: 96px 0;
+      background: #f7f8fc;
     }
     .section-header {
       display: flex;
@@ -1640,8 +1640,8 @@
        FAQ
     ───────────────────────────────────────────── */
     .faq {
-      padding: 68px 0;
-      border-top: 1px solid var(--border);
+      padding: 96px 0;
+      background: #f7f8fc;
     }
     .faq-inner {
       display: grid;
@@ -2060,8 +2060,7 @@
 
     /* ── TESTIMONIALS ── */
     .testimonials {
-      padding: 68px 0;
-      border-top: 1px solid var(--border);
+      padding: 96px 0;
       background: #f7f8ff;
     }
     .testi-header {
@@ -2165,8 +2164,8 @@
       .hero-actions { align-items: flex-start; }
       .stats-strip { padding: 60px 0; }
       .stats-grid { grid-template-columns: 1fr; gap: 0; }
-      .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 28px 0; }
-      .stat-item:last-child { border-bottom: none; }
+      .stat-item { border-right: none; padding: 28px 0 28px; }
+      .stat-item:last-child { padding-bottom: 0; }
       .stat-item::before { top: 0; left: 0; }
       .stat-num { font-size: 44px; letter-spacing: -1.5px; margin-bottom: 8px; }
       .service-row { grid-template-columns: 40px 1fr; row-gap: 0; }
@@ -2278,7 +2277,7 @@
     }
 
     /* ─── NEW: PROOF SECTION ─── */
-    .proof { padding: 68px 0; border-top: 1px solid var(--border); }
+    .proof { padding: 96px 0; background: #f7f8fc; }
     .proof-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -2334,7 +2333,7 @@
     }
 
     /* ─── THOUGHT LEADERSHIP ─── */
-    .thought-lead { padding: 68px 0; border-top: 1px solid var(--border); }
+    .thought-lead { padding: 96px 0; background: #ffffff; }
     .tl-header-row {
       display: flex;
       align-items: flex-end;
@@ -2893,15 +2892,7 @@
       animation: border-scan 2.4s linear infinite;
     }
 
-    /* 15. Section border-top: slightly stronger than default */
-    .services,
-    .proof,
-    .thought-lead,
-    .edge,
-    .audit-band,
-    .work {
-      border-top-color: #e0e0ea;
-    }
+    /* 15. Section separation: backgrounds + spacing, no border lines */
 
     /* Hero sub-line */
     .hero-sub {
@@ -2912,10 +2903,10 @@
       line-height: 1.55;
     }
 
-    /* How We Work section */
+    /* How It Works section */
     .how-we-work {
-      padding: 68px 0;
-      border-top: 1px solid #e0e0ea;
+      padding: 96px 0;
+      background: #ffffff;
     }
     /* Two-column: story left, tracks right */
     .hww-layout {
@@ -3102,7 +3093,6 @@
     /* ── HOW IT WORKS STEPS ── */
     .hww-step {
       padding: 36px 0;
-      border-top: 1px solid var(--border);
     }
     .hww-step-num {
       font-size: 11px; font-weight: 700; letter-spacing: .12em;
@@ -3122,8 +3112,8 @@
       .hww-steps { grid-template-columns: 1fr !important; }
     }
 
-    /* ── PRICING ── */
-    .pricing-section { padding: 120px 0; }
+    /* ── WHAT'S INCLUDED ── */
+    .pricing-section { padding: 96px 0; background: #ffffff; }
     @media (max-width: 900px) {
       .pricing-grid { grid-template-columns: 1fr !important; max-width: 480px; margin: 0 auto; }
     }
