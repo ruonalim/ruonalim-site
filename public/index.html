@@ -3484,9 +3484,9 @@
 
     <div class="tl-episodes">
 
-      <button class="tl-ep-card" data-vid="4p5LzrAYN30" aria-label="Watch: Matt D Smith — Good Enough UI Is the Problem">
+      <a class="tl-ep-card" href="https://www.youtube.com/watch?v=4p5LzrAYN30" target="_blank" rel="noopener noreferrer" aria-label="Watch: Matt D Smith — Good Enough UI Is the Problem">
         <div class="tl-ep-thumb-wrap">
-          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/4p5LzrAYN30/maxresdefault.jpg" alt="Beyond the Interface podcast — Matt D Smith on Good Enough UI Is the Problem: craft, design systems and AI in product design" loading="lazy">
+          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/4p5LzrAYN30/maxresdefault.jpg" alt="Beyond the Interface podcast — Matt D Smith" loading="lazy">
           <div class="tl-ep-thumb-overlay">
             <div class="tl-play-icon"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
           </div>
@@ -3496,11 +3496,11 @@
           <div class="tl-ep-guest">Matt D Smith</div>
           <div class="tl-ep-title">Good Enough UI Is the Problem — On craft, systems, and AI</div>
         </div>
-      </button>
+      </a>
 
-      <button class="tl-ep-card" data-vid="8QKgpL_UqKE" aria-label="Watch: Darren Hood — Why UX Needs Gatekeepers">
+      <a class="tl-ep-card" href="https://www.youtube.com/watch?v=8QKgpL_UqKE" target="_blank" rel="noopener noreferrer" aria-label="Watch: Darren Hood — Why UX Needs Gatekeepers">
         <div class="tl-ep-thumb-wrap">
-          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/8QKgpL_UqKE/maxresdefault.jpg" alt="Beyond the Interface podcast — Darren Hood on Why UX Needs Gatekeepers: protecting design discipline and senior UX standards" loading="lazy">
+          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/8QKgpL_UqKE/maxresdefault.jpg" alt="Beyond the Interface podcast — Darren Hood" loading="lazy">
           <div class="tl-ep-thumb-overlay">
             <div class="tl-play-icon"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
           </div>
@@ -3510,11 +3510,11 @@
           <div class="tl-ep-guest">Darren Hood</div>
           <div class="tl-ep-title">Why UX Needs Gatekeepers — Saving the discipline from itself</div>
         </div>
-      </button>
+      </a>
 
-      <button class="tl-ep-card" data-vid="TMtN8xB0aBs" aria-label="Watch: Ana Sofia Gonzalez — From UI to AI">
+      <a class="tl-ep-card" href="https://www.youtube.com/watch?v=TMtN8xB0aBs" target="_blank" rel="noopener noreferrer" aria-label="Watch: Ana Sofia Gonzalez — From UI to AI">
         <div class="tl-ep-thumb-wrap">
-          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/TMtN8xB0aBs/maxresdefault.jpg" alt="Beyond the Interface podcast — Ana Sofia Gonzalez on From UI to AI: how product designers must evolve for AI-native products" loading="lazy">
+          <img class="tl-ep-thumb" src="https://img.youtube.com/vi/TMtN8xB0aBs/maxresdefault.jpg" alt="Beyond the Interface podcast — Ana Sofia Gonzalez" loading="lazy">
           <div class="tl-ep-thumb-overlay">
             <div class="tl-play-icon"><svg viewBox="0 0 20 20"><polygon points="5,3 17,10 5,17"/></svg></div>
           </div>
@@ -3524,7 +3524,7 @@
           <div class="tl-ep-guest">Ana Sofia Gonzalez</div>
           <div class="tl-ep-title">From UI to AI — Why designers must evolve or get left behind</div>
         </div>
-      </button>
+      </a>
 
     </div>
 
@@ -3819,11 +3819,6 @@
   <div class="cf-bar"></div>
 </div>
 
-<!-- Video modal -->
-<div class="tl-modal" id="tl-modal" role="dialog" aria-modal="true" aria-label="Watch episode">
-  <button class="tl-modal-close" id="tl-modal-close" aria-label="Close">&#x2715;</button>
-  <iframe id="tl-modal-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
 
 <script>
   /* ── COPY EMAIL — JS event delegation, no onclick attrs, no mailto: race ── */
@@ -4225,36 +4220,6 @@
   })();
 
 
-  /* ── EPISODE CARDS → MODAL ── */
-  (function() {
-    var modal = document.getElementById('tl-modal');
-    var modalIframe = document.getElementById('tl-modal-iframe');
-    var modalClose = document.getElementById('tl-modal-close');
-
-    function openModal(vid) {
-      if (!modal || !modalIframe) return;
-      // autoplay=1 works on desktop + Android; iOS ignores it and shows play button — both are fine
-      var autoplay = window.matchMedia('(hover: hover)').matches ? '1' : '0';
-      modalIframe.src = 'https://www.youtube.com/embed/' + vid +
-        '?autoplay=' + autoplay + '&playsinline=1&rel=0&modestbranding=1';
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      if (modal) modal.classList.remove('open');
-      if (modalIframe) modalIframe.src = '';
-      document.body.style.overflow = '';
-    }
-
-    document.querySelectorAll('.tl-ep-card, .tl-mini-card').forEach(function(card) {
-      card.addEventListener('click', function() { openModal(card.dataset.vid); });
-    });
-
-    if (modalClose) modalClose.addEventListener('click', closeModal);
-    if (modal) modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
-  })();
 
   // ── DELIGHT LAYER ──────────────────────────────────
 
