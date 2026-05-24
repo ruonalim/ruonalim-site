@@ -209,7 +209,8 @@
   <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABbklEQVR4nO2WMYoCMRiFv2RE0EE8hBewshEUFGsbW2vBRkHsPIW3EWy9g57CShA0eVssI+vusjuJi+LiK//M5D3+/O8lRpJ4IOwjyV8CXgL+hwBJ3OLkQsjH3nsArLU45wBIkiSaHMDEBJH3Hmvfm3c8HpFEqVSKEpDrCDKN0+mUbreLtZbNZsNgMKBWqzGbzQAuXQmCcsA5J0mq1+sCtFwuBQhQuVzWaDSSJJ3P5zzbXSFIQKfTUbFYVKFQ0Hw+1263036/1+FwCCaOEtDr9QRoMplEE35GkA0zFwyHQ5xznE6n+9owG7JKpUKSJBhjMMZEk0NkEN1K+hFBHfgJ3nskYYy5ZMRdBYSQXv0XSvI5erPBXK/X9Pt9VqvVVf1XhNiw0WgI0Ha7vdSz8Gm32wLUarUk5Q+lXEeQDV2z2SRNU9I0vaoDLBYLqtUq4/H4y9qPe+sWE/8Boq/j79ZiXPDwDjz/k+wl4CXg6QW8AennMZgZQfcHAAAAAElFTkSuQmCC"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Big+Shoulders+Display:wght@700;800;900&family=DM+Sans:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Inter+Tight:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600&display=swap" rel="stylesheet" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -271,7 +272,7 @@
     body {
       background: var(--bg);
       color: var(--cream);
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 400;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
@@ -313,7 +314,7 @@
     /* ── LOGO WORDMARK ── */
     .logo-dot { color: var(--accent); }
     .logo-mark {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       letter-spacing: -0.04em;
       text-decoration: none;
@@ -476,7 +477,7 @@
       animation: ai-badge-shimmer 4s linear infinite;
     }
     .audit-hero-ad-title {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(1.8rem, 3.5vw, 3rem);
@@ -691,7 +692,7 @@
       position: absolute;
       bottom: -2%;
       right: -1%;
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(8rem, 15vw, 16rem);
@@ -732,13 +733,13 @@
     }
 
     .hero-headline {
-      font-family: 'Inter Tight', sans-serif;
-      font-weight: 900;
-      font-style: italic;
+      font-family: 'Switzer', sans-serif;
+      font-weight: 600;
+      font-style: normal;
       font-size: clamp(2.8rem, 5.5vw, 6.5rem);
-      line-height: 0.97;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      text-transform: none;
       margin-bottom: 56px;
       color: var(--hero-text);
       overflow-wrap: normal;
@@ -751,6 +752,11 @@
     .char { display: inline-block; }
 
     .hero-headline .txt-accent {
+      font-family: 'Abril Fatface', serif;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 1.08em;
+      letter-spacing: -0.02em;
       color: var(--accent);
     }
 
@@ -853,7 +859,7 @@
     .acc-trigger:hover { color: var(--accent); }
 
     .acc-title {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(1.4rem, 2.4vw, 2rem);
@@ -950,7 +956,7 @@
     }
 
     .clients-heading {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(2.2rem, 3.5vw, 3.5rem);
@@ -1048,7 +1054,7 @@
     }
 
     .c-glass-text {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 800;
       font-style: italic;
       font-size: 1.1rem;
@@ -1131,7 +1137,7 @@
     }
 
     .c-name {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(1.4rem, 2.2vw, 1.8rem);
@@ -1221,7 +1227,7 @@
       padding: 18px 32px;
       background: #fff;
       color: #0D0C0A;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-size: 0.875rem;
       font-weight: 700;
       letter-spacing: 0.04em;
@@ -1271,7 +1277,7 @@
       align-items: center;
       gap: 24px;
       padding: 0 24px;
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 800;
       font-style: italic;
       text-transform: uppercase;
@@ -1340,7 +1346,7 @@
     }
 
     .stat-number {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(2.2rem, 3.5vw, 3.5rem);
@@ -1391,7 +1397,7 @@
     }
 
     .brands-headline {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(1.6rem, 2.5vw, 2.2rem);
@@ -1456,7 +1462,7 @@
     }
 
     .brand-name {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(1.05rem, 1.6vw, 1.45rem);
@@ -1507,7 +1513,7 @@
     }
 
     .quiz-headline {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(1.6rem, 2.5vw, 2.2rem);
@@ -1566,7 +1572,7 @@
     }
 
     .quiz-question {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-size: 1.0625rem;
       font-weight: 500;
       color: var(--cream);
@@ -1588,7 +1594,7 @@
       border-radius: 4px;
       background: transparent;
       cursor: pointer;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-size: 0.875rem;
       font-weight: 400;
       color: var(--cream);
@@ -1645,7 +1651,7 @@
     }
 
     .quiz-result-service {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(1.4rem, 2.2vw, 1.8rem);
@@ -1669,7 +1675,7 @@
       padding: 14px 32px;
       background: var(--accent);
       color: #fff;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-size: 0.8125rem;
       font-weight: 500;
       letter-spacing: 0.06em;
@@ -1691,7 +1697,7 @@
       cursor: pointer;
       background: none;
       border: none;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Switzer', sans-serif;
       text-decoration: underline;
       text-underline-offset: 3px;
       transition: color 0.25s;
@@ -1719,7 +1725,7 @@
     }
 
     .edge-statement {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(2.2rem, 3.5vw, 3.5rem);
@@ -1804,7 +1810,7 @@
     .about-left { position: sticky; top: 140px; }
 
     .about-heading {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(2rem, 3vw, 2.8rem);
@@ -1868,7 +1874,7 @@
     #contact .section-tag::before { background: var(--accent); }
 
     .contact-headline {
-      font-family: 'Inter Tight', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-style: italic;
       font-size: clamp(2.2rem, 4.5vw, 4.5rem);
@@ -1981,7 +1987,7 @@
       text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
     }
     .modal-heading {
-      font-family: 'Inter Tight', sans-serif; font-weight: 900; font-style: italic;
+      font-family: 'Switzer', sans-serif; font-weight: 900; font-style: italic;
       font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.02em; line-height: 1.1;
       color: var(--cream); margin-bottom: 32px;
     }
@@ -1993,7 +1999,7 @@
     }
     .form-field input, .form-field textarea, .form-field select {
       background: var(--surface); border: 1px solid var(--border);
-      color: var(--cream); font-family: 'Space Grotesk', sans-serif;
+      color: var(--cream); font-family: 'Switzer', sans-serif;
       font-size: 0.9375rem; padding: 13px 15px; border-radius: 2px;
       outline: none; width: 100%; transition: border-color 0.25s;
       appearance: none; -webkit-appearance: none;
@@ -2005,7 +2011,7 @@
     .form-submit {
       display: flex; align-items: center; justify-content: center; gap: 12px;
       background: var(--cream); color: var(--bg); border: none; cursor: pointer;
-      font-family: 'Space Grotesk', sans-serif; font-size: 0.9375rem; font-weight: 600;
+      font-family: 'Switzer', sans-serif; font-size: 0.9375rem; font-weight: 600;
       padding: 17px 32px; border-radius: 2px; margin-top: 6px; width: 100%;
       transition: background 0.3s, transform 0.3s;
     }
@@ -2022,7 +2028,7 @@
       font-size: 1.4rem; margin: 0 auto 20px;
     }
     .form-success h3 {
-      font-family: 'Inter Tight', sans-serif; font-weight: 900;
+      font-family: 'Switzer', sans-serif; font-weight: 900;
       font-size: 1.5rem; margin-bottom: 8px; color: var(--cream);
     }
     .form-success p { color: var(--mid); }
@@ -2044,7 +2050,7 @@
     }
 
     .f-logo {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900; font-size: 1.25rem;
       letter-spacing: -0.04em; color: var(--footer-logo);
     }
@@ -2337,7 +2343,7 @@
     }
 
     .loader-logo-inner {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-weight: 900;
       font-size: clamp(3rem, 7vw, 5.5rem);
       letter-spacing: -0.04em;
@@ -2354,7 +2360,7 @@
     }
 
     .loader-tag-inner {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-size: 0.75rem;
       font-weight: 500;
       letter-spacing: 0.25em;
@@ -2384,7 +2390,7 @@
 
     /* Counter */
     .loader-counter {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Switzer', sans-serif;
       font-size: 0.6875rem;
       letter-spacing: 0.2em;
       color: rgba(255,255,255,0.2);
