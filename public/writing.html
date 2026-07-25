@@ -517,6 +517,136 @@
       .nav-overlay { display: block; }
       .nav-inner { padding: 0 24px; }
     }
+
+    /* ═══════════════════════════════════════════
+       BRUTALIST OVERRIDES — writing.html
+    ═══════════════════════════════════════════ */
+
+    :root {
+      --bg:       #F8F8F5;
+      --text:     #0A0A0A;
+      --body:     #0A0A0A;
+      --muted:    #666666;
+      --border:   #0A0A0A;
+      --accent:   #0A0A0A;
+      --tag-bg:   transparent;
+      --tag-text: #0A0A0A;
+    }
+
+    *, *::before, *::after { border-radius: 0 !important; }
+    body { background: #F8F8F5 !important; cursor: auto !important; }
+    a, button, [role="button"] { cursor: pointer !important; }
+    #hero-dots { display: none !important; }
+    #scroll-progress { background: #0A0A0A !important; }
+
+    /* Abril Fatface — kill, use Switzer throughout */
+    .writing-title em { font-family: 'Switzer', sans-serif !important; font-style: normal !important; font-weight: 900 !important; color: #0A0A0A !important; }
+    .writing-eyebrow::before { border-radius: 0 !important; background: #0A0A0A !important; }
+
+    /* NAV */
+    nav.site-nav {
+      background: #F8F8F5 !important;
+      border-bottom: 1px solid #0A0A0A !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      box-shadow: none !important;
+    }
+    nav.site-nav.nav--light { box-shadow: none !important; }
+    .nav-logo span { color: #0A0A0A !important; }
+    .nav-links a {
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+      color: #888 !important;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #0A0A0A !important; }
+    .nav-audit {
+      color: #0A0A0A !important;
+      border-color: #0A0A0A !important;
+      background: none !important;
+    }
+    .nav-audit:hover { background: rgba(0,0,0,0.04) !important; border-color: #0A0A0A !important; }
+    .nav-cta-btn {
+      background: #0A0A0A !important;
+      color: #F8F8F5 !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+    }
+    .nav-drawer {
+      background: #0A0A0A !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border-left: 1px solid rgba(255,255,255,0.1) !important;
+    }
+    .nav-drawer-cta { background: #F8F8F5 !important; color: #0A0A0A !important; }
+
+    /* PAGE + HEADER */
+    .page-wrap { background: #F8F8F5 !important; }
+    .writing-header { background: #F8F8F5 !important; border-bottom: 1px solid #0A0A0A !important; }
+    .writing-grid-wrap { background: #F8F8F5 !important; }
+
+    /* CARDS — flat, hard border, no radius, no color per topic */
+    .post-card {
+      background: #F8F8F5 !important;
+      border: 1px solid #0A0A0A !important;
+      border-left: 1px solid #0A0A0A !important;
+      box-shadow: none !important;
+      transition: background 0.15s !important;
+    }
+    .post-card:hover {
+      border-color: #0A0A0A !important;
+      border-left-color: #0A0A0A !important;
+      box-shadow: none !important;
+      transform: none !important;
+      background: #EDEDEA !important;
+    }
+    /* Kill per-topic accent colours */
+    .post-card[data-topic] { --card-accent: #0A0A0A; }
+    .post-topic { color: #666 !important; }
+    .post-dot { background: #0A0A0A !important; border-radius: 0 !important; }
+    .post-read { color: #0A0A0A !important; }
+    .post-read-cta { color: #0A0A0A !important; }
+
+    /* ARTICLE OVERLAY */
+    .article-overlay { background: #F8F8F5 !important; }
+    .article-topic { color: #0A0A0A !important; }
+    .article-body blockquote { border-left-color: #0A0A0A !important; }
+    .share-btn { border-color: #0A0A0A !important; }
+    .share-btn.copied { background: #0A0A0A !important; border-color: #0A0A0A !important; }
+    .article-nav-btn:hover:not(:disabled) .article-nav-title { color: #0A0A0A !important; }
+
+    /* ARTICLE NAV BAR — remove blur */
+    .article-nav {
+      background: rgba(248,248,245,0.97) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border-top: 1px solid #0A0A0A !important;
+    }
+
+    /* FACT CHECK PANEL */
+    .fact-check { background: #0A0A0A !important; border-top: 1px solid rgba(255,255,255,0.08) !important; }
+    .fact-check-badge {
+      background: rgba(255,255,255,0.08) !important;
+      border-color: rgba(255,255,255,0.15) !important;
+    }
+    .fact-check-label { color: rgba(255,255,255,0.6) !important; }
+    .fact-num { color: rgba(255,255,255,0.4) !important; }
+
+    /* SKELETON */
+    .skeleton { background: #EDEDEA !important; animation: none !important; }
+    .sk-card { border-color: #0A0A0A !important; }
+
+    /* FOOTER */
+    footer { background: #F8F8F5 !important; border-top: 1px solid #0A0A0A !important; }
+    .footer-logo span { color: #0A0A0A !important; }
+
+    /* COPY FLASH */
+    #copy-flash { background: #0A0A0A !important; }
+    :focus-visible { outline: 2px solid #0A0A0A !important; }
+    .skip-link { background: #0A0A0A !important; }
   </style>
 </head>
 <body>

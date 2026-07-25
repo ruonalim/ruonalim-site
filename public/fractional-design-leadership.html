@@ -16,6 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
   <style>
     :root{--bg:#FFFFFF;--text:#111111;--body:#141414;--muted:#767676;--border:#E8E8EC;--accent:#0044E4;--tag-bg:#EAF0FF;--tag-text:#0044E4;}
     .skip-link{position:absolute;top:-100%;left:8px;z-index:9999;padding:8px 16px;background:#0044E4;color:#fff;font-size:14px;font-weight:600;border-radius:0 0 4px 4px;text-decoration:none;}
@@ -181,6 +182,73 @@
       .nav-overlay { display: block; }
       .nav-inner { padding: 0 24px; }
     }
+
+    /* ═══════════════════════════════════════════════
+       BRUTALIST OVERRIDES — fractional-design-leadership.html
+    ═══════════════════════════════════════════════ */
+
+    :root {
+      --bg: #F8F8F5; --text: #0A0A0A; --body: #0A0A0A;
+      --muted: #666; --border: #0A0A0A; --accent: #0A0A0A;
+      --tag-bg: transparent; --tag-text: #0A0A0A;
+    }
+    *, *::before, *::after { border-radius: 0 !important; }
+    body {
+      background: #F8F8F5 !important;
+      cursor: auto !important;
+      font-family: 'Switzer', -apple-system, Helvetica Neue, Arial, sans-serif !important;
+    }
+    a, button, [role="button"] { cursor: pointer !important; }
+    #hero-dots { display: none !important; }
+    #scroll-progress { background: #0A0A0A !important; }
+
+    /* NAV */
+    nav {
+      background: #F8F8F5 !important;
+      border-bottom: 1px solid #0A0A0A !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    .nav-logo span { color: #0A0A0A !important; }
+    .nav-links a {
+      font-size: 11px !important; font-weight: 600 !important;
+      letter-spacing: 0.08em !important; text-transform: uppercase !important;
+      color: #888 !important;
+    }
+    .nav-links a:hover { color: #0A0A0A !important; }
+    .nav-cta-btn {
+      background: #0A0A0A !important; color: #F8F8F5 !important;
+      font-size: 11px !important; font-weight: 700 !important;
+      letter-spacing: 0.08em !important; text-transform: uppercase !important;
+    }
+    .nav-drawer { background: #0A0A0A !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+    .nav-drawer-cta { background: #F8F8F5 !important; color: #0A0A0A !important; }
+
+    /* LP STYLES */
+    .page { background: #F8F8F5 !important; }
+    .lp-cta { background: #0A0A0A !important; color: #F8F8F5 !important; box-shadow: none !important; }
+    .lp-cta:hover { opacity: 0.75 !important; }
+    .lp-section { border-color: #0A0A0A !important; }
+    .lp-card { background: #EDEDEA !important; border-color: #0A0A0A !important; box-shadow: none !important; }
+    .lp-card:hover { background: #E0E0DC !important; }
+    .lp-stat { border-color: #0A0A0A !important; }
+    .lp-stat-num span { color: #0A0A0A !important; }
+    .lp-brand { border-color: #0A0A0A !important; color: #666 !important; }
+    .lp-cta-section { border-color: #0A0A0A !important; }
+    .lp-compare-col { border-color: #0A0A0A !important; }
+    .lp-compare-col--highlight { border-color: #0A0A0A !important; }
+    .lp-compare-col--highlight::before { background: #0A0A0A !important; }
+    .lp-check { color: #0A0A0A !important; }
+    .lp-compare-item { border-color: #0A0A0A !important; }
+
+    /* FOOTER */
+    footer { background: #F8F8F5 !important; border-color: #0A0A0A !important; }
+    .footer-logo span { color: #0A0A0A !important; }
+
+    /* COPY FLASH */
+    #copy-flash { background: #0A0A0A !important; }
+    :focus-visible { outline: 2px solid #0A0A0A !important; }
+    .skip-link { background: #0A0A0A !important; }
   </style>
 </head>
 <body>
