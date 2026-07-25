@@ -284,7 +284,7 @@
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 56px;
+      padding: 0 40px;
       position: relative;
       z-index: 1;
     }
@@ -300,7 +300,7 @@
     .faq-heading em,
     .edge-heading em {
       font-family: inherit;
-      font-style: italic;
+      font-style: normal;
       font-weight: inherit;
       color: var(--accent);
     }
@@ -394,7 +394,7 @@
     .nav-inner {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 56px;
+      padding: 0 40px;
       height: 64px;
       display: flex;
       align-items: center;
@@ -527,14 +527,14 @@
       .nav-cta-desktop { display: none; }
       .nav-drawer { display: block; }
       .nav-overlay { display: block; }
-      .nav-inner { padding: 0 24px; }
+      .nav-inner { padding: 0 16px; }
     }
 
     /* ─────────────────────────────────────────────
        HERO
     ───────────────────────────────────────────── */
     .hero {
-      padding-top: 112px;
+      padding-top: 80px;
       padding-bottom: 0;
       position: sticky;
       top: 0;
@@ -685,21 +685,22 @@
 
     /* ── Hero typography ── */
     .hero-heading .display-xl { color: #ffffff; }
-    .hero-heading .display-xl em { color: #FFD23F; font-style: italic; }
+    /* Accent words (Seven days.) stay gold */
+    .hero-heading .display-xl .hl-accent { color: #FFD23F; }
 
     /* Word shimmer: text always visible, yellow colour block flows through */
     .hero-heading .display-xl .hl-w {
       display: inline-block;
     }
-    /* Non-em words: white → yellow → white */
+    /* Regular words: white → yellow → white */
     @keyframes word-shimmer {
       0%   { color: #ffffff; }
       18%  { color: #FFD23F; }
       55%  { color: #FFD23F; }
       100% { color: #ffffff; }
     }
-    /* em word (growth.): yellow → bright white → back to yellow */
-    @keyframes word-shimmer-em {
+    /* Accent words: yellow → bright white → back to yellow */
+    @keyframes word-shimmer-accent {
       0%   { color: #FFD23F; }
       18%  { color: #fffbe8; }
       55%  { color: #fffbe8; }
@@ -708,8 +709,8 @@
     .hero-heading .display-xl .hl-w.lit {
       animation: word-shimmer 0.58s ease-out;
     }
-    .hero-heading .display-xl em .hl-w.lit {
-      animation: word-shimmer-em 0.58s ease-out;
+    .hero-heading .display-xl .hl-accent.lit {
+      animation: word-shimmer-accent 0.58s ease-out;
     }
     .hero .hero-eyebrow .label { color: rgba(255,255,255,0.55); }
     .hero .eyebrow-dot         { background: rgba(255,255,255,0.40); }
@@ -785,7 +786,7 @@
     .clients-header {
       max-width: 1200px;
       margin: 0 auto 44px;
-      padding: 0 56px;
+      padding: 0 40px;
       display: flex;
       align-items: baseline;
       gap: 20px;
@@ -805,8 +806,8 @@
       line-height: 1;
     }
     .clients-headline em {
-      font-style: italic;
-      color: rgba(255,255,255,0.45);
+      font-style: normal;
+      color: rgba(255,255,255,0.60);
     }
 
     /* Marquee rows */
@@ -915,7 +916,7 @@
        SELF ASSESSMENT
     ───────────────────────────────────────────── */
     .self-assessment {
-      padding: 52px 0;
+      padding: 40px 0;
       border-top: 1px solid var(--border);
     }
     .sa-inner {
@@ -933,7 +934,7 @@
     }
     .sa-heading {
       font-weight: 900;
-      font-style: italic;
+      font-style: normal;
       font-size: clamp(32px, 5vw, 56px);
       letter-spacing: -1.5px;
       line-height: 1.0;
@@ -1066,7 +1067,7 @@
        SERVICES
     ───────────────────────────────────────────── */
     .services {
-      padding: 52px 0;
+      padding: 40px 0;
       background: #f7f8fc;
     }
     .section-header {
@@ -1126,7 +1127,7 @@
        WORK
     ───────────────────────────────────────────── */
     .work {
-      padding: 52px 0;
+      padding: 40px 0;
       border-top: 1px solid var(--border);
     }
     .work-grid {
@@ -1300,7 +1301,7 @@
        EDGE / ABOUT
     ───────────────────────────────────────────── */
     .edge {
-      padding: 52px 0;
+      padding: 40px 0;
       border-top: 1px solid var(--border);
     }
     .edge-grid {
@@ -1335,7 +1336,7 @@
     /* ─────────────────────────────────────────────
        BIG CTA
     ───────────────────────────────────────────── */
-    .big-cta { padding: 52px 0; }
+    .big-cta { padding: 40px 0; }
     .big-cta-inner {
       display: flex;
       align-items: flex-end;
@@ -1445,7 +1446,7 @@
       max-width: 860px;
     }
     .footer-cta-heading em {
-      font-style: italic;
+      font-style: normal;
       color: #FFD23F;
     }
     .footer-cta-actions {
@@ -1569,7 +1570,7 @@
       font-size: 12px;
       color: rgba(255,255,255,0.35);
       line-height: 1.7;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
     .footer-contact-badge {
       display: inline-flex;
@@ -1635,7 +1636,7 @@
        FAQ
     ───────────────────────────────────────────── */
     .faq {
-      padding: 52px 0;
+      padding: 40px 0;
       background: #f7f8fc;
     }
     .faq-inner {
@@ -1652,7 +1653,7 @@
       line-height: 1.05;
       color: var(--text);
     }
-    .faq-heading em { font-style: italic; color: var(--muted); }
+    .faq-heading em { font-style: normal; color: var(--muted); }
     .faq-list { display: flex; flex-direction: column; }
     .faq-item {
       border-bottom: 1px solid var(--border);
@@ -1888,7 +1889,7 @@
       align-items: end;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 56px;
+      padding: 0 40px;
     }
     .founder-photo-col {
       position: relative;
@@ -2016,10 +2017,10 @@
       letter-spacing: -1.5px;
       line-height: 1.08;
       color: #ffffff;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
     .founder-heading em {
-      font-style: italic;
+      font-style: normal;
       color: #FFD23F;
     }
     .founder-body {
@@ -2054,7 +2055,7 @@
 
     /* ── TESTIMONIALS ── */
     .testimonials {
-      padding: 52px 0;
+      padding: 40px 0;
       background: #f7f8ff;
     }
     .testi-header {
@@ -2095,8 +2096,8 @@
       line-height: 1.7;
       color: var(--body);
       flex: 1;
-      margin-bottom: 24px;
-      font-style: italic;
+      margin-bottom: 16px;
+      font-style: normal;
     }
     .testi-person {
       display: flex;
@@ -2151,14 +2152,14 @@
     }
 
     @media (max-width: 900px) {
-      .container { padding: 0 32px; }
-      .nav-inner { padding: 0 32px; }
+      .container { padding: 0 20px; }
+      .nav-inner { padding: 0 20px; }
       .clients-inner { padding: 0 32px; }
       .hero-sub-row { gap: 24px; }
       .hero-actions { align-items: flex-start; }
-      .stats-strip { padding: 60px 0; }
+      .stats-strip { padding: 40px 0; }
       .stats-grid { grid-template-columns: 1fr; gap: 0; }
-      .stat-item { border-right: none; padding: 28px 0 28px; }
+      .stat-item { border-right: none; padding: 20px 0 20px; }
       .stat-item:last-child { padding-bottom: 0; }
       .stat-item::before { top: 0; left: 0; }
       .stat-num { font-size: 44px; letter-spacing: -1.5px; margin-bottom: 8px; }
@@ -2271,7 +2272,7 @@
     }
 
     /* ─── NEW: PROOF SECTION ─── */
-    .proof { padding: 52px 0; background: #f7f8fc; }
+    .proof { padding: 40px 0; background: #f7f8fc; }
     .proof-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -2327,7 +2328,7 @@
     }
 
     /* ─── THOUGHT LEADERSHIP ─── */
-    .thought-lead { padding: 52px 0; background: #ffffff; }
+    .thought-lead { padding: 40px 0; background: #ffffff; }
     .tl-header-row {
       display: flex;
       align-items: flex-end;
@@ -2899,7 +2900,7 @@
 
     /* How It Works section */
     .how-we-work {
-      padding: 52px 0;
+      padding: 40px 0;
       background: #ffffff;
     }
     /* Two-column: story left, tracks right */
@@ -3107,7 +3108,7 @@
     }
 
     /* ── WHAT'S INCLUDED ── */
-    .pricing-section { padding: 52px 0; background: #ffffff; }
+    .pricing-section { padding: 40px 0; background: #ffffff; }
     @media (max-width: 900px) {
       .pricing-grid { grid-template-columns: 1fr !important; max-width: 480px; margin: 0 auto; }
     }
@@ -3168,7 +3169,7 @@
     <!-- Top: headline -->
     <div class="hero-top">
       <div class="hero-heading">
-        <h1 class="display-xl"><span class="hl-w">Brief</span> <span class="hl-w">to</span> <span class="hl-w">coded</span> <span class="hl-w">prototype.</span> <em><span class="hl-w">Seven</span> <span class="hl-w">days.</span></em></h1>
+        <h1 class="display-xl"><span class="hl-w">Brief</span> <span class="hl-w">to</span> <span class="hl-w">coded</span> <span class="hl-w">prototype.</span> <span class="hl-w hl-accent">Seven</span> <span class="hl-w hl-accent">days.</span></h1>
       </div>
     </div>
 
@@ -3195,7 +3196,7 @@
   <!-- ─── CREDIBILITY LINE ─── -->
   <div class="clients-strip" role="region" aria-label="Our credibility">
   <div class="clients-header">
-    <h2 class="clients-headline">Used by founders building for <em>fintech, lottery, and consumer tech.</em></h2>
+    <h2 class="clients-headline">Trusted by founders in fintech, lottery, and consumer tech.</h2>
   </div>
   </div>
 </section>
@@ -3227,12 +3228,12 @@
 <!-- ─── HOW IT WORKS ─── -->
 <section class="how-we-work" id="how-it-works">
   <div class="container">
-    <div class="section-header" style="margin-bottom:36px;">
+    <div class="section-header" style="margin-bottom:24px;">
       <div>
-        <h2 class="display-md">Seven days.<br><em>No hand-offs. No surprises.</em></h2>
+        <h2 class="display-md">Seven days. No hand-offs.</h2>
       </div>
     </div>
-    <div class="hww-steps" data-anim="fade-up" style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;">
+    <div class="hww-steps" data-anim="fade-up" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
 
       <div class="hww-step">
         <div class="hww-step-num">01</div>
@@ -3269,7 +3270,7 @@
   <div class="container">
     <div class="section-header">
       <div>
-        <h2 class="display-md">Three sprints.<br><em>One clear outcome each.</em></h2>
+        <h2 class="display-md">Three sprint types.</h2>
       </div>
     </div>
     <div class="services-list">
@@ -3360,9 +3361,9 @@
 <!-- ─── WHAT'S INCLUDED ─── -->
 <section class="pricing-section" id="scope" data-anim="fade-up">
   <div class="container">
-    <div class="section-header" style="margin-bottom:36px;">
+    <div class="section-header" style="margin-bottom:24px;">
       <div>
-        <h2 class="display-md">Every sprint.<br><em>Fixed scope, fixed timeline.</em></h2>
+        <h2 class="display-md">Fixed scope. Fixed timeline.</h2>
       </div>
       <div style="align-self:flex-end;">
         <p style="font-size:14px;color:var(--muted);max-width:320px;line-height:1.7;">Scope is agreed before work starts. Pricing is discussed on the call — it depends on what you need, not a fixed menu.</p>
@@ -3370,7 +3371,7 @@
     </div>
     <div class="pricing-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
 
-      <div class="pricing-card" style="border:1px solid var(--border);border-radius: 28px;padding:40px 32px;">
+      <div class="pricing-card" style="border:1px solid var(--border);border-radius: 16px;padding:28px 24px;">
         <div class="pricing-tier" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;">Investor Demo Sprint</div>
         <div class="pricing-features" style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
           <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> High-fidelity UI screens</div>
@@ -3381,7 +3382,7 @@
         <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-ghost" style="width:100%;text-align:center;">Book a call →</a>
       </div>
 
-      <div class="pricing-card" style="border:2px solid var(--accent);border-radius: 28px;padding:40px 32px;">
+      <div class="pricing-card" style="border:2px solid var(--accent);border-radius: 16px;padding:28px 24px;">
         <div class="pricing-tier" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;">Developer Handoff Sprint</div>
         <div class="pricing-features" style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
           <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> End-to-end screen design</div>
@@ -3392,7 +3393,7 @@
         <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;text-align:center;">Book a call →</a>
       </div>
 
-      <div class="pricing-card" style="border:1px solid var(--border);border-radius: 28px;padding:40px 32px;">
+      <div class="pricing-card" style="border:1px solid var(--border);border-radius: 16px;padding:28px 24px;">
         <div class="pricing-tier" style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;">Validation Sprint</div>
         <div class="pricing-features" style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px;">
           <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Core flow design</div>
@@ -3461,7 +3462,7 @@
   <div class="container">
     <div class="tl-header-row">
       <div>
-        <h2 class="display-md">We think<br><em>in public.</em></h2>
+        <h2 class="display-md">We think in public.</h2>
         <p class="tl-sub">Practitioners with a point of view. Beyond the Interface — the design leadership podcast.</p>
       </div>
       <a href="https://www.youtube.com/@beyondtheinterface" target="_blank" rel="noopener noreferrer" class="tl-podcast-link">Watch all episodes →</a>
@@ -3538,9 +3539,9 @@
 <!-- ─── PROOF ─── -->
 <section class="proof" id="proof" data-anim="fade-up">
   <div class="container">
-    <div class="section-header" style="margin-bottom:32px;">
+    <div class="section-header" style="margin-bottom:20px;">
       <div>
-        <h2 class="display-md">Outcomes,<br><em>not just outputs.</em></h2>
+        <h2 class="display-md">Selected work.</h2>
       </div>
     </div>
     <div class="proof-grid">
@@ -3606,7 +3607,7 @@
 
       <!-- Copy col -->
       <div class="founder-copy-col" data-anim="fade-up" data-delay="1">
-        <h2 class="founder-heading">Senior design experience.<br><em>Applied directly to your sprint.</em></h2>
+        <h2 class="founder-heading">Senior design,<br>applied directly.</h2>
         <p class="founder-body">RUONALIM is a senior-only studio. 16 years of product design leadership across super apps, neobanks, crypto exchanges, and regulated finance — work used by tens of millions of people.</p>
         <p class="founder-body">When you book a sprint, you're not handed to a junior team. You get senior judgment and craft applied directly to your product, delivered in a fixed timeline at a fixed price.</p>
         <div class="founder-creds">
@@ -3632,7 +3633,7 @@
   <div class="container">
     <div class="big-cta-inner">
       <div data-anim="fade-up">
-        <h2 class="big-cta-heading">Seven days to<br><em>your next milestone.</em></h2>
+        <h2 class="big-cta-heading">Ready to start<br>your sprint?</h2>
       </div>
       <div class="big-cta-right" data-anim="fade-up" data-delay="2">
         <div class="big-cta-btns">
@@ -3652,7 +3653,7 @@
     <div class="faq-inner">
       <div>
         <div class="label faq-label">Common questions</div>
-        <h2 class="faq-heading">Everything you<br><em>need to know.</em></h2>
+        <h2 class="faq-heading">Common questions.</h2>
       </div>
       <div class="faq-list" role="list">
 
@@ -3723,7 +3724,7 @@
   <div class="footer-cta-band">
     <div class="footer-wordmark" aria-hidden="true">ruonalim.</div>
     <div class="footer-cta-inner">
-      <h2 class="footer-cta-heading">Let's build something<br><em>worth using.</em></h2>
+      <h2 class="footer-cta-heading">Let's build something worth using.</h2>
       <div class="footer-cta-actions">
         <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Book a free consultation</a>
         <a href="mailto:hello@ruonalim.com" class="btn btn-ghost">Email us</a>
@@ -3867,7 +3868,7 @@
   const heroInner    = document.querySelector('.hero-inner');
   const heroEl       = document.querySelector('.hero');
   const heroGoldOvl  = document.querySelector('.hero-gold-overlay');
-  const heroHeadEm   = document.querySelector('.hero-heading .display-xl em');
+  const heroHeadEm   = document.querySelector('.hero-heading .display-xl .hl-accent');
   const heroHeadText = document.querySelector('.hero-heading .display-xl');
   const heroBodyEl   = document.querySelector('.hero .hero-body');
 
