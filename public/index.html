@@ -83,7 +83,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet" />
 
   <style>
     /* ─────────────────────────────────────────────
@@ -291,7 +290,7 @@
     }
 
     /* ─── TYPOGRAPHY ─── */
-    /* Abril Fatface callouts — Figma Pairing 1 */
+    /* Italic callouts — Switzer italic with accent colour */
     .display-xl em,
     .display-lg em,
     .display-md em,
@@ -300,12 +299,9 @@
     .sa-heading em,
     .faq-heading em,
     .edge-heading em {
-      font-family: 'Abril Fatface', Georgia, 'Times New Roman', serif;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 1.1em;
-      letter-spacing: -1.5px;
-      line-height: 0.93;
+      font-family: inherit;
+      font-style: italic;
+      font-weight: inherit;
       color: var(--accent);
     }
 
@@ -919,7 +915,7 @@
        SELF ASSESSMENT
     ───────────────────────────────────────────── */
     .self-assessment {
-      padding: 68px 0;
+      padding: 52px 0;
       border-top: 1px solid var(--border);
     }
     .sa-inner {
@@ -1070,7 +1066,7 @@
        SERVICES
     ───────────────────────────────────────────── */
     .services {
-      padding: 68px 0;
+      padding: 52px 0;
       background: #f7f8fc;
     }
     .section-header {
@@ -1130,7 +1126,7 @@
        WORK
     ───────────────────────────────────────────── */
     .work {
-      padding: 68px 0;
+      padding: 52px 0;
       border-top: 1px solid var(--border);
     }
     .work-grid {
@@ -1304,7 +1300,7 @@
        EDGE / ABOUT
     ───────────────────────────────────────────── */
     .edge {
-      padding: 68px 0;
+      padding: 52px 0;
       border-top: 1px solid var(--border);
     }
     .edge-grid {
@@ -1339,7 +1335,7 @@
     /* ─────────────────────────────────────────────
        BIG CTA
     ───────────────────────────────────────────── */
-    .big-cta { padding: 68px 0; }
+    .big-cta { padding: 52px 0; }
     .big-cta-inner {
       display: flex;
       align-items: flex-end;
@@ -1354,7 +1350,6 @@
       color: var(--text);
       max-width: 680px;
     }
-    /* .big-cta-heading em colour inherited from Abril Fatface callout rule (#0044E4) */
     .big-cta-right {
       flex-shrink: 0;
       display: flex;
@@ -1640,7 +1635,7 @@
        FAQ
     ───────────────────────────────────────────── */
     .faq {
-      padding: 68px 0;
+      padding: 52px 0;
       background: #f7f8fc;
     }
     .faq-inner {
@@ -1875,7 +1870,7 @@
     }
     .founder-band {
       background: #050508;
-      padding: 68px 0 0;
+      padding: 52px 0 0;
       position: relative;
     }
     .founder-band::after {
@@ -2024,7 +2019,6 @@
       margin-bottom: 24px;
     }
     .founder-heading em {
-      font-family: 'Abril Fatface', serif;
       font-style: italic;
       color: #FFD23F;
     }
@@ -2060,7 +2054,7 @@
 
     /* ── TESTIMONIALS ── */
     .testimonials {
-      padding: 68px 0;
+      padding: 52px 0;
       background: #f7f8ff;
     }
     .testi-header {
@@ -2092,7 +2086,7 @@
       font-size: 52px;
       line-height: 1;
       color: var(--accent);
-      font-family: 'Abril Fatface', serif;
+      font-family: inherit;
       margin-bottom: 8px;
       opacity: 0.35;
     }
@@ -2277,7 +2271,7 @@
     }
 
     /* ─── NEW: PROOF SECTION ─── */
-    .proof { padding: 68px 0; background: #f7f8fc; }
+    .proof { padding: 52px 0; background: #f7f8fc; }
     .proof-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -2333,7 +2327,7 @@
     }
 
     /* ─── THOUGHT LEADERSHIP ─── */
-    .thought-lead { padding: 68px 0; background: #ffffff; }
+    .thought-lead { padding: 52px 0; background: #ffffff; }
     .tl-header-row {
       display: flex;
       align-items: flex-end;
@@ -2905,7 +2899,7 @@
 
     /* How It Works section */
     .how-we-work {
-      padding: 68px 0;
+      padding: 52px 0;
       background: #ffffff;
     }
     /* Two-column: story left, tracks right */
@@ -3113,7 +3107,7 @@
     }
 
     /* ── WHAT'S INCLUDED ── */
-    .pricing-section { padding: 68px 0; background: #ffffff; }
+    .pricing-section { padding: 52px 0; background: #ffffff; }
     @media (max-width: 900px) {
       .pricing-grid { grid-template-columns: 1fr !important; max-width: 480px; margin: 0 auto; }
     }
@@ -3181,7 +3175,7 @@
     <!-- Bottom: subtext left, CTAs right -->
     <div class="hero-bottom hero-sub-row">
       <div class="hero-bottom-left">
-        <p class="hero-sub">16 years of senior design judgment — applied to your exact brief, accelerated by AI. Not a template. Not something your team can replicate with a tool. Bespoke craft, delivered fast.</p>
+        <p class="hero-sub">16 years of senior design leadership — applied to your exact brief, delivered in seven days. Bespoke craft. Fixed price. No hand-offs.</p>
       </div>
       <div class="hero-bottom-right">
         <div class="hero-actions">
@@ -3201,7 +3195,6 @@
   <!-- ─── CREDIBILITY LINE ─── -->
   <div class="clients-strip" role="region" aria-label="Our credibility">
   <div class="clients-header">
-    <span class="clients-eyebrow">Senior-led. Fixed price. Done in 7 days.</span>
     <h2 class="clients-headline">Used by founders building for <em>fintech, lottery, and consumer tech.</em></h2>
   </div>
   </div>
@@ -3234,9 +3227,8 @@
 <!-- ─── HOW IT WORKS ─── -->
 <section class="how-we-work" id="how-it-works">
   <div class="container">
-    <div class="section-header" style="margin-bottom:56px;">
+    <div class="section-header" style="margin-bottom:36px;">
       <div>
-        <div class="label" style="margin-bottom:14px;color:var(--accent);">How it works</div>
         <h2 class="display-md">Seven days.<br><em>No hand-offs. No surprises.</em></h2>
       </div>
     </div>
@@ -3256,8 +3248,8 @@
 
       <div class="hww-step">
         <div class="hww-step-num">03</div>
-        <div class="hww-step-heading">AI-accelerated design</div>
-        <p class="hww-step-body">Days two to six. Senior design + AI tooling in parallel. Rapid iteration without compromising craft or detail.</p>
+        <div class="hww-step-heading">Design and iteration</div>
+        <p class="hww-step-body">Days two to six. Rapid, senior-led design iteration. Every decision is considered — nothing is templated or generic.</p>
       </div>
 
       <div class="hww-step">
@@ -3277,7 +3269,6 @@
   <div class="container">
     <div class="section-header">
       <div>
-        <div class="label" style="margin-bottom:14px;">What we do</div>
         <h2 class="display-md">Three sprints.<br><em>One clear outcome each.</em></h2>
       </div>
     </div>
@@ -3369,9 +3360,8 @@
 <!-- ─── WHAT'S INCLUDED ─── -->
 <section class="pricing-section" id="scope" data-anim="fade-up">
   <div class="container">
-    <div class="section-header" style="margin-bottom:56px;">
+    <div class="section-header" style="margin-bottom:36px;">
       <div>
-        <div class="label" style="margin-bottom:14px;">What's included</div>
         <h2 class="display-md">Every sprint.<br><em>Fixed scope, fixed timeline.</em></h2>
       </div>
       <div style="align-self:flex-end;">
@@ -3425,10 +3415,6 @@
   <div class="container">
     <div class="audit-band-inner">
       <div data-anim="fade-left">
-        <div class="audit-eyebrow">
-          <div class="audit-pulse" aria-hidden="true"></div>
-          <span class="label">Free AI Tool</span>
-        </div>
         <h2 class="audit-heading">Get a UX audit score<br>in 30 seconds.</h2>
         <p class="audit-body">Submit any URL, Figma file, or screenshots. Scored against Nielsen's 10 Usability Heuristics. Top 3 issues free. Full report available.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -3475,7 +3461,6 @@
   <div class="container">
     <div class="tl-header-row">
       <div>
-        <div class="label" style="margin-bottom:14px;">Beyond the work</div>
         <h2 class="display-md">We think<br><em>in public.</em></h2>
         <p class="tl-sub">Practitioners with a point of view. Beyond the Interface — the design leadership podcast.</p>
       </div>
@@ -3553,9 +3538,8 @@
 <!-- ─── PROOF ─── -->
 <section class="proof" id="proof" data-anim="fade-up">
   <div class="container">
-    <div class="section-header" style="margin-bottom:48px;">
+    <div class="section-header" style="margin-bottom:32px;">
       <div>
-        <div class="label" style="margin-bottom:14px;">Selected work</div>
         <h2 class="display-md">Outcomes,<br><em>not just outputs.</em></h2>
       </div>
     </div>
@@ -3584,7 +3568,7 @@
       <div class="proof-card">
         <div class="proof-tags">
           <span class="proof-tag">Enterprise</span>
-          <span class="proof-tag">AI-Augmented</span>
+          <span class="proof-tag">White-label</span>
         </div>
         <div class="proof-client">Northladder</div>
         <p class="proof-brief">Reimagined the trade-in experience for the world's largest tech retailers. A white-label widget and platform redesigned end-to-end and embedded at enterprise scale. Two major workstreams shipped in 30 days — operating at a pace traditional agencies can't match without compromising on craft.</p>
@@ -3622,16 +3606,14 @@
 
       <!-- Copy col -->
       <div class="founder-copy-col" data-anim="fade-up" data-delay="1">
-        <div class="founder-eyebrow">Who we are</div>
         <h2 class="founder-heading">Senior design experience.<br><em>Applied directly to your sprint.</em></h2>
         <p class="founder-body">RUONALIM is a senior-only studio. 16 years of product design leadership across super apps, neobanks, crypto exchanges, and regulated finance — work used by tens of millions of people.</p>
         <p class="founder-body">When you book a sprint, you're not handed to a junior team. You get senior judgment and craft applied directly to your product, delivered in a fixed timeline at a fixed price.</p>
         <div class="founder-creds">
           <span class="founder-cred">16 years experience</span>
-          <span class="founder-cred">Super App · Neobank · Crypto</span>
           <span class="founder-cred">Fintech & Crypto</span>
           <span class="founder-cred">Regulated UX</span>
-          <span class="founder-cred">AI Product Design</span>
+          <span class="founder-cred">Consumer at Scale</span>
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Start your sprint →</a>
@@ -3692,10 +3674,10 @@
 
         <div class="faq-item" role="listitem">
           <button class="faq-q" aria-expanded="false" onclick="faqToggle(this)">
-            How does AI-accelerated design work?
+            How do you deliver in seven days?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
-          <div class="faq-a">AI handles the production work that previously required junior teams: rapid design exploration, component generation, copy variants, iteration cycles. Senior leadership owns what AI can't replicate: strategy, taste, system thinking, final judgment. The result is faster delivery at the same craft level. Northladder is the proof: two major workstreams shipped in 30 days, embedded at enterprise scale.</div>
+          <div class="faq-a">A structured sprint format, no account management overhead, and senior designers doing the work directly — not supervising juniors. Every sprint starts with a focused strategy session on day one, so we're not discovering the brief mid-project. Scope is fixed before work begins, which means no re-briefs, no drift, no delays. Northladder is the proof: two major workstreams shipped in 30 days at enterprise scale.</div>
         </div>
 
         <div class="faq-item" role="listitem">
@@ -3741,7 +3723,6 @@
   <div class="footer-cta-band">
     <div class="footer-wordmark" aria-hidden="true">ruonalim.</div>
     <div class="footer-cta-inner">
-      <div class="footer-cta-eyebrow">Ready when you are</div>
       <h2 class="footer-cta-heading">Let's build something<br><em>worth using.</em></h2>
       <div class="footer-cta-actions">
         <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Book a free consultation</a>
@@ -4122,31 +4103,6 @@
     el.setAttribute('data-anim', 'fade-up');
     observer.observe(el);
   });
-
-  /* ── CYCLING EYEBROW ── */
-  const eyebrowEl = document.getElementById('hero-eyebrow-text');
-  const eyebrowTexts = [
-    'Dubai · Product Design',
-    'London · Product Design',
-    'Abu Dhabi · Product Design',
-    'Riyadh · Product Design'
-  ];
-  let eyebrowIdx = 0;
-  let eyebrowBusy = false;
-  eyebrowEl.style.transition = 'opacity 0.35s ease';
-  setInterval(() => {
-    if (eyebrowBusy) return;
-    eyebrowBusy = true;
-    eyebrowEl.style.opacity = '0';
-    setTimeout(() => {
-      eyebrowIdx = (eyebrowIdx + 1) % eyebrowTexts.length;
-      eyebrowEl.textContent = eyebrowTexts[eyebrowIdx];
-      // Force reflow so the transition fires on the new content
-      void eyebrowEl.offsetWidth;
-      eyebrowEl.style.opacity = '1';
-      eyebrowBusy = false;
-    }, 380);
-  }, 3500);
 
   /* ── MOBILE NAV DRAWER ── */
   const hamburger = document.getElementById('nav-hamburger');
