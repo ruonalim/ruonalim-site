@@ -535,16 +535,14 @@
     ───────────────────────────────────────────── */
     .hero {
       padding-top: 80px;
-      padding-bottom: 0;
+      padding-bottom: 64px;
       position: sticky;
       top: 0;
       z-index: 1;
       overflow: hidden;
-      min-height: 100vh;
-      min-height: 100svh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
       background: linear-gradient(118deg, #050508 0%, #001060 22%, #0044E4 52%, #0033b8 78%, #001060 100%);
       background-size: 280% 100%;
       animation: hero-sweep 12s ease-in-out infinite alternate;
@@ -558,10 +556,9 @@
       z-index: 0;
     }
     .hero-inner {
-      flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       will-change: transform, opacity;
       transform-origin: center 40%;
       position: relative;
@@ -642,14 +639,14 @@
     .hero-inner .container {
       display: flex;
       flex-direction: column;
-      gap: clamp(18px, 2.2vh, 30px);
+      gap: 20px;
     }
     .hero-top { position: relative; }
     .hero-bottom {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 28px;
+      gap: 20px;
     }
     .hero-bottom-left  { width: 100%; }
     .hero-bottom-right { }
@@ -777,7 +774,7 @@
        CLIENTS STRIP
     ───────────────────────────────────────────── */
     .clients-strip {
-      padding: 60px 0 72px;
+      padding: 32px 0 0;
       border-top: none;
       border-bottom: none;
       background: transparent;
@@ -785,7 +782,7 @@
     }
     .clients-header {
       max-width: 1200px;
-      margin: 0 auto 44px;
+      margin: 0 auto 0;
       padding: 0 40px;
       display: flex;
       align-items: baseline;
@@ -3187,10 +3184,6 @@
       </div>
     </div>
 
-  </div>
-  <!-- Scroll cue -->
-  <div class="hero-scroll-cue" id="hero-scroll-cue" aria-hidden="true">
-    <div class="scroll-line"></div>
   </div>
   </div><!-- /.hero-inner -->
   <!-- ─── CREDIBILITY LINE ─── -->
