@@ -2991,6 +2991,452 @@
     @media (max-width: 900px) {
       .pricing-grid { grid-template-columns: 1fr !important; max-width: 480px; margin: 0 auto; }
     }
+
+    /* ═══════════════════════════════════════════════════
+       BRUTALIST DIRECTION — SITE-WIDE OVERRIDES
+       Preserves hero size + scroll parallax, kills all
+       softness: radius, shadows, blue, animations.
+    ═══════════════════════════════════════════════════ */
+
+    /* 1. ROOT TOKENS */
+    :root {
+      --bg:       #F8F8F5;
+      --bg-alt:   #EDEDEA;
+      --text:     #0A0A0A;
+      --body:     #0A0A0A;
+      --muted:    #666666;
+      --border:   #0A0A0A;
+      --accent:   #0A0A0A;
+      --tag-bg:   transparent;
+      --tag-text: #0A0A0A;
+    }
+
+    /* 2. CURSOR — remove custom blue SVG */
+    body {
+      cursor: auto !important;
+    }
+    a, button, [role="button"], input[type="submit"], select, label[for], [onclick] {
+      cursor: pointer !important;
+    }
+
+    /* 3. GLOBAL — kill border-radius everywhere */
+    *, *::before, *::after {
+      border-radius: 0 !important;
+    }
+
+    /* 4. DOT MATRIX — off */
+    #hero-dots { display: none !important; }
+
+    /* 5. FOCUS */
+    :focus-visible,
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid #0A0A0A !important;
+      border-radius: 0 !important;
+    }
+
+    /* ── NAV ── */
+    .site-nav {
+      background: #F8F8F5 !important;
+      border-bottom: 1px solid #0A0A0A !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    .site-nav.nav--scrolled {
+      background: #F8F8F5 !important;
+      box-shadow: none !important;
+      border-bottom: 1px solid #0A0A0A !important;
+    }
+    .nav-links a {
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+      color: #888 !important;
+    }
+    .nav-links a:hover { color: #0A0A0A !important; }
+    .nav-cta-btn {
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.08em !important;
+      text-transform: uppercase !important;
+      padding: 9px 20px !important;
+      background: #0A0A0A !important;
+      color: #F8F8F5 !important;
+      border-radius: 0 !important;
+      margin-left: 20px !important;
+    }
+    .nav-hamburger span { border-radius: 0 !important; }
+    .nav-drawer {
+      background: #0A0A0A !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border-left: 1px solid rgba(255,255,255,0.1) !important;
+    }
+    .nav-overlay { backdrop-filter: none !important; }
+
+    /* ── HERO ── */
+    .hero { background: #F8F8F5 !important; }
+    /* Bigger, bolder type — the key brutalist move */
+    .display-xl {
+      font-size: clamp(72px, 9.2vw, 144px) !important;
+      line-height: 0.88 !important;
+      letter-spacing: -0.045em !important;
+    }
+    /* Clients headline below CTA */
+    .clients-headline { color: #888 !important; }
+
+    /* ── BUTTONS — flat, no shimmer, no breathe ── */
+    .btn { border-radius: 0 !important; box-shadow: none !important; animation: none !important; }
+    .btn-primary {
+      background: #0A0A0A !important;
+      color: #F8F8F5 !important;
+      box-shadow: none !important;
+      animation: none !important;
+    }
+    .btn-primary::after { display: none !important; }
+    .btn-primary:hover {
+      background: #0A0A0A !important;
+      opacity: 0.75 !important;
+      transform: none !important;
+      box-shadow: none !important;
+      animation: none !important;
+    }
+    .btn-ghost {
+      border: 1px solid #0A0A0A !important;
+      color: #0A0A0A !important;
+    }
+    .btn-ghost:hover { background: rgba(0,0,0,0.04) !important; }
+    .btn-accent { background: #0A0A0A !important; color: #F8F8F5 !important; box-shadow: none !important; animation: none !important; }
+    /* Hero context: same dark button (bg is now light) */
+    .hero .btn-primary {
+      background: #0A0A0A !important;
+      color: #F8F8F5 !important;
+      box-shadow: none !important;
+      animation: none !important;
+    }
+    .hero .btn-primary:hover { background: #0A0A0A !important; opacity: 0.75 !important; animation: none !important; }
+
+    /* ── PAGE-BODY — no radius, no shadow ── */
+    .page-body {
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      background: #F8F8F5 !important;
+    }
+
+    /* ── STATS ── */
+    .stats-strip {
+      background: #F8F8F5 !important;
+      border-top: 1px solid #0A0A0A !important;
+      border-bottom: 1px solid #0A0A0A !important;
+      padding: 0 !important;
+    }
+    .stats-grid { gap: 0 !important; }
+    .stat-item {
+      border-right: 1px solid #0A0A0A !important;
+      padding: 48px 40px !important;
+      transition: none !important;
+    }
+    .stat-item:first-child { padding-left: 0 !important; }
+    .stat-item:hover { transform: none !important; }
+    .stat-item::before { display: none !important; }
+    .stat-num {
+      color: #0A0A0A !important;
+      font-size: clamp(44px, 5.5vw, 72px) !important;
+      letter-spacing: -0.04em !important;
+    }
+    .stat-num.popped { animation: none !important; }
+    .stat-item:hover .stat-label { color: #666 !important; }
+
+    /* ── HOW IT WORKS ── */
+    .how-we-work {
+      background: #F8F8F5 !important;
+      border-top: 1px solid #0A0A0A !important;
+      border-bottom: 1px solid #0A0A0A !important;
+    }
+    .hww-steps {
+      border-top: 1px solid #0A0A0A !important;
+      gap: 0 !important;
+    }
+    .hww-step {
+      border-right: 1px solid #0A0A0A !important;
+      padding: 36px 32px !important;
+    }
+    .hww-step:last-child { border-right: none !important; }
+    .hww-step-num { color: #888 !important; }
+    /* AI card */
+    .hww-card { border-radius: 0 !important; animation: none !important; border-color: #0A0A0A !important; }
+    .hww-card--ai { animation: none !important; border-color: #0A0A0A !important; }
+    .hww-proof-dot { border-radius: 0 !important; }
+    .hww-proof-dot::before { display: none !important; }
+
+    /* ── SERVICES ── */
+    .services {
+      background: #F8F8F5 !important;
+      border-top: 1px solid #0A0A0A !important;
+    }
+    .service-row {
+      border-top: 1px solid #0A0A0A !important;
+      transition: none !important;
+    }
+    .service-row::after { display: none !important; }
+    .service-row:hover { background: transparent !important; padding-left: 0 !important; }
+    .service-row:hover .service-title { color: #0A0A0A !important; }
+    .service-row--flagship { border-top: 2px solid #0A0A0A !important; }
+    /* Kill metallic shimmer on flagship */
+    .service-row--flagship .service-num,
+    .service-row--flagship .service-title,
+    .service-row--flagship .service-desc,
+    .service-row--flagship .tag {
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      background-clip: unset !important;
+      -webkit-text-fill-color: unset !important;
+      color: #0A0A0A !important;
+    }
+    .service-row--flagship.shimmer-play .service-num,
+    .service-row--flagship.shimmer-play .service-title,
+    .service-row--flagship.shimmer-play .service-desc,
+    .service-row--flagship.shimmer-play .tag { animation: none !important; }
+    .service-row--flagship .tag { border-color: #0A0A0A !important; }
+    .service-row:not(.service-row--flagship) { transition: none !important; }
+    .service-row:not(.service-row--flagship):hover { background: transparent !important; padding-left: 0 !important; }
+    /* Tags flat */
+    .tag { background: transparent !important; border: 1px solid #0A0A0A !important; }
+
+    /* ── PRICING ── */
+    .pricing-section {
+      background: #F8F8F5 !important;
+      border-top: 1px solid #0A0A0A !important;
+    }
+
+    /* ── AUDIT ── */
+    .audit-band {
+      border-color: #0A0A0A !important;
+      background: #F8F8F5 !important;
+    }
+    .audit-card {
+      background: #F8F8F5 !important;
+      border: 1px solid #0A0A0A !important;
+      box-shadow: none !important;
+    }
+    .audit-pulse { background: #0A0A0A !important; animation: none !important; }
+    .audit-pulse::before { display: none !important; }
+    .audit-dot { background: #0A0A0A !important; border-radius: 0 !important; }
+    .audit-dot.med { background: #888 !important; }
+    .audit-dot.low { background: #ccc !important; }
+    .audit-issue { border-color: #0A0A0A !important; }
+
+    /* ── THOUGHT LEADERSHIP ── */
+    .thought-lead {
+      background: #F8F8F5 !important;
+      border-top: 1px solid #0A0A0A !important;
+    }
+    .tl-ep-card {
+      box-shadow: none !important;
+      border: 1px solid #0A0A0A !important;
+    }
+    .tl-ep-card:hover { transform: none !important; box-shadow: none !important; }
+    .tl-ep-body { background: #EDEDEA !important; border-top: 1px solid #0A0A0A !important; }
+    .tl-ep-thumb-overlay { background: rgba(0,0,0,0.4) !important; }
+    .tl-play-icon { background: #F8F8F5 !important; box-shadow: none !important; }
+    .tl-play-icon svg { fill: #0A0A0A !important; }
+    .tl-podcast-link { color: #0A0A0A !important; border-color: #0A0A0A !important; }
+
+    /* ── PROOF ── */
+    .proof {
+      background: #F8F8F5 !important;
+      border-top: 1px solid #0A0A0A !important;
+    }
+    .proof-grid {
+      background: #0A0A0A !important;
+      border-radius: 0 !important;
+      border: none !important;
+      gap: 1px !important;
+    }
+    .proof-card {
+      background: #F8F8F5 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .proof-card:hover {
+      background: #EDEDEA !important;
+      box-shadow: none !important;
+      border: none !important;
+      transform: none !important;
+    }
+    .proof-tag { color: #0A0A0A !important; border-color: #0A0A0A !important; }
+    .proof-metric { color: #0A0A0A !important; border-color: #0A0A0A !important; font-weight: 700 !important; }
+
+    /* ── ABOUT / FOUNDER BAND ── */
+    .founder-band { background: #0A0A0A !important; }
+    .founder-band::after { background: none !important; }
+    .founder-photo-col::before { background: none !important; }
+    .founder-photo-frame::before { display: none !important; }
+    .founder-photo { border-radius: 0 !important; }
+    .founder-photo-grain { display: none !important; }
+    .founder-bracket { display: none !important; }
+    .founder-chip { border-radius: 0 !important; backdrop-filter: none !important; }
+    .founder-heading em { color: rgba(255,255,255,0.45) !important; }
+    .founder-cred { border-radius: 0 !important; border-color: rgba(255,255,255,0.15) !important; }
+
+    /* ── BIG CTA ── */
+    .big-cta {
+      border-top: 1px solid #0A0A0A !important;
+      background: #F8F8F5 !important;
+    }
+
+    /* ── SELF ASSESSMENT ── */
+    .self-assessment {
+      background: #F8F8F5 !important;
+      border-color: #0A0A0A !important;
+    }
+    .sa-seg.active, .sa-seg.done { background: #0A0A0A !important; }
+    .sa-option {
+      border-color: #0A0A0A !important;
+      background: #F8F8F5 !important;
+    }
+    .sa-option:hover {
+      background: #EDEDEA !important;
+      border-color: #0A0A0A !important;
+      transform: none !important;
+    }
+    .sa-option.selected {
+      border-color: #0A0A0A !important;
+      background: #EDEDEA !important;
+    }
+    .sa-option.selected .sa-badge {
+      background: #0A0A0A !important;
+      border-color: #0A0A0A !important;
+    }
+    .sa-result { border-color: #0A0A0A !important; }
+    .sa-result-tag { background: #EDEDEA !important; color: #0A0A0A !important; }
+
+    /* ── FAQ ── */
+    .faq {
+      background: #F8F8F5 !important;
+      border-top: 1px solid #0A0A0A !important;
+    }
+    .faq-item { border-color: #0A0A0A !important; }
+    .faq-icon::before, .faq-icon::after { border-radius: 0 !important; }
+    .faq-q:hover { color: #0A0A0A !important; }
+    .faq-item.open .faq-q { color: #0A0A0A !important; }
+    .faq-item.open {
+      background: #EDEDEA !important;
+      border-radius: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .faq-a { transition: max-height 0.3s ease, padding-bottom 0.3s ease !important; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0A0A0A !important;
+      animation: none !important;
+    }
+    .footer-cta-actions .btn-primary {
+      background: #F8F8F5 !important;
+      color: #0A0A0A !important;
+      box-shadow: none !important;
+      animation: none !important;
+    }
+    .footer-cta-actions .btn-primary:hover {
+      background: rgba(248,248,245,0.88) !important;
+      transform: none !important;
+    }
+    .footer-cta-actions .btn-ghost {
+      border-color: rgba(255,255,255,0.25) !important;
+    }
+    .footer-social a { border-color: rgba(255,255,255,0.12) !important; }
+    .footer-contact-badge { border-color: rgba(255,255,255,0.10) !important; }
+    .footer-wordmark { display: none !important; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      background: #F8F8F5 !important;
+      border-top: 1px solid #0A0A0A !important;
+    }
+    .testi-card {
+      border-color: #0A0A0A !important;
+      box-shadow: none !important;
+    }
+    .testi-card:hover { box-shadow: none !important; transform: none !important; }
+    .testi-avatar { background: #EDEDEA !important; color: #0A0A0A !important; }
+    .testi-company { color: #0A0A0A !important; }
+    .testi-person { border-color: #0A0A0A !important; }
+    .testi-quote-mark { color: #0A0A0A !important; }
+
+    /* ── EDGE / ABOUT ── */
+    .edge { border-color: #0A0A0A !important; background: #F8F8F5 !important; }
+    .edge-pill {
+      border-color: #0A0A0A !important;
+      transition: none !important;
+    }
+    .edge-pill:hover { border-color: #0A0A0A !important; background: #EDEDEA !important; color: #0A0A0A !important; transform: none !important; }
+
+    /* ── WORK CARDS ── */
+    .work-card { background: #EDEDEA !important; transition: background 0.2s !important; }
+    .work-card:hover { transform: none !important; box-shadow: none !important; background: #E0E0DC !important; }
+
+    /* ── KILL DECORATIVE ANIMATIONS ── */
+    /* Sonar rings */
+    .eyebrow-dot::before, .eyebrow-dot::after { display: none !important; }
+    /* Audit pulse ring */
+    .audit-pulse::before { display: none !important; }
+    /* Wave dividers */
+    .wave-divider { display: none !important; }
+    /* Footer drift */
+    @keyframes footer-drift { from{} to{} }
+    /* Founder glow */
+    @keyframes founderGlowPulse { from{} to{} }
+    /* Stat pop */
+    @keyframes stat-pop { from{} to{} }
+    /* Pulse dot */
+    @keyframes pulse-dot { 0%{opacity:1} 50%{opacity:0.7} 100%{opacity:1} }
+
+    /* ── SERVICE DETAIL expand ── */
+    .service-detail-inner {
+      border-left: 2px solid #0A0A0A !important;
+      border-radius: 0 !important;
+    }
+
+    /* ── NAV AUDIT BUTTON ── */
+    .nav-audit {
+      border-color: #0A0A0A !important;
+    }
+
+    /* ── WORK LIST ── */
+    .work-list { border-color: #0A0A0A !important; }
+    .work-list-row { border-color: #0A0A0A !important; }
+
+    /* ── SKIP LINK ── */
+    .skip-link { background: #0A0A0A !important; }
+
+    /* ── COPY FLASH ── */
+    .cf-check { background: rgba(255,255,255,0.1) !important; }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      border-bottom: 1px solid #0A0A0A !important;
+      padding-bottom: 24px !important;
+      margin-bottom: 0 !important;
+    }
+    .how-we-work .section-header { margin-bottom: 0 !important; }
+
+    /* ── SERVICE PATHS ── */
+    .service-paths { background: #0A0A0A !important; }
+    .service-path { background: #F8F8F5 !important; border-radius: 0 !important; }
+    .service-path:hover { background: #EDEDEA !important; border-color: #0A0A0A !important; }
+
+    /* ── CLIENT CARDS ── */
+    .clients-grid { background: #0A0A0A !important; }
+    .client-card { background: #F8F8F5 !important; }
+    .client-card:hover { background: #EDEDEA !important; }
+
+    /* ── MOBILE OVERRIDES ── */
+    @media (max-width: 768px) {
+      .display-xl { font-size: clamp(56px, 11vw, 96px) !important; }
+    }
   </style>
 </head>
 <body>
