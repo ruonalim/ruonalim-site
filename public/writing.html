@@ -585,7 +585,25 @@
 
     /* PAGE + HEADER */
     .page-wrap { background: #F8F8F5 !important; }
-    .writing-header { background: #F8F8F5 !important; border-bottom: 1px solid #0A0A0A !important; }
+    /* Alignment fix: move side padding from outer header to inner wrapper
+       so it uses the same layout model as .writing-grid-wrap (self-centering) */
+    .writing-header {
+      background: #F8F8F5 !important;
+      border-bottom: 1px solid #0A0A0A !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    .writing-header-inner {
+      padding-left: 56px !important;
+      padding-right: 56px !important;
+      box-sizing: border-box !important;
+    }
+    @media (max-width: 768px) {
+      .writing-header-inner {
+        padding-left: 24px !important;
+        padding-right: 24px !important;
+      }
+    }
     .writing-grid-wrap { background: #F8F8F5 !important; }
 
     /* CARDS — flat, hard border, no radius, no color per topic */
