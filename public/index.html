@@ -559,9 +559,9 @@
       z-index: 0;
     }
     .hero-inner {
+      flex: 1;
       display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+      align-items: center;
       will-change: transform, opacity;
       transform-origin: center 40%;
       position: relative;
@@ -642,20 +642,10 @@
     .hero-inner .container {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 24px;
     }
     .hero-top { position: relative; }
-    .hero-bottom {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 20px;
-    }
-    .hero-bottom-left  { width: 100%; }
-    .hero-bottom-right { }
-    @media (max-width: 768px) {
-      .hero-bottom { gap: 24px; }
-    }
+    .hero-heading { max-width: 1080px; margin-bottom: 0; }
 
     /* ── Scroll cue ── */
     .hero-scroll-cue {
@@ -750,7 +740,7 @@
       background: var(--accent);
       flex-shrink: 0;
     }
-    .hero-heading { max-width: 1080px; margin-bottom: 32px; }
+    /* .hero-heading rule consolidated above */
     .hero-sub-row {
       display: flex;
       flex-direction: column;
@@ -782,7 +772,6 @@
       border-bottom: none;
       background: transparent;
       overflow: hidden;
-      margin-top: auto;
     }
     .clients-header {
       max-width: 1200px;
@@ -3175,7 +3164,6 @@
       </div>
     </div>
 
-    <p class="hero-sub">Senior design leadership applied to your brief. Delivered in seven days.</p>
     <div>
       <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Start your sprint →</a>
     </div>
