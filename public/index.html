@@ -1413,17 +1413,18 @@
 
     /* CTA band — full viewport, centered */
     .footer-cta-band {
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: clamp(60px,7vw,100px) clamp(24px,5vw,80px);
+      justify-content: flex-start;
+      padding: 72px 0 64px;
       position: relative;
     }
     .footer-cta-inner {
       position: relative;
       z-index: 2;
-      max-width: 960px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
     }
     .footer-cta-eyebrow {
       font-size: 11px;
@@ -1623,7 +1624,7 @@
       .footer-wordmark { display: none; }
     }
     @media (max-width: 600px) {
-      .footer-cta-band { padding: 72px 24px 56px; }
+      .footer-cta-band { padding: 48px 0 40px; }
       .footer-grid { grid-template-columns: 1fr; padding: 48px 24px; gap: 36px; }
       .footer-brand-col { grid-column: auto; }
       .footer-bottom { padding: 20px 24px; }
@@ -3170,18 +3171,9 @@
       </div>
     </div>
 
-    <!-- Bottom: subtext left, CTAs right -->
-    <div class="hero-bottom hero-sub-row">
-      <div class="hero-bottom-left">
-        <p class="hero-sub">16 years of senior design leadership — applied to your exact brief, delivered in seven days. Bespoke craft. Fixed price. No hand-offs.</p>
-      </div>
-      <div class="hero-bottom-right">
-        <div class="hero-actions">
-          <div class="hero-actions-row">
-            <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Start your sprint →</a>
-          </div>
-        </div>
-      </div>
+    <p class="hero-sub">16 years of senior design leadership — applied to your exact brief, delivered in seven days. Bespoke craft. Fixed price. No hand-offs.</p>
+    <div>
+      <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Start your sprint →</a>
     </div>
 
   </div>
@@ -3645,7 +3637,6 @@
   <div class="container">
     <div class="faq-inner">
       <div>
-        <div class="label faq-label">Common questions</div>
         <h2 class="faq-heading">Common questions.</h2>
       </div>
       <div class="faq-list" role="list">
