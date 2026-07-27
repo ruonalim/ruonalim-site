@@ -3103,14 +3103,19 @@
       border-radius: 0 !important;
       box-shadow: none !important;
       animation: none !important;
-      transition: padding-left 0.3s cubic-bezier(0.4,0,0.2,1),
-                  padding-right 0.3s cubic-bezier(0.4,0,0.2,1),
-                  background 0.2s, border-color 0.2s, opacity 0.2s !important;
+      transition: background 0.2s, border-color 0.2s, opacity 0.2s !important;
+      overflow: hidden !important;
     }
-    .btn:hover {
-      padding-left: 40px !important;
-      padding-right: 12px !important;
-      opacity: 1 !important;
+    .btn:hover { opacity: 1 !important; }
+    /* Arrow glide to opposite end */
+    .btn-label { flex: 1 0 auto; }
+    .btn-arrow {
+      flex: 0 0 auto;
+      display: inline-block;
+      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    .btn:hover .btn-arrow {
+      transform: translateX(var(--arrow-travel, 8px)) !important;
     }
     .btn-primary {
       background: #0A0A0A !important;
@@ -3188,8 +3193,8 @@
     .hww-step:last-child { border-right: none !important; }
     .hww-step-num { color: #888 !important; }
     /* AI card */
-    .hww-card { border-radius: 0 !important; animation: none !important; border-color: #0A0A0A !important; }
-    .hww-card--ai { animation: none !important; border-color: #0A0A0A !important; }
+    .hww-card { border-radius: 0 !important; animation: none !important; border: none !important; background: #EDEDEA !important; }
+    .hww-card--ai { animation: none !important; border: none !important; }
     .hww-proof-dot { border-radius: 0 !important; }
     .hww-proof-dot::before { display: none !important; }
 
@@ -3227,8 +3232,8 @@
     .service-row-summary::after { display: none !important; }
     .service-row:not(.service-row--flagship) { transition: background 0.18s !important; padding-left: 0 !important; }
     .service-row:not(.service-row--flagship):hover { background: #EDEDEA !important; padding-left: 0 !important; }
-    /* Tags flat */
-    .tag { background: transparent !important; border: 1px solid #0A0A0A !important; }
+    /* Tags — no border, text only */
+    .tag { background: transparent !important; border: none !important; padding-left: 0 !important; padding-right: 0 !important; color: #666 !important; }
 
     /* ── PRICING ── */
     .pricing-section {
@@ -3242,8 +3247,8 @@
       background: #F8F8F5 !important;
     }
     .audit-card {
-      background: #F8F8F5 !important;
-      border: 1px solid #0A0A0A !important;
+      background: #EDEDEA !important;
+      border: none !important;
       box-shadow: none !important;
     }
     .audit-pulse { background: #0A0A0A !important; animation: none !important; }
@@ -3251,7 +3256,7 @@
     .audit-dot { background: #0A0A0A !important; border-radius: 0 !important; }
     .audit-dot.med { background: #888 !important; }
     .audit-dot.low { background: #ccc !important; }
-    .audit-issue { border-color: #0A0A0A !important; }
+    .audit-issue { border: none !important; }
 
     /* ── THOUGHT LEADERSHIP ── */
     .thought-lead {
@@ -3260,10 +3265,10 @@
     }
     .tl-ep-card {
       box-shadow: none !important;
-      border: 1px solid #0A0A0A !important;
+      border: none !important;
     }
     .tl-ep-card:hover { transform: none !important; box-shadow: none !important; }
-    .tl-ep-body { background: #EDEDEA !important; border-top: 1px solid #0A0A0A !important; }
+    .tl-ep-body { background: #EDEDEA !important; border-top: none !important; }
     .tl-ep-thumb-overlay { background: rgba(0,0,0,0.4) !important; }
     .tl-play-icon { background: #F8F8F5 !important; box-shadow: none !important; }
     .tl-play-icon svg { fill: #0A0A0A !important; }
@@ -3291,8 +3296,8 @@
       border: none !important;
       transform: none !important;
     }
-    .proof-tag { color: #0A0A0A !important; border-color: #0A0A0A !important; }
-    .proof-metric { color: #0A0A0A !important; border-color: #0A0A0A !important; font-weight: 700 !important; }
+    .proof-tag { color: #666 !important; border: none !important; padding-left: 0 !important; }
+    .proof-metric { color: #0A0A0A !important; border: none !important; font-weight: 700 !important; }
 
     /* ── ABOUT / FOUNDER BAND ── */
     .founder-band { background: #0A0A0A !important; }
@@ -3308,7 +3313,7 @@
 
     /* ── BIG CTA ── */
     .big-cta {
-      border-top: 1px solid #0A0A0A !important;
+      border-top: none !important;
       background: #F8F8F5 !important;
     }
 
@@ -3389,19 +3394,21 @@
       border-top: 1px solid #0A0A0A !important;
     }
     .testi-card {
-      border-color: #0A0A0A !important;
+      border: none !important;
       box-shadow: none !important;
+      background: #EDEDEA !important;
     }
     .testi-card:hover { box-shadow: none !important; transform: none !important; }
-    .testi-avatar { background: #EDEDEA !important; color: #0A0A0A !important; }
+    .testi-avatar { background: #F8F8F5 !important; color: #0A0A0A !important; }
     .testi-company { color: #0A0A0A !important; }
-    .testi-person { border-color: #0A0A0A !important; }
+    .testi-person { border: none !important; }
     .testi-quote-mark { color: #0A0A0A !important; }
 
     /* ── EDGE / ABOUT ── */
-    .edge { border-color: #0A0A0A !important; background: #F8F8F5 !important; }
+    .edge { border: none !important; background: #F8F8F5 !important; }
     .edge-pill {
-      border-color: #0A0A0A !important;
+      border: none !important;
+      background: #EDEDEA !important;
       transition: none !important;
     }
     .edge-pill:hover { border-color: #0A0A0A !important; background: #EDEDEA !important; color: #0A0A0A !important; transform: none !important; }
@@ -3551,7 +3558,7 @@
     </div>
 
     <div>
-      <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Start your sprint →</a>
+      <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary"><span class="btn-label">Start your sprint</span><span class="btn-arrow"> →</span></a>
     </div>
 
     <p class="clients-headline">Trusted by founders in fintech, lottery, and consumer tech.</p>
@@ -3738,7 +3745,7 @@
           <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Investor-ready presentation assets</div>
           <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Delivered in 7 days</div>
         </div>
-        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-ghost" style="width:100%;text-align:center;">Book a call →</a>
+        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-ghost" style="width:100%;text-align:center;"><span class="btn-label">Book a call</span><span class="btn-arrow"> →</span></a>
       </div>
 
       <div class="pricing-card" style="border:2px solid var(--accent);border-radius: 16px;padding:28px 24px;">
@@ -3749,7 +3756,7 @@
           <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Dev-ready Figma handoff specs</div>
           <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Delivered in 7 days</div>
         </div>
-        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;text-align:center;">Book a call →</a>
+        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%;text-align:center;"><span class="btn-label">Book a call</span><span class="btn-arrow"> →</span></a>
       </div>
 
       <div class="pricing-card" style="border:1px solid var(--border);border-radius: 16px;padding:28px 24px;">
@@ -3760,7 +3767,7 @@
           <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Test scenarios + insight summary</div>
           <div class="pricing-feature" style="font-size:14px;color:var(--fg);display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent);font-weight:700;flex-shrink:0;">→</span> Delivered in 7 days</div>
         </div>
-        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-ghost" style="width:100%;text-align:center;">Book a call →</a>
+        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-ghost" style="width:100%;text-align:center;"><span class="btn-label">Book a call</span><span class="btn-arrow"> →</span></a>
       </div>
 
     </div>
@@ -3778,7 +3785,7 @@
         <h2 class="audit-heading">Get a UX audit score<br>in 30 seconds.</h2>
         <p class="audit-body">Drop a URL, Figma file, or screenshot. Top 3 issues free.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="/audit/run" class="btn btn-accent">Run my free audit →</a>
+          <a href="/audit/run" class="btn btn-accent"><span class="btn-label">Run my free audit</span><span class="btn-arrow"> →</span></a>
           <a href="/audit" class="btn btn-ghost">See how it works</a>
         </div>
       </div>
@@ -3976,7 +3983,7 @@
           <span class="founder-cred">Consumer at Scale</span>
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Start your sprint →</a>
+          <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary"><span class="btn-label">Start your sprint</span><span class="btn-arrow"> →</span></a>
         </div>
       </div>
 
@@ -3996,7 +4003,7 @@
       </div>
       <div class="big-cta-right" data-anim="fade-up" data-delay="2">
         <div class="big-cta-btns">
-          <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:15px;padding:15px 32px;">Start your sprint →</a>
+          <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:15px;padding:15px 32px;"><span class="btn-label">Start your sprint</span><span class="btn-arrow"> →</span></a>
           <a href="mailto:hello@ruonalim.com" class="btn btn-ghost email-cta" style="font-size:15px;padding:15px 32px;">Email us</a>
         </div>
         <p class="big-cta-note">We reply within 4 hours.</p>
@@ -4333,6 +4340,21 @@
     drawDots();
     window.addEventListener('resize', initDots);
   }
+
+  /* ── BUTTON ARROW GLIDE ── */
+  document.querySelectorAll('.btn .btn-arrow').forEach(function(arrow) {
+    var btn = arrow.closest('.btn');
+    btn.addEventListener('mouseenter', function() {
+      var btnRect   = btn.getBoundingClientRect();
+      var arrowRect = arrow.getBoundingClientRect();
+      var pRight    = parseFloat(getComputedStyle(btn).paddingRight) || 26;
+      var target    = btnRect.right - pRight - arrowRect.right;
+      arrow.style.setProperty('--arrow-travel', target + 'px');
+    });
+    btn.addEventListener('mouseleave', function() {
+      arrow.style.setProperty('--arrow-travel', '0px');
+    });
+  });
 
   /* ── SERVICE ROW EXPANDABLE ── */
   function svcToggle(row) {
