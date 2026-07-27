@@ -4224,6 +4224,7 @@
   function lerp(a, b, t) { return Math.round(a + (b - a) * t); }
 
   const heroWords = document.querySelectorAll('.hero .display-xl .hl-w');
+  const navLogo   = document.querySelector('.nav-logo');
   function updateHeroParallax() {
     if (!heroInner || !heroEl) return;
     const scrolled = window.scrollY;
@@ -4238,8 +4239,10 @@
     if (heroGoldOvl) heroGoldOvl.style.opacity = p.toFixed(3);
     if (p > 0) {
       heroWords.forEach(w => { w.style.color = '#F8F8F5'; });
+      if (navLogo) navLogo.style.color = '#0044E4';
     } else {
       heroWords.forEach(w => { w.style.color = ''; });
+      if (navLogo) navLogo.style.color = '';
     }
   }
   window.addEventListener('scroll', updateHeroParallax, { passive: true });
