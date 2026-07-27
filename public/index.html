@@ -3408,8 +3408,13 @@
 
     /* ── SERVICE DETAIL expand ── */
     .service-detail-inner {
-      border-left: 2px solid #0A0A0A !important;
+      border-top: 1px solid #0A0A0A !important;
       border-radius: 0 !important;
+    }
+    .service-row.open .service-detail {
+      border-left: 1px solid #0A0A0A !important;
+      border-right: 1px solid #0A0A0A !important;
+      border-bottom: 1px solid #0A0A0A !important;
     }
 
     /* ── NAV AUDIT BUTTON ── */
@@ -3444,6 +3449,20 @@
     .clients-grid { background: #0A0A0A !important; }
     .client-card { background: #F8F8F5 !important; }
     .client-card:hover { background: #EDEDEA !important; }
+
+    /* ── HERO SHIMMER ── */
+    @keyframes hero-text-shimmer {
+      0%   { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+    .hero .display-xl {
+      background: linear-gradient(100deg, #0A0A0A 30%, #555 47%, #888 50%, #555 53%, #0A0A0A 70%) !important;
+      background-size: 300% auto !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      animation: hero-text-shimmer 7s ease-in-out infinite !important;
+    }
 
     /* ── MOBILE OVERRIDES ── */
     @media (max-width: 768px) {
