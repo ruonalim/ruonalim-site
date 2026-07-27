@@ -3202,8 +3202,11 @@
     .service-row--flagship.shimmer-play .service-desc,
     .service-row--flagship.shimmer-play .tag { animation: none !important; }
     .service-row--flagship .tag { border-color: #0A0A0A !important; }
-    .service-row:not(.service-row--flagship) { transition: none !important; }
-    .service-row:not(.service-row--flagship):hover { background: transparent !important; padding-left: 0 !important; }
+    /* Kill animated border, replace with whole-row colour swap */
+    .service-row::after { display: none !important; }
+    .service-row-summary::after { display: none !important; }
+    .service-row:not(.service-row--flagship) { transition: background 0.18s !important; padding-left: 0 !important; }
+    .service-row:not(.service-row--flagship):hover { background: #EDEDEA !important; padding-left: 0 !important; }
     /* Tags flat */
     .tag { background: transparent !important; border: 1px solid #0A0A0A !important; }
 
