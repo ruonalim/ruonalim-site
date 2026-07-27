@@ -3451,19 +3451,20 @@
     .client-card:hover { background: #EDEDEA !important; }
 
     /* ── HERO SHIMMER ── */
-    @keyframes hero-text-shimmer {
-      0%   { background-position: 200% center; }
-      100% { background-position: -200% center; }
+    @keyframes hero-word-shimmer {
+      0%, 100% { color: #0A0A0A; }
+      50%       { color: #8A8A8A; }
     }
     .hero .display-xl .hl-w {
-      background: linear-gradient(100deg, #0A0A0A 25%, #666 46%, #999 50%, #666 54%, #0A0A0A 75%) !important;
-      background-size: 300% auto !important;
-      -webkit-background-clip: text !important;
-      background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
       color: #0A0A0A !important;
-      animation: hero-text-shimmer 7s ease-in-out infinite !important;
+      animation: hero-word-shimmer 4s ease-in-out infinite !important;
     }
+    /* stagger the wave across words */
+    .hero .display-xl .hl-w:nth-child(2) { animation-delay: 0.2s !important; }
+    .hero .display-xl .hl-w:nth-child(3) { animation-delay: 0.4s !important; }
+    .hero .display-xl .hl-w:nth-child(5) { animation-delay: 0.6s !important; }
+    .hero .display-xl .hl-w:nth-child(7) { animation-delay: 0.8s !important; }
+    .hero .display-xl .hl-w:nth-child(8) { animation-delay: 1.0s !important; }
 
     /* ── MOBILE OVERRIDES ── */
     @media (max-width: 768px) {
