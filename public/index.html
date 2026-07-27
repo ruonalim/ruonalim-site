@@ -3079,7 +3079,16 @@
     .nav-overlay { backdrop-filter: none !important; }
 
     /* ── HERO ── */
-    .hero { background: #F8F8F5 !important; }
+    .hero { background: #F8F8F5 !important; position: relative !important; overflow: hidden !important; }
+    .hero-gold-overlay {
+      display: block !important;
+      position: absolute !important;
+      inset: 0 !important;
+      background: #0044E4 !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      z-index: 0 !important;
+    }
     /* Bigger, bolder type — the key brutalist move */
     .display-xl {
       font-size: clamp(72px, 9.2vw, 144px) !important;
@@ -4225,10 +4234,10 @@
     const p = easeIn(raw);
     heroInner.style.transform = `translateY(${p * -24}px)`;
     heroInner.style.opacity   = 1 - p * 0.9;
-    // Shift headline to brand blue as hero scrolls out
+    // Flash entire hero blue on scroll
+    if (heroGoldOvl) heroGoldOvl.style.opacity = p.toFixed(3);
     if (p > 0) {
-      const blue = `rgba(0,68,228,${Math.min(p * 1.4, 1).toFixed(3)})`;
-      heroWords.forEach(w => { w.style.color = blue; });
+      heroWords.forEach(w => { w.style.color = '#F8F8F5'; });
     } else {
       heroWords.forEach(w => { w.style.color = ''; });
     }
