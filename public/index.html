@@ -3453,7 +3453,7 @@
     /* ── HERO SHIMMER ── */
     @keyframes hero-word-shimmer {
       0%, 100% { color: #0A0A0A; }
-      50%       { color: #8A8A8A; }
+      50%       { color: #0044E4; }
     }
     .hero .display-xl .hl-w {
       animation: hero-word-shimmer 4s ease-in-out infinite !important;
@@ -4214,6 +4214,7 @@
   function easeOut(t) { return 1 - (1-t)*(1-t); }
   function lerp(a, b, t) { return Math.round(a + (b - a) * t); }
 
+  const heroWords = document.querySelectorAll('.hero .display-xl .hl-w');
   function updateHeroParallax() {
     if (!heroInner || !heroEl) return;
     const scrolled = window.scrollY;
@@ -4224,6 +4225,13 @@
     const p = easeIn(raw);
     heroInner.style.transform = `translateY(${p * -24}px)`;
     heroInner.style.opacity   = 1 - p * 0.9;
+    // Shift headline to brand blue as hero scrolls out
+    if (p > 0) {
+      const blue = `rgba(0,68,228,${Math.min(p * 1.4, 1).toFixed(3)})`;
+      heroWords.forEach(w => { w.style.color = blue; });
+    } else {
+      heroWords.forEach(w => { w.style.color = ''; });
+    }
   }
   window.addEventListener('scroll', updateHeroParallax, { passive: true });
   updateHeroParallax();
