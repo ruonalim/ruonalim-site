@@ -3274,6 +3274,23 @@
     /* ── COPY FLASH ── */
     .cf-check { background: rgba(0,0,0,0.06) !important; }
 
+
+    /* ── HERO SLIDES ── */
+    .hero-slides {
+      display: grid;
+      grid-template-areas: "stack";
+    }
+    .hero-slide {
+      grid-area: stack;
+      opacity: 0;
+      transition: opacity 0.65s ease;
+      pointer-events: none;
+    }
+    .hero-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       .display-xl { font-size: clamp(44px, 11vw, 80px) !important; }
@@ -3347,7 +3364,17 @@
     <!-- Top: headline -->
     <div class="hero-top">
       <div class="hero-heading">
-        <h1 class="display-xl"><span class="hl-w">Brief</span> <span class="hl-w">to</span> <span class="hl-w">coded</span><br><span class="hl-w">prototype.</span><br><span class="hl-w hl-accent">Seven</span> <span class="hl-w hl-accent">days.</span></h1>
+        <div class="hero-slides" aria-live="polite">
+          <h1 class="display-xl hero-slide active" aria-label="Brief to coded prototype. Seven days.">
+            <span class="hl-w">Brief</span> <span class="hl-w">to</span> <span class="hl-w">coded</span><br><span class="hl-w">prototype.</span><br><span class="hl-w hl-accent">Seven</span> <span class="hl-w hl-accent">days.</span>
+          </h1>
+          <h1 class="display-xl hero-slide" aria-label="Fast design turnaround. Days, not months." aria-hidden="true">
+            <span class="hl-w">Fast</span> <span class="hl-w">design</span><br><span class="hl-w">turnaround.</span><br><span class="hl-w hl-accent">Days,</span> <span class="hl-w hl-accent">not</span> <span class="hl-w hl-accent">months.</span>
+          </h1>
+          <h1 class="display-xl hero-slide" aria-label="Your virtual design team. Senior-only." aria-hidden="true">
+            <span class="hl-w">Your</span> <span class="hl-w">virtual</span><br><span class="hl-w">design</span> <span class="hl-w">team.</span><br><span class="hl-w hl-accent">Senior-only.</span>
+          </h1>
+        </div>
       </div>
     </div>
 
@@ -4052,6 +4079,23 @@
     if (heroEl) heroEl.classList.toggle('hero--blue', p > 0.02);
   }
   window.addEventListener('scroll', updateHeroParallax, { passive: true });
+
+  // Hero slide cycling
+  (function() {
+    var slides = document.querySelectorAll('.hero-slide');
+    var current = 0;
+    if (slides.length < 2) return;
+    function advance() {
+      slides[current].classList.remove('active');
+      slides[current].setAttribute('aria-hidden', 'true');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+      slides[current].removeAttribute('aria-hidden');
+    }
+    setInterval(advance, 3500);
+  })();
+
+
   updateHeroParallax();
 
   const mainNav = document.querySelector('.site-nav');
