@@ -183,72 +183,81 @@
       .nav-inner { padding: 0 24px; }
     }
 
+
     /* ═══════════════════════════════════════════════
-       BRUTALIST OVERRIDES — fractional-design-leadership.html
+       EDITORIAL — APPLE-LEVEL AESTHETIC
     ═══════════════════════════════════════════════ */
 
     :root {
-      --bg: #F8F8F5; --text: #0A0A0A; --body: #0A0A0A;
-      --muted: #666; --border: #0A0A0A; --accent: #0A0A0A;
-      --tag-bg: transparent; --tag-text: #0A0A0A;
+      --bg: #FFFFFF; --text: #1D1D1F; --body: #1D1D1F;
+      --muted: #86868B; --border: rgba(0,0,0,0.08); --accent: #0044E4;
+      --tag-bg: rgba(0,68,228,0.07); --tag-text: #0044E4;
     }
-    *, *::before, *::after { border-radius: 0 !important; }
-    body {
-      background: #F8F8F5 !important;
-      cursor: auto !important;
-      font-family: 'Switzer', -apple-system, Helvetica Neue, Arial, sans-serif !important;
-    }
+    body { background: #FFFFFF !important; color: #1D1D1F !important; -webkit-font-smoothing: antialiased !important; cursor: auto !important; }
     a, button, [role="button"] { cursor: pointer !important; }
     #hero-dots { display: none !important; }
     #scroll-progress { background: #0044E4 !important; }
 
     /* NAV */
-    nav {
-      background: #F8F8F5 !important;
-      border-bottom: 1px solid #0A0A0A !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
+    nav, nav.site-nav {
+      background: rgba(255,255,255,0.82) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      border-bottom: none !important;
+      box-shadow: none !important;
     }
-    .nav-logo span { color: #0A0A0A !important; }
+    nav.nav--scrolled, .nav--scrolled {
+      background: rgba(255,255,255,0.92) !important;
+      border-bottom: 1px solid rgba(0,0,0,0.07) !important;
+    }
+    .nav-logo span { color: #1D1D1F !important; }
     .nav-links a {
-      font-size: 11px !important; font-weight: 600 !important;
-      letter-spacing: 0.08em !important; text-transform: uppercase !important;
-      color: #888 !important;
+      color: #1D1D1F !important; font-size: inherit !important;
+      font-weight: inherit !important; letter-spacing: inherit !important;
+      text-transform: none !important;
     }
-    .nav-links a:hover { color: #0A0A0A !important; }
+    .nav-links a:hover, .nav-links a.active { color: #0044E4 !important; }
+    .nav-audit { color: #1D1D1F !important; border-color: rgba(0,0,0,0.14) !important; border-radius: 980px !important; background: transparent !important; }
+    .nav-audit:hover { background: #F5F5F7 !important; }
     .nav-cta-btn {
-      background: #0A0A0A !important; color: #F8F8F5 !important;
-      font-size: 11px !important; font-weight: 700 !important;
-      letter-spacing: 0.08em !important; text-transform: uppercase !important;
+      background: #0044E4 !important; color: #FFFFFF !important;
+      border-radius: 980px !important; font-size: inherit !important;
+      font-weight: 600 !important; letter-spacing: inherit !important;
+      text-transform: none !important;
     }
-    .nav-drawer { background: #0A0A0A !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
-    .nav-drawer-cta { background: #F8F8F5 !important; color: #0A0A0A !important; }
+    .nav-cta-btn:hover { background: #0033b3 !important; }
+    .nav-drawer { background: #FFFFFF !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+    .nav-drawer-cta { background: #0044E4 !important; color: #FFFFFF !important; border-radius: 980px !important; }
+
+    /* PAGE */
+    .page, .page-wrap { background: #FFFFFF !important; }
 
     /* LP STYLES */
-    .page { background: #F8F8F5 !important; }
-    .lp-cta { background: #0A0A0A !important; color: #F8F8F5 !important; box-shadow: none !important; }
-    .lp-cta:hover { opacity: 0.75 !important; }
-    .lp-section { border-color: #0A0A0A !important; }
-    .lp-card { background: #EDEDEA !important; border-color: #0A0A0A !important; box-shadow: none !important; }
-    .lp-card:hover { background: #E0E0DC !important; }
-    .lp-stat { border-color: #0A0A0A !important; }
-    .lp-stat-num span { color: #0A0A0A !important; }
-    .lp-brand { border-color: #0A0A0A !important; color: #666 !important; }
-    .lp-cta-section { border-color: #0A0A0A !important; }
-    .lp-compare-col { border-color: #0A0A0A !important; }
-    .lp-compare-col--highlight { border-color: #0A0A0A !important; }
-    .lp-compare-col--highlight::before { background: #0A0A0A !important; }
-    .lp-check { color: #0A0A0A !important; }
-    .lp-compare-item { border-color: #0A0A0A !important; }
+    .lp-cta { background: #0044E4 !important; color: #FFFFFF !important; box-shadow: none !important; border-radius: 980px !important; }
+    .lp-cta:hover { background: #0033b3 !important; opacity: 1 !important; }
+    .lp-section { border-color: rgba(0,0,0,0.07) !important; }
+    .lp-card { background: #F5F5F7 !important; border: none !important; box-shadow: none !important; border-radius: 12px !important; }
+    .lp-card:hover { background: #EBEBEF !important; }
+    .lp-stat { border-color: rgba(0,0,0,0.07) !important; }
+    .lp-stat-num span { color: #1D1D1F !important; }
+    .lp-brand { border-color: rgba(0,0,0,0.07) !important; color: #86868B !important; }
+    .lp-cta-section { border-color: rgba(0,0,0,0.07) !important; }
+    .lp-compare-col { border-color: rgba(0,0,0,0.07) !important; border-radius: 12px !important; }
+    .lp-compare-col--highlight { border-color: #0044E4 !important; border-radius: 12px !important; }
+    .lp-compare-col--highlight::before { background: #0044E4 !important; border-radius: 12px 12px 0 0 !important; }
+    .lp-check { color: #0044E4 !important; }
+    .lp-compare-item { border-color: rgba(0,0,0,0.06) !important; }
 
     /* FOOTER */
-    footer { background: #F8F8F5 !important; border-color: #0A0A0A !important; }
-    .footer-logo span { color: #0A0A0A !important; }
+    footer { background: #1D1D1F !important; border-color: none !important; border-top: none !important; }
+    .footer-logo span { color: #FFFFFF !important; }
 
     /* COPY FLASH */
-    #copy-flash { background: #0A0A0A !important; }
-    :focus-visible { outline: 2px solid #0A0A0A !important; }
-    .skip-link { background: #0A0A0A !important; }
+    #copy-flash { background: #0044E4 !important; }
+    :focus-visible { outline: 2px solid #0044E4 !important; }
+    .skip-link { background: #0044E4 !important; }
+  </style>
+
   </style>
 </head>
 <body>
