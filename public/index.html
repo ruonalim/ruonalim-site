@@ -3195,8 +3195,8 @@
     /* ── PROOF ── */
     .proof { background: #FFFFFF !important; border: none !important; }
     .proof-grid { background: #F5F5F7 !important; border-radius: 0 !important; gap: 2px !important; border: none !important; }
-    .proof-card { background: #FFFFFF !important; border: none !important; box-shadow: none !important; }
-    .proof-card:hover { background: #F5F5F7 !important; box-shadow: none !important; border: none !important; transform: none !important; }
+    .proof-card { background: #FFFFFF !important; border: none !important; box-shadow: none !important; cursor: default !important; }
+    .proof-card:hover { background: #FFFFFF !important; box-shadow: none !important; border: none !important; transform: none !important; }
     .proof-tag { color: #0044E4 !important; border: none !important; padding-left: 0 !important; background: none !important; }
     .proof-metric { color: #1D1D1F !important; border: none !important; font-weight: 600 !important; }
 
@@ -4351,7 +4351,7 @@
   });
 
   // 4. Card 3D tilt
-  document.querySelectorAll('.work-card, .proof-card, .testi-card').forEach(card => {
+  document.querySelectorAll('.work-card, .testi-card').forEach(card => {
     card.addEventListener('mousemove', (e) => {
       const r = card.getBoundingClientRect();
       const x = (e.clientY - r.top  - r.height/2) / r.height * -7;
