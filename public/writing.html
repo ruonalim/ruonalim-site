@@ -42,6 +42,7 @@
   <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet" />
 
   <style>
+    html, body { overflow-x: hidden; max-width: 100%; }
     :root {
       --bg:       #FFFFFF;
       --text:     #111111;
@@ -671,15 +672,24 @@
 <main id="main-content">
 <div class="page-wrap">
   <div class="writing-header">
-    <canvas id="hero-dots" aria-hidden="true" role="presentation"></canvas>
     <div class="writing-header-inner">
-      <div class="writing-eyebrow" aria-hidden="true">Perspectives</div>
-      <h1 class="writing-title">Things worth <em>saying.</em></h1>
-      <p class="writing-sub">Sharp thinking on design, product, and the gap between what gets built and what should.</p>
+      <div class="writing-header-left">
+        <h1 class="writing-title">Perspectives.</h1>
+      </div>
+      <div class="writing-header-right">
+        <p class="writing-sub">Essays on design, product, and the gap between what gets built and what should.</p>
+      </div>
     </div>
   </div>
+  <div class="filter-bar" role="tablist" aria-label="Filter articles by topic">
+    <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All</button>
+    <button class="filter-tab" data-filter="AI &amp; Design" role="tab" aria-selected="false">AI &amp; Design</button>
+    <button class="filter-tab" data-filter="Design Leadership" role="tab" aria-selected="false">Design Leadership</button>
+    <button class="filter-tab" data-filter="Product Strategy" role="tab" aria-selected="false">Product Strategy</button>
+    <button class="filter-tab" data-filter="Fractional Work" role="tab" aria-selected="false">Fractional Work</button>
+  </div>
   <div class="writing-grid-wrap">
-    <div class="writing-grid" id="writing-grid">
+    <div id="writing-grid">
       <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-h2"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div><div class="skeleton sk-p3"></div></div>
       <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div><div class="skeleton sk-p3"></div></div>
       <div class="sk-card"><div class="skeleton sk-tag"></div><div class="skeleton sk-h"></div><div class="skeleton sk-h2"></div><div class="skeleton sk-p"></div><div class="skeleton sk-p2"></div></div>
@@ -871,11 +881,13 @@
 
   /* ── DOT MATRIX (header-scoped, white dots on dark bg) ── */
   const canvas = document.getElementById('hero-dots');
-  const ctx = canvas.getContext('2d');
+  if (!canvas) { /* canvas removed in redesign */ }
+  const ctx = canvas ? canvas.getContext('2d') : null;
   const writingHeader = document.querySelector('.writing-header');
   let dotMouseX = -1000, dotMouseY = -1000, dots = [];
   const DOT_SPACING = 32, DOT_RADIUS = 1.1, INFLUENCE_R = 180, BULGE = 20;
   function initDots() {
+    if (!canvas || !ctx) return;
     const rect = writingHeader.getBoundingClientRect();
     canvas.width  = writingHeader.offsetWidth;
     canvas.height = writingHeader.offsetHeight;
@@ -886,6 +898,7 @@
       dots.push({ baseX: c * DOT_SPACING, baseY: r * DOT_SPACING, x: c * DOT_SPACING, y: r * DOT_SPACING });
   }
   function drawDots() {
+    if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const hRect = writingHeader.getBoundingClientRect();
     const localX = dotMouseX - hRect.left;
@@ -908,8 +921,8 @@
   }
   document.addEventListener('mousemove', e => { dotMouseX = e.clientX; dotMouseY = e.clientY; });
   document.addEventListener('mouseleave', () => { dotMouseX = -1000; dotMouseY = -1000; });
-  canvas.style.pointerEvents = 'none';
-  if (window.innerWidth > 768) { initDots(); drawDots(); window.addEventListener('resize', initDots); }
+  if (canvas) { canvas.style.pointerEvents = 'none'; }
+  if (canvas && ctx && window.innerWidth > 768) { initDots(); drawDots(); window.addEventListener('resize', initDots); }
 
   /* ── ARTICLE SYSTEM ── */
   const overlay  = document.getElementById('article-overlay');
@@ -1110,32 +1123,54 @@
     return Math.max(1, Math.round(wc / 200)) + ' min read';
   }
 
-  function renderGrid(posts) {
+  function renderGrid(posts, filter) {
     const grid = document.getElementById('writing-grid');
-    if (!posts.length) {
-      grid.innerHTML = '<div class="state-wrap"><div class="state-label">Coming soon</div><div class="state-msg">No posts published yet.</div></div>';
+    const filtered = filter && filter !== 'all'
+      ? posts.filter(p => p.topic === filter)
+      : posts;
+    if (!filtered.length) {
+      grid.innerHTML = '<div class="state-wrap"><p class="state-msg">No articles in this category yet.</p></div>';
       return;
     }
-    grid.innerHTML = posts.map((post, i) => `
-      <a class="post-card${i === 0 ? ' featured' : ''}"
-         href="/writing?post=${post.id}"
-         data-index="${i}"
-         data-topic="${post.topic || ''}"
-         aria-label="${post.title}">
-        <div class="post-meta">
-          ${post.topic ? `<span class="post-topic">${post.topic}</span><div class="post-dot"></div>` : ''}
-          <span class="post-date">${fmtDate(post.date)}</span>
+    const mkExcerpt = (post, len) => {
+      if (!post.body) return '';
+      return post.body.replace(/<[^>]+>/g, '').replace(/[#*_`>\[\]]/g, '').replace(/\n+/g, ' ').trim().slice(0, len).replace(/\s+\S*$/, '') + '…';
+    };
+    const [featured, ...rest] = filtered;
+    const rt0 = readTime(featured);
+    const ex0 = mkExcerpt(featured, 200);
+    let html = `<a class="post-featured" href="/writing?post=${featured.id}" data-index="0" aria-label="${escapeHtml(featured.title)}">
+      <div class="pf-meta">
+        ${featured.topic ? `<span class="pf-topic">${escapeHtml(featured.topic)}</span><span class="pf-dot">·</span>` : ''}
+        <span class="pf-date">${fmtDate(featured.date)}</span>
+        <span class="pf-dot">·</span>
+        <span class="pf-read">${rt0}</span>
+      </div>
+      <div class="pf-body">
+        <h2 class="pf-title">${escapeHtml(featured.title)}</h2>
+        <div class="pf-right">
+          ${ex0 ? `<p class="pf-excerpt">${escapeHtml(ex0)}</p>` : ''}
+          <span class="pf-arrow">→</span>
         </div>
-        <div class="post-title">${post.title}</div>
-        ${post.body ? `<div class="post-excerpt">${post.body.replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/[#*_]/g, '').slice(0, 220).trim()}</div>` : ''}
-        <div class="post-read"><span class="post-read-time">${readTime(post)}</span><span class="post-read-cta">Read <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h8M6 2l4 4-4 4"/></svg></span></div>
-      </a>
-    `).join('');
-    grid.querySelectorAll('.post-card').forEach(card => {
-      card.addEventListener('click', (e) => {
+      </div>
+    </a>`;
+    if (rest.length) {
+      html += '<div class="post-list">' + rest.map((post, i) => {
+        const rt = readTime(post);
+        return `<a class="post-list-item" href="/writing?post=${post.id}" data-index="${i + 1}" aria-label="${escapeHtml(post.title)}">
+          <span class="pli-topic">${escapeHtml(post.topic || '')}</span>
+          <span class="pli-title">${escapeHtml(post.title)}</span>
+          <span class="pli-meta">${fmtDate(post.date)} · ${rt}</span>
+          <span class="pli-arrow">→</span>
+        </a>`;
+      }).join('') + '</div>';
+    }
+    grid.innerHTML = html;
+    grid.querySelectorAll('[data-index]').forEach(el => {
+      el.addEventListener('click', (e) => {
         e.preventDefault();
-        const i = parseInt(card.dataset.index);
-        openArticle(posts[i], i);
+        const idx = parseInt(el.dataset.index);
+        openArticle(filtered[idx], allPosts.indexOf(filtered[idx]));
       });
     });
   }
@@ -1145,11 +1180,25 @@
       const res = await fetch('/posts.json');
       if (!res.ok) throw new Error(`${res.status}`);
       allPosts = await res.json();
-      renderGrid(allPosts);
+      let activeFilter = 'all';
+      renderGrid(allPosts, activeFilter);
+      // Wire filter tabs
+      document.querySelectorAll('.filter-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-tab').forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          activeFilter = btn.dataset.filter;
+          renderGrid(allPosts, activeFilter);
+        });
+      });
       const pid = new URLSearchParams(location.search).get('post');
       if (pid) { const post = allPosts.find(p => p.id === pid); if (post) openArticle(post); }
     } catch(e) {
-      document.getElementById('writing-grid').innerHTML = '<div class="state-wrap"><div class="state-label">Error</div><div class="state-msg">Couldn\'t load posts.</div></div>';
+      document.getElementById('writing-grid').innerHTML = '<div class="state-wrap"><p class="state-msg">Couldn\'t load posts.</p></div>';
     }
   }
   loadPosts();
