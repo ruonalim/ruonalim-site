@@ -3194,9 +3194,32 @@
 
     /* ── PROOF ── */
     .proof { background: #FFFFFF !important; border: none !important; }
-    .proof-grid { background: #F5F5F7 !important; border-radius: 0 !important; gap: 2px !important; border: none !important; }
-    .proof-card { background: #FFFFFF !important; border: none !important; box-shadow: none !important; cursor: default !important; }
-    .proof-card:hover { background: #FFFFFF !important; box-shadow: none !important; border: none !important; transform: none !important; }
+    .proof-grid {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      gap: 1px !important;
+      align-items: start !important; /* cards take natural height — no internal gaps */
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .proof-grid::after {
+      content: none !important;
+    }
+    .proof-card {
+      background: #FFFFFF !important;
+      border: none !important;
+      border-bottom: 1px solid #E8E8EC !important;
+      box-shadow: none !important;
+      cursor: default !important;
+      border-radius: 0 !important;
+      padding: 36px 32px !important;
+    }
+    .proof-card:nth-child(odd) { border-right: 1px solid #E8E8EC !important; }
+    .proof-card:hover { background: #FFFFFF !important; box-shadow: none !important; border-color: #E8E8EC !important; transform: none !important; }
+    .proof-brief { flex: none !important; } /* don't stretch — kills the gap */
+    .proof-metric { border-top: none !important; padding-top: 12px !important; }
+    /* last card spans full width if alone in its row */
+    .proof-card:last-child:nth-child(odd) { grid-column: 1 / -1 !important; border-right: none !important; }
     .proof-tag { color: #0044E4 !important; border: none !important; padding-left: 0 !important; background: none !important; }
     .proof-metric { color: #1D1D1F !important; border: none !important; font-weight: 600 !important; }
 
