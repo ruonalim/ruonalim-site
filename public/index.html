@@ -3298,24 +3298,43 @@
     .cf-check { background: rgba(0,0,0,0.06) !important; }
 
 
-    /* ── HERO SLIDES ── */
+    /* ── HERO SLIDES — F1 RACE BLUR ── */
     .hero-slides {
       position: relative;
-      /* height set by JS after fonts load */
+      overflow: hidden;
     }
     .hero-slide {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
+      top: 0; left: 0; width: 100%;
       opacity: 0;
-      transition: opacity 0.65s ease;
       pointer-events: none;
+      will-change: transform, filter, opacity;
     }
     .hero-slide.active {
-      position: relative; /* active slide defines container height */
+      position: relative;
       opacity: 1;
       pointer-events: auto;
+    }
+    /* Exit: streaks right like an F1 car passing */
+    @keyframes race-exit {
+      0%   { opacity: 1; filter: blur(0px);  transform: translateX(0)     scaleX(1);   }
+      20%  { opacity: 1; filter: blur(2px);  transform: translateX(12px)  scaleX(1.01); }
+      60%  { opacity: 0; filter: blur(18px); transform: translateX(60px)  scaleX(1.04); }
+      100% { opacity: 0; filter: blur(32px); transform: translateX(110px) scaleX(1.06); }
+    }
+    /* Enter: resolves from blur coming from the left */
+    @keyframes race-enter {
+      0%   { opacity: 0; filter: blur(28px); transform: translateX(-90px) scaleX(1.05); }
+      30%  { opacity: 0; filter: blur(22px); transform: translateX(-60px) scaleX(1.03); }
+      65%  { opacity: 1; filter: blur(4px);  transform: translateX(-8px)  scaleX(1.01); }
+      100% { opacity: 1; filter: blur(0px);  transform: translateX(0)     scaleX(1);   }
+    }
+    .hero-slide.race-out {
+      animation: race-exit 0.26s cubic-bezier(0.4, 0, 1, 1) forwards;
+    }
+    .hero-slide.race-in {
+      position: relative;
+      animation: race-enter 0.42s cubic-bezier(0, 0, 0.2, 1) forwards;
     }
 
     /* ── GLOBAL OVERFLOW FIX ── */
@@ -4122,18 +4141,53 @@
   window.addEventListener('scroll', updateHeroParallax, { passive: true });
 
   // Hero slide cycling
+  // ── Hero slide — F1 race blur transition ──
   (function() {
-    var slides = document.querySelectorAll('.hero-slide');
+    var slides = Array.from(document.querySelectorAll('.hero-slide'));
+    var container = document.querySelector('.hero-slides');
+    if (!slides.length || slides.length < 2 || !container) return;
     var current = 0;
-    if (slides.length < 2) return;
-    function advance() {
-      slides[current].classList.remove('active');
-      slides[current].setAttribute('aria-hidden', 'true');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-      slides[current].removeAttribute('aria-hidden');
+    var busy = false;
+
+    // Lock container height so absolute slides don't collapse it during transitions
+    function lockHeight() {
+      container.style.height = slides[current].offsetHeight + 'px';
     }
-    setInterval(advance, 3500);
+    // Wait for fonts then lock
+    document.fonts ? document.fonts.ready.then(lockHeight) : setTimeout(lockHeight, 300);
+    window.addEventListener('resize', lockHeight, { passive: true });
+
+    function advance() {
+      if (busy) return;
+      busy = true;
+
+      var out = slides[current];
+      current = (current + 1) % slides.length;
+      var incoming = slides[current];
+
+      // 1. Fire exit on outgoing (it's still position:relative via .active)
+      out.classList.add('race-out');
+
+      // 2. Very short delay then show incoming underneath
+      setTimeout(function() {
+        out.classList.remove('active');
+        out.setAttribute('aria-hidden', 'true');
+
+        incoming.classList.add('race-in');
+        incoming.removeAttribute('aria-hidden');
+
+        // 3. After enter animation settles, clean up
+        setTimeout(function() {
+          out.classList.remove('race-out');
+          incoming.classList.remove('race-in');
+          incoming.classList.add('active');
+          lockHeight();
+          busy = false;
+        }, 440); // matches race-enter duration
+      }, 120); // exit leads by ~120ms
+    }
+
+    setInterval(advance, 3800);
   })();
 
 
