@@ -3323,6 +3323,9 @@
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
+      /* Hero: smaller min-height, content pushed to top not centered */
+      .hero { min-height: auto !important; padding-top: 0 !important; padding-bottom: 40px !important; }
+      .hero-inner { align-items: flex-start !important; padding-top: 80px !important; }
       .display-xl { font-size: clamp(40px, 10vw, 72px) !important; }
       .container { padding-left: 20px !important; padding-right: 20px !important; }
       .service-title { font-size: 18px !important; white-space: normal !important; }
