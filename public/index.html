@@ -3044,22 +3044,41 @@
     /* ── HERO ── */
     .hero { background: #FFFFFF !important; justify-content: center !important; }
     .hero-inner { padding-top: 0 !important; }
-    .hero-gold-overlay { display: none !important; }
+    /* Blue sweep overlay — opacity driven by JS, no !important so JS can set it */
+    .hero-gold-overlay {
+      display: block !important;
+      position: absolute !important;
+      inset: 0 !important;
+      background: linear-gradient(160deg, #001060 0%, #0033cc 55%, #0044E4 100%) !important;
+      opacity: 0;
+      pointer-events: none !important;
+      z-index: 0 !important;
+      transition: opacity 0.05s linear !important;
+    }
+    .hero-inner { position: relative !important; z-index: 1 !important; }
     .display-xl {
       font-size: clamp(52px, 7.5vw, 120px) !important;
       line-height: 0.96 !important;
       letter-spacing: -0.04em !important;
     }
-    /* Two-tone: descriptor words light gray, punch words bold black */
+    /* Two-tone at rest: descriptors gray, "Seven days." bold black */
     .hero .display-xl .hl-w {
-      color: #86868B !important;
+      color: #86868B;
       font-weight: 300 !important;
       animation: none !important;
+      transition: color 0.25s ease !important;
     }
     .hero .display-xl .hl-accent {
-      color: #1D1D1F !important;
+      color: #1D1D1F;
       font-weight: 900 !important;
+      transition: color 0.25s ease !important;
     }
+    /* On scroll: all hero words flip white as blue sweeps in */
+    .hero.hero--blue .display-xl .hl-w   { color: rgba(255,255,255,0.72) !important; }
+    .hero.hero--blue .display-xl .hl-accent { color: #FFFFFF !important; }
+    .hero.hero--blue .clients-headline { color: rgba(255,255,255,0.5) !important; }
+    .hero.hero--blue .btn-primary { background: #FFFFFF !important; color: #0044E4 !important; }
+    .hero.hero--blue .btn-ghost { border-color: rgba(255,255,255,0.3) !important; color: #FFFFFF !important; }
     .clients-headline { color: #86868B !important; }
     .eyebrow-dot { background: #0044E4 !important; border-radius: 50% !important; }
 
@@ -4017,6 +4036,9 @@
     const p = easeIn(raw);
     heroInner.style.transform = `translateY(${p * -24}px)`;
     heroInner.style.opacity   = 1 - p * 0.9;
+    // Blue sweep — gradient overlay + class-based text/button inversion
+    if (heroGoldOvl) heroGoldOvl.style.opacity = p.toFixed(3);
+    if (heroEl) heroEl.classList.toggle('hero--blue', p > 0.02);
   }
   window.addEventListener('scroll', updateHeroParallax, { passive: true });
   updateHeroParallax();
