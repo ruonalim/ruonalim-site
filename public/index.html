@@ -3342,9 +3342,9 @@
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
-      /* Hero: smaller min-height, content pushed to top not centered */
-      .hero { min-height: auto !important; padding-top: 0 !important; padding-bottom: 40px !important; }
-      .hero-inner { align-items: flex-start !important; padding-top: 80px !important; }
+      /* Hero: fill full screen, content anchored to upper third */
+      .hero { min-height: 100svh !important; min-height: 100vh !important; padding-top: 0 !important; padding-bottom: 0 !important; justify-content: center !important; }
+      .hero-inner { align-items: flex-start !important; padding-top: 100px !important; padding-bottom: 60px !important; }
       .display-xl { font-size: clamp(40px, 10vw, 72px) !important; }
       .container { padding-left: 20px !important; padding-right: 20px !important; }
       .service-title { font-size: 18px !important; white-space: normal !important; }
@@ -3429,10 +3429,10 @@
       <div class="hero-heading">
         <div class="hero-slides" aria-live="polite">
           <h1 class="display-xl hero-slide active" aria-label="Brief to coded prototype. Seven days.">
-            <span class="hl-w">Brief</span> <span class="hl-w">to</span> <span class="hl-w">coded</span><br><span class="hl-w">prototype.</span><br><span class="hl-w hl-accent">Seven</span> <span class="hl-w hl-accent">days.</span>
+            <span class="hl-w">Brief</span> <span class="hl-w">to</span> <span class="hl-w">coded</span> <span class="hl-w">prototype.</span><br><span class="hl-w hl-accent">Seven</span> <span class="hl-w hl-accent">days.</span>
           </h1>
           <h1 class="display-xl hero-slide" aria-label="Fast design turnaround. Days, not months." aria-hidden="true">
-            <span class="hl-w">Fast</span> <span class="hl-w">design</span><br><span class="hl-w">turnaround.</span><br><span class="hl-w hl-accent">Days,</span> <span class="hl-w hl-accent">not</span> <span class="hl-w hl-accent">months.</span>
+            <span class="hl-w">Fast</span> <span class="hl-w">design</span> <span class="hl-w">turnaround.</span><br><span class="hl-w hl-accent">Days,</span> <span class="hl-w hl-accent">not</span> <span class="hl-w hl-accent">months.</span>
           </h1>
           <h1 class="display-xl hero-slide" aria-label="Design on demand. Zero overhead." aria-hidden="true">
             <span class="hl-w">Design</span> <span class="hl-w">on</span> <span class="hl-w">demand.</span><br><span class="hl-w hl-accent">Zero</span> <span class="hl-w hl-accent">overhead.</span>
