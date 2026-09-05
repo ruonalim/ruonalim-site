@@ -3144,8 +3144,33 @@
     .hww-proof-dot { border-radius: 50% !important; }
     .hww-proof-dot::before { display: none !important; }
 
+    /* ── STATS: fix 3-col on mobile ── */
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: 1fr !important; }
+      .stat-item { border-right: none !important; border-bottom: 1px solid rgba(0,0,0,0.06) !important; padding: 24px 0 !important; }
+      .stat-item:last-child { border-bottom: none !important; }
+    }
+
     /* ── SERVICES ── */
     .services { background: #FFFFFF !important; border: none !important; }
+    /* Fix: service-num hidden so remove its 52px grid slot — title gets 1fr */
+    .service-row-summary {
+      grid-template-columns: 1fr 1fr 80px 28px !important;
+      gap: 32px !important;
+    }
+    @media (max-width: 768px) {
+      .service-row-summary {
+        grid-template-columns: 1fr auto !important;
+        grid-template-rows: auto auto !important;
+        gap: 8px 16px !important;
+        padding: 20px 0 !important;
+        align-items: start !important;
+      }
+      .service-title { grid-column: 1; grid-row: 1; font-size: 17px !important; white-space: normal !important; }
+      .service-desc { grid-column: 1; grid-row: 2; display: block !important; font-size: 13px !important; color: #86868B !important; }
+      .service-tag, .tag { grid-column: 2; grid-row: 2; align-self: end !important; }
+      .svc-toggle { grid-column: 2; grid-row: 1; align-self: start !important; display: flex !important; }
+    }
     .service-row { border-top: 1px solid rgba(0,0,0,0.06) !important; transition: background 0.18s !important; }
     .service-row::after { display: none !important; }
     .service-row-summary::after { display: none !important; }
