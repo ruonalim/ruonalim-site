@@ -77,7 +77,7 @@
     }
     .nav-logo { font-weight: 800; font-size: 16px; letter-spacing: -0.03em; color: #111111; }
     .nav-logo span { color: #1D1D1F; }
-    .nav-links { list-style: none; display: flex; align-items: center; gap: 36px; margin-left: auto; }
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 52px; margin-left: auto; }
     .nav-links a { font-size: 13px; font-weight: 500; color: rgba(0,0,0,0.50); transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: #0044E4; }
     .nav-cta-btn {
@@ -576,86 +576,100 @@
     progressBar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
   }, { passive: true });
 
-  /* ── SUBSTACK RSS ── */
-  let allPosts = [];
+  /* ── POSTS (static snapshot from feed — always renders, no CORS) ── */
+  const STATIC_POSTS = [
+    {
+      title: "Your Design System Isn't a Library Anymore. It's Your AI's Operating Manual.",
+      url: "https://jaytulloch.substack.com/p/your-design-system-isnt-a-library",
+      date: "16 May 2026",
+      excerpt: "I have spent the last decade building, scaling, and maintaining design systems. Tokens, components, documentation, governance. The whole machine. And I am telling you now: if your design system strategy hasn't changed in the last six months, you are already behind.",
+      readTime: "6 min read",
+    },
+    {
+      title: "The Design Job Market Didn't Just Get Worse. It Split in Two.",
+      url: "https://jaytulloch.substack.com/p/the-design-job-market-didnt-just",
+      date: "16 May 2026",
+      excerpt: "Product design postings fell 5.5% in April 2026. Design engineering postings rose 14.4% in the same month. Those two numbers are not telling a story of a market contracting. They are telling a story of a market bifurcating in real time.",
+      readTime: "8 min read",
+    },
+    {
+      title: "The AI Hiring Bet That's Already Going Wrong",
+      url: "https://jaytulloch.substack.com/p/the-ai-hiring-bet-thats-already-going",
+      date: "16 May 2026",
+      excerpt: "Fortune published the numbers last week, and they're worth sitting with. Sixty-six percent of CEOs plan to freeze or cut hiring through the rest of 2026. Since 2025, corporate America has eliminated over 1.17 million positions to fund AI investments.",
+      readTime: "4 min read",
+    },
+    {
+      title: "Google Declared War on Figma. The Wrong People Are Worried.",
+      url: "https://jaytulloch.substack.com/p/google-declared-war-on-figma-the",
+      date: "16 May 2026",
+      excerpt: "Google relaunched Stitch on March 19th. Multi-screen generation from a single natural language prompt. An AI-native infinite canvas. Voice commands. Direct integrations with Claude, Cursor, and Gemini CLI. Figma's shares dropped 4% the same day.",
+      readTime: "4 min read",
+    },
+    {
+      title: "Why Most Designers Will Never Become Director. And It Has Nothing To Do With Skill.",
+      url: "https://jaytulloch.substack.com/p/why-most-designers-will-never-become",
+      date: "16 May 2026",
+      excerpt: "Here's something most design leaders won't say out loud: if you're a senior designer who hasn't been promoted in two years, stop reviewing your own performance. Review your company's career architecture. The problem is almost certainly the org, not you.",
+      readTime: "5 min read",
+    },
+    {
+      title: "What Running an Agency Taught Me About Director-Level Clarity",
+      url: "https://jaytulloch.substack.com/p/what-running-an-agency-taught-me",
+      date: "16 May 2026",
+      excerpt: "The best thing I ever did for my director-level work was stop being a director. Not permanently. But long enough to run the agency side of my life properly. Two days a week on the agency, billing clients, shipping work, sending invoices. Three days embedded in product orgs.",
+      readTime: "5 min read",
+    },
+    {
+      title: "Vibe Design Is Real. It Won't Replace Designers. It Will Expose Them.",
+      url: "https://jaytulloch.substack.com/p/vibe-design-is-real-it-wont-replace",
+      date: "16 May 2026",
+      excerpt: "Last week, Google redesigned Stitch. The pitch: describe a business goal or an emotional direction, and an AI agent builds you high-fidelity UI. They're calling it 'Vibe Design.' The design community's response was predictable. Both sides missed the point.",
+      readTime: "4 min read",
+    },
+    {
+      title: "The Rise of the Super IC: Why the Best Senior Designers Don't Want Your Management Title",
+      url: "https://jaytulloch.substack.com/p/the-rise-of-the-super-ic-why-the",
+      date: "16 May 2026",
+      excerpt: "For every senior designer who wants to become a manager, two want to stay on the craft track. That's a 2.3:1 ratio, and it's been widening for three years. Most design orgs still have roughly 13 director-level roles for every Principal role on the ladder.",
+      readTime: "6 min read",
+    },
+    {
+      title: "The Hidden Cost of Hiring a Full-Time Design Lead Before You're Ready",
+      url: "https://jaytulloch.substack.com/p/the-hidden-cost-of-hiring-a-full",
+      date: "16 May 2026",
+      excerpt: "Most companies I've watched hire a full-time design director in the last three years didn't need one. They needed a sharp founding designer and adult supervision two days a week. They got someone on £180K instead, with no team to lead.",
+      readTime: "8 min read",
+    },
+    {
+      title: "The Figma Canvas Is Now Open to AI Agents. Most Designers Are Asking the Wrong Question.",
+      url: "https://jaytulloch.substack.com/p/the-figma-canvas-is-now-open-to-ai",
+      date: "16 May 2026",
+      excerpt: "The AI can design in Figma now. Not roughly. Not as a separate prototype in a disconnected tool. Directly on your canvas, using your design system, pulling your components, applying your tokens. Figma opened the canvas to AI agents in April 2026 with a live MCP server.",
+      readTime: "9 min read",
+    },
+    {
+      title: "Stop Treating Onboarding Like a Funnel. Your Users Aren't Metrics.",
+      url: "https://jaytulloch.substack.com/p/stop-treating-onboarding-like-a-funnel",
+      date: "16 May 2026",
+      excerpt: "The average fintech product loses 63% of new users during onboarding. Companies are spending money to bring users in and failing to keep them past the first few screens. The instinctive response is to optimise. It's a comprehension problem, not a conversion problem.",
+      readTime: "4 min read",
+    },
+    {
+      title: "Staff Designer Is the Best Job in Tech Right Now. Most Companies Don't Know How to Hire One.",
+      url: "https://jaytulloch.substack.com/p/staff-designer-is-the-best-job-in",
+      date: "16 May 2026",
+      excerpt: "Most product designers I know are still chasing the wrong promotion. They want to manage. They think headcount equals seniority. That mental model is six years out of date. Right now, the most leveraged role on a product team is the Staff or Principal designer.",
+      readTime: "9 min read",
+    },
+  ];
 
-  function fmtDate(d) {
-    if (!d) return '';
-    try { return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }); }
-    catch(e) { return ''; }
-  }
-
-  function stripHtml(html) {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = html;
-    return (tmp.textContent || tmp.innerText || '').trim();
-  }
-
-  function readTimeMin(text) {
-    const wc = text ? text.split(/\s+/).filter(Boolean).length : 0;
-    return Math.max(1, Math.round(wc / 200)) + ' min read';
-  }
+  let allPosts = [...STATIC_POSTS];
 
   function esc(s) {
     return String(s)
       .replace(/&/g,'&amp;').replace(/</g,'&lt;')
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  async function fetchRSS() {
-    const url = 'https://jaytulloch.substack.com/feed';
-    // Try direct — Substack RSS supports CORS
-    try {
-      const res = await fetch(url, { mode: 'cors' });
-      if (res.ok) {
-        const text = await res.text();
-        if (text && text.includes('<item>')) return text;
-      }
-    } catch(e) {}
-    // CORS proxy fallback
-    const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
-    const res = await fetch(proxy);
-    return res.text();
-  }
-
-  function parseRSS(xmlText) {
-    const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
-    const items = Array.from(xml.querySelectorAll('item'));
-    return items.map(item => {
-      const title = (item.querySelector('title')?.textContent || '').trim();
-      // Substack puts the URL in <link> as a plain text node
-      let url = '';
-      for (const child of item.childNodes) {
-        if (child.nodeName === 'link') { url = child.textContent.trim(); break; }
-      }
-      if (!url) url = item.querySelector('link')?.textContent?.trim() || '';
-      if (!url) url = item.querySelector('guid')?.textContent?.trim() || '';
-      const pubDate = item.querySelector('pubDate')?.textContent || '';
-      const descRaw = item.querySelector('description')?.textContent || '';
-      const categories = Array.from(item.querySelectorAll('category')).map(c => c.textContent.trim()).filter(Boolean);
-      // Prefer content:encoded for a richer excerpt — Substack's description is often 1 sentence
-      let fullHtml = '';
-      try {
-        const encoded = item.getElementsByTagNameNS('http://purl.org/rss/1.0/modules/content/', 'encoded');
-        if (encoded && encoded.length > 0) fullHtml = encoded[0].textContent || '';
-      } catch(e) {}
-      if (!fullHtml) fullHtml = descRaw;
-      const fullText = stripHtml(fullHtml);
-      // Short excerpt: first 240 chars, ends on word boundary
-      const srcText = fullText || stripHtml(descRaw);
-      const excerpt = srcText.length > 240
-        ? srcText.slice(0, 240).replace(/\s+\S*$/, '') + '…'
-        : srcText;
-      return {
-        title: title.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#39;/g,"'").replace(/&quot;/g,'"'),
-        url,
-        date: pubDate,
-        excerpt,
-        fullText,
-        categories,
-        topic: categories[0] || '',
-      };
-    }).filter(p => p.title && p.url);
   }
 
   function renderGrid(posts, filter) {
@@ -668,13 +682,11 @@
       return;
     }
     const [featured, ...rest] = filtered;
-    const rt0 = readTimeMin(featured.fullText);
     let html = `<a class="post-featured" href="${esc(featured.url)}" target="_blank" rel="noopener" aria-label="${esc(featured.title)} — opens on Substack">
       <div class="pf-meta">
-        ${featured.topic ? `<span class="pf-topic">${esc(featured.topic)}</span><span class="pf-dot">·</span>` : ''}
-        <span class="pf-date">${fmtDate(featured.date)}</span>
+        <span class="pf-date">${esc(featured.date)}</span>
         <span class="pf-dot">·</span>
-        <span class="pf-read">${rt0}</span>
+        <span class="pf-read">${esc(featured.readTime)}</span>
       </div>
       <div class="pf-body">
         <h2 class="pf-title">${esc(featured.title)}</h2>
@@ -685,64 +697,53 @@
       </div>
     </a>`;
     if (rest.length) {
-      html += '<div class="post-list">' + rest.map(post => {
-        const rt = readTimeMin(post.fullText);
-        return `<a class="post-list-item" href="${esc(post.url)}" target="_blank" rel="noopener" aria-label="${esc(post.title)} — opens on Substack">
-          <span class="pli-topic">${esc(post.topic || '')}</span>
+      html += '<div class="post-list">' + rest.map(post => `
+        <a class="post-list-item" href="${esc(post.url)}" target="_blank" rel="noopener" aria-label="${esc(post.title)} — opens on Substack">
+          <span class="pli-topic"></span>
           <span class="pli-title">${esc(post.title)}</span>
-          <span class="pli-meta">${fmtDate(post.date)} · ${rt}</span>
+          <span class="pli-meta">${esc(post.date)} · ${esc(post.readTime)}</span>
           <span class="pli-arrow">→</span>
-        </a>`;
-      }).join('') + '</div>';
+        </a>`).join('') + '</div>';
     }
     grid.innerHTML = html;
   }
 
-  function buildFilterTabs(posts) {
-    const cats = [...new Set(posts.map(p => p.topic).filter(Boolean))];
-    if (cats.length === 0) return;
-    const filterBar = document.querySelector('.filter-bar');
-    if (!filterBar) return;
-    cats.forEach(cat => {
-      const btn = document.createElement('button');
-      btn.className = 'filter-tab';
-      btn.dataset.filter = cat;
-      btn.setAttribute('role', 'tab');
-      btn.setAttribute('aria-selected', 'false');
-      btn.textContent = cat;
-      filterBar.appendChild(btn);
-    });
-  }
+  // Render static posts immediately — no network needed
+  renderGrid(allPosts, 'all');
 
-  async function loadPosts() {
+  // Silently try live RSS update (CORS proxy) — replaces static if it works
+  (async function tryLiveUpdate() {
     try {
-      const xmlText = await fetchRSS();
-      allPosts = parseRSS(xmlText);
-      if (!allPosts.length) throw new Error('empty feed');
-      buildFilterTabs(allPosts);
-      let activeFilter = 'all';
-      renderGrid(allPosts, activeFilter);
-      document.querySelectorAll('.filter-tab').forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.filter-tab').forEach(b => {
-            b.classList.remove('active');
-            b.setAttribute('aria-selected', 'false');
-          });
-          this.classList.add('active');
-          this.setAttribute('aria-selected', 'true');
-          activeFilter = this.dataset.filter;
-          renderGrid(allPosts, activeFilter);
-        });
-      });
-    } catch(e) {
-      document.getElementById('writing-grid').innerHTML = `
-        <div class="state-wrap">
-          <p class="state-msg">Read the latest on <a href="https://jaytulloch.substack.com" target="_blank" rel="noopener">By Design</a>.</p>
-        </div>`;
-    }
-  }
-
-  loadPosts();
+      const url = 'https://jaytulloch.substack.com/feed';
+      const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
+      const res = await fetch(proxy, { signal: AbortSignal.timeout(6000) });
+      if (!res.ok) return;
+      const xmlText = await res.text();
+      if (!xmlText.includes('<item>')) return;
+      const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
+      const items = Array.from(xml.querySelectorAll('item'));
+      const livePosts = items.map(item => {
+        const title = (item.querySelector('title')?.textContent || '').trim()
+          .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#39;/g,"'").replace(/&quot;/g,'"');
+        let url = '';
+        for (const c of item.childNodes) { if (c.nodeName==='link') { url=c.textContent.trim(); break; } }
+        if (!url) url = item.querySelector('guid')?.textContent?.trim() || '';
+        const date = item.querySelector('pubDate')?.textContent || '';
+        let fullHtml = '';
+        try { const enc=item.getElementsByTagNameNS('http://purl.org/rss/1.0/modules/content/','encoded'); if(enc.length) fullHtml=enc[0].textContent||''; } catch(e){}
+        const tmp = document.createElement('div'); tmp.innerHTML = fullHtml || (item.querySelector('description')?.textContent||'');
+        const text = (tmp.textContent||'').trim();
+        const excerpt = text.length>240 ? text.slice(0,240).replace(/\s+\S*$/,'')+'…' : text;
+        const wc = text.split(/\s+/).filter(Boolean).length;
+        const fmtD = date ? new Date(date).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}) : '';
+        return { title, url, date: fmtD, excerpt, readTime: Math.max(1,Math.round(wc/200))+' min read' };
+      }).filter(p=>p.title&&p.url);
+      if (livePosts.length > 0) {
+        allPosts = livePosts;
+        renderGrid(allPosts, 'all');
+      }
+    } catch(e) { /* silently keep static content */ }
+  })();
 </script>
 </body>
 </html>
