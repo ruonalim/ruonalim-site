@@ -758,11 +758,11 @@
     }
     .audit-close:hover { opacity: 1; }
 
-    /* ── QUESTIONNAIRE ── */
-    .audit-intro { display: block; }
-    .audit-intro.hidden { display: none; }
-    .audit-qs { display: none; }
-    .audit-qs.active { display: block; }
+    /* ── AUDIT STATES ── */
+    .audit-entry { display: block; }
+    .audit-entry.hidden { display: none; }
+    .audit-loading { display: none; }
+    .audit-loading.active { display: block; }
     .audit-results { display: none; }
     .audit-results.active { display: block; }
 
@@ -776,80 +776,53 @@
       margin-bottom: 16px;
     }
     .audit-entry-sub { font-size: 17px; color: var(--muted); line-height: 1.6; margin-bottom: 40px; }
-    .audit-start-btn {
-      background: var(--text); color: #fff;
-      border: none; border-radius: 980px;
-      padding: 16px 32px;
-      font-family: inherit; font-size: 16px; font-weight: 600;
-      cursor: pointer;
-      transition: background 0.18s, transform 0.18s;
-    }
-    .audit-start-btn:hover { background: #2a2a2a; transform: translateY(-1px); }
-
-    /* questions */
-    .aq-progress {
-      display: flex; gap: 4px; margin-bottom: 40px;
-    }
-    .aq-pip {
-      flex: 1; height: 3px; border-radius: 2px; background: var(--border);
-      transition: background 0.3s;
-    }
-    .aq-pip.done { background: var(--accent); }
-    .aq-num { font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 12px; }
-    .aq-question {
-      font-size: clamp(20px, 2.8vw, 28px);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      line-height: 1.2;
-      margin-bottom: 28px;
-    }
-    .aq-options { display: flex; flex-direction: column; gap: 10px; }
-    .aq-opt {
-      display: flex; align-items: center; gap: 14px;
+    .audit-input-row { display: flex; gap: 10px; align-items: stretch; }
+    .audit-url-input {
+      flex: 1; min-width: 0;
       border: 1.5px solid var(--border);
       border-radius: 12px;
-      padding: 16px 20px;
-      cursor: pointer;
-      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-      background: #fff;
-      text-align: left;
-      font-family: inherit;
-      width: 100%;
+      padding: 14px 18px;
+      font-family: inherit; font-size: 15px;
+      color: var(--text); background: #fff;
+      outline: none; transition: border-color 0.18s;
     }
-    .aq-opt:hover { border-color: #aaa; }
-    .aq-opt.selected { border-color: var(--accent); background: #f0f4ff; }
-    .aq-opt-dot {
-      width: 18px; height: 18px; border-radius: 50%;
-      border: 1.5px solid var(--border);
-      flex-shrink: 0;
-      transition: all 0.18s;
-    }
-    .aq-opt.selected .aq-opt-dot { background: var(--accent); border-color: var(--accent); }
-    .aq-opt-text { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.4; }
-    .aq-opt-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .aq-nav {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 28px; gap: 12px;
-    }
-    .aq-back {
-      background: none; border: none; font-family: inherit;
-      font-size: 14px; color: var(--muted); cursor: pointer;
-      text-decoration: underline; text-underline-offset: 3px;
-      padding: 0;
-    }
-    .aq-next {
+    .audit-url-input:focus { border-color: var(--text); }
+    .audit-url-input::placeholder { color: #bbb; }
+    .audit-run-btn {
       background: var(--text); color: #fff;
-      border: none; border-radius: 980px;
-      padding: 13px 24px;
+      border: none; border-radius: 12px;
+      padding: 14px 24px;
       font-family: inherit; font-size: 15px; font-weight: 600;
-      cursor: pointer;
-      transition: background 0.18s, transform 0.18s, opacity 0.18s;
-      opacity: 0.35;
-      pointer-events: none;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.18s, transform 0.18s;
     }
-    .aq-next.enabled { opacity: 1; pointer-events: auto; }
-    .aq-next.enabled:hover { background: #2a2a2a; transform: translateY(-1px); }
+    .audit-run-btn:hover { background: #2a2a2a; transform: translateY(-1px); }
+    .audit-run-btn:disabled { background: #888; transform: none; cursor: not-allowed; }
+
+    /* loading */
+    .audit-loading-title {
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 800; letter-spacing: -0.03em;
+      color: var(--text); margin-bottom: 36px;
+    }
+    .audit-steps { display: flex; flex-direction: column; gap: 16px; }
+    .audit-step { display: flex; align-items: center; gap: 14px; opacity: 0.25; transition: opacity 0.4s; }
+    .audit-step.done, .audit-step.active { opacity: 1; }
+    .audit-step-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; flex-shrink: 0; transition: all 0.3s;
+    }
+    .audit-step.done .audit-step-icon { background: var(--text); border-color: var(--text); color: #fff; }
+    .audit-step.active .audit-step-icon { border-color: var(--accent); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .audit-step.active .audit-step-icon::after {
+      content: ''; display: block; width: 10px; height: 10px;
+      border: 1.5px solid var(--accent); border-top-color: transparent;
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+    }
+    .audit-step-label { font-size: 16px; font-weight: 600; color: var(--text); }
 
     /* results */
     .audit-score-header {
@@ -1368,31 +1341,34 @@
 
   <div class="audit-modal-inner">
 
-    <!-- Intro screen -->
-    <div class="audit-intro" id="audit-intro">
-      <div class="audit-entry-label">Free · 2 minutes · No strings</div>
-      <h2 class="audit-entry-title" id="audit-modal-title">How good is your<br>product UX?</h2>
-      <p class="audit-entry-sub">Five questions. Honest score. We'll tell you exactly where the gaps are.</p>
-      <button class="audit-start-btn" onclick="auditStart()">Start the audit →</button>
-    </div>
-
-    <!-- Questions screen -->
-    <div class="audit-qs" id="audit-qs">
-      <div class="aq-progress" id="aq-progress"></div>
-      <div class="aq-num" id="aq-num"></div>
-      <div class="aq-question" id="aq-question"></div>
-      <div class="aq-options" id="aq-options"></div>
-      <div class="aq-nav">
-        <button class="aq-back" id="aq-back" onclick="auditBack()">← Back</button>
-        <button class="aq-next" id="aq-next" onclick="auditNext()">Next →</button>
+    <!-- Entry -->
+    <div class="audit-entry" id="audit-entry">
+      <div class="audit-entry-label">Free · AI-powered · No strings</div>
+      <h2 class="audit-entry-title" id="audit-modal-title">Run a free<br>UX audit.</h2>
+      <p class="audit-entry-sub">Drop in a URL. Claude visits your site and scores it across usability, clarity, accessibility, and conversion.</p>
+      <div class="audit-input-row">
+        <input type="url" id="audit-url" class="audit-url-input"
+          placeholder="https://yourproduct.com" autocomplete="off" spellcheck="false" />
+        <button class="audit-run-btn" id="audit-run-btn" onclick="runAudit()">Run audit →</button>
       </div>
     </div>
 
-    <!-- Results screen -->
+    <!-- Loading -->
+    <div class="audit-loading" id="audit-loading">
+      <div class="audit-loading-title">Auditing your product…</div>
+      <div class="audit-steps">
+        <div class="audit-step" id="step-0"><div class="audit-step-icon"></div><div class="audit-step-label">Visiting your site</div></div>
+        <div class="audit-step" id="step-1"><div class="audit-step-icon"></div><div class="audit-step-label">Applying UX heuristics</div></div>
+        <div class="audit-step" id="step-2"><div class="audit-step-icon"></div><div class="audit-step-label">Checking accessibility &amp; SEO</div></div>
+        <div class="audit-step" id="step-3"><div class="audit-step-icon"></div><div class="audit-step-label">Generating your report</div></div>
+      </div>
+    </div>
+
+    <!-- Results -->
     <div class="audit-results" id="audit-results">
       <div class="audit-score-header">
         <div>
-          <div class="audit-score-label">Your UX score</div>
+          <div class="audit-score-label">Overall UX score</div>
           <div class="audit-score-num" id="audit-score-num">—</div>
           <div class="audit-score-verdict" id="audit-score-verdict"></div>
         </div>
@@ -1401,11 +1377,11 @@
       </div>
       <div class="audit-cats" id="audit-cats"></div>
       <div class="audit-issues" id="audit-issues-wrap">
-        <div class="audit-issues-title">Where to focus</div>
+        <div class="audit-issues-title">Top issues found</div>
         <div id="audit-issues-list"></div>
       </div>
       <div class="audit-result-cta">
-        <button class="audit-restart" onclick="auditReset()">← Retake</button>
+        <button class="audit-restart" onclick="auditReset()">← Audit another URL</button>
       </div>
     </div>
 
@@ -1506,197 +1482,67 @@
   }
   var auditInput = document.getElementById('audit-url');
   if (auditInput) {
-    auditInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') runAudit();
-    });
+    auditInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') runAudit(); });
+    setTimeout(function() { auditInput.focus(); }, 100);
   }
 
-  /* ── Audit questionnaire ── */
-  var AQ = {
-    questions: [
-      {
-        q: 'Does your product communicate what it does within the first 5 seconds?',
-        cat: 'Clarity',
-        opts: [
-          { label: 'Yes, clearly',      sub: 'Value prop is obvious immediately',      pts: 20 },
-          { label: 'Mostly',            sub: 'Needs a bit of reading to get it',        pts: 12 },
-          { label: 'Not really',        sub: 'Users often ask what we do',             pts: 4  }
-        ]
-      },
-      {
-        q: 'Can a brand new user complete the core action without any help?',
-        cat: 'Usability',
-        opts: [
-          { label: 'Yes, every time',   sub: 'First-timers get through without issues', pts: 20 },
-          { label: 'Usually',           sub: 'Some friction but most manage',           pts: 12 },
-          { label: 'Often not',         sub: 'Support questions are common',            pts: 4  }
-        ]
-      },
-      {
-        q: 'Is your product fully designed for mobile devices?',
-        cat: 'Mobile',
-        opts: [
-          { label: 'Fully responsive',  sub: 'Works great on any screen size',          pts: 20 },
-          { label: 'Partially',         sub: 'Some screens are awkward on mobile',      pts: 10 },
-          { label: 'Not really',        sub: 'Primarily desktop only',                 pts: 0  }
-        ]
-      },
-      {
-        q: 'Do you have designed states for errors, loading, and empty screens?',
-        cat: 'Completeness',
-        opts: [
-          { label: 'All three',         sub: 'Edge cases are properly handled',         pts: 20 },
-          { label: 'Some of them',      sub: 'A few are designed, others are not',      pts: 10 },
-          { label: 'None designed',     sub: 'We rely on defaults',                    pts: 0  }
-        ]
-      },
-      {
-        q: 'Has your product been tested with real users in the last 3 months?',
-        cat: 'Validation',
-        opts: [
-          { label: 'Yes, formally',     sub: 'Structured sessions with real users',     pts: 20 },
-          { label: 'Informally',        sub: 'Ad-hoc feedback from people we know',     pts: 12 },
-          { label: 'Not tested',        sub: 'No user testing done recently',          pts: 4  }
-        ]
-      }
-    ],
-    current: 0,
-    answers: []
-  };
-
-  function auditStart() {
-    AQ.current = 0;
-    AQ.answers = [];
-    document.getElementById('audit-intro').classList.add('hidden');
-    var qs = document.getElementById('audit-qs');
-    qs.classList.add('active');
-    renderQuestion();
-  }
-
-  function auditReset() {
-    AQ.current = 0;
-    AQ.answers = [];
-    var intro = document.getElementById('audit-intro');
-    var qs    = document.getElementById('audit-qs');
-    var res   = document.getElementById('audit-results');
-    intro.classList.remove('hidden');
-    qs.classList.remove('active');
-    res.classList.remove('active');
-  }
-
-  function renderQuestion() {
-    var q = AQ.questions[AQ.current];
-    var total = AQ.questions.length;
-    /* progress pips */
-    var pipHtml = '';
-    for (var i = 0; i < total; i++) {
-      pipHtml += '<div class="aq-pip' + (i <= AQ.current ? ' done' : '') + '"></div>';
-    }
-    document.getElementById('aq-progress').innerHTML = pipHtml;
-    document.getElementById('aq-num').textContent = 'Question ' + (AQ.current + 1) + ' of ' + total;
-    document.getElementById('aq-question').textContent = q.q;
-    /* options */
-    var optsHtml = '';
-    var selected = AQ.answers[AQ.current];
-    q.opts.forEach(function(opt, i) {
-      var sel = selected === i ? ' selected' : '';
-      optsHtml += '<button class="aq-opt' + sel + '" onclick="selectOpt(' + i + ')">' +
-        '<span class="aq-opt-dot"></span>' +
-        '<span><div class="aq-opt-text">' + opt.label + '</div>' +
-        '<div class="aq-opt-sub">' + opt.sub + '</div></span>' +
-        '</button>';
-    });
-    document.getElementById('aq-options').innerHTML = optsHtml;
-    /* back */
-    var back = document.getElementById('aq-back');
-    if (back) back.style.visibility = AQ.current === 0 ? 'hidden' : 'visible';
-    /* next */
-    var next = document.getElementById('aq-next');
-    if (next) {
-      next.textContent = AQ.current === total - 1 ? 'See results →' : 'Next →';
-      if (selected !== undefined) {
-        next.classList.add('enabled');
-      } else {
-        next.classList.remove('enabled');
-      }
-    }
-  }
-
-  function selectOpt(i) {
-    AQ.answers[AQ.current] = i;
-    renderQuestion();
-  }
-
-  function auditBack() {
-    if (AQ.current === 0) return;
-    AQ.current--;
-    renderQuestion();
-  }
-
-  function auditNext() {
-    if (AQ.answers[AQ.current] === undefined) return;
-    if (AQ.current < AQ.questions.length - 1) {
-      AQ.current++;
-      renderQuestion();
-    } else {
-      showAuditResults();
-    }
-  }
-
+  /* ── Audit (server-side via /api/audit) ── */
   function scoreColor(n) {
     if (n >= 75) return 'good';
     if (n >= 50) return 'ok';
     return 'poor';
   }
 
-  function showAuditResults() {
-    /* compute */
-    var total = 0;
-    var cats = [];
-    AQ.questions.forEach(function(q, i) {
-      var pts = q.opts[AQ.answers[i]].pts;
-      total += pts;
-      cats.push({ name: q.cat, score: pts * 5 }); /* 20pts → 100 */
+  function auditSetState(id) {
+    ['audit-entry','audit-loading','audit-results'].forEach(function(s) {
+      var el = document.getElementById(s);
+      if (!el) return;
+      if (s === 'audit-entry') {
+        el.classList.toggle('hidden', s !== id);
+      } else {
+        el.classList.toggle('active', s === id);
+      }
     });
-    var overall = total; /* 0-100 already (5 questions × 20pts) */
+  }
 
-    /* issues from low scores */
-    var issues = [];
-    var issueMap = [
-      'First impression is unclear — users decide in 5 seconds. If your value prop isn\'t obvious, they leave.',
-      'Core user journey has friction — every extra step loses conversions. Founders underestimate this by 3×.',
-      'Mobile experience is broken or inconsistent — over 60% of traffic is mobile for most products.',
-      'Missing edge case states (errors, loading, empty) make the product feel unfinished to real users.',
-      'No recent user testing means you\'re building on assumption, not evidence. Kills roadmaps.'
-    ];
-    AQ.questions.forEach(function(q, i) {
-      if (AQ.answers[i] > 0) issues.push(issueMap[i]);
+  function auditReset() {
+    auditSetState('audit-entry');
+    var inp = document.getElementById('audit-url');
+    if (inp) { inp.value = ''; inp.focus(); }
+    var btn = document.getElementById('audit-run-btn');
+    if (btn) btn.disabled = false;
+  }
+
+  function animSteps(steps, idx, cb) {
+    if (idx >= steps.length) { if (cb) cb(); return; }
+    steps.forEach(function(s, i) {
+      s.classList.remove('active','done');
+      if (i < idx)  s.classList.add('done');
+      if (i === idx) s.classList.add('active');
     });
+    setTimeout(function() { animSteps(steps, idx + 1, cb); }, 1800);
+  }
 
-    /* verdict */
-    var verdict;
-    if (overall >= 80) verdict = 'Strong foundation. A sprint can sharpen the details that separate good from great.';
-    else if (overall >= 55) verdict = 'Good start with clear gaps. One focused sprint closes the distance fast.';
-    else verdict = 'Significant UX debt. This is exactly what a sprint is built for — seven days changes everything.';
-
-    /* render */
+  function renderResults(data) {
+    var score = data.overall_score || 0;
     var numEl = document.getElementById('audit-score-num');
     var verdEl = document.getElementById('audit-score-verdict');
-    if (numEl) { numEl.textContent = overall + '/100'; numEl.className = 'audit-score-num ' + scoreColor(overall); }
-    if (verdEl) verdEl.textContent = verdict;
+    if (numEl) { numEl.textContent = score + '/100'; numEl.className = 'audit-score-num ' + scoreColor(score); }
+    if (verdEl) verdEl.textContent = data.summary || '';
 
     var catsEl = document.getElementById('audit-cats');
-    if (catsEl) {
-      catsEl.innerHTML = cats.map(function(c) {
-        var col = scoreColor(c.score);
+    if (catsEl && data.categories) {
+      catsEl.innerHTML = Object.keys(data.categories).map(function(k) {
+        var c = data.categories[k];
+        var pct = Math.round((c.score || 0) * 100);
+        var col = scoreColor(pct);
         var barColor = col === 'good' ? '#16a34a' : col === 'ok' ? '#ca8a04' : '#dc2626';
         return '<div class="audit-cat">' +
-          '<div class="audit-cat-name">' + c.name + '</div>' +
-          '<div class="audit-cat-bar-wrap"><div class="audit-cat-bar" style="background:' + barColor + '" data-w="' + c.score + '"></div></div>' +
-          '<div class="audit-cat-score" style="color:' + barColor + '">' + c.score + '<span style="font-size:13px;font-weight:500;color:var(--muted)">/100</span></div>' +
+          '<div class="audit-cat-name">' + (c.title || k) + '</div>' +
+          '<div class="audit-cat-bar-wrap"><div class="audit-cat-bar" style="background:' + barColor + '" data-w="' + pct + '"></div></div>' +
+          '<div class="audit-cat-score" style="color:' + barColor + '">' + pct + '<span style="font-size:13px;font-weight:500;color:var(--muted)">/100</span></div>' +
           '</div>';
       }).join('');
-      /* animate bars after paint */
       requestAnimationFrame(function() {
         catsEl.querySelectorAll('.audit-cat-bar').forEach(function(b) {
           b.style.width = b.getAttribute('data-w') + '%';
@@ -1706,13 +1552,56 @@
 
     var listEl = document.getElementById('audit-issues-list');
     if (listEl) {
+      var issues = data.issues || [];
       listEl.innerHTML = issues.length
         ? issues.map(function(iss) { return '<div class="audit-issue"><span class="audit-issue-dot"></span>' + iss + '</div>'; }).join('')
-        : '<div class="audit-issue"><span class="audit-issue-dot" style="background:#16a34a"></span>No major gaps found. Book a call to go deeper.</div>';
+        : '<div class="audit-issue"><span class="audit-issue-dot" style="background:#16a34a"></span>No major issues found — book a call to go deeper.</div>';
     }
 
-    document.getElementById('audit-qs').classList.remove('active');
-    document.getElementById('audit-results').classList.add('active');
+    auditSetState('audit-results');
+  }
+
+  function runAudit() {
+    var inp = document.getElementById('audit-url');
+    var url = (inp ? inp.value : '').trim();
+    if (!url) { if (inp) inp.focus(); return; }
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+    var btn = document.getElementById('audit-run-btn');
+    if (btn) btn.disabled = true;
+
+    var steps = [0,1,2,3].map(function(i) { return document.getElementById('step-' + i); }).filter(Boolean);
+    steps.forEach(function(s) { s.classList.remove('active','done'); });
+    auditSetState('audit-loading');
+
+    var done = false;
+    animSteps(steps, 0, function() { done = true; });
+
+    fetch('/api/audit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: url }),
+      signal: AbortSignal.timeout ? AbortSignal.timeout(45000) : undefined
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.error) throw new Error(data.error);
+      var show = function() { renderResults(data); if (btn) btn.disabled = false; };
+      if (done) show(); else setTimeout(show, 400);
+    })
+    .catch(function(err) {
+      /* Show partial result rather than a dead error */
+      var show = function() {
+        renderResults({
+          overall_score: 0,
+          summary: 'Audit couldn\'t complete — ' + (err.message || 'try again or book a call for a manual review.'),
+          categories: {},
+          issues: ['The audit service encountered an error. Book a call and we\'ll review your site live.']
+        });
+        if (btn) btn.disabled = false;
+      };
+      if (done) show(); else setTimeout(show, 400);
+    });
   }
 
   /* ── Copy email ── */
