@@ -659,6 +659,139 @@
       transition: width 0.1s linear;
     }
 
+    /* ─── AUDIT PILL ─────────────────────── */
+    .audit-pill {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--text);
+      color: #fff;
+      border: none;
+      border-radius: 980px;
+      padding: 13px 20px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s;
+    }
+    .audit-pill:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.22); }
+    .audit-pill-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #34d399;
+      flex-shrink: 0;
+    }
+    @media (max-width: 768px) {
+      .audit-pill { bottom: 20px; right: 16px; left: 16px; justify-content: center; border-radius: 14px; }
+    }
+
+    /* ─── BOTTOM SHEET ───────────────────── */
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+    .sheet {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 201;
+      background: var(--bg);
+      border-radius: 20px 20px 0 0;
+      padding: 40px 48px 48px;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .sheet.open { transform: translateY(0); }
+    .sheet-handle {
+      width: 36px; height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin: 0 auto 32px;
+    }
+    .sheet-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .sheet-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .sheet-body {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+    .sheet-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .sheet-items li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .sheet-items li::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .sheet-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .sheet-close-btn {
+      position: absolute;
+      top: 20px; right: 24px;
+      background: var(--border);
+      border: none;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      color: var(--text);
+      cursor: pointer;
+      line-height: 1;
+    }
+    @media (max-width: 768px) {
+      .sheet { padding: 32px 24px 36px; }
+      .sheet-actions { flex-direction: column; align-items: stretch; }
+      .sheet-actions .btn { text-align: center; justify-content: center; }
+    }
+
     /* ─── PRINT ──────────────────────────── */
     @media print {
       #nav, #scroll-progress { display: none; }
@@ -916,8 +1049,8 @@
         <p class="t-label" style="margin-bottom: 16px; margin-top: 48px;">Based in</p>
         <p class="t-body">Dubai, UAE &amp; London, UK<br>Remote-first. Available worldwide.</p>
         <p class="t-label" style="margin-top: 32px; margin-bottom: 12px;">Contact</p>
-        <a href="mailto:hello@ruonalim.com" class="email-cta t-body"
-           style="color: var(--text); font-weight: 600; cursor: pointer;">hello@ruonalim.com</a>
+        <a href="#" class="email-cta t-body"
+           style="color: var(--text); font-weight: 600; cursor: pointer;">Copy email →</a>
       </div>
     </div>
   </div>
@@ -970,7 +1103,7 @@
             How do I start?
             <span class="faq-icon" aria-hidden="true"></span>
           </button>
-          <div class="faq-a">Book via Calendly or email hello@ruonalim.com. We confirm fit, agree the sprint type, and lock a start date. Most sprints start within a week.</div>
+          <div class="faq-a">Book via Calendly or drop us a message. We confirm fit, agree the sprint type, and lock a start date. Most sprints start within a week.</div>
         </div>
 
       </div>
@@ -987,7 +1120,7 @@
       <h2 class="cta-heading">Ready to start<br>your sprint?</h2>
       <div class="cta-actions">
         <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">Book a call →</a>
-        <a href="mailto:hello@ruonalim.com" class="btn btn-ghost email-cta">Email us</a>
+        <a href="#" class="btn btn-ghost email-cta">Copy email</a>
       </div>
     </div>
   </div>
@@ -1013,6 +1146,33 @@
     </div>
   </div>
 </footer>
+
+<!-- Audit pill -->
+<button class="audit-pill" id="audit-pill" onclick="openAudit()">
+  <span class="audit-pill-dot"></span>
+  Free UX audit
+</button>
+
+<!-- Audit bottom sheet -->
+<div class="sheet-backdrop" id="sheet-backdrop" onclick="closeAudit()"></div>
+<div class="sheet" id="audit-sheet" role="dialog" aria-modal="true" aria-labelledby="audit-title">
+  <div class="sheet-handle"></div>
+  <button class="sheet-close-btn" onclick="closeAudit()" aria-label="Close">×</button>
+  <div class="sheet-label">Free · No strings</div>
+  <h2 class="sheet-title" id="audit-title">Get a free<br>UX audit.</h2>
+  <p class="sheet-body">We'll review your product and score it across five dimensions. You'll get a Loom walkthrough and a written summary — free, no pitch attached.</p>
+  <ul class="sheet-items">
+    <li>Onboarding and first-run experience</li>
+    <li>Core user flow friction</li>
+    <li>Visual hierarchy and clarity</li>
+    <li>Mobile responsiveness</li>
+    <li>Conversion and trust signals</li>
+  </ul>
+  <div class="sheet-actions">
+    <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary" onclick="closeAudit()">Book the audit →</a>
+    <button class="btn btn-ghost email-cta" onclick="closeAudit()">Copy email instead</button>
+  </div>
+</div>
 
 <!-- Copy flash -->
 <div id="copy-flash" role="status" aria-live="polite">
@@ -1073,6 +1233,24 @@
     document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
     if (!isOpen) item.classList.add('open');
   }
+
+  /* ── Audit sheet ── */
+  var auditSheet   = document.getElementById('audit-sheet');
+  var auditBackdrop = document.getElementById('sheet-backdrop');
+  var auditPill    = document.getElementById('audit-pill');
+  function openAudit() {
+    auditSheet.classList.add('open');
+    auditBackdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (auditPill) auditPill.style.opacity = '0';
+  }
+  function closeAudit() {
+    auditSheet.classList.remove('open');
+    auditBackdrop.classList.remove('open');
+    document.body.style.overflow = '';
+    if (auditPill) auditPill.style.opacity = '1';
+  }
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeAudit(); });
 
   /* ── Copy email ── */
   var flash = document.getElementById('copy-flash');
