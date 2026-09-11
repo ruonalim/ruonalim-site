@@ -1498,7 +1498,7 @@
         </div>
         <div class="audit-step" id="step-1">
           <div class="audit-step-icon">✓</div>
-          <div class="audit-step-label">Running Lighthouse</div>
+          <div class="audit-step-label">Checking SEO and clarity</div>
         </div>
         <div class="audit-step" id="step-2">
           <div class="audit-step-icon">✓</div>
@@ -1646,8 +1646,7 @@
     });
   }
 
-  /* ── Audit runner ── */
-  var AUDIT_API = '/api/audit';
+  /* ── Audit engine (client-side) ── */
 
   function showState(id) {
     ['audit-entry','audit-loading','audit-results','audit-error'].forEach(function(s) {
@@ -1738,6 +1737,103 @@
     });
   }
 
+  /* ── Heuristic audit engine ── */
+  function analyzeHTML(html, url) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(html, 'text/html');
+    var issues = [];
+    var checks = {};
+
+    /* ── 1. SEO / Clarity ── */
+    var title   = doc.querySelector('title');
+    var metaDesc = doc.querySelector('meta[name="description"]');
+    var h1s     = doc.querySelectorAll('h1');
+    var h2s     = doc.querySelectorAll('h2');
+    var ogTitle = doc.querySelector('meta[property="og:title"]');
+    var canonical = doc.querySelector('link[rel="canonical"]');
+    var viewport  = doc.querySelector('meta[name="viewport"]');
+
+    var clarityScore = 100;
+    if (!title || !title.textContent.trim())  { issues.push('Missing page title — hurts SEO and browser tab identification'); clarityScore -= 25; }
+    else if (title.textContent.trim().length > 70) { issues.push('Page title too long (' + title.textContent.trim().length + ' chars) — truncates in search results'); clarityScore -= 10; }
+    if (!metaDesc)  { issues.push('No meta description — missed opportunity to improve click-through from search'); clarityScore -= 20; }
+    if (!h1s.length){ issues.push('No H1 heading found — unclear page hierarchy for users and search engines'); clarityScore -= 20; }
+    if (h1s.length > 1){ issues.push('Multiple H1 headings (' + h1s.length + ') — weakens content hierarchy'); clarityScore -= 10; }
+    if (!ogTitle)   { issues.push('No Open Graph tags — social shares will look generic'); clarityScore -= 10; }
+    checks.clarity = Math.max(0, clarityScore);
+
+    /* ── 2. Accessibility ── */
+    var imgs = doc.querySelectorAll('img');
+    var imgsNoAlt = 0;
+    imgs.forEach(function(img) { if (!img.hasAttribute('alt')) imgsNoAlt++; });
+    var inputs  = doc.querySelectorAll('input:not([type="hidden"]),textarea,select');
+    var labels  = doc.querySelectorAll('label');
+    var unlabelled = 0;
+    inputs.forEach(function(inp) {
+      if (!inp.id || !doc.querySelector('label[for="' + inp.id + '"]')) {
+        if (!inp.getAttribute('aria-label') && !inp.getAttribute('aria-labelledby') && !inp.getAttribute('placeholder')) unlabelled++;
+      }
+    });
+    var skipLink = doc.querySelector('a[href^="#"]');
+    var langAttr = doc.documentElement.getAttribute('lang');
+
+    var a11yScore = 100;
+    if (imgsNoAlt > 0)   { issues.push(imgsNoAlt + ' image' + (imgsNoAlt > 1 ? 's' : '') + ' missing alt text — screen readers can\'t describe them'); a11yScore -= Math.min(30, imgsNoAlt * 8); }
+    if (unlabelled > 0)  { issues.push(unlabelled + ' form field' + (unlabelled > 1 ? 's' : '') + ' without labels — inaccessible for assistive tech'); a11yScore -= Math.min(25, unlabelled * 10); }
+    if (!langAttr)       { issues.push('Missing lang attribute on <html> — breaks screen reader language detection'); a11yScore -= 15; }
+    if (!viewport)       { issues.push('No viewport meta tag — page won\'t scale correctly on mobile devices'); a11yScore -= 20; }
+    checks.accessibility = Math.max(0, a11yScore);
+
+    /* ── 3. Usability ── */
+    var links   = doc.querySelectorAll('a');
+    var emptyLinks = 0;
+    links.forEach(function(a) { if (!a.textContent.trim() && !a.getAttribute('aria-label')) emptyLinks++; });
+    var buttons = doc.querySelectorAll('button,input[type="submit"],input[type="button"]');
+    var emptyBtns = 0;
+    buttons.forEach(function(b) {
+      var label = b.textContent.trim() || b.getAttribute('aria-label') || b.getAttribute('value') || '';
+      if (!label) emptyBtns++;
+    });
+    var forms    = doc.querySelectorAll('form');
+    var navs     = doc.querySelectorAll('nav,[role="navigation"]');
+    var usabilityScore = 100;
+    if (emptyLinks > 2)  { issues.push(emptyLinks + ' links with no text — confusing for keyboard and screen reader users'); usabilityScore -= 20; }
+    if (emptyBtns > 0)   { issues.push(emptyBtns + ' button' + (emptyBtns > 1 ? 's' : '') + ' with no label — users can\'t tell what they do'); usabilityScore -= 20; }
+    if (!navs.length)    { issues.push('No navigation landmark — users rely on scroll to find content'); usabilityScore -= 15; }
+    if (forms.length && !doc.querySelector('input[type="submit"],button[type="submit"]')) { issues.push('Form found with no visible submit button'); usabilityScore -= 15; }
+    checks.usability = Math.max(0, usabilityScore);
+
+    /* ── 4. Conversion ── */
+    var ctas = 0;
+    var ctaWords = /book|start|get|sign|try|buy|contact|demo|learn|schedule|join|subscribe/i;
+    buttons.forEach(function(b) { if (ctaWords.test(b.textContent)) ctas++; });
+    links.forEach(function(a)   { if (ctaWords.test(a.textContent)) ctas++; });
+    var hasPhone    = /(\+\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/.test(html);
+    var hasEmail    = /mailto:|email/i.test(html);
+    var bodyText    = (doc.body ? doc.body.innerText || doc.body.textContent : '').length;
+    var isHttps     = /^https/i.test(url);
+    var convScore   = 100;
+    if (ctas < 1)        { issues.push('No clear call-to-action found — visitors don\'t know what to do next'); convScore -= 35; }
+    if (!hasEmail && !hasPhone) { issues.push('No contact information visible — creates friction for interested visitors'); convScore -= 20; }
+    if (!isHttps)        { issues.push('Page not served over HTTPS — damages trust and hurts search ranking'); convScore -= 25; }
+    if (bodyText < 300)  { issues.push('Very thin content — under 300 characters of body text, likely a single-view app without sufficient context'); convScore -= 10; }
+    checks.conversion = Math.max(0, convScore);
+
+    /* ── Overall ── */
+    var overall = Math.round((checks.clarity + checks.accessibility + checks.usability + checks.conversion) / 4);
+
+    return {
+      overall_score: overall,
+      categories: {
+        clarity:       { title: 'Clarity & SEO',   score: checks.clarity / 100 },
+        accessibility: { title: 'Accessibility',   score: checks.accessibility / 100 },
+        usability:     { title: 'Usability',       score: checks.usability / 100 },
+        conversion:    { title: 'Conversion',      score: checks.conversion / 100 }
+      },
+      issues: issues.slice(0, 5)
+    };
+  }
+
   function runAudit() {
     var inp = document.getElementById('audit-url');
     var url = (inp ? inp.value : '').trim();
@@ -1751,49 +1847,43 @@
     var steps = [0,1,2,3].map(function(i) { return document.getElementById('step-' + i); }).filter(Boolean);
     steps.forEach(function(s) { s.classList.remove('active','done'); });
 
-    /* start step animation */
     var stepsDone = false;
     animateSteps(steps, 0, function() { stepsDone = true; });
 
-    fetch(AUDIT_API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url })
-    })
-    .then(function(r) {
-      if (!r.ok) throw new Error('API returned ' + r.status);
-      return r.json();
-    })
-    .then(function(data) {
-      /* wait for step animation to at least reach step 3 */
-      var show = function() {
-        var overall = Math.round(
-          data.score !== undefined ? data.score :
-          data.overallScore !== undefined ? data.overallScore :
-          data.uxScore !== undefined ? data.uxScore : 50
-        );
-        var numEl = document.getElementById('audit-score-num');
-        var urlEl = document.getElementById('audit-score-url');
-        if (numEl) {
-          numEl.textContent = overall + '/100';
-          numEl.className = 'audit-score-num ' + scoreColor(overall);
-        }
-        if (urlEl) urlEl.textContent = url;
-        renderCats(data);
-        renderIssues(data);
-        showState('audit-results');
-      };
-      if (stepsDone) { show(); }
-      else { setTimeout(show, 400); }
-    })
-    .catch(function(err) {
-      console.error('Audit error:', err);
-      var msgEl = document.getElementById('audit-error-msg');
-      var msg = (err && err.message) || 'Unknown error';
-      if (msgEl) msgEl.textContent = 'Audit failed: ' + msg + '. Try another URL or reach out directly.';
-      showState('audit-error');
-      if (runBtn) runBtn.disabled = false;
-    });
+    /* Fetch page via CORS proxy, then analyse client-side */
+    var proxy = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
+
+    fetch(proxy)
+      .then(function(r) {
+        if (!r.ok) throw new Error('Could not fetch that URL');
+        return r.json();
+      })
+      .then(function(d) {
+        var html = d.contents;
+        if (!html) throw new Error('Empty response from URL');
+        var data = analyzeHTML(html, url);
+        var show = function() {
+          var numEl = document.getElementById('audit-score-num');
+          var urlEl = document.getElementById('audit-score-url');
+          if (numEl) {
+            numEl.textContent = data.overall_score + '/100';
+            numEl.className = 'audit-score-num ' + scoreColor(data.overall_score);
+          }
+          if (urlEl) urlEl.textContent = url;
+          renderCats(data);
+          renderIssues(data);
+          showState('audit-results');
+          if (runBtn) runBtn.disabled = false;
+        };
+        if (stepsDone) show(); else setTimeout(show, 500);
+      })
+      .catch(function(err) {
+        console.error('Audit error:', err);
+        var msgEl = document.getElementById('audit-error-msg');
+        if (msgEl) msgEl.textContent = 'Couldn\'t reach that URL — the site may block external requests. Check the URL and try again.';
+        showState('audit-error');
+        if (runBtn) runBtn.disabled = false;
+      });
   }
 
   /* ── Copy email ── */
