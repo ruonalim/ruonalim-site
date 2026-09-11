@@ -96,6 +96,8 @@
     .t-accent { color: var(--accent); }
     .t-muted   { color: var(--muted); }
 
+    /* ─── NAV: REMOVED ──────────────────── */
+
     /* ─── BUTTONS ────────────────────────── */
     .btn {
       display: inline-flex;
@@ -125,106 +127,13 @@
     }
     .btn-ghost:hover { border-color: #aaa; }
 
-    /* ─── NAV ────────────────────────────── */
-    #nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 20px 0;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-    }
-    #nav.scrolled {
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 1px 0 var(--border);
-    }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 48px;
-    }
-    .nav-logo {
-      font-size: 18px;
+    /* ─── HERO LOGO ──────────────────────── */
+    .hero-logo {
+      font-size: 16px;
       font-weight: 800;
       letter-spacing: -0.04em;
-      color: var(--text);
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 36px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 14px;
-      font-weight: 500;
       color: var(--muted);
-      transition: color 0.18s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-cta { margin-left: 12px; }
-
-    /* Mobile nav */
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-    }
-    .nav-hamburger span {
-      width: 22px;
-      height: 1.5px;
-      background: var(--text);
-      display: block;
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .nav-drawer {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      z-index: 99;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
-    .nav-drawer.open { display: flex; }
-    .nav-drawer a {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      padding: 12px 0;
-      color: var(--text);
-    }
-    .nav-drawer a:hover { color: var(--accent); }
-    .nav-drawer .btn {
-      margin-top: 16px;
-      font-size: 16px;
-    }
-    .drawer-close {
-      position: absolute;
-      top: 24px;
-      right: 24px;
-      background: none;
-      border: none;
-      font-size: 28px;
-      color: var(--text);
-      cursor: pointer;
-      line-height: 1;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links, .nav-cta.nav-cta-desktop { display: none; }
-      .nav-hamburger { display: flex; }
-      .nav-inner { padding: 0 24px; }
+      margin-bottom: 64px;
     }
 
     /* ─── HERO ───────────────────────────── */
@@ -234,7 +143,6 @@
       display: flex;
       align-items: center;
       background: var(--bg);
-      padding-top: 80px;
       position: sticky;
       top: 0;
       z-index: 1;
@@ -265,10 +173,11 @@
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .hs-l1  { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
-    .hs-l2  { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.13s both; }
-    .hs-sub { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.21s both; }
-    .hs-cta { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.29s both; }
+    .hero-logo { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0s both; }
+    .hs-l1  { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both; }
+    .hs-l2  { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both; }
+    .hs-sub { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.24s both; }
+    .hs-cta { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both; }
 
     /* Scroll-away state */
     .hero.hero--faded .hero-inner {
@@ -278,7 +187,7 @@
     }
 
     @media (max-width: 768px) {
-      .hero { align-items: flex-start; padding-top: 120px; min-height: 100svh; }
+      .hero { align-items: flex-start; padding-top: 64px; min-height: 100svh; }
       .t-hero { font-size: clamp(52px, 14vw, 80px) !important; }
     }
 
@@ -760,35 +669,6 @@
 
 <div id="scroll-progress"></div>
 
-<!-- ─── NAV ─── -->
-<nav id="nav">
-  <div class="nav-inner">
-    <a href="/" class="nav-logo" aria-label="ruonalim – home">ruonalim.</a>
-    <ul class="nav-links" role="list">
-      <li><a href="#how-it-works">How it works</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#faq">FAQ</a></li>
-    </ul>
-    <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener"
-       class="btn btn-primary nav-cta nav-cta-desktop" style="padding: 10px 20px; font-size: 14px;">Book a call</a>
-    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<!-- Mobile drawer -->
-<div class="nav-drawer" id="nav-drawer" aria-hidden="true">
-  <button class="drawer-close" id="drawer-close" aria-label="Close menu">×</button>
-  <a href="#how-it-works" onclick="closeDrawer()">How it works</a>
-  <a href="#work" onclick="closeDrawer()">Work</a>
-  <a href="#about" onclick="closeDrawer()">About</a>
-  <a href="#faq" onclick="closeDrawer()">FAQ</a>
-  <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener"
-     class="btn btn-primary" onclick="closeDrawer()">Book a call</a>
-</div>
-
 <main id="main-content">
 
 <!-- ─── HERO ─── -->
@@ -796,6 +676,7 @@
   <div class="hero-inner" id="hero-inner">
     <div class="container">
       <div class="hero-simple">
+        <div class="hero-logo">ruonalim.</div>
         <h1 class="t-hero hs-title">
           <span class="hs-line hs-l1">Brief to prototype.</span>
           <span class="hs-line hs-l2">Seven days.</span>
@@ -1145,12 +1026,6 @@
 <script>
   var EMAIL = 'hello@ruonalim.com';
 
-  /* ── Nav scroll ── */
-  var nav = document.getElementById('nav');
-  window.addEventListener('scroll', function() {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive: true });
-
   /* ── Scroll progress ── */
   var prog = document.getElementById('scroll-progress');
   window.addEventListener('scroll', function() {
@@ -1201,26 +1076,6 @@
     document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
     if (!isOpen) item.classList.add('open');
   }
-
-  /* ── Mobile nav ── */
-  var hamburger = document.getElementById('nav-hamburger');
-  var drawer    = document.getElementById('nav-drawer');
-  var closeBtn  = document.getElementById('drawer-close');
-
-  function openDrawer()  {
-    drawer.classList.add('open');
-    drawer.setAttribute('aria-hidden', 'false');
-    hamburger.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeDrawer() {
-    drawer.classList.remove('open');
-    drawer.setAttribute('aria-hidden', 'true');
-    hamburger.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  }
-  if (hamburger) hamburger.addEventListener('click', openDrawer);
-  if (closeBtn)  closeBtn.addEventListener('click', closeDrawer);
 
   /* ── Copy email ── */
   var flash = document.getElementById('copy-flash');
