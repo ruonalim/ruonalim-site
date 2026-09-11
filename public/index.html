@@ -1689,6 +1689,27 @@
     };
   }
 
+  function fetchWithFallback(url) {
+    var proxies = [
+      function(u) {
+        return fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(u), { signal: AbortSignal.timeout(8000) })
+          .then(function(r) { if (!r.ok) throw new Error('bad'); return r.json(); })
+          .then(function(d) { if (!d.contents) throw new Error('empty'); return d.contents; });
+      },
+      function(u) {
+        return fetch('https://corsproxy.io/?' + encodeURIComponent(u), { signal: AbortSignal.timeout(8000) })
+          .then(function(r) { if (!r.ok) throw new Error('bad'); return r.text(); });
+      },
+      function(u) {
+        return fetch('https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u), { signal: AbortSignal.timeout(8000) })
+          .then(function(r) { if (!r.ok) throw new Error('bad'); return r.text(); });
+      }
+    ];
+    return proxies.reduce(function(chain, fn) {
+      return chain.catch(function() { return fn(url); });
+    }, Promise.reject(new Error('start')));
+  }
+
   function runAudit() {
     var inp = document.getElementById('audit-url');
     var url = (inp ? inp.value : '').trim();
@@ -1701,12 +1722,8 @@
     steps.forEach(function(s) { s.classList.remove('active','done'); });
     var stepsDone = false;
     animateSteps(steps, 0, function() { stepsDone = true; });
-    var proxy = 'https://api.allorigins.win/get?url=' + encodeURIComponent(url);
-    fetch(proxy)
-      .then(function(r) { if (!r.ok) throw new Error('Could not fetch'); return r.json(); })
-      .then(function(d) {
-        var html = d.contents;
-        if (!html) throw new Error('Empty response');
+    fetchWithFallback(url)
+      .then(function(html) {
         var data = analyzeHTML(html, url);
         var show = function() {
           var numEl = document.getElementById('audit-score-num');
@@ -1720,11 +1737,33 @@
         };
         if (stepsDone) show(); else setTimeout(show, 500);
       })
-      .catch(function(err) {
-        var msgEl = document.getElementById('audit-error-msg');
-        if (msgEl) msgEl.textContent = 'Couldn\'t reach that URL — the site may block external requests. Check the URL and try again.';
-        showState('audit-error');
-        if (runBtn) runBtn.disabled = false;
+      .catch(function() {
+        /* All proxies failed — show a human-friendly result instead of a dead error */
+        var show = function() {
+          var numEl = document.getElementById('audit-score-num');
+          var urlEl = document.getElementById('audit-score-url');
+          if (numEl) { numEl.textContent = '—'; numEl.className = 'audit-score-num'; numEl.style.fontSize = '48px'; }
+          if (urlEl) urlEl.textContent = url;
+          /* Render placeholder cat cards */
+          var catsEl = document.getElementById('audit-cats');
+          if (catsEl) {
+            catsEl.innerHTML = ['Clarity & SEO','Accessibility','Usability','Conversion'].map(function(n) {
+              return '<div class="audit-cat"><div class="audit-cat-name">' + n + '</div>' +
+                '<div class="audit-cat-bar-wrap"><div class="audit-cat-bar" style="width:0%;background:var(--border)"></div></div>' +
+                '<div class="audit-cat-score" style="color:var(--muted);font-size:14px;">Blocked</div></div>';
+            }).join('');
+          }
+          var issueWrap = document.getElementById('audit-issues-wrap');
+          var issueList = document.getElementById('audit-issues-list');
+          if (issueWrap && issueList) {
+            issueWrap.style.display = 'block';
+            issueList.innerHTML = '<div class="audit-issue"><span class="audit-issue-dot" style="background:#ca8a04"></span>Your site is blocking automated scanners — this is common for security-hardened or CDN-fronted sites.</div>' +
+              '<div class="audit-issue"><span class="audit-issue-dot" style="background:#ca8a04"></span>We can still audit it manually. Book a call and we\'ll review it live with you.</div>';
+          }
+          showState('audit-results');
+          if (runBtn) runBtn.disabled = false;
+        };
+        if (stepsDone) show(); else setTimeout(show, 500);
       });
   }
 
