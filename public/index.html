@@ -659,6 +659,64 @@
       transition: width 0.1s linear;
     }
 
+    /* ─── WRITING ────────────────────────── */
+    .writing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .writing-card {
+      display: flex;
+      gap: 20px;
+      padding: 32px 28px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      transition: background 0.18s;
+    }
+    .writing-card:hover { background: #fafafa; }
+    .writing-card:nth-child(2n) { border-right: none; }
+    .writing-card:nth-child(3),
+    .writing-card:nth-child(4) { border-bottom: none; }
+    .wc-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+    .wc-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .wc-excerpt {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .wc-meta {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    @media (max-width: 768px) {
+      .writing-grid { grid-template-columns: 1fr; }
+      .writing-card { border-right: none !important; }
+      .writing-card:last-child { border-bottom: none; }
+      .writing-card:nth-child(3) { border-bottom: 1px solid var(--border); }
+    }
+
     /* ─── AUDIT PILL ─────────────────────── */
     .audit-pill {
       position: fixed;
@@ -1112,6 +1170,56 @@
 </section>
 
 </main>
+
+<!-- ─── WRITING ─── -->
+<section class="section" id="writing">
+  <div class="container">
+    <div class="section-heading-row" data-anim>
+      <h2 class="t-xl">Inside the Build.</h2>
+      <a href="https://jaytulloch.substack.com" target="_blank" rel="noopener"
+         class="btn btn-ghost" style="flex-shrink:0;">All articles →</a>
+    </div>
+    <div class="writing-grid">
+
+      <a class="writing-card" href="https://jaytulloch.substack.com/p/your-design-system-isnt-a-library" target="_blank" rel="noopener" data-anim>
+        <div class="wc-num">01</div>
+        <div class="wc-body">
+          <div class="wc-title">Your Design System Isn't a Library Anymore. It's Your AI's Operating Manual.</div>
+          <p class="wc-excerpt">If your design system strategy hasn't changed in the last six months, you are already behind. Tokens, components, documentation — AI has changed what all of it is for.</p>
+          <div class="wc-meta">May 2026 · 5 min</div>
+        </div>
+      </a>
+
+      <a class="writing-card" href="https://jaytulloch.substack.com/p/the-design-job-market-didnt-just" target="_blank" rel="noopener" data-anim data-delay="1">
+        <div class="wc-num">02</div>
+        <div class="wc-body">
+          <div class="wc-title">The Design Job Market Didn't Just Get Worse. It Split in Two.</div>
+          <p class="wc-excerpt">Product design postings fell 5.5% in April 2026. Design engineering postings rose 14.4%. This isn't a market contracting — it's a market bifurcating in real time.</p>
+          <div class="wc-meta">May 2026 · 4 min</div>
+        </div>
+      </a>
+
+      <a class="writing-card" href="https://jaytulloch.substack.com/p/vibe-design-is-real-it-wont-replace" target="_blank" rel="noopener" data-anim data-delay="2">
+        <div class="wc-num">03</div>
+        <div class="wc-body">
+          <div class="wc-title">Vibe Design Is Real. It Won't Replace Designers. It Will Expose Them.</div>
+          <p class="wc-excerpt">Google's Stitch pitch: describe a business goal and AI builds high-fidelity UI. The design community's response was predictable. Both sides missed the point.</p>
+          <div class="wc-meta">May 2026 · 5 min</div>
+        </div>
+      </a>
+
+      <a class="writing-card" href="https://jaytulloch.substack.com/p/why-most-designers-will-never-become" target="_blank" rel="noopener" data-anim data-delay="3">
+        <div class="wc-num">04</div>
+        <div class="wc-body">
+          <div class="wc-title">Why Most Designers Will Never Become Director. And It Has Nothing To Do With Skill.</div>
+          <p class="wc-excerpt">If you're a senior designer who hasn't been promoted in two years, stop reviewing your own performance. Review your company's career architecture.</p>
+          <div class="wc-meta">May 2026 · 6 min</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
 
 <!-- ─── CTA BAND ─── -->
 <div class="cta-band">
