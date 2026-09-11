@@ -746,6 +746,165 @@
     }
 
     /* ─────────────────────────────────────────────
+       HERO v2 — EDITORIAL TYPOGRAPHIC STATEMENT
+    ───────────────────────────────────────────── */
+
+    /* Background override */
+    .hero { background: #FFFFFF !important; }
+
+    /* Push content to top, not centred */
+    .hero-inner {
+      align-items: flex-start !important;
+      padding-top: 48px !important;
+      padding-bottom: 48px !important;
+    }
+    .hero-inner .container { gap: 0 !important; }
+
+    /* Outer editorial wrapper fills available space */
+    .hero-editorial {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      width: 100%;
+      min-height: calc(100svh - 200px);
+      min-height: calc(100vh - 200px);
+    }
+
+    /* ── Top masthead strip ── */
+    .he-masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1.5px solid #111111;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #767676;
+      animation: he-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* ── Main: headline + stats sidebar ── */
+    .he-main {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 0;
+      align-items: start;
+      padding: 52px 0 44px;
+    }
+
+    /* ── Headline ── */
+    .he-title {
+      font-size: clamp(64px, 11.5vw, 168px);
+      font-weight: 900;
+      letter-spacing: -0.045em;
+      line-height: 0.87;
+      color: #111111;
+      margin: 0;
+    }
+    .he-line { display: block; }
+    .he-title-blue { color: #0044E4; }
+    .he-line-1 { animation: he-up 0.72s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both; }
+    .he-line-2 { animation: he-up 0.72s cubic-bezier(0.16, 1, 0.3, 1) 0.13s both; }
+    .he-line-3 { animation: he-up 0.72s cubic-bezier(0.16, 1, 0.3, 1) 0.20s both; }
+    .he-line-4 { animation: he-up 0.72s cubic-bezier(0.16, 1, 0.3, 1) 0.27s both; }
+
+    /* ── Stats sidebar ── */
+    .he-stats {
+      display: flex;
+      flex-direction: column;
+      border-left: 1.5px solid #111111;
+      padding-left: 28px;
+      animation: he-up 0.72s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
+    }
+    .he-stat {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .he-stat:first-child { padding-top: 0; }
+    .he-stat:last-child  { border-bottom: none; padding-bottom: 0; }
+    .he-stat-num {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #111111;
+      line-height: 1;
+    }
+    .he-stat-label {
+      font-size: 10px;
+      color: #767676;
+      margin-top: 3px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* ── Footer strip ── */
+    .he-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 20px;
+      border-top: 1.5px solid #111111;
+      flex-wrap: wrap;
+      gap: 16px;
+      animation: he-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both;
+    }
+    .he-footer-clients {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #767676;
+    }
+
+    @keyframes he-up {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Scroll-away blue state ── */
+    .hero.hero--blue .he-title { color: rgba(255,255,255,0.88) !important; }
+    .hero.hero--blue .he-title-blue { color: #FFFFFF !important; }
+    .hero.hero--blue .he-masthead { border-color: rgba(255,255,255,0.15) !important; color: rgba(255,255,255,0.4) !important; }
+    .hero.hero--blue .he-stats { border-color: rgba(255,255,255,0.2) !important; }
+    .hero.hero--blue .he-stat { border-color: rgba(255,255,255,0.08) !important; }
+    .hero.hero--blue .he-stat-num { color: rgba(255,255,255,0.88) !important; }
+    .hero.hero--blue .he-stat-label { color: rgba(255,255,255,0.38) !important; }
+    .hero.hero--blue .he-footer { border-color: rgba(255,255,255,0.15) !important; }
+    .hero.hero--blue .he-footer-clients { color: rgba(255,255,255,0.4) !important; }
+
+    /* ── Mobile collapse ── */
+    @media (max-width: 768px) {
+      .hero-editorial { min-height: 0; grid-template-rows: auto auto auto; }
+      .he-masthead { font-size: 10px; }
+      .he-main {
+        grid-template-columns: 1fr;
+        padding: 32px 0 28px;
+        gap: 28px;
+      }
+      .he-title { font-size: clamp(52px, 13.5vw, 96px) !important; line-height: 0.88 !important; }
+      .he-stats {
+        border-left: none !important;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        padding-left: 0 !important;
+        padding-top: 20px;
+        flex-direction: row;
+        gap: 0;
+      }
+      .he-stat {
+        flex: 1;
+        border-bottom: none !important;
+        border-right: 1px solid rgba(0,0,0,0.08);
+        padding: 0 16px 0 0;
+        margin-right: 16px;
+      }
+      .he-stat:first-child { padding-top: 0; }
+      .he-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+      .he-footer { flex-direction: column; align-items: flex-start; gap: 14px; }
+    }
+
+    /* ─────────────────────────────────────────────
        CLIENTS STRIP
     ───────────────────────────────────────────── */
     .clients-strip {
@@ -3508,43 +3667,48 @@
   <div class="hero-inner">
   <div class="container">
 
-    <!-- Top: headline -->
-    <div class="hero-top">
-      <div class="hero-heading">
-        <div class="hero-slides" aria-live="polite">
-          <h1 class="display-xl hero-slide active" aria-label="Brief to coded prototype. Seven days.">
-            <span class="hl-w">Brief</span> <span class="hl-w">to</span> <span class="hl-w">coded</span><br><span class="hl-w">prototype.</span><br><span class="hl-w hl-accent">Seven</span> <span class="hl-w hl-accent">days.</span>
-          </h1>
-          <h1 class="display-xl hero-slide" aria-label="Fast design turnaround. Days, not months." aria-hidden="true">
-            <span class="hl-w">Fast</span> <span class="hl-w">design</span><br><span class="hl-w">turnaround.</span><br><span class="hl-w hl-accent">Days,</span> <span class="hl-w hl-accent">not</span> <span class="hl-w hl-accent">months.</span>
-          </h1>
-          <h1 class="display-xl hero-slide" aria-label="Design on demand. Zero overhead." aria-hidden="true">
-            <span class="hl-w">Design</span> <span class="hl-w">on</span><br><span class="hl-w">demand.</span><br><span class="hl-w hl-accent">Zero</span> <span class="hl-w hl-accent">overhead.</span>
-          </h1>
+    <div class="hero-editorial">
+
+      <!-- Masthead strip -->
+      <div class="he-masthead">
+        <span class="he-masthead-tag">Design Sprint Agency</span>
+        <span class="he-masthead-loc">London · Dubai · Remote</span>
+      </div>
+
+      <!-- Headline + stats sidebar -->
+      <div class="he-main">
+        <h1 class="he-title" aria-label="Brief to prototype. Seven days.">
+          <span class="he-line he-line-1">Brief to</span>
+          <span class="he-line he-line-2">prototype.</span>
+          <span class="he-line he-line-3 he-title-blue">Seven</span>
+          <span class="he-line he-line-4 he-title-blue">days.</span>
+        </h1>
+
+        <div class="he-stats" aria-label="Key proof points">
+          <div class="he-stat">
+            <div class="he-stat-num">7 days</div>
+            <div class="he-stat-label">Brief to ship</div>
+          </div>
+          <div class="he-stat">
+            <div class="he-stat-num">Fixed</div>
+            <div class="he-stat-label">Agreed upfront</div>
+          </div>
+          <div class="he-stat">
+            <div class="he-stat-num">16yrs+</div>
+            <div class="he-stat-label">Senior craft</div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div>
-      <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary"><span class="btn-label">Start your sprint</span><span class="btn-arrow"> →</span></a>
-    </div>
+      <!-- Footer strip: CTA + trust line -->
+      <div class="he-footer">
+        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary">
+          <span class="btn-label">Start your sprint</span><span class="btn-arrow"> →</span>
+        </a>
+        <span class="he-footer-clients">Trusted by founders in fintech, lottery &amp; consumer tech</span>
+      </div>
 
-    <div class="hero-proof-rail" id="hero-proof-rail" aria-label="Key stats">
-      <div class="hpr-item">
-        <span class="hpr-num">7 days</span>
-        <span class="hpr-label">Brief to prototype</span>
-      </div>
-      <div class="hpr-item">
-        <span class="hpr-num">Fixed</span>
-        <span class="hpr-label">Agreed upfront</span>
-      </div>
-      <div class="hpr-item">
-        <span class="hpr-num">16yrs+</span>
-        <span class="hpr-label">Senior design</span>
-      </div>
     </div>
-
-    <p class="clients-headline">Trusted by founders in fintech, lottery, and consumer tech.</p>
 
   </div>
   </div><!-- /.hero-inner -->
