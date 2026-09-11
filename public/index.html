@@ -57,10 +57,10 @@
     h1, h2, h3 { font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
 
     .t-hero {
-      font-size: clamp(56px, 9vw, 136px);
+      font-size: clamp(64px, 10vw, 152px);
       font-weight: 900;
-      letter-spacing: -0.045em;
-      line-height: 0.88;
+      letter-spacing: -0.04em;
+      line-height: 0.96;
     }
     .t-xl {
       font-size: clamp(40px, 5vw, 72px);
@@ -129,11 +129,12 @@
 
     /* ─── HERO LOGO ──────────────────────── */
     .hero-logo {
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 64px;
+      margin-bottom: 80px;
     }
 
     /* ─── HERO ───────────────────────────── */
@@ -155,18 +156,18 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 28px;
+      gap: 40px;
     }
     .hs-title { color: var(--text); }
     .hs-line  { display: block; }
     .hs-l2    { color: var(--accent); }
     .hs-sub {
-      font-size: clamp(16px, 1.4vw, 19px);
+      font-size: clamp(18px, 1.6vw, 22px);
       color: var(--muted);
-      max-width: 440px;
-      line-height: 1.6;
+      max-width: 480px;
+      line-height: 1.5;
     }
-    .hs-cta { margin-top: 4px; }
+    .hs-cta { margin-top: 8px; }
 
     /* Load-in animation */
     @keyframes fade-up {
@@ -187,8 +188,9 @@
     }
 
     @media (max-width: 768px) {
-      .hero { align-items: flex-start; padding-top: 64px; min-height: 100svh; }
-      .t-hero { font-size: clamp(52px, 14vw, 80px) !important; }
+      .hero { align-items: flex-start; padding-top: 72px; min-height: 100svh; }
+      .t-hero { font-size: clamp(52px, 15vw, 88px) !important; }
+      .hero-logo { margin-bottom: 56px; }
     }
 
     /* ─── SECTION BASE ───────────────────── */
@@ -683,7 +685,7 @@
         </h1>
         <p class="hs-sub">Fixed price. Senior craft. No overhead.</p>
         <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener"
-           class="btn btn-primary hs-cta">Start your sprint →</a>
+           class="btn btn-primary hs-cta" style="padding: 16px 32px; font-size: 16px;">Start your sprint →</a>
       </div>
     </div>
   </div>
