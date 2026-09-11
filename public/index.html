@@ -127,23 +127,13 @@
 
     /* ─── HERO LOGO ──────────────────────── */
     .hero-logo {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      color: var(--accent);
       margin-bottom: 80px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      display: block;
     }
-    .hero-logo::after {
-      content: '';
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-      margin-bottom: 1px;
+    .hero-logo img {
+      height: 32px;
+      width: auto;
+      display: block;
     }
 
     /* ─── HERO ───────────────────────────── */
@@ -1067,7 +1057,9 @@
   <div class="hero-inner" id="hero-inner">
     <div class="container">
       <div class="hero-simple">
-        <div class="hero-logo">ruonalim</div>
+        <div class="hero-logo">
+          <img src="/logo-assets/wordmark-blue-transparent.svg" alt="ruonalim" width="160" height="32">
+        </div>
         <h1 class="t-hero hs-title">
           <span class="hs-line hs-l1">Brief to prototype.</span>
           <span class="hs-line hs-l2">Seven days.</span>
