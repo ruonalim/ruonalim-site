@@ -87,10 +87,8 @@
       font-weight: 400;
     }
     .t-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--muted);
     }
     .t-accent { color: var(--accent); }
@@ -129,12 +127,23 @@
 
     /* ─── HERO LOGO ──────────────────────── */
     .hero-logo {
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--accent);
       margin-bottom: 80px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-logo::after {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-bottom: 1px;
     }
 
     /* ─── HERO ───────────────────────────── */
@@ -254,10 +263,8 @@
     }
     .step:last-child { border-right: none; }
     .step-num {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--accent);
       margin-bottom: 16px;
     }
@@ -311,12 +318,10 @@
       transition: color 0.18s;
     }
     .svc-tag {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--muted);
-      padding: 5px 10px;
+      padding: 5px 12px;
       border: 1px solid var(--border);
       border-radius: 980px;
     }
@@ -349,10 +354,8 @@
       gap: 32px;
     }
     .svc-detail-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--muted);
       margin-bottom: 8px;
     }
@@ -445,10 +448,8 @@
       margin-top: 32px;
     }
     .about-cred {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 500;
       padding: 6px 14px;
       border: 1.5px solid var(--border);
       border-radius: 980px;
@@ -704,10 +705,8 @@
       margin-bottom: 20px;
     }
     .wc-meta {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--muted);
     }
     @media (max-width: 768px) {
@@ -785,27 +784,26 @@
     .audit-close {
       position: fixed;
       top: 24px; right: 28px;
-      background: var(--border);
+      background: none;
       border: none;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      font-size: 18px;
+      font-size: 28px;
+      font-weight: 300;
       color: var(--text);
       cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.18s;
+      line-height: 1;
+      opacity: 0.5;
+      transition: opacity 0.18s;
       z-index: 301;
+      padding: 4px;
     }
-    .audit-close:hover { background: #ddd; }
+    .audit-close:hover { opacity: 1; }
 
     /* Entry state */
     .audit-entry { display: block; }
     .audit-entry.active { display: block; }
     .audit-entry-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--accent);
       margin-bottom: 16px;
     }
@@ -930,10 +928,8 @@
     }
     .audit-score-block { }
     .audit-score-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--muted);
       margin-bottom: 8px;
     }
@@ -965,10 +961,8 @@
       padding: 16px 18px;
     }
     .audit-cat-name {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--muted);
       margin-bottom: 8px;
     }
@@ -997,8 +991,6 @@
     .audit-issues-title {
       font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
       color: var(--muted);
       margin-bottom: 14px;
     }
@@ -1075,7 +1067,7 @@
   <div class="hero-inner" id="hero-inner">
     <div class="container">
       <div class="hero-simple">
-        <div class="hero-logo">ruonalim.</div>
+        <div class="hero-logo">ruonalim</div>
         <h1 class="t-hero hs-title">
           <span class="hs-line hs-l1">Brief to prototype.</span>
           <span class="hs-line hs-l2">Seven days.</span>
