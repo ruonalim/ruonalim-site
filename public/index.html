@@ -702,6 +702,50 @@
     .hero-note { font-size: 12px; color: var(--muted); }
 
     /* ─────────────────────────────────────────────
+       HERO PROOF RAIL
+    ───────────────────────────────────────────── */
+    .hero-proof-rail {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+    .hpr-item {
+      display: flex;
+      flex-direction: column;
+      padding: 0 28px 0 0;
+      margin: 0 28px 0 0;
+      border-right: 1px solid rgba(0,0,0,0.12);
+    }
+    .hpr-item:first-child { padding-left: 0; }
+    .hpr-item:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .hpr-num {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #111111;
+      line-height: 1;
+    }
+    .hpr-label {
+      font-size: 11px;
+      color: var(--muted, #86868B);
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 500;
+    }
+    /* scroll-triggered blue sweep on the numbers */
+    .hero-proof-rail.is-visible .hpr-num {
+      color: #0044E4;
+      transition: color 0.4s ease;
+    }
+    @media (max-width: 768px) {
+      .hero-proof-rail { gap: 0; margin-top: 20px; }
+      .hpr-item { padding: 0 20px 0 0; margin: 0 20px 0 0; }
+    }
+
+    /* ─────────────────────────────────────────────
        CLIENTS STRIP
     ───────────────────────────────────────────── */
     .clients-strip {
@@ -3485,6 +3529,21 @@
       <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary"><span class="btn-label">Start your sprint</span><span class="btn-arrow"> →</span></a>
     </div>
 
+    <div class="hero-proof-rail" id="hero-proof-rail" aria-label="Key stats">
+      <div class="hpr-item">
+        <span class="hpr-num">7 days</span>
+        <span class="hpr-label">Brief to prototype</span>
+      </div>
+      <div class="hpr-item">
+        <span class="hpr-num">Fixed</span>
+        <span class="hpr-label">Agreed upfront</span>
+      </div>
+      <div class="hpr-item">
+        <span class="hpr-num">16yrs+</span>
+        <span class="hpr-label">Senior design</span>
+      </div>
+    </div>
+
     <p class="clients-headline">Trusted by founders in fintech, lottery, and consumer tech.</p>
 
   </div>
@@ -4362,6 +4421,20 @@
   }, { threshold: 0.07, rootMargin: '0px 0px -20px 0px' });
 
   animEls.forEach(el => observer.observe(el));
+
+  /* ── HERO PROOF RAIL — blue sweep on scroll ── */
+  const proofRail = document.getElementById('hero-proof-rail');
+  if (proofRail) {
+    const proofObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          proofRail.classList.add('is-visible');
+          proofObs.unobserve(proofRail);
+        }
+      });
+    }, { threshold: 0.5 });
+    proofObs.observe(proofRail);
+  }
 
   /* ── 0→1 FLAGSHIP ROW SHIMMER ── */
   const flagshipRow = document.querySelector('.service-row--flagship');
