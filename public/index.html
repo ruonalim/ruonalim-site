@@ -761,12 +761,12 @@
       backdrop-filter: blur(24px) saturate(1.6);
       -webkit-backdrop-filter: blur(24px) saturate(1.6);
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      padding: 24px;
+      padding: 72px 24px 48px;
       overflow-y: auto;
     }
     .audit-modal.open {
@@ -799,7 +799,8 @@
     .audit-close:hover { background: #ddd; }
 
     /* Entry state */
-    .audit-entry { }
+    .audit-entry { display: block; }
+    .audit-entry.active { display: block; }
     .audit-entry-label {
       font-size: 11px;
       font-weight: 600;
@@ -1651,13 +1652,14 @@
   function showState(id) {
     ['audit-entry','audit-loading','audit-results','audit-error'].forEach(function(s) {
       var el = document.getElementById(s);
-      if (el) el.classList.remove('active');
-      if (el) el.style.display = (s === 'audit-entry') ? '' : 'none';
+      if (!el) return;
+      el.classList.remove('active');
+      el.style.display = 'none';
     });
     var target = document.getElementById(id);
     if (target) {
-      target.style.display = id === 'audit-entry' ? '' : 'block';
-      if (id !== 'audit-entry') target.classList.add('active');
+      target.style.removeProperty('display');
+      target.classList.add('active');
     }
   }
 
