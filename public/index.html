@@ -740,6 +740,8 @@
       transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s;
     }
     .audit-pill:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.22); }
+    .audit-pill { opacity: 0; pointer-events: none; transition: opacity 0.4s ease, transform 0.22s cubic-bezier(0.16,1,0.3,1), box-shadow 0.22s; }
+    .audit-pill.pill-visible { opacity: 1; pointer-events: auto; }
     .audit-pill-dot {
       width: 7px; height: 7px;
       border-radius: 50%;
@@ -750,104 +752,307 @@
       .audit-pill { bottom: 20px; right: 16px; left: 16px; justify-content: center; border-radius: 14px; }
     }
 
-    /* ─── BOTTOM SHEET ───────────────────── */
-    .sheet-backdrop {
+    /* ─── AUDIT MODAL ───────────────────── */
+    .audit-modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      z-index: 200;
+      z-index: 300;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(24px) saturate(1.6);
+      -webkit-backdrop-filter: blur(24px) saturate(1.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 24px;
+      overflow-y: auto;
     }
-    .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
-    .sheet {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      z-index: 201;
-      background: var(--bg);
-      border-radius: 20px 20px 0 0;
-      padding: 40px 48px 48px;
-      transform: translateY(100%);
+    .audit-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .audit-modal-inner {
+      width: 100%;
+      max-width: 640px;
+      transform: translateY(32px);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      max-width: 680px;
-      margin: 0 auto;
     }
-    .sheet.open { transform: translateY(0); }
-    .sheet-handle {
-      width: 36px; height: 4px;
+    .audit-modal.open .audit-modal-inner {
+      transform: translateY(0);
+    }
+    .audit-close {
+      position: fixed;
+      top: 24px; right: 28px;
       background: var(--border);
-      border-radius: 2px;
-      margin: 0 auto 32px;
+      border: none;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 18px;
+      color: var(--text);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.18s;
+      z-index: 301;
     }
-    .sheet-label {
+    .audit-close:hover { background: #ddd; }
+
+    /* Entry state */
+    .audit-entry { }
+    .audit-entry-label {
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.13em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
-    .sheet-title {
-      font-size: clamp(28px, 4vw, 40px);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
+    .audit-entry-title {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
       color: var(--text);
       margin-bottom: 16px;
     }
-    .sheet-body {
-      font-size: 16px;
+    .audit-entry-sub {
+      font-size: 17px;
       color: var(--muted);
-      line-height: 1.65;
-      margin-bottom: 32px;
+      line-height: 1.6;
+      margin-bottom: 40px;
     }
-    .sheet-items {
-      list-style: none;
+    .audit-input-row {
       display: flex;
-      flex-direction: column;
       gap: 10px;
-      margin-bottom: 32px;
+      align-items: stretch;
     }
-    .sheet-items li {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .audit-url-input {
+      flex: 1;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-family: inherit;
       font-size: 15px;
       color: var(--text);
-      font-weight: 500;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.18s;
+      min-width: 0;
     }
-    .sheet-items li::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--accent);
+    .audit-url-input:focus { border-color: var(--text); }
+    .audit-url-input::placeholder { color: #bbb; }
+    .audit-run-btn {
+      background: var(--text);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .audit-run-btn:hover { background: #222; transform: translateY(-1px); }
+    .audit-run-btn:disabled { background: #888; transform: none; cursor: not-allowed; }
+
+    /* Loading state */
+    .audit-loading { display: none; }
+    .audit-loading.active { display: block; }
+    .audit-loading-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 40px;
+    }
+    .audit-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .audit-step {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      opacity: 0.3;
+      transition: opacity 0.4s;
+    }
+    .audit-step.done { opacity: 1; }
+    .audit-step.active { opacity: 1; }
+    .audit-step-icon {
+      width: 28px; height: 28px;
       border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
       flex-shrink: 0;
+      transition: all 0.3s;
     }
-    .sheet-actions {
+    .audit-step.done .audit-step-icon {
+      background: var(--text);
+      border-color: var(--text);
+      color: #fff;
+    }
+    .audit-step.active .audit-step-icon {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .audit-step.active .audit-step-icon::after {
+      content: '';
+      display: block;
+      width: 10px; height: 10px;
+      border: 1.5px solid var(--accent);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    .audit-step.active .audit-step-icon { font-size: 0; }
+    .audit-step-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Results state */
+    .audit-results { display: none; }
+    .audit-results.active { display: block; }
+    .audit-score-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .audit-score-block { }
+    .audit-score-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .audit-score-num {
+      font-size: 80px;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      line-height: 1;
+      color: var(--text);
+    }
+    .audit-score-num.good  { color: #16a34a; }
+    .audit-score-num.ok    { color: #ca8a04; }
+    .audit-score-num.poor  { color: #dc2626; }
+    .audit-score-url {
+      font-size: 13px;
+      color: var(--muted);
+      word-break: break-all;
+      margin-top: 8px;
+    }
+    .audit-cats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .audit-cat {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .audit-cat-name {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .audit-cat-bar-wrap {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .audit-cat-bar {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--accent);
+      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .audit-cat-score {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+    .audit-issues {
+      margin-bottom: 36px;
+    }
+    .audit-issues-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .audit-issue {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .audit-issue:last-child { border-bottom: none; }
+    .audit-issue-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #dc2626;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .audit-result-cta {
       display: flex;
       gap: 12px;
       align-items: center;
+      flex-wrap: wrap;
     }
-    .sheet-close-btn {
-      position: absolute;
-      top: 20px; right: 24px;
-      background: var(--border);
+    .audit-restart {
+      background: none;
       border: none;
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px;
-      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--muted);
       cursor: pointer;
-      line-height: 1;
+      padding: 0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
-    @media (max-width: 768px) {
-      .sheet { padding: 32px 24px 36px; }
-      .sheet-actions { flex-direction: column; align-items: stretch; }
-      .sheet-actions .btn { text-align: center; justify-content: center; }
+    .audit-error { display: none; }
+    .audit-error.active {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .audit-error-msg {
+      font-size: 16px;
+      color: #dc2626;
+      font-weight: 500;
+    }
+
+    @media (max-width: 640px) {
+      .audit-input-row { flex-direction: column; }
+      .audit-cats { grid-template-columns: 1fr; }
+      .audit-score-header { flex-direction: column; align-items: flex-start; }
+      .audit-close { top: 16px; right: 16px; }
     }
 
     /* ─── PRINT ──────────────────────────── */
@@ -875,8 +1080,11 @@
           <span class="hs-line hs-l2">Seven days.</span>
         </h1>
         <p class="hs-sub">Fixed price. Senior craft. No overhead.</p>
-        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener"
-           class="btn btn-primary hs-cta" style="padding: 16px 32px; font-size: 16px;">Start your sprint →</a>
+        <div class="hs-cta" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener"
+             class="btn btn-primary" style="padding: 16px 32px; font-size: 16px;">Start your sprint →</a>
+          <button onclick="openAudit()" class="btn btn-ghost" style="padding: 16px 24px; font-size: 16px;">Free audit</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1255,30 +1463,83 @@
   </div>
 </footer>
 
-<!-- Audit pill -->
-<button class="audit-pill" id="audit-pill" onclick="openAudit()">
+<!-- Floating pill (appears after scroll) -->
+<button class="audit-pill" id="audit-pill" onclick="openAudit()" aria-label="Free UX audit">
   <span class="audit-pill-dot"></span>
   Free UX audit
 </button>
 
-<!-- Audit bottom sheet -->
-<div class="sheet-backdrop" id="sheet-backdrop" onclick="closeAudit()"></div>
-<div class="sheet" id="audit-sheet" role="dialog" aria-modal="true" aria-labelledby="audit-title">
-  <div class="sheet-handle"></div>
-  <button class="sheet-close-btn" onclick="closeAudit()" aria-label="Close">×</button>
-  <div class="sheet-label">Free · No strings</div>
-  <h2 class="sheet-title" id="audit-title">Get a free<br>UX audit.</h2>
-  <p class="sheet-body">We'll review your product and score it across five dimensions. You'll get a Loom walkthrough and a written summary — free, no pitch attached.</p>
-  <ul class="sheet-items">
-    <li>Onboarding and first-run experience</li>
-    <li>Core user flow friction</li>
-    <li>Visual hierarchy and clarity</li>
-    <li>Mobile responsiveness</li>
-    <li>Conversion and trust signals</li>
-  </ul>
-  <div class="sheet-actions">
-    <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener" class="btn btn-primary" onclick="closeAudit()">Book the audit →</a>
-    <button class="btn btn-ghost email-cta" onclick="closeAudit()">Copy email instead</button>
+<!-- Full-screen audit modal -->
+<div class="audit-modal" id="audit-modal" role="dialog" aria-modal="true" aria-labelledby="audit-modal-title">
+  <button class="audit-close" id="audit-close" onclick="closeAudit()" aria-label="Close">×</button>
+
+  <div class="audit-modal-inner">
+
+    <!-- Entry -->
+    <div class="audit-entry" id="audit-entry">
+      <div class="audit-entry-label">Free · No strings</div>
+      <h2 class="audit-entry-title" id="audit-modal-title">Run a free<br>UX audit.</h2>
+      <p class="audit-entry-sub">Drop in a URL. We'll score your product across usability, performance, accessibility, and conversion — in seconds.</p>
+      <div class="audit-input-row">
+        <input type="url" id="audit-url" class="audit-url-input"
+          placeholder="https://yourproduct.com" autocomplete="off" spellcheck="false" />
+        <button class="audit-run-btn" id="audit-run-btn" onclick="runAudit()">Run audit →</button>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="audit-loading" id="audit-loading">
+      <div class="audit-loading-title">Auditing your product…</div>
+      <div class="audit-steps">
+        <div class="audit-step" id="step-0">
+          <div class="audit-step-icon">✓</div>
+          <div class="audit-step-label">Fetching page</div>
+        </div>
+        <div class="audit-step" id="step-1">
+          <div class="audit-step-icon">✓</div>
+          <div class="audit-step-label">Running Lighthouse</div>
+        </div>
+        <div class="audit-step" id="step-2">
+          <div class="audit-step-icon">✓</div>
+          <div class="audit-step-label">Applying UX heuristics</div>
+        </div>
+        <div class="audit-step" id="step-3">
+          <div class="audit-step-icon">✓</div>
+          <div class="audit-step-label">Generating report</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="audit-error" id="audit-error">
+      <div class="audit-entry-label">Something went wrong</div>
+      <div class="audit-error-msg" id="audit-error-msg">We couldn't audit that URL. Try again or reach out directly.</div>
+      <div>
+        <button class="btn btn-primary" onclick="auditReset()">Try again</button>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="audit-results" id="audit-results">
+      <div class="audit-score-header">
+        <div class="audit-score-block">
+          <div class="audit-score-label">Overall UX score</div>
+          <div class="audit-score-num" id="audit-score-num">—</div>
+          <div class="audit-score-url" id="audit-score-url"></div>
+        </div>
+        <a href="https://calendly.com/hello-ruonalim" target="_blank" rel="noopener"
+           class="btn btn-primary">Book a sprint →</a>
+      </div>
+      <div class="audit-cats" id="audit-cats"></div>
+      <div class="audit-issues" id="audit-issues-wrap" style="display:none">
+        <div class="audit-issues-title">Top issues found</div>
+        <div id="audit-issues-list"></div>
+      </div>
+      <div class="audit-result-cta">
+        <button class="audit-restart" onclick="auditReset()">← Audit another URL</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1342,23 +1603,195 @@
     if (!isOpen) item.classList.add('open');
   }
 
-  /* ── Audit sheet ── */
-  var auditSheet   = document.getElementById('audit-sheet');
-  var auditBackdrop = document.getElementById('sheet-backdrop');
-  var auditPill    = document.getElementById('audit-pill');
+  /* ── Pill scroll reveal ── */
+  var pill = document.getElementById('audit-pill');
+  var heroSection = document.querySelector('.hero');
+  function updatePill() {
+    if (!pill || !heroSection) return;
+    var heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+    pill.classList.toggle('pill-visible', window.scrollY > heroBottom * 0.5);
+  }
+  window.addEventListener('scroll', updatePill, { passive: true });
+  updatePill();
+
+  /* ── Audit modal ── */
+  var auditModal = document.getElementById('audit-modal');
   function openAudit() {
-    auditSheet.classList.add('open');
-    auditBackdrop.classList.add('open');
+    auditModal.classList.add('open');
     document.body.style.overflow = 'hidden';
-    if (auditPill) auditPill.style.opacity = '0';
+    setTimeout(function() {
+      var inp = document.getElementById('audit-url');
+      if (inp) inp.focus();
+    }, 100);
   }
   function closeAudit() {
-    auditSheet.classList.remove('open');
-    auditBackdrop.classList.remove('open');
+    auditModal.classList.remove('open');
     document.body.style.overflow = '';
-    if (auditPill) auditPill.style.opacity = '1';
   }
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeAudit(); });
+
+  /* Close on backdrop click (outside inner) */
+  if (auditModal) {
+    auditModal.addEventListener('click', function(e) {
+      if (e.target === auditModal) closeAudit();
+    });
+  }
+
+  /* ── Audit enter on input ── */
+  var auditInput = document.getElementById('audit-url');
+  if (auditInput) {
+    auditInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') runAudit();
+    });
+  }
+
+  /* ── Audit runner ── */
+  var AUDIT_API = 'https://ruonalim-audit-api.vercel.app/api/audit';
+
+  function showState(id) {
+    ['audit-entry','audit-loading','audit-results','audit-error'].forEach(function(s) {
+      var el = document.getElementById(s);
+      if (el) el.classList.remove('active');
+      if (el) el.style.display = (s === 'audit-entry') ? '' : 'none';
+    });
+    var target = document.getElementById(id);
+    if (target) {
+      target.style.display = id === 'audit-entry' ? '' : 'block';
+      if (id !== 'audit-entry') target.classList.add('active');
+    }
+  }
+
+  function auditReset() {
+    showState('audit-entry');
+    var inp = document.getElementById('audit-url');
+    if (inp) { inp.value = ''; inp.focus(); }
+    var runBtn = document.getElementById('audit-run-btn');
+    if (runBtn) runBtn.disabled = false;
+  }
+
+  function animateSteps(steps, idx, cb) {
+    if (idx >= steps.length) { if (cb) cb(); return; }
+    steps.forEach(function(s, i) {
+      s.classList.remove('active','done');
+      if (i < idx)  s.classList.add('done');
+      if (i === idx) s.classList.add('active');
+    });
+    setTimeout(function() { animateSteps(steps, idx + 1, cb); }, 900);
+  }
+
+  function scoreColor(n) {
+    if (n >= 75) return 'good';
+    if (n >= 50) return 'ok';
+    return 'poor';
+  }
+
+  function renderCats(data) {
+    var catsEl = document.getElementById('audit-cats');
+    if (!catsEl) return;
+    catsEl.innerHTML = '';
+
+    /* normalise whatever the API returns */
+    var cats = [];
+    if (data.categories) {
+      Object.keys(data.categories).forEach(function(k) {
+        var c = data.categories[k];
+        var score = Math.round((c.score !== undefined ? c.score : c) * 100);
+        if (isNaN(score)) return;
+        cats.push({ name: c.title || k, score: score });
+      });
+    } else if (data.scores) {
+      Object.keys(data.scores).forEach(function(k) {
+        cats.push({ name: k, score: Math.round(data.scores[k]) });
+      });
+    }
+
+    if (!cats.length) {
+      /* fallback: show the overall score as a single tile */
+      var overall = Math.round(data.score || data.overallScore || 0);
+      cats = [{ name: 'UX', score: overall }];
+    }
+
+    cats.forEach(function(c) {
+      var col = scoreColor(c.score);
+      var barColor = col === 'good' ? '#16a34a' : col === 'ok' ? '#ca8a04' : '#dc2626';
+      catsEl.innerHTML += '<div class="audit-cat">' +
+        '<div class="audit-cat-name">' + c.name + '</div>' +
+        '<div class="audit-cat-bar-wrap"><div class="audit-cat-bar" style="width:' + c.score + '%;background:' + barColor + '"></div></div>' +
+        '<div class="audit-cat-score">' + c.score + '<span style="font-size:14px;font-weight:500;color:var(--muted)">/100</span></div>' +
+        '</div>';
+    });
+  }
+
+  function renderIssues(data) {
+    var wrap = document.getElementById('audit-issues-wrap');
+    var list = document.getElementById('audit-issues-list');
+    if (!wrap || !list) return;
+    var issues = data.issues || data.opportunities || data.diagnostics || [];
+    if (!issues.length) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    list.innerHTML = '';
+    issues.slice(0, 5).forEach(function(issue) {
+      var label = typeof issue === 'string' ? issue : (issue.title || issue.description || issue.label || JSON.stringify(issue));
+      list.innerHTML += '<div class="audit-issue"><span class="audit-issue-dot"></span>' + label + '</div>';
+    });
+  }
+
+  function runAudit() {
+    var inp = document.getElementById('audit-url');
+    var url = (inp ? inp.value : '').trim();
+    if (!url) { inp && inp.focus(); return; }
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+    var runBtn = document.getElementById('audit-run-btn');
+    if (runBtn) runBtn.disabled = true;
+
+    showState('audit-loading');
+    var steps = [0,1,2,3].map(function(i) { return document.getElementById('step-' + i); }).filter(Boolean);
+    steps.forEach(function(s) { s.classList.remove('active','done'); });
+
+    /* start step animation */
+    var stepsDone = false;
+    animateSteps(steps, 0, function() { stepsDone = true; });
+
+    fetch(AUDIT_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: url })
+    })
+    .then(function(r) {
+      if (!r.ok) throw new Error('API returned ' + r.status);
+      return r.json();
+    })
+    .then(function(data) {
+      /* wait for step animation to at least reach step 3 */
+      var show = function() {
+        var overall = Math.round(
+          data.score !== undefined ? data.score :
+          data.overallScore !== undefined ? data.overallScore :
+          data.uxScore !== undefined ? data.uxScore : 50
+        );
+        var numEl = document.getElementById('audit-score-num');
+        var urlEl = document.getElementById('audit-score-url');
+        if (numEl) {
+          numEl.textContent = overall + '/100';
+          numEl.className = 'audit-score-num ' + scoreColor(overall);
+        }
+        if (urlEl) urlEl.textContent = url;
+        renderCats(data);
+        renderIssues(data);
+        showState('audit-results');
+      };
+      if (stepsDone) { show(); }
+      else { setTimeout(show, 400); }
+    })
+    .catch(function(err) {
+      console.error('Audit error:', err);
+      var msgEl = document.getElementById('audit-error-msg');
+      if (msgEl) msgEl.textContent = 'We couldn\'t audit that URL — the page may block external requests. Try another URL or reach out directly.';
+      showState('audit-error');
+      if (runBtn) runBtn.disabled = false;
+    });
+  }
 
   /* ── Copy email ── */
   var flash = document.getElementById('copy-flash');
