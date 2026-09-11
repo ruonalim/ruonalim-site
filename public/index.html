@@ -1646,7 +1646,7 @@
   }
 
   /* ── Audit runner ── */
-  var AUDIT_API = 'https://ruonalim-audit-api.vercel.app/api/audit';
+  var AUDIT_API = '/api/audit';
 
   function showState(id) {
     ['audit-entry','audit-loading','audit-results','audit-error'].forEach(function(s) {
@@ -1787,7 +1787,8 @@
     .catch(function(err) {
       console.error('Audit error:', err);
       var msgEl = document.getElementById('audit-error-msg');
-      if (msgEl) msgEl.textContent = 'We couldn\'t audit that URL — the page may block external requests. Try another URL or reach out directly.';
+      var msg = (err && err.message) || 'Unknown error';
+      if (msgEl) msgEl.textContent = 'Audit failed: ' + msg + '. Try another URL or reach out directly.';
       showState('audit-error');
       if (runBtn) runBtn.disabled = false;
     });
