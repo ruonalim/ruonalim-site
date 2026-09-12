@@ -25,6 +25,7 @@
       background: var(--bg);
       color: var(--text);
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
       cursor: none;
       overflow-x: hidden;
     }
@@ -848,14 +849,14 @@
 
     function renderResults(data) {
       setState('results');
-      var raw = Math.round((data.overall_score || 0) * 100);
+      var raw = Math.round(data.overall_score || 0);
       var grade = data.grade || (raw >= 80 ? 'A' : raw >= 65 ? 'B' : raw >= 50 ? 'C' : 'D');
       var cats = data.categories || {};
       var issues = (data.issues || []).slice(0, 5);
       var names = { usability: 'Usability', clarity: 'Clarity', accessibility: 'Accessibility', conversion: 'Conversion' };
 
       var catHtml = Object.keys(names).map(function(k) {
-        var s = Math.round(((cats[k] || {}).score || 0) * 100);
+        var s = Math.round((cats[k] || {}).score || 0);
         return '<div class="r-cat"><div class="r-cat-name">' + names[k] + '</div>' +
           '<div class="r-bar-wrap"><div class="r-bar" style="width:0" data-w="' + s + '%"></div></div>' +
           '<div class="r-cat-val">' + s + '</div></div>';
