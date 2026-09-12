@@ -503,6 +503,58 @@
     }
     .audit-note { font-size: 12px; color: #bbb; margin-top: 11px; }
 
+    /* ── upload zone ── */
+    .audit-upload { margin-bottom: 10px; }
+    .audit-upload-zone {
+      width: 100%;
+      border: 1.5px dashed #E0E0E0;
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: #FAFAFA;
+      margin-bottom: 10px;
+    }
+    .audit-upload-zone:hover { border-color: var(--text); background: #F5F5F5; }
+    .audit-upload-zone.has-files { border-style: solid; border-color: #D0D0D0; }
+    .upload-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #EFEFEF;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+      color: var(--text);
+    }
+    .upload-label { font-size: 13px; color: var(--muted); font-weight: 500; }
+    .upload-hint { font-weight: 400; color: #BBBBBB; margin-left: 4px; }
+    .audit-thumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+    .audit-thumb {
+      position: relative;
+      width: 52px; height: 52px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1.5px solid #E8E8E8;
+    }
+    .audit-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .audit-thumb-rm {
+      position: absolute;
+      top: 2px; right: 2px;
+      width: 16px; height: 16px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 10px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      line-height: 1;
+      border: none;
+      padding: 0;
+    }
+
     @media (max-width: 768px) {
       .audit-section { padding: 80px 0; }
       .audit-layout { grid-template-columns: 1fr; gap: 44px; }
@@ -727,13 +779,21 @@
     <div class="wrap">
       <div class="audit-layout">
         <div data-r>
-          <h2 class="audit-heading">See where your product stands.</h2>
-          <p class="audit-sub">Drop in a URL. Claude visits your site and scores it across usability, clarity, and conversion. No account. No pitch call first.</p>
+          <h2 class="audit-heading">See where your website stands.</h2>
+          <p class="audit-sub">Drop in a URL or upload screenshots. Claude scores your site across usability, clarity, and conversion. No account. No pitch call first.</p>
         </div>
         <div class="audit-right" data-r data-d="1">
 
           <div class="audit-entry" id="audit-entry">
-            <input type="url" id="audit-url" class="audit-url-input" placeholder="https://yourproduct.com" autocomplete="off" spellcheck="false" />
+            <input type="url" id="audit-url" class="audit-url-input" placeholder="https://yourwebsite.com (optional)" autocomplete="off" spellcheck="false" />
+            <div class="audit-upload" id="audit-upload">
+              <input type="file" id="audit-files" accept="image/*" multiple style="display:none" onchange="handleAuditFiles(this.files)">
+              <div class="audit-upload-zone" id="upload-zone" onclick="document.getElementById('audit-files').click()">
+                <span class="upload-icon">↑</span>
+                <span class="upload-label">Upload screenshots<span class="upload-hint">up to 5, optional</span></span>
+              </div>
+              <div class="audit-thumbs" id="audit-thumbs"></div>
+            </div>
             <button class="audit-run-btn" id="audit-run-btn" onclick="runAudit()">
               Run free audit
               <span class="audit-run-icon">→</span>
@@ -856,7 +916,7 @@
       var names = { usability: 'Usability', clarity: 'Clarity', accessibility: 'Accessibility', conversion: 'Conversion' };
 
       var catHtml = Object.keys(names).map(function(k) {
-        var s = Math.round((cats[k] || {}).score || 0);
+        var s = Math.round(((cats[k] || {}).score || 0) * 100);
         return '<div class="r-cat"><div class="r-cat-name">' + names[k] + '</div>' +
           '<div class="r-bar-wrap"><div class="r-bar" style="width:0" data-w="' + s + '%"></div></div>' +
           '<div class="r-cat-val">' + s + '</div></div>';
@@ -893,9 +953,51 @@
       });
     }
 
+    // ── IMAGE UPLOAD ──
+    var _images = [];
+
+    window.handleAuditFiles = function(files) {
+      var remaining = 5 - _images.length;
+      Array.from(files).slice(0, remaining).forEach(function(file) {
+        if (!file.type.startsWith('image/')) return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          _images.push({ dataUrl: e.target.result, type: file.type });
+          renderThumbs();
+        };
+        reader.readAsDataURL(file);
+      });
+      // reset file input so same file can be re-added after removal
+      document.getElementById('audit-files').value = '';
+    };
+
+    function renderThumbs() {
+      var zone = document.getElementById('upload-zone');
+      var container = document.getElementById('audit-thumbs');
+      if (!container) return;
+      container.innerHTML = _images.map(function(img, i) {
+        return '<div class="audit-thumb">' +
+          '<img src="' + img.dataUrl + '" alt="Screenshot ' + (i+1) + '">' +
+          '<button class="audit-thumb-rm" onclick="removeThumb(' + i + ')">×</button>' +
+          '</div>';
+      }).join('');
+      if (zone) zone.classList.toggle('has-files', _images.length > 0);
+      // hide zone when 5 reached
+      zone.style.display = _images.length >= 5 ? 'none' : '';
+    }
+
+    window.removeThumb = function(i) {
+      _images.splice(i, 1);
+      renderThumbs();
+    };
+
     window.resetAudit = function() {
       clearTimeout(_t);
+      _images = [];
+      renderThumbs();
       document.getElementById('audit-url').value = '';
+      var zone = document.getElementById('upload-zone');
+      if (zone) zone.style.display = '';
       [0,1,2,3].forEach(function(i) {
         var s = document.getElementById('step-' + i);
         if (s) s.classList.remove('active','done');
@@ -906,8 +1008,12 @@
     window.runAudit = function() {
       var inp = document.getElementById('audit-url');
       var url = (inp ? inp.value : '').trim();
-      if (!url) { inp && inp.focus(); return; }
-      if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+      if (url && !/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+      if (!url && _images.length === 0) {
+        inp && inp.focus();
+        return;
+      }
 
       var btn = document.getElementById('audit-run-btn');
       if (btn) btn.disabled = true;
@@ -919,11 +1025,15 @@
       var done = false;
       animSteps(steps, 0, function() { done = true; });
 
+      var payload = {};
+      if (url) payload.url = url;
+      if (_images.length > 0) payload.images = _images.map(function(img) { return img.dataUrl; });
+
       fetch('/api/audit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: url }),
-        signal: AbortSignal.timeout ? AbortSignal.timeout(50000) : undefined
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout ? AbortSignal.timeout(60000) : undefined
       })
       .then(function(r) { return r.json(); })
       .then(function(d) {
