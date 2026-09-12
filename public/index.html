@@ -353,6 +353,7 @@
       transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
     }
     .work-item:hover .work-left { transform: translateX(24px); }
+    .work-item:hover .work-right { transform: translateX(24px); }
     .work-name {
       font-size: clamp(36px, 5.5vw, 76px);
       font-weight: 900;
@@ -388,6 +389,8 @@
       position: relative;
       z-index: 1;
       flex-shrink: 0;
+      transform: translateX(0);
+      transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
     }
     .work-context {
       font-size: 13px;
@@ -429,6 +432,8 @@
       .work-left { padding: 28px 0 4px; }
       .work-right { padding-bottom: 28px; }
       .work-arrow { display: none; }
+      .work-item:hover .work-right { transform: translateX(0); }
+      .work-desc { padding-left: 2px; }
     }
 
     /* ───────────────────────────────────
