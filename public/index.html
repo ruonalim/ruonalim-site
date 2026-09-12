@@ -292,15 +292,21 @@
 
     .work-list { }
     .work-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .work-content {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 40px;
       padding: 0;
-      overflow: hidden;
       position: relative;
-      transition: padding 0.45s cubic-bezier(0.22,1,0.36,1);
+      z-index: 1;
+      transform: translateX(0);
+      transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
     }
+    .work-item:hover .work-content { transform: translateX(24px); }
 
     .work-bg {
       position: absolute;
@@ -343,17 +349,11 @@
     .work-item--shimmer:hover .work-arrow { color: var(--accent) !important; transform: rotate(-45deg); }
 
     .work-left {
-      position: relative;
-      z-index: 1;
       padding: 36px 0;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      transform: translateX(0);
-      transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
     }
-    .work-item:hover .work-left { transform: translateX(24px); }
-    .work-item:hover .work-right { transform: translateX(24px); }
     .work-name {
       font-size: clamp(36px, 5.5vw, 76px);
       font-weight: 900;
@@ -386,11 +386,7 @@
       display: flex;
       align-items: center;
       gap: 24px;
-      position: relative;
-      z-index: 1;
       flex-shrink: 0;
-      transform: translateX(0);
-      transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
     }
     .work-context {
       font-size: 13px;
@@ -428,11 +424,10 @@
 
     @media (max-width: 768px) {
       .work { padding-bottom: 80px; }
-      .work-item { flex-direction: column; align-items: flex-start; gap: 12px; padding: 0; }
+      .work-content { flex-direction: column; align-items: flex-start; gap: 12px; }
       .work-left { padding: 28px 0 4px; }
       .work-right { padding-bottom: 28px; }
       .work-arrow { display: none; }
-      .work-desc { padding-left: 2px; }
     }
 
     /* ───────────────────────────────────
@@ -680,39 +675,45 @@
 
         <div class="work-item" data-r>
           <div class="work-bg"></div>
-          <div class="work-left">
-            <span class="work-name">Big Ticket</span>
-            <span class="work-desc">Redesigned the full purchase and responsible play experience for the UAE's biggest lottery app.</span>
-          </div>
-          <div class="work-right">
-            <span class="work-context">Lottery &amp; Raffle · UAE</span>
-            <span class="work-phase">1→N</span>
-            <span class="work-arrow">↗</span>
+          <div class="work-content">
+            <div class="work-left">
+              <span class="work-name">Big Ticket</span>
+              <span class="work-desc">Redesigned the full purchase and responsible play experience for the UAE's biggest lottery app.</span>
+            </div>
+            <div class="work-right">
+              <span class="work-context">Lottery &amp; Raffle · UAE</span>
+              <span class="work-phase">1→N</span>
+              <span class="work-arrow">↗</span>
+            </div>
           </div>
         </div>
 
         <div class="work-item" data-r data-d="1">
           <div class="work-bg"></div>
-          <div class="work-left">
-            <span class="work-name">Northladder</span>
-            <span class="work-desc">Designed the device trade-in widget powering Amazon, Vodafone, Samsung, and Apple trade-in web experiences across MENA.</span>
-          </div>
-          <div class="work-right">
-            <span class="work-context">Device Trade-In · MENA</span>
-            <span class="work-phase">0→1</span>
-            <span class="work-arrow">↗</span>
+          <div class="work-content">
+            <div class="work-left">
+              <span class="work-name">Northladder</span>
+              <span class="work-desc">Designed the device trade-in widget powering Amazon, Vodafone, Samsung, and Apple trade-in web experiences across MENA.</span>
+            </div>
+            <div class="work-right">
+              <span class="work-context">Device Trade-In · MENA</span>
+              <span class="work-phase">0→1</span>
+              <span class="work-arrow">↗</span>
+            </div>
           </div>
         </div>
 
         <div class="work-item work-item--shimmer" data-r data-d="2">
           <div class="work-bg"></div>
-          <div class="work-left">
-            <span class="work-name" style="color:var(--muted);">Your project</span>
-            <span class="work-desc">We're taking on new work. Tell us where you are — 0→1 or 1→N — and we'll take it from there.</span>
-          </div>
-          <div class="work-right">
-            <span class="work-context">0→1 or 1→N</span>
-            <span class="work-arrow" style="border-color:transparent;">↗</span>
+          <div class="work-content">
+            <div class="work-left">
+              <span class="work-name" style="color:var(--muted);">Your project</span>
+              <span class="work-desc">We're taking on new work. Tell us where you are — 0→1 or 1→N — and we'll take it from there.</span>
+            </div>
+            <div class="work-right">
+              <span class="work-context">0→1 or 1→N</span>
+              <span class="work-arrow" style="border-color:transparent;">↗</span>
+            </div>
           </div>
         </div>
 
