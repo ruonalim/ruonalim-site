@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RUONALIM — Product Design Studio</title>
-  <meta name="description" content="Product design for founders and product teams. We take ideas from 0→1 and products from 1→N." />
+  <meta name="description" content="Product design for founders and product teams. 0 to 1, or 1 to N." />
   <meta name="theme-color" content="#FFFFFF" />
   <link rel="canonical" href="https://ruonalim.com" />
-  <meta property="og:title" content="RUONALIM — Product Design Studio" />
+  <meta property="og:title" content="RUONALIM" />
   <meta property="og:description" content="Product design for founders and product teams." />
   <meta property="og:url" content="https://ruonalim.com" />
   <meta property="og:type" content="website" />
@@ -17,8 +17,8 @@
     :root {
       --accent: #0044E4;
       --text:   #111111;
-      --muted:  #888888;
-      --border: #E8E8E8;
+      --muted:  #909090;
+      --border: #EBEBEB;
       --bg:     #FFFFFF;
     }
 
@@ -34,7 +34,6 @@
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; }
 
-    /* ── LAYOUT ── */
     .wrap {
       max-width: 1200px;
       margin: 0 auto;
@@ -42,23 +41,22 @@
     }
     @media (max-width: 768px) { .wrap { padding: 0 24px; } }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fade-up {
-      from { opacity: 0; transform: translateY(20px); }
+    /* ── ENTRY ANIMATIONS ── */
+    @keyframes up {
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     [data-anim] {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(22px);
+      transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    [data-anim].visible { opacity: 1; transform: none; }
-    [data-delay="1"] { transition-delay: 0.1s; }
-    [data-delay="2"] { transition-delay: 0.2s; }
-    [data-delay="3"] { transition-delay: 0.3s; }
-    [data-delay="4"] { transition-delay: 0.4s; }
+    [data-anim].in { opacity: 1; transform: none; }
+    [data-delay="1"] { transition-delay: 0.12s; }
+    [data-delay="2"] { transition-delay: 0.22s; }
+    [data-delay="3"] { transition-delay: 0.34s; }
 
     /* ───────────────────────────────────
        NAV
@@ -67,46 +65,42 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 28px 0;
-      animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
+      padding: 30px 0;
+      animation: up 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
     }
     .nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      text-decoration: none;
-    }
-    .nav-btn {
+    .nav-cta {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
       background: var(--text);
       color: #fff;
       border: none;
       border-radius: 980px;
-      padding: 10px 20px;
+      padding: 10px 18px 10px 20px;
       font-size: 13px;
       font-weight: 600;
       letter-spacing: -0.01em;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: background 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .nav-btn:hover { background: #2a2a2a; transform: translateY(-1px); }
-    .nav-btn-icon {
-      width: 22px; height: 22px;
+    .nav-cta:hover { background: #222; transform: translateY(-1px); }
+    .nav-cta-arrow {
+      width: 24px; height: 24px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.14);
       display: flex; align-items: center; justify-content: center;
-      font-size: 11px;
-      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      font-size: 12px;
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .nav-btn:hover .nav-btn-icon { transform: translateX(2px) translateY(-1px); }
+    .nav-cta:hover .nav-cta-arrow { transform: translateX(2px) translateY(-1px); }
 
     /* ───────────────────────────────────
        HERO
@@ -116,169 +110,148 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      padding-top: 120px;
     }
     .hero-body {
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 64px 0 72px;
-    }
-    .hero-eyebrow {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 40px;
-      animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+      justify-content: flex-end;
+      padding-bottom: 80px;
+      padding-top: 160px;
     }
     .hero-headline {
-      font-size: clamp(56px, 9.5vw, 136px);
+      font-size: clamp(60px, 10.5vw, 148px);
       font-weight: 900;
-      letter-spacing: -0.05em;
-      line-height: 0.95;
+      letter-spacing: -0.052em;
+      line-height: 0.93;
       color: var(--text);
-      max-width: 900px;
-      animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both;
-    }
-    .hero-headline em {
-      font-style: normal;
-      color: var(--accent);
+      animation: up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
     }
     .hero-sub {
-      font-size: clamp(16px, 1.6vw, 20px);
+      font-size: clamp(16px, 1.5vw, 19px);
       color: var(--muted);
-      line-height: 1.6;
-      max-width: 400px;
-      margin-top: 48px;
-      animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+      line-height: 1.65;
+      max-width: 380px;
+      margin-top: 52px;
+      animation: up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
     }
-
-    .hero-foot {
+    .hero-divider {
+      border: none;
       border-top: 1px solid var(--border);
-      animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+      margin-top: 72px;
+      animation: up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
     }
-    .hero-foot-inner {
+    .hero-foot {
+      padding: 26px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 28px 0;
-      gap: 24px;
+      animation: up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
     }
-    .hero-scroll-hint {
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .hero-scroll-hint::before {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 1px;
-      background: var(--border);
-    }
-    .hero-clients-hint {
-      font-size: 12px;
+    .hero-foot-note {
+      font-size: 13px;
       color: var(--muted);
     }
     @media (max-width: 768px) {
-      .hero-headline { font-size: clamp(48px, 13vw, 80px); }
+      .hero-body { padding-bottom: 56px; padding-top: 130px; }
       .hero-sub { max-width: 100%; }
-      .hero-clients-hint { display: none; }
+      .hero-foot-clients { display: none; }
     }
 
     /* ───────────────────────────────────
-       APPROACH — 0→1 / 1→N
+       APPROACH
     ─────────────────────────────────── */
     .approach {
       border-top: 1px solid var(--border);
-      padding: 140px 0;
-    }
-    .approach-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 32px;
-      margin-bottom: 100px;
-    }
-    .approach-label {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .approach-note {
-      font-size: 15px;
-      color: var(--muted);
-      max-width: 320px;
-      text-align: right;
-      line-height: 1.6;
+      padding: 130px 0 140px;
     }
     .approach-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 58% 42%;
       gap: 0;
       border-top: 1px solid var(--border);
+      margin-top: 72px;
+    }
+    .approach-intro {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      color: var(--text);
+      max-width: 640px;
+    }
+    .approach-intro-sub {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 440px;
+      margin-top: 20px;
     }
     .approach-col {
-      padding: 72px 0;
-      padding-right: 80px;
+      padding: 64px 80px 64px 0;
       border-right: 1px solid var(--border);
     }
     .approach-col:last-child {
-      padding-left: 80px;
-      padding-right: 0;
+      padding: 64px 0 64px 72px;
       border-right: none;
     }
     .approach-mark {
-      font-size: clamp(72px, 9vw, 120px);
+      font-size: clamp(80px, 10vw, 130px);
       font-weight: 900;
       letter-spacing: -0.06em;
       line-height: 1;
       color: var(--text);
-      margin-bottom: 40px;
+      margin-bottom: 36px;
     }
-    .approach-mark span {
+    .approach-mark sup {
+      font-size: 0.45em;
+      letter-spacing: -0.03em;
+      vertical-align: super;
       color: var(--accent);
     }
+    .approach-mark .arr {
+      color: var(--accent);
+      font-size: 0.8em;
+      letter-spacing: -0.04em;
+    }
+    .approach-term {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
     .approach-title {
-      font-size: clamp(20px, 2.2vw, 28px);
+      font-size: clamp(18px, 2vw, 24px);
       font-weight: 800;
       letter-spacing: -0.03em;
       color: var(--text);
-      margin-bottom: 18px;
-      line-height: 1.1;
-    }
-    .approach-def {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 18px;
+      margin-bottom: 16px;
+      line-height: 1.15;
     }
     .approach-body {
-      font-size: 16px;
+      font-size: 15px;
       color: var(--muted);
-      line-height: 1.7;
-      max-width: 380px;
+      line-height: 1.72;
+      max-width: 340px;
     }
+
+    /* make the 1→N col feel smaller/lighter */
+    .approach-col:last-child .approach-mark {
+      font-size: clamp(64px, 7.5vw, 100px);
+    }
+    .approach-col:last-child .approach-body {
+      max-width: 280px;
+    }
+
     @media (max-width: 768px) {
       .approach { padding: 80px 0; }
-      .approach-header { flex-direction: column; align-items: flex-start; }
-      .approach-note { text-align: left; max-width: 100%; }
-      .approach-header { margin-bottom: 56px; }
-      .approach-grid { grid-template-columns: 1fr; }
-      .approach-col { padding: 56px 0; padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); }
-      .approach-col:last-child { padding-left: 0; border-bottom: none; }
+      .approach-grid { grid-template-columns: 1fr; margin-top: 48px; }
+      .approach-col { padding: 56px 0; border-right: none; border-bottom: 1px solid var(--border); }
+      .approach-col:last-child { padding: 56px 0 0; border-bottom: none; }
+      .approach-col:last-child .approach-mark { font-size: clamp(64px, 14vw, 90px); }
+      .approach-body, .approach-col:last-child .approach-body { max-width: 100%; }
     }
 
     /* ───────────────────────────────────
@@ -286,21 +259,14 @@
     ─────────────────────────────────── */
     .work {
       border-top: 1px solid var(--border);
-      padding: 140px 0;
+      padding: 130px 0;
     }
-    .work-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 32px;
-      margin-bottom: 80px;
-    }
-    .work-label {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+    .work-preamble {
+      font-size: clamp(14px, 1.2vw, 16px);
       color: var(--muted);
+      max-width: 340px;
+      line-height: 1.65;
+      margin-bottom: 72px;
     }
     .work-list { border-top: 1px solid var(--border); }
     .work-item {
@@ -308,143 +274,128 @@
       align-items: baseline;
       justify-content: space-between;
       gap: 40px;
-      padding: 40px 0;
+      padding: 36px 0;
       border-bottom: 1px solid var(--border);
-      transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      cursor: default;
     }
-    .work-item:hover { padding-left: 16px; }
     .work-name {
-      font-size: clamp(28px, 3.8vw, 52px);
+      font-size: clamp(30px, 4.2vw, 58px);
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 1;
       color: var(--text);
+      transition: color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .work-meta {
+    .work-item:hover .work-name { color: var(--accent); }
+    .work-right {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 28px;
       flex-shrink: 0;
     }
-    .work-type {
+    .work-context {
       font-size: 13px;
       color: var(--muted);
       font-weight: 500;
     }
-    .work-scope {
-      font-size: 12px;
-      font-weight: 600;
+    .work-phase {
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--accent);
     }
     @media (max-width: 768px) {
       .work { padding: 80px 0; }
-      .work-item { flex-direction: column; gap: 12px; }
-      .work-item:hover { padding-left: 0; }
-      .work-meta { gap: 16px; }
+      .work-item { flex-direction: column; gap: 10px; padding: 28px 0; }
+      .work-right { gap: 16px; }
     }
 
     /* ───────────────────────────────────
-       AUDIT CTA
+       AUDIT
     ─────────────────────────────────── */
     .audit-section {
       border-top: 1px solid var(--border);
-      padding: 140px 0;
+      padding: 130px 0;
     }
-    .audit-section-inner {
+    .audit-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 100px;
       align-items: start;
     }
-    .audit-section-left { }
-    .audit-section-label {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-    .audit-section-heading {
-      font-size: clamp(36px, 4.5vw, 60px);
+    .audit-heading {
+      font-size: clamp(32px, 4vw, 52px);
       font-weight: 900;
       letter-spacing: -0.045em;
       line-height: 1.0;
       color: var(--text);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
-    .audit-section-sub {
-      font-size: 17px;
+    .audit-sub {
+      font-size: 16px;
       color: var(--muted);
       line-height: 1.65;
     }
-    .audit-section-right {
-      padding-top: 8px;
-    }
-    .audit-form-label {
+    .audit-right { padding-top: 6px; }
+    .audit-field-label {
       font-size: 12px;
-      font-weight: 500;
       color: var(--muted);
-      margin-bottom: 16px;
-      letter-spacing: 0.04em;
-    }
-    .audit-form-row {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      margin-bottom: 12px;
+      font-weight: 500;
     }
     .audit-url-input {
       width: 100%;
       border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 20px;
+      border-radius: 10px;
+      padding: 15px 18px;
       font-family: inherit;
       font-size: 15px;
       color: var(--text);
       background: #fff;
       outline: none;
-      transition: border-color 0.18s;
+      transition: border-color 0.2s;
+      margin-bottom: 10px;
+      display: block;
     }
-    .audit-url-input:focus { border-color: var(--text); }
+    .audit-url-input:focus { border-color: #aaa; }
     .audit-url-input::placeholder { color: #ccc; }
     .audit-run-btn {
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
       background: var(--text);
       color: #fff;
       border: none;
-      border-radius: 12px;
-      padding: 16px 20px;
+      border-radius: 10px;
+      padding: 15px 18px;
       font-family: inherit;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: background 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .audit-run-btn:hover { background: #2a2a2a; transform: translateY(-1px); }
-    .audit-run-btn:disabled { opacity: 0.5; pointer-events: none; }
-    .audit-btn-icon {
-      width: 28px; height: 28px;
+    .audit-run-btn:hover { background: #222; transform: translateY(-1px); }
+    .audit-run-btn:disabled { opacity: 0.45; pointer-events: none; }
+    .audit-run-icon {
+      width: 26px; height: 26px;
       border-radius: 50%;
       background: rgba(255,255,255,0.12);
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
+      font-size: 13px;
     }
-    .audit-disclaimer {
+    .audit-small {
       font-size: 12px;
       color: #bbb;
-      margin-top: 14px;
+      margin-top: 12px;
     }
     @media (max-width: 768px) {
       .audit-section { padding: 80px 0; }
-      .audit-section-inner { grid-template-columns: 1fr; gap: 48px; }
+      .audit-layout { grid-template-columns: 1fr; gap: 44px; }
     }
 
-    /* ── AUDIT STATES ── */
+    /* ── AUDIT STATE VISIBILITY ── */
     .audit-entry { display: block; }
     .audit-entry.hidden { display: none; }
     .audit-loading { display: none; }
@@ -454,176 +405,167 @@
 
     /* loading */
     .audit-loading-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text);
-      margin-bottom: 28px;
-      letter-spacing: -0.01em;
+      margin-bottom: 24px;
     }
-    .audit-steps { display: flex; flex-direction: column; gap: 14px; }
+    .audit-steps { display: flex; flex-direction: column; gap: 12px; }
     .audit-step {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       font-size: 14px;
       color: var(--muted);
-      opacity: 0.4;
-      transition: opacity 0.4s;
+      opacity: 0.38;
+      transition: opacity 0.35s;
     }
     .audit-step.active { opacity: 1; color: var(--text); }
-    .audit-step.done { opacity: 0.6; }
-    .audit-step-icon {
-      width: 20px; height: 20px;
+    .audit-step.done { opacity: 0.55; }
+    .audit-step-dot {
+      width: 18px; height: 18px;
       border-radius: 50%;
       border: 1.5px solid var(--border);
       flex-shrink: 0;
       position: relative;
-      transition: all 0.3s;
+      transition: all 0.28s;
     }
-    .audit-step.active .audit-step-icon {
+    .audit-step.active .audit-step-dot {
       border-color: var(--accent);
       background: var(--accent);
-      animation: pulse-ring 1.4s ease infinite;
+      animation: pulse 1.5s ease infinite;
     }
-    .audit-step.done .audit-step-icon {
+    .audit-step.done .audit-step-dot {
       border-color: #34d399;
       background: #34d399;
     }
-    .audit-step.done .audit-step-icon::after {
+    .audit-step.done .audit-step-dot::after {
       content: '';
       position: absolute;
-      width: 6px; height: 4px;
+      width: 5px; height: 3px;
       border-left: 1.5px solid #fff;
       border-bottom: 1.5px solid #fff;
-      top: 5px; left: 5px;
+      top: 5px; left: 4.5px;
       transform: rotate(-45deg);
     }
-    @keyframes pulse-ring {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(0, 68, 228, 0.35); }
-      50% { box-shadow: 0 0 0 5px rgba(0, 68, 228, 0); }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,68,228,0.3); }
+      50% { box-shadow: 0 0 0 5px rgba(0,68,228,0); }
     }
 
     /* results */
-    .audit-score-row {
+    .r-score {
       display: flex;
       align-items: baseline;
-      gap: 14px;
-      margin-bottom: 24px;
+      gap: 12px;
+      margin-bottom: 20px;
     }
-    .audit-score-num {
-      font-size: 56px;
+    .r-score-num {
+      font-size: 52px;
       font-weight: 900;
       letter-spacing: -0.05em;
       line-height: 1;
       color: var(--text);
     }
-    .audit-score-grade {
-      font-size: 20px;
-      font-weight: 700;
+    .r-score-denom {
+      font-size: 18px;
+      font-weight: 600;
       color: var(--muted);
     }
-    .audit-summary {
-      font-size: 15px;
+    .r-summary {
+      font-size: 14px;
       color: var(--muted);
       line-height: 1.7;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
-    .audit-cats {
+    .r-cats {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 28px;
+      gap: 12px;
+      margin-bottom: 24px;
     }
-    .audit-cat {
-      padding: 16px;
+    .r-cat {
+      padding: 14px;
       border: 1.5px solid var(--border);
-      border-radius: 10px;
+      border-radius: 8px;
     }
-    .audit-cat-name {
-      font-size: 11px;
+    .r-cat-name {
+      font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
       margin-bottom: 8px;
     }
-    .audit-cat-bar-wrap {
-      height: 3px;
+    .r-bar-wrap {
+      height: 2px;
       background: var(--border);
       border-radius: 2px;
       overflow: hidden;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
     }
-    .audit-cat-bar {
+    .r-bar {
       height: 100%;
       background: var(--accent);
       border-radius: 2px;
-      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: width 0.85s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .audit-cat-score {
-      font-size: 13px;
+    .r-cat-val {
+      font-size: 12px;
       font-weight: 700;
       color: var(--text);
     }
-    .audit-issues { }
-    .audit-issues-title {
-      font-size: 11px;
+    .r-issues-label {
+      font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
-    .audit-issue {
-      font-size: 14px;
+    .r-issue {
+      font-size: 13px;
       color: var(--text);
       line-height: 1.6;
-      padding: 12px 0;
+      padding: 10px 0;
       border-top: 1px solid var(--border);
       display: flex;
       gap: 10px;
-      align-items: flex-start;
     }
-    .audit-issue::before {
-      content: '—';
-      color: var(--muted);
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .audit-cta-link {
+    .r-issue::before { content: '–'; color: var(--muted); flex-shrink: 0; }
+    .r-deeper {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 24px;
-      font-size: 14px;
+      gap: 7px;
+      margin-top: 20px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--accent);
-      text-decoration: none;
       transition: gap 0.2s;
     }
-    .audit-cta-link:hover { gap: 12px; }
-    .audit-restart-btn {
+    .r-deeper:hover { gap: 11px; }
+    .r-restart {
+      display: block;
       background: none;
       border: 1.5px solid var(--border);
       border-radius: 980px;
-      padding: 8px 16px;
+      padding: 7px 14px;
       font-family: inherit;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--muted);
       cursor: pointer;
-      margin-top: 8px;
-      display: block;
+      margin-top: 10px;
       transition: border-color 0.18s, color 0.18s;
     }
-    .audit-restart-btn:hover { border-color: var(--text); color: var(--text); }
+    .r-restart:hover { border-color: var(--text); color: var(--text); }
 
     /* ───────────────────────────────────
        FOOTER
     ─────────────────────────────────── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 56px 0;
+      padding: 48px 0;
     }
     .footer-inner {
       display: flex;
@@ -632,60 +574,44 @@
       gap: 24px;
       flex-wrap: wrap;
     }
-    .footer-left {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
     .footer-copy {
       font-size: 13px;
       color: var(--muted);
     }
-    .footer-email {
-      font-size: 13px;
-      color: var(--muted);
-      transition: color 0.18s;
-    }
-    .footer-email:hover { color: var(--text); }
-    .footer-right {
+    .footer-links {
       display: flex;
       gap: 28px;
     }
     .footer-link {
       font-size: 13px;
       color: var(--muted);
-      text-decoration: none;
       transition: color 0.18s;
     }
     .footer-link:hover { color: var(--text); }
     @media (max-width: 768px) {
-      footer { padding: 48px 0; }
-      .footer-inner { flex-direction: column; gap: 32px; }
-      .footer-right { gap: 20px; }
+      footer { padding: 40px 0; }
+      .footer-inner { flex-direction: column; gap: 24px; align-items: flex-start; }
     }
 
-    /* ── COPY TOAST ── */
-    #copy-flash {
+    /* ── TOAST ── */
+    #toast {
       position: fixed;
       bottom: 24px; left: 50%;
-      transform: translateX(-50%) translateY(12px);
+      transform: translateX(-50%) translateY(10px);
       background: var(--text);
       color: #fff;
-      padding: 12px 20px;
-      border-radius: 12px;
+      padding: 11px 18px;
+      border-radius: 10px;
       font-size: 13px;
       font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      display: flex; align-items: center; gap: 8px;
       opacity: 0;
       pointer-events: none;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
       z-index: 999;
-      white-space: nowrap;
     }
-    #copy-flash.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
-    .cf-dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; flex-shrink: 0; }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast-dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; }
   </style>
 </head>
 <body>
@@ -694,16 +620,16 @@
   <nav>
     <div class="wrap">
       <div class="nav-inner">
-        <a href="/" class="nav-logo" aria-label="RUONALIM">
-          <svg viewBox="0 0 200 36" height="28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block;">
-            <text y="28" font-family="'Switzer', system-ui, sans-serif" font-weight="900" font-size="32" letter-spacing="-1.2" fill="#0044E4">r.</text>
-            <line x1="52" y1="6" x2="52" y2="30" stroke="rgba(0,0,0,0.15)" stroke-width="1.2"/>
-            <text x="62" y="28" font-family="'Switzer', system-ui, sans-serif" font-weight="700" font-size="22" letter-spacing="-0.6" fill="#111111">ruonalim.</text>
+        <a href="/" aria-label="RUONALIM">
+          <svg viewBox="0 0 200 36" height="27" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block;">
+            <text y="28" font-family="'Switzer',system-ui,sans-serif" font-weight="900" font-size="32" letter-spacing="-1.2" fill="#0044E4">r.</text>
+            <line x1="52" y1="7" x2="52" y2="29" stroke="rgba(0,0,0,0.13)" stroke-width="1.2"/>
+            <text x="62" y="28" font-family="'Switzer',system-ui,sans-serif" font-weight="700" font-size="22" letter-spacing="-0.6" fill="#111111">ruonalim.</text>
           </svg>
         </a>
-        <a href="https://cal.com/ruonalim" target="_blank" rel="noopener" class="nav-btn">
-          Book a call
-          <span class="nav-btn-icon">↗</span>
+        <a href="https://cal.com/ruonalim" target="_blank" rel="noopener" class="nav-cta">
+          Let's talk
+          <span class="nav-cta-arrow">↗</span>
         </a>
       </div>
     </div>
@@ -711,22 +637,16 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="wrap" style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="wrap" style="flex:1;display:flex;flex-direction:column;">
       <div class="hero-body">
-        <p class="hero-eyebrow">Product Design Studio</p>
-        <h1 class="hero-headline">
-          We get your<br>product right.
-        </h1>
+        <h1 class="hero-headline">We ship<br>products.</h1>
         <p class="hero-sub">
-          From idea to first version, or from first version to scale — we know the difference and we've done both.
+          From idea to first product, or first product to scale. The craft is different at each stage. We know which one you need.
         </p>
-      </div>
-    </div>
-    <div class="hero-foot">
-      <div class="wrap">
-        <div class="hero-foot-inner">
-          <span class="hero-scroll-hint">Scroll to explore</span>
-          <span class="hero-clients-hint">Big Ticket · Northladder · and more</span>
+        <hr class="hero-divider" />
+        <div class="hero-foot">
+          <span class="hero-foot-note">Product design studio, Dubai</span>
+          <span class="hero-foot-note hero-foot-clients">Big Ticket &nbsp;·&nbsp; Northladder</span>
         </div>
       </div>
     </div>
@@ -735,25 +655,25 @@
   <!-- APPROACH -->
   <section class="approach">
     <div class="wrap">
-      <div class="approach-header" data-anim>
-        <span class="approach-label">How we work</span>
-        <p class="approach-note">We ask one question first: where are you? Then we work accordingly.</p>
+      <div data-anim>
+        <h2 class="approach-intro">Two types of work. Most studios don't know the difference.</h2>
+        <p class="approach-intro-sub">We ask one question before we start: where are you? Everything follows from that.</p>
       </div>
       <div class="approach-grid">
         <div class="approach-col" data-anim data-delay="1">
-          <div class="approach-mark">0<span>→</span>1</div>
-          <p class="approach-def">Zero to one</p>
-          <h3 class="approach-title">Your idea. First product.</h3>
+          <div class="approach-mark">0<span class="arr">→</span>1</div>
+          <p class="approach-term">Zero to one</p>
+          <h3 class="approach-title">Your idea becomes a real product.</h3>
           <p class="approach-body">
-            You have a concept, a vision, maybe a deck. We turn it into something real — designed, tested, and ready to put in front of your first users. Research, UX, UI, prototype. Everything you need to ship.
+            You have a direction. Maybe a deck, maybe just a conversation you keep having. We design the thing — flows, interfaces, a prototype you can put in front of real users. No process theatre. Just work.
           </p>
         </div>
         <div class="approach-col" data-anim data-delay="2">
-          <div class="approach-mark">1<span>→</span>N</div>
-          <p class="approach-def">One to many</p>
-          <h3 class="approach-title">Your product. Built to scale.</h3>
+          <div class="approach-mark">1<span class="arr">→</span>N</div>
+          <p class="approach-term">One to many</p>
+          <h3 class="approach-title">Your product builds to scale.</h3>
           <p class="approach-body">
-            You have users. You have traction. Now the product needs to grow with you — faster flows, cleaner systems, better conversion, design that scales. We take what's working and make it stronger.
+            You have users. The cracks are showing. We come in, audit what exists, fix what's broken, and design a system that grows with you.
           </p>
         </div>
       </div>
@@ -763,29 +683,28 @@
   <!-- WORK -->
   <section class="work">
     <div class="wrap">
-      <div class="work-header" data-anim>
-        <span class="work-label">Selected work</span>
-      </div>
+      <p class="work-preamble" data-anim>
+        We've worked across fintech, lottery, consumer apps and device trade-in. Both 0→1 builds and 1→N redesigns.
+      </p>
       <div class="work-list">
-        <div class="work-item" data-anim data-delay="1">
+        <div class="work-item" data-anim>
           <span class="work-name">Big Ticket</span>
-          <div class="work-meta">
-            <span class="work-type">Lottery & Raffle · UAE</span>
-            <span class="work-scope">1→N</span>
+          <div class="work-right">
+            <span class="work-context">Lottery &amp; Raffle · UAE</span>
+            <span class="work-phase">1→N</span>
+          </div>
+        </div>
+        <div class="work-item" data-anim data-delay="1">
+          <span class="work-name">Northladder</span>
+          <div class="work-right">
+            <span class="work-context">Device Trade-In · MENA</span>
+            <span class="work-phase">0→1</span>
           </div>
         </div>
         <div class="work-item" data-anim data-delay="2">
-          <span class="work-name">Northladder</span>
-          <div class="work-meta">
-            <span class="work-type">Device Trade-In · MENA</span>
-            <span class="work-scope">0→1</span>
-          </div>
-        </div>
-        <div class="work-item" data-anim data-delay="3">
-          <span class="work-name">Available</span>
-          <div class="work-meta">
-            <span class="work-type">Your project here</span>
-            <span class="work-scope">0→1 or 1→N</span>
+          <span class="work-name">Your project</span>
+          <div class="work-right">
+            <span class="work-context">0→1 or 1→N</span>
           </div>
         </div>
       </div>
@@ -795,42 +714,39 @@
   <!-- AUDIT -->
   <section class="audit-section">
     <div class="wrap">
-      <div class="audit-section-inner">
-        <div class="audit-section-left" data-anim>
-          <p class="audit-section-label">Free · AI-powered</p>
-          <h2 class="audit-section-heading">See how your product scores.</h2>
-          <p class="audit-section-sub">Drop in a URL. Claude visits your site and scores it across usability, clarity, accessibility, and conversion.</p>
+      <div class="audit-layout">
+        <div data-anim>
+          <h2 class="audit-heading">See where your product stands.</h2>
+          <p class="audit-sub">
+            Drop in a URL. Claude visits your site and scores it across usability, clarity, accessibility, and conversion. No account. No pitch call first.
+          </p>
         </div>
-        <div class="audit-section-right" data-anim data-delay="1">
+        <div class="audit-right" data-anim data-delay="1">
 
           <!-- ENTRY -->
           <div class="audit-entry" id="audit-entry">
-            <p class="audit-form-label">Your product URL</p>
-            <div class="audit-form-row">
-              <input type="url" id="audit-url" class="audit-url-input" placeholder="https://yourproduct.com" autocomplete="off" spellcheck="false" />
-              <button class="audit-run-btn" id="audit-run-btn" onclick="runAudit()">
-                Run free audit
-                <span class="audit-btn-icon">→</span>
-              </button>
-            </div>
-            <p class="audit-disclaimer">No account needed. Results in ~30 seconds.</p>
+            <p class="audit-field-label">Your product URL</p>
+            <input type="url" id="audit-url" class="audit-url-input" placeholder="https://yourproduct.com" autocomplete="off" spellcheck="false" />
+            <button class="audit-run-btn" id="audit-run-btn" onclick="runAudit()">
+              Run audit
+              <span class="audit-run-icon">→</span>
+            </button>
+            <p class="audit-small">Results in ~30 seconds.</p>
           </div>
 
           <!-- LOADING -->
           <div class="audit-loading" id="audit-loading">
             <p class="audit-loading-title">Auditing your product…</p>
             <div class="audit-steps">
-              <div class="audit-step" id="step-0"><div class="audit-step-icon"></div><span>Visiting your site</span></div>
-              <div class="audit-step" id="step-1"><div class="audit-step-icon"></div><span>Applying UX heuristics</span></div>
-              <div class="audit-step" id="step-2"><div class="audit-step-icon"></div><span>Checking accessibility &amp; SEO</span></div>
-              <div class="audit-step" id="step-3"><div class="audit-step-icon"></div><span>Generating your report</span></div>
+              <div class="audit-step" id="step-0"><div class="audit-step-dot"></div><span>Visiting your site</span></div>
+              <div class="audit-step" id="step-1"><div class="audit-step-dot"></div><span>Applying UX heuristics</span></div>
+              <div class="audit-step" id="step-2"><div class="audit-step-dot"></div><span>Checking accessibility &amp; SEO</span></div>
+              <div class="audit-step" id="step-3"><div class="audit-step-dot"></div><span>Generating your report</span></div>
             </div>
           </div>
 
           <!-- RESULTS -->
-          <div class="audit-results" id="audit-results">
-            <!-- filled by JS -->
-          </div>
+          <div class="audit-results" id="audit-results"></div>
 
         </div>
       </div>
@@ -841,107 +757,97 @@
   <footer>
     <div class="wrap">
       <div class="footer-inner">
-        <div class="footer-left">
-          <span class="footer-copy">© 2025 RUONALIM</span>
-          <a href="mailto:hello@ruonalim.com" class="footer-email">hello@ruonalim.com</a>
-        </div>
-        <div class="footer-right">
-          <a href="https://cal.com/ruonalim" target="_blank" rel="noopener" class="footer-link">Book a call</a>
+        <span class="footer-copy">© 2025 RUONALIM</span>
+        <div class="footer-links">
+          <a href="mailto:hello@ruonalim.com" class="footer-link" id="email-link">hello@ruonalim.com</a>
+          <a href="https://cal.com/ruonalim" target="_blank" rel="noopener" class="footer-link">Let's talk</a>
           <a href="https://linkedin.com/company/ruonalim" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- TOAST -->
-  <div id="copy-flash">
-    <span class="cf-dot"></span>
-    Email copied
-  </div>
+  <div id="toast"><span class="toast-dot"></span> Email copied</div>
 
   <script>
-    // ── SCROLL ANIMATIONS ──
-    var observer = new IntersectionObserver(function(entries) {
+    // Scroll reveals
+    var io = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('[data-anim]').forEach(function(el) { observer.observe(el); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('[data-anim]').forEach(function(el) { io.observe(el); });
 
-    // ── AUDIT HELPERS ──
-    function auditSetState(state) {
-      document.getElementById('audit-entry').classList.toggle('hidden', state !== 'entry');
-      document.getElementById('audit-loading').classList.toggle('active', state === 'loading');
-      document.getElementById('audit-results').classList.toggle('active', state === 'results');
+    // Audit state
+    function setState(s) {
+      document.getElementById('audit-entry').classList.toggle('hidden', s !== 'entry');
+      document.getElementById('audit-loading').classList.toggle('active', s === 'loading');
+      document.getElementById('audit-results').classList.toggle('active', s === 'results');
     }
 
-    var animTimer = null;
-    function animSteps(steps, i, done) {
-      if (i >= steps.length) { if (done) done(); return; }
-      if (i > 0) steps[i-1].classList.remove('active'), steps[i-1].classList.add('done');
+    var _timer = null;
+    function animSteps(steps, i, cb) {
+      if (i >= steps.length) { cb && cb(); return; }
+      if (i > 0) { steps[i-1].classList.remove('active'); steps[i-1].classList.add('done'); }
       steps[i].classList.add('active');
-      animTimer = setTimeout(function() { animSteps(steps, i + 1, done); }, 900);
+      _timer = setTimeout(function() { animSteps(steps, i+1, cb); }, 920);
     }
 
     function renderResults(data) {
-      auditSetState('results');
+      setState('results');
       var score = Math.round((data.overall_score || 0) * 100);
       var grade = data.grade || (score >= 80 ? 'A' : score >= 65 ? 'B' : score >= 50 ? 'C' : 'D');
       var cats = data.categories || {};
-      var issues = data.issues || [];
+      var issues = (data.issues || []).slice(0, 5);
+      var names = { usability: 'Usability', clarity: 'Clarity', accessibility: 'Accessibility', conversion: 'Conversion' };
 
-      var catNames = { usability: 'Usability', clarity: 'Clarity', accessibility: 'Accessibility', conversion: 'Conversion' };
-      var catHtml = '';
-      Object.keys(catNames).forEach(function(k) {
-        var c = cats[k] || {};
-        var s = Math.round((c.score || 0) * 100);
-        catHtml += '<div class="audit-cat"><div class="audit-cat-name">' + catNames[k] + '</div><div class="audit-cat-bar-wrap"><div class="audit-cat-bar" style="width:0%" data-target="' + s + '%"></div></div><div class="audit-cat-score">' + s + '/100</div></div>';
-      });
-
-      var issuesHtml = issues.slice(0, 5).map(function(i) {
-        return '<div class="audit-issue"><span>' + i + '</span></div>';
+      var catHtml = Object.keys(names).map(function(k) {
+        var s = Math.round(((cats[k] || {}).score || 0) * 100);
+        return '<div class="r-cat"><div class="r-cat-name">' + names[k] + '</div>' +
+          '<div class="r-bar-wrap"><div class="r-bar" style="width:0%" data-w="' + s + '%"></div></div>' +
+          '<div class="r-cat-val">' + s + '</div></div>';
       }).join('');
+
+      var issHtml = issues.map(function(i) { return '<div class="r-issue"><span>' + i + '</span></div>'; }).join('');
 
       var el = document.getElementById('audit-results');
       el.innerHTML =
-        '<div class="audit-score-row"><span class="audit-score-num">' + score + '</span><span class="audit-score-grade">/ 100 · ' + grade + '</span></div>' +
-        '<p class="audit-summary">' + (data.summary || '') + '</p>' +
-        (catHtml ? '<div class="audit-cats">' + catHtml + '</div>' : '') +
-        (issuesHtml ? '<div class="audit-issues"><p class="audit-issues-title">Issues found</p>' + issuesHtml + '</div>' : '') +
-        '<a href="https://cal.com/ruonalim" target="_blank" class="audit-cta-link">Book a deeper review →</a>' +
-        '<button class="audit-restart-btn" onclick="restartAudit()">Run another audit</button>';
+        '<div class="r-score"><span class="r-score-num">' + score + '</span><span class="r-score-denom">/ 100 &middot; ' + grade + '</span></div>' +
+        '<p class="r-summary">' + (data.summary || '') + '</p>' +
+        (catHtml ? '<div class="r-cats">' + catHtml + '</div>' : '') +
+        (issHtml ? '<p class="r-issues-label">Issues found</p>' + issHtml : '') +
+        '<a href="https://cal.com/ruonalim" target="_blank" class="r-deeper">Book a deeper review →</a>' +
+        '<button class="r-restart" onclick="resetAudit()">Run another audit</button>';
 
-      // animate bars
       requestAnimationFrame(function() {
-        el.querySelectorAll('.audit-cat-bar').forEach(function(bar) {
-          setTimeout(function() { bar.style.width = bar.dataset.target; }, 80);
+        el.querySelectorAll('.r-bar').forEach(function(b) {
+          setTimeout(function() { b.style.width = b.dataset.w; }, 60);
         });
       });
     }
 
-    function restartAudit() {
-      clearTimeout(animTimer);
+    function resetAudit() {
+      clearTimeout(_timer);
       document.getElementById('audit-url').value = '';
-      var steps = [0,1,2,3].map(function(i) { return document.getElementById('step-' + i); }).filter(Boolean);
-      steps.forEach(function(s) { s.classList.remove('active','done'); });
-      auditSetState('entry');
+      [0,1,2,3].forEach(function(i) {
+        var s = document.getElementById('step-' + i);
+        if (s) s.classList.remove('active','done');
+      });
+      setState('entry');
     }
 
     function runAudit() {
       var inp = document.getElementById('audit-url');
       var url = (inp ? inp.value : '').trim();
-      if (!url) { if (inp) inp.focus(); return; }
+      if (!url) { inp && inp.focus(); return; }
       if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
 
       var btn = document.getElementById('audit-run-btn');
       if (btn) btn.disabled = true;
 
-      var steps = [0,1,2,3].map(function(i) { return document.getElementById('step-' + i); }).filter(Boolean);
-      steps.forEach(function(s) { s.classList.remove('active','done'); });
-      auditSetState('loading');
+      var steps = [0,1,2,3].map(function(i) { return document.getElementById('step-' + i); });
+      steps.forEach(function(s) { s && s.classList.remove('active','done'); });
+      setState('loading');
 
       var done = false;
       animSteps(steps, 0, function() { done = true; });
@@ -953,42 +859,31 @@
         signal: AbortSignal.timeout ? AbortSignal.timeout(50000) : undefined
       })
       .then(function(r) { return r.json(); })
-      .then(function(data) {
-        if (data.error) throw new Error(data.error);
-        var show = function() { renderResults(data); if (btn) btn.disabled = false; };
-        if (done) show(); else setTimeout(show, 400);
+      .then(function(d) {
+        if (d.error) throw new Error(d.error);
+        var go = function() { renderResults(d); if (btn) btn.disabled = false; };
+        done ? go() : setTimeout(go, 400);
       })
       .catch(function(err) {
-        var show = function() {
-          renderResults({
-            overall_score: 0,
-            grade: '–',
-            summary: 'Couldn\'t complete the audit — ' + (err.message || 'please try again.') + ' Book a call for a manual review.',
-            categories: {},
-            issues: []
-          });
+        var go = function() {
+          renderResults({ overall_score: 0, grade: '-', summary: 'Couldn\'t complete the audit. ' + (err.message || 'Try again or book a call.'), categories: {}, issues: [] });
           if (btn) btn.disabled = false;
         };
-        if (done) show(); else setTimeout(show, 400);
+        done ? go() : setTimeout(go, 400);
       });
     }
 
-    // Enter key on input
     document.addEventListener('DOMContentLoaded', function() {
       var inp = document.getElementById('audit-url');
-      if (inp) inp.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') runAudit();
-      });
-    });
+      if (inp) inp.addEventListener('keydown', function(e) { if (e.key === 'Enter') runAudit(); });
 
-    // ── EMAIL COPY ──
-    document.querySelectorAll('a[href="mailto:hello@ruonalim.com"]').forEach(function(el) {
-      el.addEventListener('click', function(e) {
+      var el = document.getElementById('email-link');
+      if (el) el.addEventListener('click', function(e) {
         e.preventDefault();
         navigator.clipboard.writeText('hello@ruonalim.com').catch(function(){});
-        var flash = document.getElementById('copy-flash');
-        flash.classList.add('visible');
-        setTimeout(function() { flash.classList.remove('visible'); }, 2200);
+        var t = document.getElementById('toast');
+        t.classList.add('show');
+        setTimeout(function() { t.classList.remove('show'); }, 2000);
       });
     });
   </script>
