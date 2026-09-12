@@ -104,9 +104,45 @@
       top: 0; left: 0; right: 0;
       z-index: 500;
       padding: 28px 0;
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(20px) saturate(1.4);
-      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      background: transparent;
+    }
+    .nav-blur {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .nav-blur > div {
+      position: absolute;
+      inset: 0;
+    }
+    .nb1 {
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 35%);
+      mask-image: linear-gradient(to bottom, black 0%, transparent 35%);
+    }
+    .nb2 {
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 60%);
+      mask-image: linear-gradient(to bottom, black 20%, transparent 60%);
+    }
+    .nb3 {
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 78%);
+      mask-image: linear-gradient(to bottom, black 40%, transparent 78%);
+    }
+    .nb4 {
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 95%);
+      mask-image: linear-gradient(to bottom, black 65%, transparent 95%);
+    }
+    .nav-bg-fade {
+      background: linear-gradient(to bottom, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0) 100%);
     }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; }
 
@@ -564,6 +600,13 @@
 
   <!-- NAV -->
   <nav>
+    <div class="nav-blur">
+      <div class="nb1"></div>
+      <div class="nb2"></div>
+      <div class="nb3"></div>
+      <div class="nb4"></div>
+      <div class="nav-bg-fade"></div>
+    </div>
     <div class="wrap">
       <div class="nav-inner">
         <a href="/" aria-label="RUONALIM">
