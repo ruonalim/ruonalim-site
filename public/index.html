@@ -141,13 +141,13 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      border-bottom: 1px solid var(--border);
     }
     .hero-body {
       flex: 1;
       display: flex;
-      align-items: flex-end;
-      padding: 160px 0 72px;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 0;
     }
     .hero-hl {
       font-size: clamp(68px, 12.5vw, 172px);
@@ -193,12 +193,10 @@
     .approach { padding: 140px 0; }
     .approach-grid {
       display: grid;
-      grid-template-columns: 60% 40%;
+      grid-template-columns: 1fr 1fr;
     }
     .approach-col {
       padding: 72px 88px 72px 0;
-      border-right: 1px solid var(--border);
-      border-top: 1px solid var(--border);
     }
     .approach-col:last-child {
       padding: 72px 0 72px 80px;
@@ -214,9 +212,6 @@
       display: block;
     }
     .approach-mark .a { color: var(--accent); }
-    .approach-col:last-child .approach-mark {
-      font-size: clamp(68px, 9vw, 118px);
-    }
     .approach-def {
       font-size: 11px;
       font-weight: 700;
@@ -239,13 +234,13 @@
       line-height: 1.74;
       max-width: 360px;
     }
-    .approach-col:last-child .approach-body { max-width: 280px; }
+    .approach-col:last-child .approach-body { max-width: 360px; }
 
     @media (max-width: 768px) {
       .approach { padding: 80px 0; }
       .approach-grid { grid-template-columns: 1fr; }
       .approach-col { padding: 56px 0; border-right: none; }
-      .approach-col:last-child { padding-left: 0; border-top: 1px solid var(--border); }
+      .approach-col:last-child { padding-left: 0; }
       .approach-col:last-child .approach-mark { font-size: clamp(68px, 14vw, 100px); }
       .approach-body, .approach-col:last-child .approach-body { max-width: 100%; }
     }
@@ -262,11 +257,9 @@
       justify-content: space-between;
       gap: 40px;
       padding: 0;
-      border-top: 1px solid var(--border);
       overflow: hidden;
       position: relative;
     }
-    .work-item:last-child { border-bottom: 1px solid var(--border); }
 
     .work-bg {
       position: absolute;
@@ -346,7 +339,6 @@
        AUDIT
     ─────────────────────────────────── */
     .audit-section {
-      border-top: 1px solid var(--border);
       padding: 130px 0;
     }
     .audit-layout {
@@ -473,7 +465,6 @@
        FOOTER
     ─────────────────────────────────── */
     footer {
-      border-top: 1px solid var(--border);
       padding: 32px 0;
     }
     .footer-inner {
