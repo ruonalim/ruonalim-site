@@ -276,6 +276,36 @@
     }
     .work-item:hover .work-bg { transform: translateY(0); }
 
+    /* ── shimmer variant (Your project) ── */
+    @keyframes shimmer-sweep {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(300%); }
+    }
+    .work-item--shimmer .work-bg {
+      background: #EEF2FF;
+    }
+    .work-item--shimmer .work-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        transparent 30%,
+        rgba(0,68,228,0.18) 50%,
+        transparent 70%
+      );
+      transform: translateX(-100%);
+      animation: none;
+      width: 60%;
+    }
+    .work-item--shimmer:hover .work-bg::after {
+      animation: shimmer-sweep 1.6s cubic-bezier(0.4,0,0.2,1) infinite;
+    }
+    .work-item--shimmer:hover .work-name { color: var(--accent) !important; }
+    .work-item--shimmer:hover .work-desc { color: rgba(0,20,100,0.65) !important; }
+    .work-item--shimmer:hover .work-context { color: var(--muted) !important; }
+    .work-item--shimmer:hover .work-arrow { color: var(--accent) !important; transform: rotate(-45deg); }
+
     .work-left {
       position: relative;
       z-index: 1;
@@ -627,7 +657,7 @@
           </div>
         </div>
 
-        <div class="work-item" data-r data-d="2">
+        <div class="work-item work-item--shimmer" data-r data-d="2">
           <div class="work-bg"></div>
           <div class="work-left">
             <span class="work-name" style="color:var(--muted);">Your project</span>
