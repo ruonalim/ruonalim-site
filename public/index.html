@@ -312,7 +312,6 @@
     .work-arrow {
       width: 44px; height: 44px;
       border-radius: 50%;
-      border: 1.5px solid var(--border);
       display: flex; align-items: center; justify-content: center;
       font-size: 18px;
       color: var(--muted);
@@ -363,7 +362,7 @@
     .audit-right { padding-top: 4px; }
     .audit-url-input {
       width: 100%;
-      border: 1.5px solid var(--border);
+      border: 1.5px solid transparent;
       border-radius: 10px;
       padding: 15px 18px;
       font-family: inherit;
@@ -426,7 +425,7 @@
     .audit-step.done { opacity: 0.5; }
     .audit-step-dot {
       width: 18px; height: 18px; border-radius: 50%;
-      border: 1.5px solid var(--border);
+      border: 1.5px solid #ddd;
       flex-shrink: 0; position: relative; transition: all 0.28s;
     }
     .audit-step.active .audit-step-dot { border-color: var(--accent); background: var(--accent); animation: pulse 1.5s ease infinite; }
@@ -448,17 +447,17 @@
     .r-score-denom { font-size: 17px; font-weight: 600; color: var(--muted); }
     .r-summary { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
     .r-cats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
-    .r-cat { padding: 13px; border: 1.5px solid var(--border); border-radius: 8px; }
+    .r-cat { padding: 13px; background: #F7F7F7; border-radius: 8px; }
     .r-cat-name { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
     .r-bar-wrap { height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 6px; }
     .r-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.9s cubic-bezier(0.22,1,0.36,1); }
     .r-cat-val { font-size: 12px; font-weight: 700; color: var(--text); }
     .r-issues-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-    .r-issue { font-size: 13px; color: var(--text); line-height: 1.6; padding: 9px 0; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+    .r-issue { font-size: 13px; color: var(--text); line-height: 1.6; padding: 9px 0; display: flex; gap: 10px; padding-top: 10px; }
     .r-issue::before { content: '–'; color: var(--muted); flex-shrink: 0; }
     .r-deeper { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; font-size: 13px; font-weight: 600; color: var(--accent); transition: gap 0.2s; }
     .r-deeper:hover { gap: 11px; }
-    .r-restart { display: block; background: none; border: 1.5px solid var(--border); border-radius: 980px; padding: 7px 14px; font-family: inherit; font-size: 12px; font-weight: 500; color: var(--muted); margin-top: 10px; transition: border-color 0.18s, color 0.18s; }
+    .r-restart { display: block; background: none; border: 1.5px solid #E0E0E0; border-radius: 980px; padding: 7px 14px; font-family: inherit; font-size: 12px; font-weight: 500; color: var(--muted); margin-top: 10px; transition: border-color 0.18s, color 0.18s; }
     .r-restart:hover { border-color: var(--text); color: var(--text); }
 
     /* ───────────────────────────────────
