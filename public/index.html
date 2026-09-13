@@ -199,6 +199,22 @@
       text-align: center;
     }
     .hero-hl .accent { color: var(--accent); }
+    .hero-word-wrap { display: inline-block; overflow: hidden; vertical-align: bottom; }
+    .hero-word {
+      display: inline-block;
+      transform: translateY(0);
+      transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease;
+      opacity: 1;
+    }
+    .hero-word.exit {
+      transform: translateY(-110%);
+      opacity: 0;
+    }
+    .hero-word.enter {
+      transform: translateY(110%);
+      opacity: 0;
+      transition: none;
+    }
 
     .hero-foot {
       display: flex;
@@ -465,17 +481,18 @@
       font-family: inherit;
       font-size: 15px;
       color: var(--text);
-      background: #fff;
+      background: #F4F4F4;
       outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
       display: block;
       margin-bottom: 10px;
     }
     .audit-url-input:focus {
-      border-color: var(--text);
-      box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
+      background: #EFEFEF;
+      border-color: #D8D8D8;
+      box-shadow: 0 0 0 4px rgba(0,0,0,0.04);
     }
-    .audit-url-input::placeholder { color: #ccc; }
+    .audit-url-input::placeholder { color: #ABABAB; }
     .audit-run-btn {
       width: 100%;
       display: flex;
@@ -680,9 +697,9 @@
   <section class="hero">
     <div class="wrap" style="display:flex;flex-direction:column;flex:1;">
       <div class="hero-body">
-        <h1 class="hero-hl" aria-label="We ship products.">
+        <h1 class="hero-hl" id="hero-hl">
           <span class="rw"><span class="rw-inner">We ship</span></span>
-          <span class="rw"><span class="rw-inner">products<span class="accent">.</span></span></span>
+          <span class="rw"><span class="rw-inner"><span class="hero-word-wrap"><span class="hero-word" id="hero-word">products</span></span><span class="accent">.</span></span></span>
         </h1>
       </div>
 
@@ -865,8 +882,37 @@
     window.addEventListener('load', function() {
       document.body.classList.add('ready');
     });
-    // Fallback if load already fired
     if (document.readyState === 'complete') document.body.classList.add('ready');
+
+    // ── HERO WORD CYCLE ──
+    var _words = ['products', 'startups', 'apps', 'experiences', 'ideas', 'interfaces', 'visions', 'software'];
+    var _wi = 0;
+    var _wordEl = document.getElementById('hero-word');
+
+    function cycleWord() {
+      if (!_wordEl) return;
+      _wi = (_wi + 1) % _words.length;
+      var next = _words[_wi];
+
+      // exit current
+      _wordEl.classList.add('exit');
+
+      setTimeout(function() {
+        // snap to bottom, swap text
+        _wordEl.classList.remove('exit');
+        _wordEl.classList.add('enter');
+        _wordEl.textContent = next;
+
+        // force reflow then animate in
+        void _wordEl.offsetWidth;
+        _wordEl.classList.remove('enter');
+      }, 370);
+    }
+
+    // start cycling after initial reveal delay
+    setTimeout(function() {
+      setInterval(cycleWord, 2600);
+    }, 1800);
 
     // ── SCROLL REVEALS ──
     var io = new IntersectionObserver(function(entries) {
