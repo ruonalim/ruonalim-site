@@ -663,6 +663,18 @@
     }
     #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .t-dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; }
+
+    /* ── HERO FLASH ── */
+    #hero-flash {
+      position: fixed;
+      inset: 0;
+      background: var(--accent);
+      z-index: 400;
+      pointer-events: none;
+      clip-path: circle(0% at 50% 42%);
+      opacity: 1;
+      will-change: clip-path, opacity;
+    }
   </style>
 </head>
 <body>
@@ -852,6 +864,7 @@
   </footer>
 
   <div id="toast"><span class="t-dot"></span>Email copied</div>
+  <div id="hero-flash"></div>
 
   <script>
   (function() {
@@ -885,6 +898,30 @@
       document.body.classList.add('ready');
     });
     if (document.readyState === 'complete') document.body.classList.add('ready');
+
+    // ── HERO FLASH ON FIRST SCROLL ──
+    var _flashEl = document.getElementById('hero-flash');
+    var _flashFired = false;
+
+    function fireHeroFlash() {
+      if (_flashFired || !_flashEl) return;
+      _flashFired = true;
+
+      // Explode outward
+      _flashEl.style.transition = 'clip-path 0.38s cubic-bezier(0.16, 1, 0.3, 1)';
+      _flashEl.style.clipPath = 'circle(150vmax at 50% 42%)';
+
+      // Hold briefly, then vanish
+      setTimeout(function() {
+        _flashEl.style.transition = 'opacity 0.32s ease';
+        _flashEl.style.opacity = '0';
+        setTimeout(function() { if (_flashEl.parentNode) _flashEl.parentNode.removeChild(_flashEl); }, 380);
+      }, 420);
+    }
+
+    window.addEventListener('scroll', fireHeroFlash, { once: true, passive: true });
+    window.addEventListener('wheel',  fireHeroFlash, { once: true, passive: true });
+    window.addEventListener('touchmove', fireHeroFlash, { once: true, passive: true });
 
     // ── HERO WORD CYCLE ──
     var _words = ['products', 'startups', 'apps', 'experiences', 'ideas', 'interfaces', 'visions', 'software'];
