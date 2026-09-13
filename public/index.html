@@ -906,22 +906,6 @@
       }, 200);
     }
 
-    // set min-width to widest word so container never shrinks
-    function setWordMinWidth() {
-      var wrap = _wordEl ? _wordEl.parentElement : null;
-      if (!wrap || !_wordEl) return;
-      var orig = _wordEl.textContent;
-      var max = 0;
-      _words.forEach(function(w) {
-        _wordEl.textContent = w;
-        max = Math.max(max, _wordEl.offsetWidth);
-      });
-      _wordEl.textContent = orig;
-      wrap.style.minWidth = max + 'px';
-    }
-    window.addEventListener('load', setWordMinWidth);
-    window.addEventListener('resize', setWordMinWidth);
-
     // start cycling after initial reveal delay
     setTimeout(function() {
       setInterval(cycleWord, 2600);
