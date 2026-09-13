@@ -674,6 +674,25 @@
       clip-path: circle(0% at 50% 42%);
       opacity: 1;
       will-change: clip-path, opacity;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hero-flash-text {
+      color: #fff;
+      font-size: clamp(28px, 4.5vw, 62px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      text-align: center;
+      padding: 0 48px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.22s ease 0.25s, transform 0.4s cubic-bezier(0.16,1,0.3,1) 0.25s;
+      line-height: 1.1;
+    }
+    #hero-flash.text-in #hero-flash-text {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
@@ -864,7 +883,9 @@
   </footer>
 
   <div id="toast"><span class="t-dot"></span>Email copied</div>
-  <div id="hero-flash"></div>
+  <div id="hero-flash">
+    <p id="hero-flash-text">The world only sees what ships.</p>
+  </div>
 
   <script>
   (function() {
@@ -908,15 +929,18 @@
       _flashFired = true;
 
       // Explode outward
-      _flashEl.style.transition = 'clip-path 0.38s cubic-bezier(0.16, 1, 0.3, 1)';
+      _flashEl.style.transition = 'clip-path 0.42s cubic-bezier(0.16, 1, 0.3, 1)';
       _flashEl.style.clipPath = 'circle(150vmax at 50% 42%)';
 
-      // Hold briefly, then vanish
+      // Reveal text once circle is open
+      setTimeout(function() { _flashEl.classList.add('text-in'); }, 200);
+
+      // Hold, then vanish
       setTimeout(function() {
-        _flashEl.style.transition = 'opacity 0.32s ease';
+        _flashEl.style.transition = 'opacity 0.38s ease';
         _flashEl.style.opacity = '0';
-        setTimeout(function() { if (_flashEl.parentNode) _flashEl.parentNode.removeChild(_flashEl); }, 380);
-      }, 420);
+        setTimeout(function() { if (_flashEl.parentNode) _flashEl.parentNode.removeChild(_flashEl); }, 420);
+      }, 900);
     }
 
     window.addEventListener('scroll', fireHeroFlash, { once: true, passive: true });
