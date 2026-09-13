@@ -199,19 +199,19 @@
       text-align: center;
     }
     .hero-hl .accent { color: var(--accent); }
-    .hero-word-wrap { display: inline-block; overflow: hidden; vertical-align: bottom; }
+    .hero-word-wrap { display: inline-block; vertical-align: baseline; }
     .hero-word {
       display: inline-block;
       transform: translateY(0);
-      transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease;
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
       opacity: 1;
     }
     .hero-word.exit {
-      transform: translateY(-110%);
+      transform: translateY(-12px);
       opacity: 0;
     }
     .hero-word.enter {
-      transform: translateY(110%);
+      transform: translateY(12px);
       opacity: 0;
       transition: none;
     }
