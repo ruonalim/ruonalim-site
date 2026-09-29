@@ -544,15 +544,18 @@
     .intake-opt:hover .opt-arr { color: #fff; transform: rotate(-45deg); }
 
     /* Final CTA step */
+    .intake-q--hero {
+      font-size: clamp(52px, 8.5vw, 116px);
+      margin-bottom: 48px;
+    }
     .intake-final {
       display: flex;
       align-items: center;
-      gap: 28px;
-      margin-top: 8px;
+      gap: 24px;
       flex-wrap: wrap;
     }
     .intake-final-sub {
-      font-size: 15px;
+      font-size: 14px;
       color: var(--muted);
       font-weight: 500;
       letter-spacing: -0.01em;
@@ -561,11 +564,11 @@
       display: inline-flex; align-items: center;
       background: var(--accent); color: #fff;
       text-decoration: none;
-      font-size: 15px; font-weight: 700;
-      padding: 15px 30px; border-radius: 100px;
+      font-size: 16px; font-weight: 700;
+      padding: 17px 34px; border-radius: 100px;
       letter-spacing: -0.02em; white-space: nowrap;
       transition: opacity 0.2s, transform 0.3s cubic-bezier(0.22,1,0.36,1);
-      box-shadow: 0 4px 24px rgba(0,68,228,0.22);
+      box-shadow: 0 8px 32px rgba(0,68,228,0.24);
     }
     .intake-final-btn:hover { opacity: 0.88; transform: translateY(-2px); }
 
@@ -876,7 +879,6 @@
           <div class="rw"><div class="rw-inner" style="transition-delay:0s;">
             <span class="approach-mark">0<span class="a">→</span>1</span>
           </div></div>
-          <p class="approach-def">Zero to one</p>
           <h3 class="approach-title">Get the strategy right before you build.</h3>
           <p class="approach-body">
             You have a direction — maybe a deck, maybe just a conversation you keep having. We help you think it through: what to build, what to cut, and how to position it before you spend a dollar on development.
@@ -887,7 +889,6 @@
           <div class="rw"><div class="rw-inner" style="transition-delay:0.1s;">
             <span class="approach-mark">1<span class="a">→</span>N</span>
           </div></div>
-          <p class="approach-def">One to many</p>
           <h3 class="approach-title">Know what to fix before you hire.</h3>
           <p class="approach-body">
             You have users and the cracks are starting to show. We audit what's broken, identify what actually matters, and give you a clear brief — so whoever builds next is building the right thing.
@@ -910,7 +911,6 @@
 
       <!-- Step 1: Stage -->
       <div class="intake-step active" id="intake-step-1" data-r>
-        <span class="intake-label">Work with us</span>
         <h2 class="intake-q">Where are you right now?</h2>
         <div class="intake-opts">
           <button class="intake-opt" onclick="intakeNext(2,'0→1')">
@@ -934,7 +934,6 @@
 
       <!-- Step 2: 0→1 follow-up -->
       <div class="intake-step" id="intake-step-2">
-        <span class="intake-label">0→1 — Pre-product</span>
         <h2 class="intake-q">What's the biggest challenge?</h2>
         <div class="intake-opts">
           <button class="intake-opt" onclick="intakeNext(4, 'I don\'t know what to build first')">
@@ -954,7 +953,6 @@
 
       <!-- Step 3: 1→N follow-up -->
       <div class="intake-step" id="intake-step-3">
-        <span class="intake-label">1→N — Live product</span>
         <h2 class="intake-q">What's the biggest pain?</h2>
         <div class="intake-opts">
           <button class="intake-opt" onclick="intakeNext(4, 'UX is unclear — users aren\'t converting')">
@@ -974,11 +972,10 @@
 
       <!-- Step 4: CTA -->
       <div class="intake-step" id="intake-step-4">
-        <span class="intake-label">We can help.</span>
-        <h2 class="intake-q" id="intake-solution-heading"></h2>
+        <h2 class="intake-q intake-q--hero">We can help.</h2>
         <div class="intake-final">
-          <p class="intake-final-sub">30 minutes. Free. No pitch.</p>
-          <a href="https://cal.com/ruonalim" target="_blank" rel="noopener" class="intake-final-btn">Book a call →</a>
+          <a href="https://cal.com/ruonalim" target="_blank" rel="noopener" class="intake-final-btn">Book a free call →</a>
+          <p class="intake-final-sub">30 minutes. No commitment.</p>
         </div>
       </div>
 
@@ -1089,6 +1086,9 @@
       if (_flashFired || !_flashEl) return;
       _flashFired = true;
 
+      // Lock scroll for the duration of the flash
+      document.body.style.overflow = 'hidden';
+
       // Explode outward
       _flashEl.style.transition = 'clip-path 0.42s cubic-bezier(0.16, 1, 0.3, 1)';
       _flashEl.style.clipPath = 'circle(150vmax at 50% 42%)';
@@ -1096,11 +1096,14 @@
       // Reveal text once circle is open
       setTimeout(function() { _flashEl.classList.add('text-in'); }, 200);
 
-      // Hold, then vanish
+      // Hold, then vanish, then restore scroll
       setTimeout(function() {
         _flashEl.style.transition = 'opacity 0.22s ease';
         _flashEl.style.opacity = '0';
-        setTimeout(function() { if (_flashEl.parentNode) _flashEl.parentNode.removeChild(_flashEl); }, 260);
+        setTimeout(function() {
+          if (_flashEl.parentNode) _flashEl.parentNode.removeChild(_flashEl);
+          document.body.style.overflow = '';
+        }, 260);
       }, 3000);
     }
 
@@ -1359,14 +1362,6 @@
       2: 'Step 2 of 3', 3: 'Step 2 of 3', 4: 'Step 3 of 3'
     };
 
-    var _solutionMap = {
-      "I don't know what to build first":               "We can help you decide what to build first.",
-      "I know what to build but can't articulate it":   "We can help you articulate it clearly.",
-      "I need to validate before spending on development": "We can help you validate before you spend.",
-      "UX is unclear — users aren't converting":        "We can help improve your conversion.",
-      "We keep building the wrong things":               "We can help you build the right things.",
-      "We need a clear direction for the next 6 months":"We can help define your next direction."
-    };
 
     function intakeShowStep(n) {
       document.querySelectorAll('.intake-step').forEach(function(el) {
@@ -1384,11 +1379,6 @@
         prog.textContent = _intakeProgress[n] || '';
       }
 
-      if (n === 4) {
-        var challenge = _intakeAnswers[2] || _intakeAnswers[3] || '';
-        var heading = _solutionMap[challenge] || 'We can help with that.';
-        document.getElementById('intake-solution-heading').textContent = heading;
-      }
     }
 
     function intakeNext(step, answer) {
