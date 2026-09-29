@@ -1127,9 +1127,9 @@
 
       // Hold, then vanish
       setTimeout(function() {
-        _flashEl.style.transition = 'opacity 0.5s ease';
+        _flashEl.style.transition = 'opacity 0.22s ease';
         _flashEl.style.opacity = '0';
-        setTimeout(function() { if (_flashEl.parentNode) _flashEl.parentNode.removeChild(_flashEl); }, 550);
+        setTimeout(function() { if (_flashEl.parentNode) _flashEl.parentNode.removeChild(_flashEl); }, 260);
       }, 3000);
     }
 
