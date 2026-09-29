@@ -253,14 +253,15 @@
     .approach-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0 80px;
+      gap: 0;
     }
     .approach-col {
-      padding: 72px 0;
+      padding: 72px 64px 72px 0;
     }
     .approach-col:last-child {
-      padding: 72px 0;
+      padding: 72px 0 72px 64px;
       border-right: none;
+      border-left: 1px solid var(--border);
     }
     .approach-mark {
       font-size: clamp(88px, 12vw, 156px);
@@ -292,9 +293,9 @@
       font-size: 15px;
       color: var(--muted);
       line-height: 1.74;
-      max-width: 360px;
+      max-width: 440px;
     }
-    .approach-col:last-child .approach-body { max-width: 360px; }
+    .approach-col:last-child .approach-body { max-width: 440px; }
 
     @media (max-width: 768px) {
       .approach { padding: 80px 0; }
