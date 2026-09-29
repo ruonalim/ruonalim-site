@@ -543,54 +543,31 @@
     }
     .intake-opt:hover .opt-arr { color: #fff; transform: rotate(-45deg); }
 
-    /* CTA step */
-    .intake-cta-wrap { padding-top: 4px; }
-    .intake-book-btn {
+    /* Final CTA step */
+    .intake-final {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .intake-final-sub {
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+    .intake-final-btn {
       display: inline-flex; align-items: center;
       background: var(--accent); color: #fff;
-      text-decoration: none; font-size: 15px; font-weight: 700;
-      padding: 16px 28px; border-radius: 100px;
-      letter-spacing: -0.02em;
-      transition: opacity 0.2s, transform 0.25s cubic-bezier(0.22,1,0.36,1);
+      text-decoration: none;
+      font-size: 15px; font-weight: 700;
+      padding: 15px 30px; border-radius: 100px;
+      letter-spacing: -0.02em; white-space: nowrap;
+      transition: opacity 0.2s, transform 0.3s cubic-bezier(0.22,1,0.36,1);
+      box-shadow: 0 4px 24px rgba(0,68,228,0.22);
     }
-    .intake-book-btn:hover { opacity: 0.85; transform: translateY(-2px); }
-
-    .intake-divider {
-      display: flex; align-items: center; gap: 16px;
-      margin: 28px 0; color: var(--muted); font-size: 13px;
-    }
-    .intake-divider::before, .intake-divider::after {
-      content: ''; flex: 1; height: 1px;
-      background: var(--border); max-width: 120px;
-    }
-
-    .intake-form {
-      display: flex; flex-direction: column; gap: 10px;
-      max-width: 460px;
-    }
-    .intake-email-in, .intake-msg-in {
-      background: #F4F4F4; border: 1.5px solid transparent;
-      border-radius: 10px; padding: 13px 16px;
-      font-size: 14px; font-family: inherit; color: var(--text);
-      outline: none; width: 100%; resize: none;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .intake-email-in:focus, .intake-msg-in:focus {
-      background: #EFEFEF; border-color: #D8D8D8;
-    }
-    .intake-email-in::placeholder, .intake-msg-in::placeholder { color: #ABABAB; }
-    .intake-send-btn {
-      align-self: flex-start; background: var(--text); color: #fff;
-      border: none; border-radius: 100px; font-size: 14px;
-      font-weight: 700; padding: 12px 24px; cursor: pointer;
-      font-family: inherit; letter-spacing: -0.01em;
-      transition: opacity 0.2s;
-    }
-    .intake-send-btn:hover { opacity: 0.75; }
-    .intake-confirm {
-      font-size: 14px; font-weight: 600; color: var(--accent);
-      margin-top: 14px;
-    }
+    .intake-final-btn:hover { opacity: 0.88; transform: translateY(-2px); }
 
     @media (max-width: 768px) {
       .intake { padding-bottom: 80px; }
@@ -997,17 +974,11 @@
 
       <!-- Step 4: CTA -->
       <div class="intake-step" id="intake-step-4">
-        <span class="intake-label">Got it.</span>
-        <h2 class="intake-q">Two ways forward.</h2>
-        <div class="intake-cta-wrap">
-          <a href="https://cal.com/ruonalim" target="_blank" rel="noopener" class="intake-book-btn">Book a free 30-min call →</a>
-          <div class="intake-divider"><span>or send a note</span></div>
-          <form class="intake-form" onsubmit="intakeSubmit(event)">
-            <input type="email" id="intake-email" class="intake-email-in" placeholder="your@email.com" required />
-            <textarea id="intake-msg" class="intake-msg-in" rows="2" placeholder="Anything else we should know? (optional)"></textarea>
-            <button type="submit" class="intake-send-btn">Send →</button>
-          </form>
-          <p class="intake-confirm" id="intake-confirm" style="display:none">Done — we'll be in touch within 24 hours.</p>
+        <span class="intake-label">We can help.</span>
+        <h2 class="intake-q" id="intake-solution-heading"></h2>
+        <div class="intake-final">
+          <p class="intake-final-sub">30 minutes. Free. No pitch.</p>
+          <a href="https://cal.com/ruonalim" target="_blank" rel="noopener" class="intake-final-btn">Book a call →</a>
         </div>
       </div>
 
@@ -1388,6 +1359,15 @@
       2: 'Step 2 of 3', 3: 'Step 2 of 3', 4: 'Step 3 of 3'
     };
 
+    var _solutionMap = {
+      "I don't know what to build first":               "We can help you decide what to build first.",
+      "I know what to build but can't articulate it":   "We can help you articulate it clearly.",
+      "I need to validate before spending on development": "We can help you validate before you spend.",
+      "UX is unclear — users aren't converting":        "We can help improve your conversion.",
+      "We keep building the wrong things":               "We can help you build the right things.",
+      "We need a clear direction for the next 6 months":"We can help define your next direction."
+    };
+
     function intakeShowStep(n) {
       document.querySelectorAll('.intake-step').forEach(function(el) {
         el.classList.remove('active');
@@ -1403,10 +1383,15 @@
         nav.style.display = 'flex';
         prog.textContent = _intakeProgress[n] || '';
       }
+
+      if (n === 4) {
+        var challenge = _intakeAnswers[2] || _intakeAnswers[3] || '';
+        var heading = _solutionMap[challenge] || 'We can help with that.';
+        document.getElementById('intake-solution-heading').textContent = heading;
+      }
     }
 
     function intakeNext(step, answer) {
-      // Store answer keyed by current step
       var current = _intakeStack[_intakeStack.length - 1];
       _intakeAnswers[current] = answer;
       _intakeStack.push(step);
@@ -1417,26 +1402,6 @@
       if (_intakeStack.length <= 1) return;
       _intakeStack.pop();
       intakeShowStep(_intakeStack[_intakeStack.length - 1]);
-    }
-
-    function intakeSubmit(e) {
-      e.preventDefault();
-      var email = document.getElementById('intake-email').value;
-      var msg   = document.getElementById('intake-msg').value;
-      var stage     = _intakeAnswers[1] || '';
-      var challenge = _intakeAnswers[2] || _intakeAnswers[3] || '';
-
-      var subject = encodeURIComponent('RUONALIM Advisory — ' + stage);
-      var body = encodeURIComponent(
-        'Stage: ' + stage + '\n' +
-        'Challenge: ' + challenge + '\n' +
-        'Email: ' + email + '\n' +
-        (msg ? 'Note: ' + msg : '')
-      );
-      window.location.href = 'mailto:hello@ruonalim.com?subject=' + subject + '&body=' + body;
-
-      document.getElementById('intake-form') && (document.querySelector('.intake-form').style.display = 'none');
-      document.getElementById('intake-confirm').style.display = 'block';
     }
 
   </script>
