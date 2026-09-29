@@ -546,6 +546,15 @@
     /* Final CTA step */
     .intake-q--hero {
       font-size: clamp(52px, 8.5vw, 116px);
+      margin-bottom: 16px;
+    }
+    .intake-context {
+      font-size: clamp(16px, 1.6vw, 20px);
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.5;
+      max-width: 560px;
       margin-bottom: 48px;
     }
     .intake-final {
@@ -973,6 +982,7 @@
       <!-- Step 4: CTA -->
       <div class="intake-step" id="intake-step-4">
         <h2 class="intake-q intake-q--hero">We can help.</h2>
+        <p class="intake-context" id="intake-context"></p>
         <div class="intake-final">
           <a href="https://cal.com/ruonalim" target="_blank" rel="noopener" class="intake-final-btn">Book a free call →</a>
           <p class="intake-final-sub">30 minutes. No commitment.</p>
@@ -1362,6 +1372,14 @@
       2: 'Step 2 of 3', 3: 'Step 2 of 3', 4: 'Step 3 of 3'
     };
 
+    var _intakeContextMap = {
+      "I don't know what to build first": "We'll help you cut through the noise and prioritise what matters — before you write a line of code.",
+      "I know what to build but can't articulate it": "We'll sharpen your thinking into a clear, actionable brief your team can execute on.",
+      "I need to validate before spending on development": "We'll stress-test your idea and give you the confidence to move — or the clarity to pivot.",
+      "UX is unclear — users aren't converting": "We'll audit the experience end-to-end and show you exactly where you're losing people.",
+      "We keep building the wrong things": "We'll help you separate signal from noise and define what's actually worth building next.",
+      "We need a clear direction for the next 6 months": "We'll work through the choices with you and hand you a roadmap you can commit to."
+    };
 
     function intakeShowStep(n) {
       document.querySelectorAll('.intake-step').forEach(function(el) {
@@ -1379,6 +1397,11 @@
         prog.textContent = _intakeProgress[n] || '';
       }
 
+      if (n === 4) {
+        var lastAnswer = _intakeAnswers[_intakeStack[_intakeStack.length - 2]];
+        var ctx = document.getElementById('intake-context');
+        if (ctx) ctx.textContent = _intakeContextMap[lastAnswer] || '';
+      }
     }
 
     function intakeNext(step, answer) {
