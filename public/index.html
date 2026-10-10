@@ -860,6 +860,181 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* ══════════════════════════════════════
+       PREMIUM LAYER — ELEVATIONS & MICRO-UX
+    ══════════════════════════════════════ */
+
+    /* Selection */
+    ::selection { background: var(--accent); color: #fff; }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* ── NAV SCROLL STATE ── */
+    nav {
+      transition: padding 0.4s cubic-bezier(0.22,1,0.36,1),
+                  border-color 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      padding: 16px 0;
+      border-color: var(--border);
+    }
+
+    /* ── NAV CTA ELEVATION ── */
+    .nav-cta {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.14), 0 1px 2px rgba(0,0,0,0.08);
+      transition: background 0.25s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.3s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.25s cubic-bezier(0.22,1,0.36,1);
+    }
+    .nav-cta:hover {
+      background: #111;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.1);
+      transform: translateY(-1px);
+    }
+    .nav-cta:active { transform: translateY(0) scale(0.985); box-shadow: 0 1px 4px rgba(0,0,0,0.12); }
+    .nav-cta-ic {
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), background 0.25s;
+    }
+    .nav-cta:hover .nav-cta-ic {
+      transform: translate(3px,-2px) scale(1.08);
+      background: rgba(255,255,255,0.22);
+    }
+
+    /* ── APPROACH COL HOVER ── */
+    .approach-col {
+      transition: background 0.4s cubic-bezier(0.22,1,0.36,1),
+                  padding 0.4s cubic-bezier(0.22,1,0.36,1);
+      border-radius: 2px;
+    }
+    .approach-col:hover { background: #FAFAFA; }
+    .approach-mark {
+      transition: letter-spacing 0.4s cubic-bezier(0.22,1,0.36,1),
+                  color 0.3s;
+    }
+    .approach-col:hover .approach-mark { letter-spacing: -0.06em; }
+
+    /* ── WORK ITEM LINE ── */
+    .work-item {
+      border-top: 1px solid var(--border);
+      transition: border-color 0.4s;
+    }
+    .work-item:hover { border-color: var(--accent); }
+
+    /* ── INTAKE OPT PRESS STATE ── */
+    .intake-opt:active { transform: scale(0.995); }
+
+    /* ── INTAKE FINAL BTN ELEVATION ── */
+    .intake-final-btn {
+      gap: 14px;
+      box-shadow: 0 4px 20px rgba(0,68,228,0.28), 0 1px 4px rgba(0,68,228,0.14);
+      transition: box-shadow 0.35s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.35s cubic-bezier(0.22,1,0.36,1),
+                  opacity 0.2s;
+    }
+    .intake-final-btn .btn-ic {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+                  background 0.25s;
+      flex-shrink: 0;
+    }
+    .intake-final-btn:hover {
+      opacity: 1;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(0,68,228,0.38), 0 4px 12px rgba(0,68,228,0.18);
+    }
+    .intake-final-btn:hover .btn-ic {
+      transform: translate(3px,-2px) scale(1.1);
+      background: rgba(255,255,255,0.28);
+    }
+    .intake-final-btn:active { transform: translateY(-1px) scale(0.985); }
+
+    /* ── AUDIT SECTION TINTED BACKGROUND ── */
+    .audit-section {
+      background: #F7F8FA;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── AUDIT INPUT FOCUS RING ── */
+    .audit-url-input:focus {
+      background: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0,68,228,0.10);
+    }
+
+    /* ── AUDIT RUN BTN PRESS ── */
+    .audit-run-btn {
+      transition: background 0.22s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.22s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.22s cubic-bezier(0.22,1,0.36,1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .audit-run-btn:hover {
+      background: #111;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    }
+    .audit-run-btn:active { transform: scale(0.985); box-shadow: none; }
+    .audit-run-icon {
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .audit-run-btn:hover .audit-run-icon { transform: translate(2px,-2px) scale(1.08); }
+
+    /* ── R-CATS CARD LIFT ── */
+    .r-cat {
+      transition: box-shadow 0.3s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .r-cat:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); transform: translateY(-1px); }
+
+    /* ── FOOTER SEPARATOR ── */
+    footer { border-top: 1px solid var(--border); }
+    .footer-link {
+      position: relative;
+    }
+    .footer-link::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 1px;
+      background: var(--text);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s cubic-bezier(0.22,1,0.36,1);
+    }
+    .footer-link:hover::after { transform: scaleX(1); }
+
+    /* ── UPLOAD ZONE ELEVATION ── */
+    .audit-upload-zone {
+      transition: border-color 0.25s, background 0.25s,
+                  box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);
+    }
+    .audit-upload-zone:hover {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    /* ── CURSOR GLOW ON INTERACTIVE ── */
+    .cursor.ring {
+      box-shadow: 0 0 0 1px rgba(13,13,13,0.08);
+    }
+
+    /* ── HERO WORD TRANSITION — horizontal ── */
+    .hero-word.exit {
+      transform: translateX(-10px);
+      opacity: 0;
+    }
+    .hero-word.enter {
+      transform: translateX(10px);
+      opacity: 0;
+      transition: none;
+    }
   </style>
   <!-- Vercel Web Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>
@@ -1013,7 +1188,7 @@
         <h2 class="intake-q intake-q--hero">We can help.</h2>
         <p class="intake-context" id="intake-context"></p>
         <div class="intake-final">
-          <a href="https://cal.com/ruonalim" target="_blank" rel="noopener" class="intake-final-btn">Book a free call →</a>
+          <a href="https://cal.com/ruonalim" target="_blank" rel="noopener" class="intake-final-btn">Book a free call <span class="btn-ic">↗</span></a>
           <p class="intake-final-sub">30 minutes. No commitment.</p>
         </div>
       </div>
@@ -1110,6 +1285,16 @@
       el.addEventListener('mouseenter', function() { cur.classList.add('ring'); });
       el.addEventListener('mouseleave', function() { cur.classList.remove('ring'); });
     });
+
+    // ── NAV SCROLL STATE ──
+    (function() {
+      var _nav = document.querySelector('nav');
+      function checkScroll() {
+        _nav.classList.toggle('scrolled', window.scrollY > 40);
+      }
+      window.addEventListener('scroll', checkScroll, { passive: true });
+      checkScroll();
+    })();
 
     // ── HERO INTRO → REVEAL SEQUENCE ──
     var _introEl = document.getElementById('hero-intro');
