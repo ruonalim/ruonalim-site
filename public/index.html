@@ -190,6 +190,29 @@
       align-items: center;
       justify-content: center;
       padding: 0;
+      position: relative;
+    }
+    .hero-intro {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(68px, 12.5vw, 172px);
+      font-weight: 900;
+      letter-spacing: -0.055em;
+      line-height: 0.9;
+      text-align: center;
+      color: var(--text);
+      opacity: 0;
+      transition: opacity 0.55s ease;
+      pointer-events: none;
+      z-index: 2;
+      padding: 0 48px;
+    }
+    .hero-intro.in { opacity: 1; }
+    @media (max-width: 768px) {
+      .hero-intro { padding: 0 24px; font-size: clamp(52px, 16vw, 100px); }
     }
     .hero-hl {
       font-size: clamp(68px, 12.5vw, 172px);
@@ -870,6 +893,7 @@
   <section class="hero">
     <div class="wrap" style="display:flex;flex-direction:column;flex:1;">
       <div class="hero-body">
+        <div class="hero-intro" id="hero-intro">Design that moves the needle.</div>
         <h1 class="hero-hl" id="hero-hl">
           <span class="rw"><span class="rw-inner">We advise</span></span>
           <span class="rw"><span class="rw-inner"><span class="hero-word-wrap"><span class="hero-word" id="hero-word">founders</span></span><span class="accent">.</span></span></span>
@@ -1083,11 +1107,28 @@
       el.addEventListener('mouseleave', function() { cur.classList.remove('ring'); });
     });
 
-    // ── HERO REVEAL ──
-    window.addEventListener('load', function() {
+    // ── HERO INTRO → REVEAL SEQUENCE ──
+    var _introEl = document.getElementById('hero-intro');
+
+    function triggerHeroReveal() {
       document.body.classList.add('ready');
+      setTimeout(function() { setInterval(cycleWord, 2200); }, 700);
+    }
+
+    window.addEventListener('load', function() {
+      // Fade intro in
+      setTimeout(function() {
+        if (_introEl) _introEl.classList.add('in');
+      }, 80);
+      // Hold, then fade intro out, then reveal headline
+      setTimeout(function() {
+        if (_introEl) _introEl.classList.remove('in');
+        setTimeout(function() {
+          if (_introEl) { _introEl.style.opacity = '0'; _introEl.style.pointerEvents = 'none'; }
+          triggerHeroReveal();
+        }, 580);
+      }, 2600);
     });
-    if (document.readyState === 'complete') document.body.classList.add('ready');
 
     // ── HERO FLASH ON FIRST SCROLL ──
     var _flashEl = document.getElementById('hero-flash');
@@ -1144,10 +1185,7 @@
       }, 110);
     }
 
-    // start cycling after initial reveal delay
-    setTimeout(function() {
-      setInterval(cycleWord, 2200);
-    }, 700);
+    // word cycling is started by triggerHeroReveal() after the intro sequence
 
     // ── SCROLL REVEALS ──
     var io = new IntersectionObserver(function(entries) {
