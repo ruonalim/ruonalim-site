@@ -65,11 +65,11 @@
     .rw-inner {
       display: block;
       opacity: 0;
-      transform: translateY(20px);
-      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                  opacity 0.6s ease;
+      transform: translateX(48px);
+      transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.55s ease;
     }
-    body.ready .rw-inner { opacity: 1; transform: translateY(0); }
+    body.ready .rw-inner { opacity: 1; transform: translateX(0); }
 
     /* stagger hero lines */
     .rw:nth-child(2) .rw-inner { transition-delay: 0.08s; }
@@ -205,12 +205,15 @@
       text-align: center;
       color: var(--text);
       opacity: 0;
-      transition: opacity 0.55s ease;
+      transform: translateX(48px);
+      transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.55s cubic-bezier(0.16,1,0.3,1);
       pointer-events: none;
       z-index: 2;
       padding: 0 48px;
     }
-    .hero-intro.in { opacity: 1; }
+    .hero-intro.in { opacity: 1; transform: translateX(0); }
+    .hero-intro.out { opacity: 0; transform: translateX(-48px); }
     @media (max-width: 768px) {
       .hero-intro { padding: 0 24px; font-size: clamp(52px, 16vw, 100px); }
     }
@@ -1120,11 +1123,11 @@
       setTimeout(function() {
         if (_introEl) _introEl.classList.add('in');
       }, 80);
-      // Hold, then fade intro out, then reveal headline
+      // Hold, then slide intro out left, then reveal headline from right
       setTimeout(function() {
-        if (_introEl) _introEl.classList.remove('in');
+        if (_introEl) { _introEl.classList.remove('in'); _introEl.classList.add('out'); }
         setTimeout(function() {
-          if (_introEl) { _introEl.style.opacity = '0'; _introEl.style.pointerEvents = 'none'; }
+          if (_introEl) _introEl.style.display = 'none';
           triggerHeroReveal();
         }, 580);
       }, 2600);
